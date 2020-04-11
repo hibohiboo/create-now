@@ -8,8 +8,8 @@ const initScenario = {
   title: '無人島漂流記',
   titleRuby: '                         サバイバルデイズ',
   subTitle: 'The Life and Strange Surprising Adventures of  XXXX',
-  pcNumber: 4,
-  limit: 3,
+  pcNumber: 'PC人数: 4',
+  limit: 'リミット: 3',
   type: '想定プレイ時間 5h',
 }
 export type Scenario = typeof initScenario

@@ -1,13 +1,17 @@
 import * as React from 'react'
 import { NextPage } from 'next'
 import Link from './components/atoms/mui/Link'
+import { Container, Box, Typography } from '@material-ui/core'
 
 const Home: NextPage = () => {
   return (
-    <div className="container">
-      <main>
-        <h1>なう開発工房</h1>
-        <h2>now製作物</h2>
+    <Container maxWidth="sm">
+      <Box my={4}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          なう開発工房
+        </Typography>
+
+        <h4>now製作物</h4>
         <ul>
           <li>
             <Link href="/entrySheet"> エントリーシートPDF作成 </Link>
@@ -16,7 +20,7 @@ const Home: NextPage = () => {
             <Link href="/trailer"> トレーラーPDF作成 </Link>
           </li>
         </ul>
-        <h2>firebase製作物</h2>
+        <h4>firebase製作物</h4>
         <ul>
           <li>
             <a
@@ -73,8 +77,7 @@ const Home: NextPage = () => {
             </a>
           </li>
         </ul>
-      </main>
-
+      </Box>
       <footer>
         <a
           href="https://twitter.com/hibohiboo"
@@ -84,7 +87,7 @@ const Home: NextPage = () => {
           Presented by hibohiboo
         </a>
       </footer>
-    </div>
+    </Container>
   )
 }
 

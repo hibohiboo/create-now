@@ -1,22 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import scenarioModule, {
-  useScenario,
-  Scenario
-} from '../../store/modules/scenarioModule'
-
-const InputField: React.FC<{
-  scenario: Scenario
-  type: string
-  prop: string
-  labelText: string
-  changeHandler: any
-}> = ({ scenario, type, prop, labelText, changeHandler }) => (
-  <label>
-    {labelText}
-    <input type={type} value={scenario[prop]} onChange={changeHandler} />
-  </label>
-)
+import scenarioModule, { useScenario } from '../../store/modules/scenarioModule'
+import InputField from '../components/form/InputField'
 
 const InputArea: React.FC = () => {
   const scenario = useScenario()
@@ -29,7 +14,7 @@ const InputArea: React.FC = () => {
   return (
     <>
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="copy1"
         labelText="コピー１"
@@ -38,7 +23,7 @@ const InputArea: React.FC = () => {
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="copy2"
         labelText="コピー2"
@@ -47,7 +32,7 @@ const InputArea: React.FC = () => {
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="system"
         labelText="システム"
@@ -56,7 +41,7 @@ const InputArea: React.FC = () => {
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="title"
         labelText="シナリオタイトル"
@@ -65,7 +50,7 @@ const InputArea: React.FC = () => {
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="titleRuby"
         labelText="タイトルルビ"
@@ -74,7 +59,7 @@ const InputArea: React.FC = () => {
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="subTitle"
         labelText="サブタイトル"
@@ -83,25 +68,25 @@ const InputArea: React.FC = () => {
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="texnumbert"
         prop="pcNumber"
         labelText="PC人数"
         changeHandler={(e) =>
-          dispatch(update({ ...scenario, pcNumber: Number(e.target.value) }))
+          dispatch(update({ ...scenario, pcNumber: e.target.value }))
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="limit"
         labelText="リミット"
         changeHandler={(e) =>
-          dispatch(update({ ...scenario, limit: Number(e.target.value) }))
+          dispatch(update({ ...scenario, limit: e.target.value }))
         }
       />
       <InputField
-        scenario={scenario}
+        model={scenario}
         type="text"
         prop="type"
         labelText="シナリオタイプ"

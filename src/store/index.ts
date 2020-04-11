@@ -1,7 +1,7 @@
 import {
   configureStore,
   getDefaultMiddleware,
-  EnhancedStore
+  EnhancedStore,
 } from '@reduxjs/toolkit'
 import { rootReducer } from './modules/rootState'
 import logger from 'redux-logger'
@@ -16,6 +16,6 @@ export const setupStore = (): EnhancedStore => {
   return configureStore({
     reducer: rootReducer,
     middleware: middlewares,
-    devTools: true
+    devTools: true,
   })
 }

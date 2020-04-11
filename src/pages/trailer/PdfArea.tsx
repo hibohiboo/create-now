@@ -23,7 +23,7 @@ const docDefinition = (scenario: Scenario) => ({
     },
     { text: scenario.subTitle, fontSize: 20, font: 'IPASerif' },
     {
-      text: `PC人数:${scenario.pcNumber}    リミット: ${scenario.limit}    ${scenario.type}`,
+      text: `${scenario.pcNumber}     ${scenario.limit}    ${scenario.type}`,
       margin: [0, 50, 0, 0],
     },
   ],
