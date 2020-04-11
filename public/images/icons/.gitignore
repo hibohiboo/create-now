@@ -1,0 +1,4 @@
+# https://app-manifest.firebaseapp.com/ のジェネレータを使用。
+# 作成されたzip内のアイコン画像をこのフォルダにいれる
+*
+!.gitignore

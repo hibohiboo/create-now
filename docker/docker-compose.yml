@@ -1,0 +1,30 @@
+version: '3'
+services:
+  zeit_now:
+    # Dockerfileビルド
+    build: ./now
+    # ディレクトリを共有する。
+    volumes:
+      - ../src:/app/src
+      - ../public:/app/public
+      - ../fonts:/app/fonts
+      - ../api:/app/api
+      - ../.now:/app/.now
+      - ../now.json:/app/now.json
+      - ../next.config.js:/app/next.config.js
+      - ../.nowignore:/app/.nowignore
+      - ../tsconfig.json:/app/tsconfig.json
+      - ../.eslintrc.js:/app/.eslintrc.js
+      - ../.gitignore:/app/.gitignore
+      - ../.babelrc.js:/app/.babelrc.js
+      - ../.prettierrc.js:/app/.prettierrc.js
+      - ../jest.config.js:/app/jest.config.js
+      - ../.storybook:/app/.storybook
+
+    ports:
+      - 3000:3000
+      - 6006:6006
+    environment:
+      - CHOKIDAR_USEPOLLING=true # デフォルトの設定の場合、vagrantだとファイルの変更を検知できない。pollingが必要。
+    working_dir: /app
+    command: [now, dev]
