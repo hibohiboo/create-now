@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import entrySheetModule, {
   useEntrySheet,
@@ -324,7 +324,7 @@ const PdfArea: React.FC = () => {
   }
   return (
     <>
-      <button onClick={(e) => makePdf(sheet, dispatch)}>PDFを作る</button>
+      <button onClick={() => makePdf(sheet, dispatch)}>PDFを作る</button>
       {pdf !== '' && (
         <a href={pdf} download="sheet.pdf">
           作成したPDFをダウンロード

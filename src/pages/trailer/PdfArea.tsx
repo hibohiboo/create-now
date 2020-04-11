@@ -55,7 +55,7 @@ const PdfArea: React.FC = () => {
   }
   return (
     <>
-      <button onClick={(e) => makePdf(scenario, dispatch)}>PDFを作る</button>
+      <button onClick={() => makePdf(scenario, dispatch)}>PDFを作る</button>
       {pdf !== '' && (
         <a href={pdf} download="scenario.pdf">
           作成したPDFをダウンロード
