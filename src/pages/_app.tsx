@@ -7,11 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
 import theme from '../theme'
 const store = setupStore()
-import Router from 'next/router'
-
-import * as gtag from '../lib/gtag'
-
-Router.events.on('routeChangeComplete', (url) => gtag.pageview(url))
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
