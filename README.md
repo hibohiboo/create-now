@@ -1,0 +1,2 @@
+# create-now
+nowでデプロイするNext.jsのSSRアプリ
