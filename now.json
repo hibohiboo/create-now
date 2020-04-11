@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "alias": "create-now",
   "functions": {
     "api/pdf.ts": {
       "includeFiles": "fonts/**"

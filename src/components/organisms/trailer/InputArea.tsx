@@ -1,7 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import scenarioModule, { useScenario } from '../../store/modules/scenarioModule'
-import InputField from '../components/form/InputField'
+import scenarioModule, {
+  useScenario,
+} from '../../../store/modules/scenarioModule'
+import InputField from '../../form/InputField'
 
 const InputArea: React.FC = () => {
   const scenario = useScenario()

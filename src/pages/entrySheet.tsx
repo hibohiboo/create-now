@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import * as React from 'react'
 import { NextPage } from 'next'
-import ImageArea from './entrySheet/ImageArea'
-import InputArea from './entrySheet/InputArea'
-import PdfArea from './entrySheet/PdfArea'
+import ImageArea from '../components/organisms/entrySheet/ImageArea'
+import InputArea from '../components/organisms/entrySheet/InputArea'
+import PdfArea from '../components/organisms/entrySheet/PdfArea'
 
 const Home: NextPage = () => {
   return (

@@ -42,3 +42,8 @@
 ### prettier
 
 [trailing-comma](https://prettier.io/docs/en/options.html#trailing-commas)
+
+## google tag manager
+
+[gtag manager](https://wacul-ai.com/blog/access-analysis/google-analytics-setting/tag-manager/)
+[next.js sample](https://github.com/zeit/next.js/blob/canary/examples/with-google-analytics/lib/gtag.js)

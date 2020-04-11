@@ -4,7 +4,7 @@ import entrySheetModule, {
   useEntrySheet,
   usePdf,
   EntrySheet,
-} from '../../store/modules/entrySheetModule'
+} from '../../../store/modules/entrySheetModule'
 const rank = (r: 1 | 2 | 3 | 4) => {
   switch (r) {
     case 1:

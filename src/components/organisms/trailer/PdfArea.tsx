@@ -4,7 +4,7 @@ import scenarioModule, {
   useScenario,
   usePdf,
   Scenario,
-} from '../../store/modules/scenarioModule'
+} from '../../../store/modules/scenarioModule'
 
 const docDefinition = (scenario: Scenario) => ({
   content: [

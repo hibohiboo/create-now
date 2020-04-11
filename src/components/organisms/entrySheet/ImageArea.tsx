@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useEntrySheet } from '../../store/modules/entrySheetModule'
+import { useEntrySheet } from '../../../store/modules/entrySheetModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
-import URLImage from '../components/atoms/URLImage'
+import URLImage from '../../atoms/URLImage'
 import Hidden from '@material-ui/core/Hidden'
 
 const ImageArea: React.FC = () => {

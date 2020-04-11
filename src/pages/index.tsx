@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NextPage } from 'next'
-import Link from './components/atoms/mui/Link'
+import Link from '../components/atoms/mui/Link'
 import { Container, Box, Typography } from '@material-ui/core'
 
 const Home: NextPage = () => {
@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     <Container maxWidth="sm">
       <Box my={4}>
         <Typography variant="h4" component="h1" gutterBottom>
-          なう開発工房
+          なう! 開発工房
         </Typography>
 
         <h4>now製作物</h4>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useScenario } from '../../store/modules/scenarioModule'
+import { useScenario } from '../../../store/modules/scenarioModule'
 import { Stage, Layer, Rect, Text, Line } from 'react-konva'
 import { Hidden } from '@material-ui/core'
 

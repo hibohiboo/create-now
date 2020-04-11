@@ -77,3 +77,4 @@ RUN npm install pdfmake
 # cat /proc/sys/fs/inotify/max_user_watches で変更を確認
 
 RUN npm install @material-ui/core
+

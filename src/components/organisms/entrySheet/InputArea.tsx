@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import entrySheetModule, {
   useEntrySheet,
-} from '../../store/modules/entrySheetModule'
-import InputField from '../components/form/InputField'
-import RadioField from '../components/form/RadioField'
+} from '../../../store/modules/entrySheetModule'
+import InputField from '../../form/InputField'
+import RadioField from '../../form/RadioField'
 
 const InputArea: React.FC = () => {
   const entrySheet = useEntrySheet()
