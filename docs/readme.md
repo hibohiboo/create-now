@@ -48,3 +48,7 @@
 [gtag manager](https://wacul-ai.com/blog/access-analysis/google-analytics-setting/tag-manager/)
 [next.js sample](https://github.com/zeit/next.js/blob/canary/examples/with-google-analytics/lib/gtag.js)
 [Next.js のプロジェクトに GTM を組み込む方法](https://qiita.com/seya/items/d4108d28ee5b1773f671)
+
+## firebase
+
+[firebase](https://dev.to/benzguo/getting-started-with-next-js-now-firebase-4ejg)
