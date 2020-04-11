@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div className="container">
       <Head>
-        <title>Create Scenario Image</title>
+        <title>GMエントリーシート作成ページ</title>
       </Head>
 
       <main>

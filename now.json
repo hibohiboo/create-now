@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/entrySheetPdf.ts": {
+    "api/pdf.ts": {
       "includeFiles": "fonts/**"
     }
   }

@@ -1,7 +1,7 @@
 import path from 'path'
 import PdfPrinter from 'pdfmake'
 
-export function createPdfBinary(pdfDoc, callback) {
+export default function createPdfBinary(pdfDoc, callback) {
   const baseDir = 'fonts/'
   const gPath = path.resolve(baseDir + 'ipaexg.ttf')
   const mPath = path.resolve(baseDir + 'ipaexm.ttf')
