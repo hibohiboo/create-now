@@ -3,7 +3,7 @@ interface Window {
 }
 declare let window: Window
 
-export const GA_TRACKING_ID = '<YOUR_GA_TRACKING_ID>'
+export const GA_TRACKING_ID = 'GTM-TFQ27FV'
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url) => {
