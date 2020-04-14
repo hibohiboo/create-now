@@ -86,6 +86,8 @@ const Home: NextPage = () => {
         >
           Presented by hibohiboo
         </a>
+        <Link href="/infos/agreement"> 利用規約 </Link>
+        <Link href="/infos/privacy-policy"> プライバシーポリシー </Link>
       </footer>
     </Container>
   )

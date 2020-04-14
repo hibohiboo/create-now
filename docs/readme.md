@@ -52,3 +52,4 @@
 ## firebase
 
 [firebase](https://dev.to/benzguo/getting-started-with-next-js-now-firebase-4ejg)
+[Next.js プロジェクトに Firebase Authentication を組み込み](https://nekorokkekun.hatenablog.com/entry/2019/09/25/000041)
