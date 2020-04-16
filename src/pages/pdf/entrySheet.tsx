@@ -1,40 +1,27 @@
 import Head from 'next/head'
 import * as React from 'react'
 import { NextPage } from 'next'
-import ImageArea from '../components/organisms/trailer/ImageArea'
-import InputArea from '../components/organisms/trailer/InputArea'
-import PdfArea from '../components/organisms/trailer/PdfArea'
+import ImageArea from '../../components/organisms/entrySheet/ImageArea'
+import InputArea from '../../components/organisms/entrySheet/InputArea'
+import PdfArea from '../../components/organisms/entrySheet/PdfArea'
+import Footer from '../../components/organisms/common/Footer'
 
 const Home: NextPage = () => {
   return (
     <div className="container">
       <Head>
-        <title>トレーラー作成ページ</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>GMエントリーシート作成ページ</title>
       </Head>
 
       <main>
-        <InputArea />
-        <ImageArea />
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <InputArea />
+          <ImageArea />
+        </div>
         <PdfArea />
-        <a
-          href="https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          参考： @hibimarie様「それっぽくなるトレーラー画像の話」
-        </a>
       </main>
 
-      <footer>
-        <a
-          href="https://twitter.com/hibohiboo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Presented by hibohiboo
-        </a>
-      </footer>
+      <Footer />
 
       <style jsx>{`
         .container {
