@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Link from '../../components/atoms/mui/Link'
 import { Container } from '@material-ui/core'
+import Footer from '../../components/organisms/common/Footer'
 
 const Page: NextPage = () => {
   return (
@@ -176,6 +177,7 @@ const Page: NextPage = () => {
           <p>制定：2020年4月15日</p>
         </div>
       </div>
+      <Footer />
     </Container>
   )
 }

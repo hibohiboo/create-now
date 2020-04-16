@@ -53,3 +53,7 @@
 
 [firebase](https://dev.to/benzguo/getting-started-with-next-js-now-firebase-4ejg)
 [Next.js プロジェクトに Firebase Authentication を組み込み](https://nekorokkekun.hatenablog.com/entry/2019/09/25/000041)
+[firebase](https://qiita.com/gagagaga_dev/items/a8dd490114c315329279)
+[next example](https://github.com/zeit/next.js/blob/canary/examples/with-firebase-authentication/pages/index.js)
+[React で Firebase Authentication を使う](https://qiita.com/zaburo/items/801bd288cec47bd28764)
+[Next.js, Material-UI v4-alpha And React Hook With Firebase Hosting example](https://github.com/scarlet-sage/React-Hooks-Nextjs-Material-Ui-next-With-Firebase-Hosting)

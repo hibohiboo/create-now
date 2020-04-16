@@ -5,6 +5,9 @@ import {
 } from '@reduxjs/toolkit'
 import { rootReducer } from './modules/rootState'
 import logger from 'redux-logger'
+import initFirebase from '../utils/auth/initFirebase'
+
+initFirebase()
 
 export const setupStore = (): EnhancedStore => {
   const middlewares = [...getDefaultMiddleware()]

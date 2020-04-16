@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import { Container } from '@material-ui/core'
+import Footer from '../../components/organisms/common/Footer'
 
 const Page: NextPage = () => {
   return (
@@ -56,6 +57,7 @@ const Page: NextPage = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </Container>
   )
 }

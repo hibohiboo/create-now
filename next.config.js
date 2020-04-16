@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require('path')
 const withOffline = require('next-offline')
+require('dotenv').config()
 
 const nextConfig = {
   webpack: (config) => {
@@ -33,6 +34,16 @@ const nextConfig = {
         },
       },
     ],
+  },
+  // .envファイルから読み込んだ環境変数をnextで使用できるように定義
+  env: {
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+    FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL,
+    FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY,
+    SESSION_SECRET: process.env.SESSION_SECRET,
+    SESSION_SECRET_PREVIOUS: process.env.SESSION_SECRET_PREVIOUS,
   },
 }
 

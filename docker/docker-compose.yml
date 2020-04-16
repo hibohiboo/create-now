@@ -20,6 +20,7 @@ services:
       - ../.prettierrc.js:/app/.prettierrc.js
       - ../jest.config.js:/app/jest.config.js
       - ../.storybook:/app/.storybook
+      - ../.env:/app/.env
 
     ports:
       - 3000:3000

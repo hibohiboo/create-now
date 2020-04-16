@@ -2,12 +2,19 @@ import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
 import theme from '../theme'
+import { getAuthUserInfo } from '../utils/pageWrappers/withAuthUser'
+import { userInfoPropTypes } from '../utils/pageWrappers/withAuthUserInfo'
+import { AuthUserInfo } from '../utils/auth/user'
 
-export default class MyDocument extends Document {
+export default class MyDocument extends Document<{
+  AuthUserInfo: AuthUserInfo
+}> {
+  static propTypes = userInfoPropTypes
   render() {
     const GA_TRACKING_ID = 'GTM-TFQ27FV'
     const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GA_TRACKING_ID}');`
     const gtmFrame = `<iframe src="https://www.googletagmanager.com/ns.html?id=${GA_TRACKING_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+    const { AuthUserInfo } = this.props
     return (
       <Html lang="en">
         <Head>
@@ -21,6 +28,13 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <noscript dangerouslySetInnerHTML={{ __html: gtmFrame }} />
+          <script
+            id="__MY_AUTH_USER_INFO"
+            type="application/json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(AuthUserInfo, null, 2),
+            }}
+          />
           <Main />
           <NextScript />
         </body>
@@ -62,9 +76,12 @@ MyDocument.getInitialProps = async (ctx) => {
     })
 
   const initialProps = await Document.getInitialProps(ctx)
+  const AuthUserInfo = getAuthUserInfo(ctx)
 
   return {
     ...initialProps,
+    // 認証
+    AuthUserInfo,
     // Styles fragment is rendered after the app and page rendering finish.
     styles: [
       ...React.Children.toArray(initialProps.styles),

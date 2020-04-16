@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:13.12.0
+FROM node:13.13.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 # 後で確認出来るようにpackage.jsonを作成
 COPY .npmrc /app/.npmrc
 RUN npm init -y
-RUN npm i -g now
+RUN npm i -g now@latest
 
 RUN npm i next react react-dom
 
@@ -77,4 +77,19 @@ RUN npm install pdfmake
 # cat /proc/sys/fs/inotify/max_user_watches で変更を確認
 
 RUN npm install @material-ui/core
+
+## 認証
+### 便利ツール lodash
+RUN npm install lodash
+
+### session
+RUN npm install cookie-session
+
+### fetch
+RUN npm install isomorphic-unfetch
+
+### firebase
+RUN npm install firebase
+RUN npm install react-firebaseui
+RUN npm install firebase-admin
 
