@@ -14,5 +14,25 @@
     "api/pdf.ts": {
       "includeFiles": "fonts/**"
     }
+  },
+  "env": {
+    "FIREBASE_API_KEY": "@firebase-api-key",
+    "FIREBASE_AUTH_DOMAIN": "@firebase-auth-domain",
+    "FIREBASE_PROJECT_ID": "@firebase-project-id",
+    "FIREBASE_CLIENT_EMAIL": "@firebase-client-email",
+    "FIREBASE_PRIVATE_KEY": "@firebase-private-key",
+    "SESSION_SECRET": "@session-secret",
+    "SESSION_SECRET_PREVIOUS": "@session-secret-previous"
+  },
+  "build": {
+    "env": {
+      "FIREBASE_API_KEY": "@firebase-api-key",
+      "FIREBASE_AUTH_DOMAIN": "@firebase-auth-domain",
+      "FIREBASE_PROJECT_ID": "@firebase-project-id",
+      "FIREBASE_CLIENT_EMAIL": "@firebase-client-email",
+      "FIREBASE_PRIVATE_KEY": "@firebase-private-key",
+      "SESSION_SECRET": "@session-secret",
+      "SESSION_SECRET_PREVIOUS": "@session-secret-previous"
+    }
   }
 }

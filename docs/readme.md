@@ -2,6 +2,8 @@
 
 [PDF DL 動作確認時のソース](https://github.com/hibohiboo/develop/tree/c670289100bb719d282b893a6d8d0bf9f8bc604e/tutorial/lesson/react-my-examples/scenario-sheet/)
 
+[firebase 認証 開発環境時点のソース](https://github.com/hibohiboo/create-now/tree/15774ac423bd882a6ae73dbd99262fc38cecb85b/)
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)
@@ -57,3 +59,4 @@
 [next example](https://github.com/zeit/next.js/blob/canary/examples/with-firebase-authentication/pages/index.js)
 [React で Firebase Authentication を使う](https://qiita.com/zaburo/items/801bd288cec47bd28764)
 [Next.js, Material-UI v4-alpha And React Hook With Firebase Hosting example](https://github.com/scarlet-sage/React-Hooks-Nextjs-Material-Ui-next-With-Firebase-Hosting)
+[react-redux-firebase](http://react-redux-firebase.com/)

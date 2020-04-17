@@ -9,5 +9,5 @@ export interface RootState {
 
 export const rootReducer = combineReducers({
   scenario: scenarioModule.reducer,
-  entrySheet: entrySheetModule.reducer
+  entrySheet: entrySheetModule.reducer,
 })
