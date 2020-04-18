@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  function isSignedIn() {
+    return request.auth != null;
+  }
+
+  function isUser(userID) {
+    return request.auth.uid == userID;
+  }
+
+  // 制限をしたら、クエリのほうでもその制約を意識する必要がある。 https://firebase.google.com/docs/firestore/security/rules-query?hl=ja
+  function isOwner(rsc) {
+    // データ作成した本人であることを確認
+    return isSignedIn() && request.auth.uid == rsc.data.uid;
+  }
+
+  // マッチングルール
+  match /databases/{database}/documents {
+    match /systems/lost/{userID}/{documents=**} {
+      allow create: if isSignedIn()
+      allow read, update: if isUser(userID)
+    }
+  }
+}

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  # デプロイツール
+  firebase:
+    build: ./firebase
+    env_file: .env
+    volumes:
+      - ./config/firebase.json:/app/firebase.json
+      - ./config/firestore.rules:/app/firestore.rules
+    ports:
+      - 9005:9005
