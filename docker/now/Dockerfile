@@ -98,3 +98,6 @@ RUN npm install react-redux-firebase
 
 ### thunk
 RUN npm install redux-thunk
+
+## react redux firestore
+RUN npm install redux-firestore

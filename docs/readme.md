@@ -62,7 +62,10 @@
 [next example](https://github.com/zeit/next.js/blob/canary/examples/with-firebase-authentication/pages/index.js)
 [React で Firebase Authentication を使う](https://qiita.com/zaburo/items/801bd288cec47bd28764)
 [Next.js, Material-UI v4-alpha And React Hook With Firebase Hosting example](https://github.com/scarlet-sage/React-Hooks-Nextjs-Material-Ui-next-With-Firebase-Hosting)
+[React + Redux + Firebase を使ってログイン機能あり掲示板アプリ開発](https://qiita.com/momosuke/items/57295ca99387ab243ce8)
 
 ### react-redux-firebase
 
 [react-redux-firebase](http://react-redux-firebase.com/)
+[react-redux-firebase useFirestore.md](https://github.com/prescottprue/react-redux-firebase/blob/master/docs/api/useFirestore.md#usefirestore)
+[error @@login](https://github.com/rt2zz/redux-persist/issues/988)

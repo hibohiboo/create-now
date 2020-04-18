@@ -12,6 +12,9 @@ const Created: React.FC = () => {
         <li>
           <Link href="/pdf/trailer"> トレーラーPDF作成 </Link>
         </li>
+        <li>
+          <Link href="/lostrpg"> LOSTRPG 支援 </Link>
+        </li>
       </ul>
     </>
   )

@@ -1,4 +1,6 @@
 import firebase from 'firebase/app'
+import 'firebase/firestore'
+import { createFirestoreInstance } from 'redux-firestore'
 
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -9,6 +11,7 @@ const config = {
 export default () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(config)
+    firebase.firestore()
   }
 }
 
@@ -18,4 +21,5 @@ const rrfConfig = {}
 export const rrfProps = {
   firebase,
   config: rrfConfig,
+  createFirestoreInstance,
 }
