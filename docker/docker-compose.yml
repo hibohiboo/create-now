@@ -21,6 +21,7 @@ services:
       - ../jest.config.js:/app/jest.config.js
       - ../.storybook:/app/.storybook
       - ../.env:/app/.env
+      - ../.env.build:/app/.env.build
 
     ports:
       - 3000:3000

@@ -93,3 +93,8 @@ RUN npm install firebase
 RUN npm install react-firebaseui
 RUN npm install firebase-admin
 
+### react-firebase
+RUN npm install react-redux-firebase
+
+### thunk
+RUN npm install redux-thunk

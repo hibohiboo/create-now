@@ -4,6 +4,8 @@
 
 [firebase 認証 開発環境時点のソース](https://github.com/hibohiboo/create-now/tree/15774ac423bd882a6ae73dbd99262fc38cecb85b/)
 
+[firebase 認証 デプロイ確認時点のソース](https://github.com/hibohiboo/create-now/tree/19af4015f5b4f693b5991f0417e251ad5031fe84/)
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)
@@ -36,6 +38,7 @@
 
 [react material-ui](https://material-ui.com/components/text-fields/)
 [material-ui の SSR を導入](https://qiita.com/sono8/items/6fcd9d30c9b7073ed4a0)
+[第 2 回 2020 年版 React の Material UI V4 の使い方について](https://qiita.com/tetsurotayama/items/12d6c7b3463246306e87)
 
 ### next
 
@@ -59,4 +62,7 @@
 [next example](https://github.com/zeit/next.js/blob/canary/examples/with-firebase-authentication/pages/index.js)
 [React で Firebase Authentication を使う](https://qiita.com/zaburo/items/801bd288cec47bd28764)
 [Next.js, Material-UI v4-alpha And React Hook With Firebase Hosting example](https://github.com/scarlet-sage/React-Hooks-Nextjs-Material-Ui-next-With-Firebase-Hosting)
+
+### react-redux-firebase
+
 [react-redux-firebase](http://react-redux-firebase.com/)

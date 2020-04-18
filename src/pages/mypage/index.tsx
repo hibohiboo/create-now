@@ -8,8 +8,34 @@ import withAuthUserInfo, {
   defaultUserProps,
 } from '../../utils/pageWrappers/withAuthUserInfo'
 import logout from '../../utils/auth/logout'
-import { Container, Box, Avatar } from '@material-ui/core'
+import {
+  Container,
+  Box,
+  Avatar,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+} from '@material-ui/core'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Footer from '../../components/organisms/common/Footer'
+
+// スタイルを適用する
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    menuButton: {
+      color: 'inherit',
+      padding: '8px',
+    },
+    headerTitleStyle: {
+      flexGrow: 1,
+      color: 'inherit',
+    },
+    avatar: {
+      margin: '8px',
+    },
+  }),
+)
 
 const MyPage = (props: any) => {
   const { AuthUserInfo } = props
@@ -19,12 +45,35 @@ const MyPage = (props: any) => {
       Router.push('/')
     }
   }, [])
+  // CSSを適用する。
+  const classes = useStyles()
+
   return (
     <>
       {!authUser ? (
         <></>
       ) : (
         <>
+          <AppBar position="static" aria-label="Global Navi">
+            <Toolbar>
+              <Typography
+                className={classes.headerTitleStyle}
+                variant="subtitle1"
+              >
+                Create Now
+              </Typography>
+              <IconButton className={classes.menuButton} aria-label="Menu">
+                {!authUser.photoURL ? (
+                  <Avatar className={classes.avatar}></Avatar>
+                ) : (
+                  <Avatar
+                    alt={authUser.displayName}
+                    src={authUser.photoURL}
+                  ></Avatar>
+                )}
+              </IconButton>
+            </Toolbar>
+          </AppBar>
           <Container>
             <Box height="100vh">
               <h2>マイページ</h2>

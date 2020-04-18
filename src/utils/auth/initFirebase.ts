@@ -11,3 +11,11 @@ export default () => {
     firebase.initializeApp(config)
   }
 }
+
+// react-redux-firebase の プロバイダ設定
+const rrfConfig = {}
+
+export const rrfProps = {
+  firebase,
+  config: rrfConfig,
+}

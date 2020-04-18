@@ -3,6 +3,7 @@ import { get, has } from 'lodash'
 export interface AuthUser {
   id: string
   displayName: string
+  photoURL: string
 }
 export interface AuthUserInfo {
   AuthUser: AuthUser
@@ -30,6 +31,9 @@ export const createAuthUser = (
     displayName: has(firebaseUser, 'displayName')
       ? get(firebaseUser, 'displayName') // client SDK
       : get(firebaseUser, 'display_name'), // admin SDK
+    photoURL: has(firebaseUser, 'photoURL')
+      ? get(firebaseUser, 'photoURL') // client SDK
+      : get(firebaseUser, 'photo_url'), // admin SDK
   }
 }
 
