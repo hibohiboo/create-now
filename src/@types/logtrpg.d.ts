@@ -8,8 +8,8 @@ export interface Facility {
 
 export interface Camp {
   name: string
-  facilities: Facility[]
-  freeWriting: string
+  facilities?: Facility[]
+  freeWriting?: string
   campId?: string
   uid?: string
 }

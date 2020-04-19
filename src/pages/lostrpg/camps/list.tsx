@@ -57,7 +57,7 @@ const Page: NextPage = () => {
         {items.map((item) => (
           <ListItemLink
             href={{
-              pathname: '/lostrpg/camps/edit', // trailing slash(/lostrpg/camps/edit/)にするとエラー。
+              pathname: '/lostrpg/camps/view', // trailing slash(/lostrpg/camps/edit/)にするとエラー。
               query: { id: item.id },
             }}
             key={item.id}
