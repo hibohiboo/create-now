@@ -1,0 +1,1 @@
+export const GTM_TRACKING_ID = 'GTM-TFQ27FV'

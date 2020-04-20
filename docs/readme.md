@@ -43,6 +43,9 @@
 ### next
 
 [maximumFileSizeToCacheInBytes](https://tech.mercari.com/entry/2017/12/19/workbox)
+[Next.js でウェブ開発をするにあたって知ってると便利なリソース集](https://blog.nyan-tech.com/nextjs-resources/)
+[next-site](https://github.com/zeit/next-site)
+[create-nextjs-app](https://nextjs.org/learn/basics/create-nextjs-app)
 
 ### prettier
 

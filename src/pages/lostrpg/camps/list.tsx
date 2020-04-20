@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useFirestore } from 'react-redux-firebase'
-import { Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@material-ui/core'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -9,9 +9,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Link from '~/components/atoms/mui/Link'
 import ListItemLink from '~/components/atoms/mui/ListItemLink'
-import Footer from '~/components/organisms/common/Footer'
 import { getList } from '~/store/firestore/lostrpg/camp'
 import { getAuth } from '~/store/firebase'
+import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,39 +38,40 @@ const Page: NextPage = () => {
   } = getList(useFirestore())
   return (
     <Container>
-      <h2>LOSTRPG キャンプ一覧</h2>
-      {authUser ? <Link href="/lostrpg/camps/edit">新規作成</Link> : <></>}
-      <div>
-        {loading && <div>...</div>}
-        {!loading && (
-          <List
-            component="ul"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-              <ListSubheader component="div" id="nested-list-subheader">
-                キャンプ一覧
-              </ListSubheader>
-            }
-            className={classes.root}
-          ></List>
-        )}
-        {items.map((item) => (
-          <ListItemLink
-            href={{
-              pathname: '/lostrpg/camps/view', // trailing slash(/lostrpg/camps/edit/)にするとエラー。
-              query: { id: item.id },
-            }}
-            key={item.id}
-          >
-            <ListItemText primary={item.data().name} />
-          </ListItemLink>
-        ))}
-        {hasMore && !loadingMore && (
-          <button onClick={loadMore}>[ 次の10件 ]</button>
-        )}
-      </div>
+      <Box my={4}>
+        <h2>LOSTRPG キャンプ一覧</h2>
+        {authUser ? <Link href="/lostrpg/camps/edit">新規作成</Link> : <></>}
+        <div>
+          {loading && <div>...</div>}
+          {!loading && (
+            <List
+              component="ul"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                  キャンプ一覧
+                </ListSubheader>
+              }
+              className={classes.root}
+            ></List>
+          )}
+          {items.map((item) => (
+            <ListItemLink
+              href={{
+                pathname: '/lostrpg/camps/view', // trailing slash(/lostrpg/camps/edit/)にするとエラー。
+                query: { id: item.id },
+              }}
+              key={item.id}
+            >
+              <ListItemText primary={item.data().name} />
+            </ListItemLink>
+          ))}
+          {hasMore && !loadingMore && (
+            <button onClick={loadMore}>[ 次の10件 ]</button>
+          )}
+        </div>
+      </Box>
       <Link href="/lostrpg">戻る</Link>
-      <Footer />
     </Container>
   )
 }

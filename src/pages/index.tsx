@@ -17,7 +17,7 @@ const Home: NextPage = (props: any) => {
 
   return (
     <Container maxWidth="sm">
-      <Box my={4}>
+      <Box my={4} style={{ minHeight: '100vh' }}>
         <Typography variant="h4" component="h1" gutterBottom>
           なう! 開発工房
         </Typography>

@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from '../../atoms/mui/Link'
 
 const Footer: React.FC = () => {
   return (
@@ -11,8 +10,8 @@ const Footer: React.FC = () => {
       >
         Presented by hibohiboo
       </a>
-      <Link href="/infos/agreement"> 利用規約 </Link>
-      <Link href="/infos/privacy-policy"> プライバシーポリシー </Link>
+      <a href="/infos/agreement"> 利用規約 </a>
+      <a href="/infos/privacy-policy"> プライバシーポリシー </a>
     </footer>
   )
 }

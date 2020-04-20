@@ -5,6 +5,7 @@ import theme from '../theme'
 import { getAuthUserInfo } from '../utils/pageWrappers/withAuthUser'
 import { userInfoPropTypes } from '../utils/pageWrappers/withAuthUserInfo'
 import { AuthUserInfo } from '../utils/auth/user'
+import { GTM_TRACKING_ID } from '~/lib/google-tag-manager'
 
 export default class MyDocument extends Document<{
   AuthUserInfo: AuthUserInfo
@@ -12,12 +13,11 @@ export default class MyDocument extends Document<{
   static propTypes = userInfoPropTypes
 
   render() {
-    const GA_TRACKING_ID = 'GTM-TFQ27FV'
-    const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GA_TRACKING_ID}');`
-    const gtmFrame = `<iframe src="https://www.googletagmanager.com/ns.html?id=${GA_TRACKING_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+    const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_TRACKING_ID}');`
+    const gtmFrame = `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_TRACKING_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
     const { AuthUserInfo } = this.props
     return (
-      <Html lang="en">
+      <Html>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />

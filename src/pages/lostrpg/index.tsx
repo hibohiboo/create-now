@@ -1,7 +1,6 @@
 import { NextPage } from 'next'
 import Link from '~/components/atoms/mui/Link'
-import { Container } from '@material-ui/core'
-import Footer from '~/components/organisms/common/Footer'
+import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 
 const Page: NextPage = () => {
   return (
@@ -13,7 +12,6 @@ const Page: NextPage = () => {
         </li>
       </ul>
       <Link href="/">戻る</Link>
-      <Footer />
     </Container>
   )
 }
