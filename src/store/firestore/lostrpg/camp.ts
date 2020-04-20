@@ -1,8 +1,7 @@
 import usePagination from 'firestore-pagination-hook'
 import { ExtendedFirestoreInstance } from 'react-redux-firebase'
-import fetch from 'isomorphic-unfetch'
 import { Camp } from '~/@types/logtrpg'
-import { FireStoreAPIResponse } from '~/@types/firestore'
+import firestoreApi from '~/utils/firestore/api'
 
 export const initCamp: Camp = {
   name: '',
@@ -50,14 +49,12 @@ export const updateCamp = (
 }
 
 export const fetchCamp = async (id: string) => {
-  const res: Response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${process.env.FIREBASE_PROJECT_ID}/databases/(default)/documents/systems/lost/camps/${id}`,
-  )
-  const data: FireStoreAPIResponse = await res.json()
+  const { fetchApi, getStr } = firestoreApi
+  const data = await fetchApi(`systems/lost/camps/${id}`)
   const { name, uid } = data.fields
   const ret: Camp = {
-    name: name.stringValue,
-    uid: uid.stringValue,
+    name: getStr(name),
+    uid: getStr(uid),
   }
   return ret
 }
