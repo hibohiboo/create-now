@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useFirestore } from 'react-redux-firebase'
 import { makeStyles } from '@material-ui/core/styles'
-import { Box } from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -67,7 +67,7 @@ const Page: NextPage = () => {
             </ListItemLink>
           ))}
           {hasMore && !loadingMore && (
-            <button onClick={loadMore}>[ 次の10件 ]</button>
+            <Button onClick={loadMore}>次の10件</Button>
           )}
         </div>
       </Box>

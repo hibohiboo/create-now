@@ -6,7 +6,7 @@ import Link from '~/components/atoms/mui/Link'
 import { getAuth } from '~/store/firebase'
 import InputField from '~/components/form/InputField'
 import { Camp } from '~/@types/logtrpg'
-import { initCamp, fetchCamp } from '~/store/firestore/lostrpg/camp'
+import { canEdit, fetchCamp } from '~/store/firestore/lostrpg/camp'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 
 const Page: NextPage<{ camp: Camp }> = function (ctx) {
@@ -15,16 +15,24 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
   const router = useRouter()
   const { id } = router.query
   const beforePage = '/lostrpg/camps/list'
-
+  const authUser = getAuth()
   return (
     <>
       <Container>
         <Box my={4}>
           <div style={{ maxWidth: '500px', minWidth: '200px' }}>
             <h2>{camp.name}</h2>
+            {!canEdit(authUser, camp) ? (
+              <></>
+            ) : (
+              <Box my={1}>
+                <Link href={{ pathname: '/lostrpg/camps/edit', query: { id } }}>
+                  編集
+                </Link>
+              </Box>
+            )}
           </div>
         </Box>
-
         <Link href={beforePage}>戻る</Link>
       </Container>
     </>

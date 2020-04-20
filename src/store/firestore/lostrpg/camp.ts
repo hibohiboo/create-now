@@ -2,6 +2,7 @@ import usePagination from 'firestore-pagination-hook'
 import { ExtendedFirestoreInstance } from 'react-redux-firebase'
 import { Camp } from '~/@types/logtrpg'
 import firestoreApi from '~/utils/firestore/api'
+import firebase from 'firebase'
 
 export const initCamp: Camp = {
   name: '',
@@ -15,7 +16,7 @@ const getCamps = (firestore: ExtendedFirestoreInstance) => {
 
 export const getList = (firestore: ExtendedFirestoreInstance) =>
   usePagination(getCamps(firestore).orderBy('name', 'asc'), {
-    limit: 2,
+    limit: 10,
   })
 
 export const getDataById = async (
@@ -34,7 +35,12 @@ export const createCamp = (
   camp: Camp,
   uid: string,
 ) => {
-  getCamps(firestore).add({ ...camp, uid })
+  getCamps(firestore).add({
+    ...camp,
+    uid,
+    createAt: firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  })
 }
 
 export const updateCamp = (
@@ -45,7 +51,11 @@ export const updateCamp = (
 ) => {
   getCamps(firestore)
     .doc(id)
-    .set({ ...camp, uid })
+    .set({
+      ...camp,
+      uid,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    })
 }
 
 export const fetchCamp = async (id: string) => {
@@ -57,4 +67,14 @@ export const fetchCamp = async (id: string) => {
     uid: getStr(uid),
   }
   return ret
+}
+
+export const canEdit = (authUser: { uid: string }, camp: Camp) =>
+  authUser && authUser.uid === camp.uid
+
+export const deleteCamp = (
+  firestore: ExtendedFirestoreInstance,
+  id: string,
+) => {
+  return getCamps(firestore).doc(id).delete()
 }
