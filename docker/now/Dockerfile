@@ -102,3 +102,5 @@ RUN npm install redux-thunk
 ## react redux firestore
 RUN npm install redux-firestore
 RUN npm install firestore-pagination-hook
+
+RUN npm install @material-ui/icons
