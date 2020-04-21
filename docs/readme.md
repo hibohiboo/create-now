@@ -76,3 +76,7 @@
 ### react
 
 [use effect](https://overreacted.io/ja/a-complete-guide-to-useeffect/)
+
+### gear
+
+[code pen](https://codepen.io/alextebbs/pen/tHhrz)

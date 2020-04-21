@@ -25,16 +25,22 @@ const Page: NextPage = () => {
   const { id } = router.query
   const beforePage = '/lostrpg/camps/list'
   const editHandler = id
-    ? () => {
-        updateCamp(
+    ? async () => {
+        await updateCamp(
           firestore,
           id as string,
           { ...camp, uid: authUser.uid },
           authUser.uid,
         )
+        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
       }
-    : () => {
-        createCamp(firestore, { ...camp, uid: authUser.uid }, authUser.uid)
+    : async () => {
+        const id = await createCamp(
+          firestore,
+          { ...camp, uid: authUser.uid },
+          authUser,
+        )
+        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
       }
   const deleteHandler = async () => {
     if (confirm('削除してもよいですか？')) {
@@ -49,6 +55,7 @@ const Page: NextPage = () => {
     }
 
     if (!id) {
+      if (authUser) setCamp({ ...camp, playerName: authUser.displayName })
       return
     }
     ;(async () => {
@@ -68,6 +75,15 @@ const Page: NextPage = () => {
           <Box my={4} style={{ maxWidth: '500px', minWidth: '200px' }}>
             <h2>LOSTRPG キャンプ{id ? '編集' : '作成'}</h2>
             <Box my={2}>
+              <InputField
+                model={camp}
+                type="text"
+                prop="playerName"
+                labelText="プレイヤー名"
+                changeHandler={(e) =>
+                  setCamp({ ...camp, playerName: e.target.value })
+                }
+              />
               <InputField
                 model={camp}
                 type="text"

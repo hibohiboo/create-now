@@ -8,6 +8,7 @@ export const initCamp: Camp = {
   name: '',
   facilities: [],
   freeWriting: '',
+  playerName: '',
 }
 
 const getCamps = (firestore: ExtendedFirestoreInstance) => {
@@ -30,33 +31,37 @@ export const getDataById = async (
   }
 }
 
-export const createCamp = (
+export const createCamp = async (
   firestore: ExtendedFirestoreInstance,
   camp: Camp,
-  uid: string,
+  authUser: firebase.User,
 ) => {
-  getCamps(firestore).add({
-    ...camp,
-    uid,
-    createAt: firebase.firestore.FieldValue.serverTimestamp(),
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  })
+  const { id } = await getCamps(firestore).doc()
+  const { uid } = authUser
+  await getCamps(firestore)
+    .doc(id)
+    .set({
+      ...camp,
+      uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+  return id
 }
 
-export const updateCamp = (
+export const updateCamp = async (
   firestore: ExtendedFirestoreInstance,
   id: string,
   camp: Camp,
   uid: string,
-) => {
-  getCamps(firestore)
+) =>
+  await getCamps(firestore)
     .doc(id)
     .set({
       ...camp,
       uid,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     })
-}
 
 export const fetchCamp = async (id: string) => {
   const { fetchApi, getStr } = firestoreApi

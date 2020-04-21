@@ -10,6 +10,9 @@ export interface Camp {
   name: string
   facilities?: Facility[]
   freeWriting?: string
-  campId?: string
+  playerName?: string
   uid?: string
+  twitterId?: string
+  createdAt?: any
+  updatedAt?: any
 }
