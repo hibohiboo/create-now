@@ -39,7 +39,7 @@ const initEntrySheet = {
 `, // 自由記入欄
 }
 export type EntrySheet = typeof initEntrySheet
-const init = { entrySheet: initEntrySheet, pdfBase64: '' }
+export const init = { entrySheet: initEntrySheet, pdfBase64: '' }
 
 // actions と reducers の定義
 const entrySheetModule = createSlice({

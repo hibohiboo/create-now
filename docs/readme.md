@@ -66,6 +66,7 @@
 [React で Firebase Authentication を使う](https://qiita.com/zaburo/items/801bd288cec47bd28764)
 [Next.js, Material-UI v4-alpha And React Hook With Firebase Hosting example](https://github.com/scarlet-sage/React-Hooks-Nextjs-Material-Ui-next-With-Firebase-Hosting)
 [React + Redux + Firebase を使ってログイン機能あり掲示板アプリ開発](https://qiita.com/momosuke/items/57295ca99387ab243ce8)
+[React + Redux + Firebase で作る Todo App](https://qiita.com/gonta616/items/278a7e81a8b624d9621e)
 
 ### react-redux-firebase
 
@@ -80,3 +81,7 @@
 ### gear
 
 [code pen](https://codepen.io/alextebbs/pen/tHhrz)
+
+### next.js redux
+
+[Server-Side Rendered App with Next.js, React and Redux](https://dev.to/waqasabbasi/server-side-rendered-app-with-next-js-react-and-redux-38gf)

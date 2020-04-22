@@ -13,7 +13,7 @@ const initScenario = {
   type: '想定プレイ時間 5h',
 }
 export type Scenario = typeof initScenario
-const init = { scenario: initScenario, pdfBase64: '' }
+export const init = { scenario: initScenario, pdfBase64: '' }
 
 // actions と reducers の定義
 const scenarioModule = createSlice({

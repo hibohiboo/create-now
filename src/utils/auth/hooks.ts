@@ -24,7 +24,7 @@ export const useFirebaseAuth = () => {
   })
 
   const onChange = (user: firebase.User | null) => {
-    setState({ initializing: false, user })
+    //setState({ initializing: false, user })
 
     // Call server to update session.
     setSession(user)

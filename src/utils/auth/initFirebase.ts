@@ -7,14 +7,20 @@ const config = {
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: process.env.FIREBASE_PROJECT_ID,
 }
-
-export default () => {
+let db: firebase.firestore.Firestore
+const init = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(config)
-    firebase.firestore()
+    db = firebase.firestore()
   }
 }
 
+export default init
+
+export const getFirestore = () => {
+  init()
+  return db
+}
 // react-redux-firebase の プロバイダ設定
 const rrfConfig = {}
 

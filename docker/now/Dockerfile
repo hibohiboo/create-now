@@ -104,3 +104,5 @@ RUN npm install redux-firestore
 RUN npm install firestore-pagination-hook
 
 RUN npm install @material-ui/icons
+
+RUN npm install next-redux-wrapper

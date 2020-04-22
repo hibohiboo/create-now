@@ -28,6 +28,7 @@
     "konva": "^4.2.2",
     "lodash": "^4.17.15",
     "next": "^9.3.4",
+    "next-redux-wrapper": "^5.0.0",
     "pdfmake": "^0.1.65",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

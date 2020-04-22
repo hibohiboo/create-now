@@ -1,8 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import scenarioModule, { Scenario } from './modules/scenarioModule'
-import entrySheetModule, { EntrySheet } from './modules/entrySheetModule'
-import firebase from './firebase'
-import fireStore from './firestore'
+import scenarioModule, {
+  Scenario,
+  init as scenarioInit,
+} from './modules/scenarioModule'
+import entrySheetModule, {
+  EntrySheet,
+  init as entryInit,
+} from './modules/entrySheetModule'
+import authModule, { init as authInit } from './modules/authModule'
 
 export interface RootState {
   scenario: Scenario
@@ -12,6 +17,11 @@ export interface RootState {
 export const rootReducer = combineReducers({
   scenario: scenarioModule.reducer,
   entrySheet: entrySheetModule.reducer,
-  firebase: firebase.reducer,
-  fireStore: fireStore.reducer,
+  auth: authModule.reducer,
 })
+
+export const rootPreloadedState = {
+  scenario: scenarioInit,
+  entrySheet: entryInit,
+  auth: authInit,
+}
