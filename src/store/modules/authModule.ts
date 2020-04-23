@@ -80,6 +80,11 @@ const authModule = createSlice({
       setSession(user)
       state.authUser = createAuthUser(user)
     },
+    logout: (state) => {
+      state.authUser = null
+      state.token = null
+      auth.signOut()
+    },
   },
 })
 

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useEffect } from 'react'
 import Router from 'next/router'
-import logout from '../../utils/auth/logout'
 import {
   Container,
   Box,
@@ -11,8 +10,9 @@ import {
   Typography,
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+import { useDispatch } from 'react-redux'
 import Footer from '../../components/organisms/common/Footer'
-import { useAuth } from '~/store/modules/authModule'
+import authModule, { useAuth } from '~/store/modules/authModule'
 
 // スタイルを適用する
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,13 +33,24 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MyPage = () => {
   const authUser = useAuth()
+  const dispatch = useDispatch()
+  const logoutHandler = () => {
+    try {
+      dispatch(authModule.actions.logout())
+      Router.push('/')
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // CSSを適用する。
+  const classes = useStyles()
+
   useEffect(() => {
     if (!authUser) {
       Router.push('/')
     }
   }, [])
-  // CSSを適用する。
-  const classes = useStyles()
 
   return (
     <>
@@ -71,18 +82,7 @@ const MyPage = () => {
             <Box height="100vh">
               <h2>マイページ</h2>
               <div>ユーザー: {authUser.displayName}</div>
-              <button
-                onClick={async () => {
-                  try {
-                    await logout()
-                    Router.push('/')
-                  } catch (e) {
-                    console.error(e)
-                  }
-                }}
-              >
-                ログアウト
-              </button>
+              <button onClick={logoutHandler}>ログアウト</button>
             </Box>
             {/* <pre className="text-xs">{JSON.stringify(authUser, null, 2)}</pre> */}
             <Footer />
