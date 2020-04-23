@@ -35,10 +35,14 @@ const createAuthUser = (firebaseUser: firebase.User | null): AuthUser => {
   }
   return {
     id: get(firebaseUser, 'uid'),
-    displayName: has(firebaseUser, 'displayName')
+    displayName: has(firebaseUser, 'name')
+      ? get(firebaseUser, 'name') // cookie
+      : has(firebaseUser, 'displayName')
       ? get(firebaseUser, 'displayName') // client SDK
       : get(firebaseUser, 'display_name'), // admin SDK
-    photoURL: has(firebaseUser, 'photoURL')
+    photoURL: has(firebaseUser, 'picture')
+      ? get(firebaseUser, 'picture') // cookie
+      : has(firebaseUser, 'photoURL')
       ? get(firebaseUser, 'photoURL') // client SDK
       : get(firebaseUser, 'photo_url'), // admin SDK
   }
@@ -72,6 +76,7 @@ const authModule = createSlice({
   reducers: {
     createServerSide: (state, action: PayloadAction<ServerSidePayload>) => {
       const { authUser, token } = createAuthUserInfo(action.payload)
+      console.log('payload', action.payload)
       state.authUser = authUser
       state.token = token
     },
