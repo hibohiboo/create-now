@@ -9,7 +9,7 @@ export const rootReducer = combineReducers({
   auth: authModule.reducer,
 })
 
-export const rootPreloadedState = {
+const rootPreloadedState = {
   scenario: scenarioInit,
   entrySheet: entryInit,
   auth: authInit,

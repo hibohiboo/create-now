@@ -7,10 +7,11 @@ import Head from 'next/head'
 import withRedux, { ReduxWrapperAppProps } from 'next-redux-wrapper'
 import { get } from 'lodash'
 import { makeStore } from '~/store'
+import { RootState } from '~/store/rootState'
 import theme from '../theme'
 import authModule from '~/store/modules/authModule'
 
-class MyApp extends App<ReduxWrapperAppProps<any>> {
+class MyApp extends App<ReduxWrapperAppProps<RootState>> {
   public static async getInitialProps({ Component, ctx }: AppContext) {
     const { createServerSide, createClientSide } = authModule.actions
     if (typeof window === 'undefined') {
