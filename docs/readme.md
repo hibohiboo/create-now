@@ -6,6 +6,8 @@
 
 [firebase 認証 デプロイ確認時点のソース](https://github.com/hibohiboo/create-now/tree/19af4015f5b4f693b5991f0417e251ad5031fe84/)
 
+[firebase 認証 react-redux-wrapper 使用時点のソース](https://github.com/hibohiboo/create-now/tree/51096761d068578c3846070f15c79149751e9bdd/)
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)

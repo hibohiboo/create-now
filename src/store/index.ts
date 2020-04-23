@@ -9,13 +9,7 @@ import { MakeStore } from 'next-redux-wrapper'
 import { cloneDeep } from 'lodash'
 
 export const setupStore = (preloadedState?): EnhancedStore => {
-  const middlewares = [
-    ...getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ['@@reactReduxFirebase/LOGIN'],
-      },
-    }),
-  ]
+  const middlewares = [...getDefaultMiddleware()]
 
   if (process.env.NODE_ENV === 'development') {
     middlewares.push(logger)
