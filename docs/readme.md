@@ -67,12 +67,15 @@
 [Next.js, Material-UI v4-alpha And React Hook With Firebase Hosting example](https://github.com/scarlet-sage/React-Hooks-Nextjs-Material-Ui-next-With-Firebase-Hosting)
 [React + Redux + Firebase を使ってログイン機能あり掲示板アプリ開発](https://qiita.com/momosuke/items/57295ca99387ab243ce8)
 [React + Redux + Firebase で作る Todo App](https://qiita.com/gonta616/items/278a7e81a8b624d9621e)
+[新：React + Firestore で CRUD（基礎編）](https://qiita.com/zaburo/items/353524e4f54671c8eace)
+[【Next.js】Cloud Firestore を Next.js に組み込みデータ取得](https://nekorokkekun.hatenablog.com/entry/2019/09/21/172416)
 
 ### react-redux-firebase
 
 [react-redux-firebase](http://react-redux-firebase.com/)
 [react-redux-firebase useFirestore.md](https://github.com/prescottprue/react-redux-firebase/blob/master/docs/api/useFirestore.md#usefirestore)
 [error @@login](https://github.com/rt2zz/redux-persist/issues/988)
+[Simple Firebase Authentication with Next.js using HOC(Higher Order Components)](https://medium.com/@uvictor/simple-firebase-authentication-with-next-js-using-hoc-higher-order-components-8e8931d25cfa)
 
 ### react
 

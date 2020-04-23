@@ -1,12 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import Router from 'next/router'
-import withAuthUser, {
-  getUserInfo,
-} from '../../utils/pageWrappers/withAuthUser'
-import withAuthUserInfo, {
-  userInfoPropTypes,
-  defaultUserProps,
-} from '../../utils/pageWrappers/withAuthUserInfo'
 import logout from '../../utils/auth/logout'
 import {
   Container,
@@ -19,6 +12,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Footer from '../../components/organisms/common/Footer'
+import { useAuth } from '~/store/modules/authModule'
 
 // スタイルを適用する
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,9 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const MyPage = (props: any) => {
-  const { AuthUserInfo } = props
-  const authUser = getUserInfo(AuthUserInfo)
+const MyPage = () => {
+  const authUser = useAuth()
   useEffect(() => {
     if (!authUser) {
       Router.push('/')
@@ -77,10 +70,6 @@ const MyPage = (props: any) => {
           <Container>
             <Box height="100vh">
               <h2>マイページ</h2>
-              {/* <Avatar
-                alt={authUser.displayName}
-                src={authUser.twitterProfileImageUrl}
-              /> */}
               <div>ユーザー: {authUser.displayName}</div>
               <button
                 onClick={async () => {
@@ -103,12 +92,4 @@ const MyPage = (props: any) => {
     </>
   )
 }
-
-MyPage.propTypes = userInfoPropTypes
-MyPage.defaultProps = defaultUserProps
-
-// Use `withAuthUser` to get the authed user server-side, which
-// disables static rendering.
-// Use `withAuthUserInfo` to include the authed user as a prop
-// to your component.
-export default withAuthUser(withAuthUserInfo(MyPage))
+export default MyPage

@@ -5,7 +5,6 @@ import Footer from '../components/organisms/common/Footer'
 import OuterCreated from '../components/organisms/home/OuterCreated'
 import Created from '../components/organisms/home/Created'
 import CreatedWithLogin from '../components/organisms/home/CreatedWithLogin'
-
 import { useAuth } from '~/store/modules/authModule'
 
 const Home: NextPage = () => {
