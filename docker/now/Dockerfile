@@ -93,14 +93,10 @@ RUN npm install firebase
 RUN npm install react-firebaseui
 RUN npm install firebase-admin
 
-### react-firebase
-RUN npm install react-redux-firebase
-
 ### thunk
 RUN npm install redux-thunk
 
 ## react redux firestore
-RUN npm install redux-firestore
 RUN npm install firestore-pagination-hook
 
 RUN npm install @material-ui/icons
