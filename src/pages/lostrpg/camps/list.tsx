@@ -10,8 +10,8 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import Link from '~/components/atoms/mui/Link'
 import ListItemLink from '~/components/atoms/mui/ListItemLink'
 import { getList } from '~/store/firestore/lostrpg/camp'
-import { getAuth } from '~/store/firebase'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
+import { useAuth } from '~/store/modules/authModule'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Page: NextPage = () => {
   const classes = useStyles()
-  const authUser = getAuth()
+  const authUser = useAuth()
+
   const {
     loading,
     loadingError,

@@ -5,16 +5,11 @@ import Footer from '../components/organisms/common/Footer'
 import OuterCreated from '../components/organisms/home/OuterCreated'
 import Created from '../components/organisms/home/Created'
 import CreatedWithLogin from '../components/organisms/home/CreatedWithLogin'
-import withAuthUser, { getUserInfo } from '../utils/pageWrappers/withAuthUser'
-import withAuthUserInfo, {
-  userInfoPropTypes,
-  defaultUserProps,
-} from '../utils/pageWrappers/withAuthUserInfo'
 
-const Home: NextPage = (props: any) => {
-  const { AuthUserInfo } = props
-  const authUser = getUserInfo(AuthUserInfo)
+import { useAuth } from '~/store/modules/authModule'
 
+const Home: NextPage = () => {
+  const authUser = useAuth()
   return (
     <Container maxWidth="sm">
       <Box my={4} style={{ minHeight: '100vh' }}>
@@ -29,7 +24,5 @@ const Home: NextPage = (props: any) => {
     </Container>
   )
 }
-Home.propTypes = userInfoPropTypes
-Home.defaultProps = defaultUserProps
 
-export default withAuthUser(withAuthUserInfo(Home))
+export default Home
