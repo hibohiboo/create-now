@@ -67,6 +67,7 @@ const authModule = createSlice({
     logout: (state) => {
       state.authUser = null
       state.token = null
+      setSession(null)
       auth.signOut()
     },
   },
