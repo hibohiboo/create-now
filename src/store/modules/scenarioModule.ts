@@ -12,8 +12,12 @@ const initScenario = {
   limit: 'リミット: 3',
   type: '想定プレイ時間 5h',
 }
-export type Scenario = typeof initScenario
-export const init = { scenario: initScenario, pdfBase64: '' }
+type Scenario = typeof initScenario
+type ScenarioState = {
+  scenario: Scenario
+  pdfBase64: string
+}
+export const init: ScenarioState = { scenario: initScenario, pdfBase64: '' }
 
 // actions と reducers の定義
 const scenarioModule = createSlice({

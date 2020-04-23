@@ -1,18 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import scenarioModule, {
-  Scenario,
-  init as scenarioInit,
-} from './modules/scenarioModule'
-import entrySheetModule, {
-  EntrySheet,
-  init as entryInit,
-} from './modules/entrySheetModule'
+import scenarioModule, { init as scenarioInit } from './modules/scenarioModule'
+import entrySheetModule, { init as entryInit } from './modules/entrySheetModule'
 import authModule, { init as authInit } from './modules/authModule'
-
-export interface RootState {
-  scenario: Scenario
-  entrySheet: EntrySheet
-}
 
 export const rootReducer = combineReducers({
   scenario: scenarioModule.reducer,
@@ -25,3 +14,4 @@ export const rootPreloadedState = {
   entrySheet: entryInit,
   auth: authInit,
 }
+export type RootState = typeof rootPreloadedState
