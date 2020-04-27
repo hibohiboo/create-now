@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import createPdfBinary from './utils/createPdfBinary'
+import createPdfBinary from '../src/lib/pdf/createPdfBinary'
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   const docDefinition = req.body
