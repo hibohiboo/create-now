@@ -7,9 +7,9 @@ const Page: NextPage = () => {
     <Container>
       <h2>LOSTRPG サポートページ</h2>
       <ul>
-        <li>
+        {/* <li>
           <Link href="/lostrpg/camps/list">キャンプ一覧</Link>
-        </li>
+        </li> */}
       </ul>
       <Link href="/">戻る</Link>
     </Container>

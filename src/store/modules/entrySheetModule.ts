@@ -38,7 +38,7 @@ const initEntrySheet = {
 
 `, // 自由記入欄
 }
-type EntrySheet = typeof initEntrySheet
+export type EntrySheet = typeof initEntrySheet
 type EntrySheetState = { entrySheet: EntrySheet; pdfBase64: string }
 export const init: EntrySheetState = {
   entrySheet: initEntrySheet,

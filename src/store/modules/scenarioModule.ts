@@ -12,7 +12,7 @@ const initScenario = {
   limit: 'リミット: 3',
   type: '想定プレイ時間 5h',
 }
-type Scenario = typeof initScenario
+export type Scenario = typeof initScenario
 type ScenarioState = {
   scenario: Scenario
   pdfBase64: string
