@@ -5,7 +5,7 @@ import { auth } from '~/lib/firebase/initFirebase'
 import { setSession } from '~/utils/auth/firebaseSessionHandler'
 
 export interface AuthUser {
-  id: string
+  uid: string
   displayName: string
   photoURL: string
 }
@@ -24,7 +24,7 @@ const createAuthUser = (firebaseUser: firebase.User | null): AuthUser => {
     return null
   }
   return {
-    id: get(firebaseUser, 'uid'),
+    uid: get(firebaseUser, 'uid'),
     displayName: has(firebaseUser, 'name')
       ? get(firebaseUser, 'name') // cookie
       : has(firebaseUser, 'displayName')

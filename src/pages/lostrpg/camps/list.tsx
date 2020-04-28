@@ -1,15 +1,11 @@
 import { NextPage } from 'next'
-import { useFirestore } from 'react-redux-firebase'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Button } from '@material-ui/core'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Link from '~/components/atoms/mui/Link'
 import ListItemLink from '~/components/atoms/mui/ListItemLink'
-import { getList } from '~/store/firestore/lostrpg/camp'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { useAuth } from '~/store/modules/authModule'
 
@@ -27,16 +23,11 @@ const useStyles = makeStyles((theme) => ({
 const Page: NextPage = () => {
   const classes = useStyles()
   const authUser = useAuth()
-
-  const {
-    loading,
-    loadingError,
-    loadingMore,
-    loadingMoreError,
-    hasMore,
-    items,
-    loadMore,
-  } = getList(useFirestore())
+  const loading = false
+  const hasMore = false
+  const loadMore = () => ({})
+  const items = []
+  const loadingMore = false
   return (
     <Container>
       <Box my={4}>
@@ -72,6 +63,7 @@ const Page: NextPage = () => {
           )}
         </div>
       </Box>
+
       <Link href="/lostrpg">戻る</Link>
     </Container>
   )

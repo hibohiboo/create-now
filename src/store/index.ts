@@ -3,7 +3,7 @@ import {
   getDefaultMiddleware,
   EnhancedStore,
 } from '@reduxjs/toolkit'
-import { rootReducer } from './rootState'
+import rootReducer from './rootState'
 import logger from 'redux-logger'
 import { MakeStore } from 'next-redux-wrapper'
 
@@ -25,12 +25,12 @@ export const setupStore = (preloadedState?): EnhancedStore => {
 export const makeStore: MakeStore = (initialState) => {
   const store = setupStore(initialState)
 
-  // if (module.hot) {
-  //   module.hot.accept('./reducer', () => {
-  //     console.log('Replacing reducer')
-  //     store.replaceReducer(require('./reducer').default)
-  //   })
-  // }
+  if (module.hot) {
+    module.hot.accept('./rootState', () => {
+      console.log('Replacing reducer')
+      store.replaceReducer(require('./rootState').default)
+    })
+  }
 
   return store
 }
