@@ -50,17 +50,6 @@ export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
 //       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
 //     })
 
-// export const fetchCamp = async (id: string) => {
-//   const { fetchApi, getStr } = firestoreApi
-//   const data = await fetchApi(`systems/lost/camps/${id}`)
-//   const { name, uid } = data.fields
-//   const ret: Camp = {
-//     name: getStr(name),
-//     uid: getStr(uid),
-//   }
-//   return ret
-// }
-
 export const canEdit = (authUser: { uid: string }, camp: Camp) =>
   authUser && authUser.uid === camp.uid
 

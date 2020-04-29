@@ -1,19 +1,20 @@
-import { NextPage } from 'next'
 import React from 'react'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Box } from '@material-ui/core'
 import Link from '~/components/atoms/mui/Link'
-import { getAuth } from '~/store/firebase'
-import { Camp } from '~/@types/logtrpg'
-import { canEdit, fetchCamp } from '~/store/firestore/lostrpg/camp'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
+import { getCamp } from '~/api/firestoreAPI'
+import { canEdit } from '~/firestore/camp'
+import { Camp } from '~/store/modules/lostModule'
+import { useAuth } from '~/store/modules/authModule'
 
 const Page: NextPage<{ camp: Camp }> = function (ctx) {
-  const { camp } = ctx
   const router = useRouter()
+  const authUser = useAuth()
+  const { camp } = ctx
   const { id } = router.query
   const beforePage = '/lostrpg/camps/list'
-  const authUser = getAuth()
   return (
     <>
       <Container>
@@ -38,8 +39,8 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
 }
 
 Page.getInitialProps = async ({ query }) => {
-  const camp = await fetchCamp(query.id as string)
-  return { camp: camp }
+  const camp = await getCamp(query.id as string)
+  return { camp }
 }
 
 export default Page
