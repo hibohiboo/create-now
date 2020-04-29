@@ -1,3 +1,5 @@
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Button } from '@material-ui/core'
@@ -8,6 +10,11 @@ import Link from '~/components/atoms/mui/Link'
 import ListItemLink from '~/components/atoms/mui/ListItemLink'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { useAuth } from '~/store/modules/authModule'
+import {
+  useCamps,
+  useCampsPagination,
+  fetchCamps,
+} from '~/store/modules/lostModule'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
 const Page: NextPage = () => {
   const classes = useStyles()
   const authUser = useAuth()
-  const loading = false
-  const hasMore = false
   const loadMore = () => ({})
-  const items = []
+  const items = useCamps()
+  const { loading, hasMore } = useCampsPagination()
   const loadingMore = false
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchCamps())
+  }, [dispatch])
   return (
     <Container>
       <Box my={4}>
@@ -55,7 +65,7 @@ const Page: NextPage = () => {
               }}
               key={item.id}
             >
-              <ListItemText primary={item.data().name} />
+              <ListItemText primary={item.name} />
             </ListItemLink>
           ))}
           {hasMore && !loadingMore && (
@@ -63,7 +73,6 @@ const Page: NextPage = () => {
           )}
         </div>
       </Box>
-
       <Link href="/lostrpg">戻る</Link>
     </Container>
   )

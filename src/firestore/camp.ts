@@ -7,21 +7,27 @@ const getCamps = (firestore: firebase.firestore.Firestore) => {
   return firestore.collection('systems').doc('lost').collection('camps')
 }
 
-// export const getList = (firestore: ExtendedFirestoreInstance) =>
-//   usePagination(getCamps(firestore).orderBy('name', 'asc'), {
-//     limit: 10,
-//   })
-
-// export const getDataById = async (
-//   firestore: ExtendedFirestoreInstance,
-//   id: string,
-// ) => {
-//   const doc = await getCamps(firestore).doc(id).get()
-//   console.log('doc', doc)
-//   if (doc.exists) {
-//     return doc.data() as Camp
-//   }
-// }
+export const readCamps = async (
+  lastVisible: firebase.firestore.QueryDocumentSnapshot<
+    firebase.firestore.DocumentData
+  > | null = null,
+  limit = 10,
+) => {
+  const query = getCamps(db).orderBy('createdAt', 'desc').limit(limit)
+  if (lastVisible !== null) {
+    query.startAfter(lastVisible)
+  }
+  const querySnapshot = await query.get()
+  const len = querySnapshot.docs.length
+  const next = querySnapshot.docs[len - 1]
+  const camps: any[] = []
+  querySnapshot.forEach((doc) => camps.push({ ...doc.data(), id: doc.id }))
+  if (len < limit) {
+    // limitより少なければ、次のデータはないとする ... limitと同値の時は次へが表示されてしまう
+    return { camps, next, hasMore: false }
+  }
+  return { camps, next, hasMore: true }
+}
 
 export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
   const camps = getCamps(db)
