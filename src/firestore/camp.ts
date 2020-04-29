@@ -47,19 +47,25 @@ export const canEdit = (authUser: { uid: string }, camp: Camp) =>
 
 export const readCamps = async (
   lastVisible: string | null = null,
-  limit = 2,
+  limit = 10,
+  searchName = '',
 ) => {
-  let query = getCamps(db).orderBy('createdAt', 'desc').limit(limit)
-  if (lastVisible !== null) {
-    query.startAfter(lastVisible)
-  }
+  // 複合インデックスを作っていないので、orderBy出来るのは一つ
+  let query = !searchName
+    ? getCamps(db).orderBy('createdAt', 'desc')
+    : getCamps(db)
+        .orderBy('name')
+        .startAt(searchName)
+        .endAt(searchName + '\uf8ff')
   const splitter = ':'
 
-  if (lastVisible) {
+  // 次の〇件は検索時には現状使用不可
+  if (lastVisible && !searchName) {
     const [seconds, nanoseconds] = lastVisible.split(splitter)
     const timestamp = new Timestamp(Number(seconds), Number(nanoseconds))
     query = query.startAfter(timestamp)
   }
+  query = query.limit(limit)
   const querySnapshot = await query.get()
   const len = querySnapshot.docs.length
   const next = querySnapshot.docs[len - 1]?.data()
