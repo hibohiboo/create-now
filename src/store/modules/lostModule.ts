@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
-import { firestore } from 'firebase'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
 
@@ -29,6 +28,10 @@ export const initCamp = {
   facilities: [],
   freeWriting: '',
   playerName: '',
+  createdAt: '',
+  updatedAt: '',
+  twitterId: '',
+  uid: '',
 }
 
 type LostState = {
@@ -46,7 +49,7 @@ type PaginationState = {
 }
 const initialState = {
   hasMore: false,
-  limit: 10,
+  limit: 2,
   lastLoaded: null,
   loading: true,
 }
@@ -67,12 +70,16 @@ const campModule = createSlice({
       state.campsPagination.loading = action.payload
     },
     campsLoaded: (state, action: PayloadAction<CampLoaded>) => {
-      const { camps, next, hasMore } = action.payload
+      const { next, hasMore } = action.payload
       state.campsPagination.loading = false
       state.campsPagination.hasMore = hasMore
       state.campsPagination.lastLoaded = next
-
-      state.camps = camps
+    },
+    setCamps: (state, action: PayloadAction<Camp[]>) => {
+      state.camps = action.payload
+    },
+    addCamps: (state, action: PayloadAction<Camp[]>) => {
+      state.camps = state.camps.concat(action.payload)
     },
     setError: (state, action: PayloadAction<Camp>) => {
       state.camp = action.payload
@@ -93,20 +100,54 @@ export const useCampsPagination = () =>
 export default campModule
 
 // actions
-const { setCampsLoading, campsLoaded, setError } = campModule.actions
+const {
+  setCampsLoading,
+  campsLoaded,
+  setCamps,
+  addCamps,
+  setError,
+} = campModule.actions
 interface CampLoaded {
   camps: Camp[]
   next: string
   hasMore: boolean
 }
 // thunk
-export const fetchCamps = (): AppThunk => async (dispatch) => {
+const fetchCampsCommon = async (next, limit, dispatch, action) => {
   dispatch(setCampsLoading(true))
   try {
-    const ret: CampLoaded = await readCamps()
+    const ret: CampLoaded = await readCamps(next, limit)
     dispatch(campsLoaded(ret))
+    dispatch(action(ret.camps))
   } catch (err) {
     dispatch(setError(err.toString()))
     dispatch(setCampsLoading(false))
   }
+}
+export const fetchCamps = (limit: number): AppThunk => async (dispatch) => {
+  await fetchCampsCommon(null, limit, dispatch, setCamps)
+  // dispatch(setCampsLoading(true))
+  // try {
+  //   const ret: CampLoaded = await readCamps(null, limit)
+  //   dispatch(campsLoaded(ret))
+  //   dispatch(setCamps(ret.camps))
+  // } catch (err) {
+  //   dispatch(setError(err.toString()))
+  //   dispatch(setCampsLoading(false))
+  // }
+}
+
+export const fetchCampsMore = (next: string, limit: number): AppThunk => async (
+  dispatch,
+) => {
+  await fetchCampsCommon(next, limit, dispatch, addCamps)
+  // dispatch(setCampsLoading(true))
+  // try {
+  //   const ret: CampLoaded = await readCamps(next, limit)
+  //   dispatch(campsLoaded(ret))
+  //   dispatch(addCamps(ret.camps))
+  // } catch (err) {
+  //   dispatch(setError(err.toString()))
+  //   dispatch(setCampsLoading(false))
+  // }
 }

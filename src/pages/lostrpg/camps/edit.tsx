@@ -7,8 +7,7 @@ import InputField from '~/components/form/InputField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { Camp, initCamp } from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
-import { createCamp, canEdit, updateCamp } from '~/firestore/camp'
-import { getCamp } from '~/api/firestoreAPI'
+import { createCamp, canEdit, updateCamp, getCamp } from '~/firestore/camp'
 
 const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id

@@ -2,14 +2,12 @@
 import { Camp } from '~/store/modules/lostModule'
 import firebase from 'firebase'
 import { db } from '~/lib/firebase/initFirebase'
-
+import { toSerializeObject } from '~/firestore/utils'
 const { Timestamp } = firebase.firestore
 
 const getCamps = (firestore: firebase.firestore.Firestore) => {
   return firestore.collection('systems').doc('lost').collection('camps')
 }
-
-const toSerializeObject = (obj) => JSON.parse(JSON.stringify(obj))
 
 export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
   const camps = getCamps(db)
@@ -22,6 +20,10 @@ export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
   })
   return id
+}
+
+export const getCamp = async (id: string) => {
+  return (await getCamps(db).doc(id).get()).data() as Camp
 }
 
 export const updateCamp = async (id: string, camp: Camp, uid: string) =>
@@ -45,7 +47,7 @@ export const canEdit = (authUser: { uid: string }, camp: Camp) =>
 
 export const readCamps = async (
   lastVisible: string | null = null,
-  limit = 10,
+  limit = 2,
 ) => {
   let query = getCamps(db).orderBy('createdAt', 'desc').limit(limit)
   if (lastVisible !== null) {
@@ -60,7 +62,7 @@ export const readCamps = async (
   }
   const querySnapshot = await query.get()
   const len = querySnapshot.docs.length
-  const next = querySnapshot.docs[len - 1].data()
+  const next = querySnapshot.docs[len - 1]?.data()
   const camps: any[] = []
   querySnapshot.forEach((doc) => {
     const data = doc.data()

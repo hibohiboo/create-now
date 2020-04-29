@@ -13,15 +13,19 @@ const fetchFromFirestore = async (path: string) => {
 const getStr = ({
   stringValue,
 }: { stringValue: string } | undefined): string | undefined => stringValue
+const getTimestamp = ({ timestampValue }: { timestampValue: Date }) =>
+  timestampValue
 
 // LOSTRPG
 export const getCamp = async (id: string) => {
   const data = await fetchFromFirestore(`systems/lost/camps/${id}`)
-  const { name, uid, playerName } = data.fields
+  const { name, uid, playerName, createdAt, updatedAt } = data.fields
   const ret: lost.Camp = {
     name: getStr(name),
     uid: getStr(uid),
     playerName: getStr(playerName),
+    createdAt: getTimestamp(createdAt),
+    updatedAt: getTimestamp(updatedAt),
   }
   return ret
 }

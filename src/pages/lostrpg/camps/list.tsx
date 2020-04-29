@@ -14,6 +14,7 @@ import {
   useCamps,
   useCampsPagination,
   fetchCamps,
+  fetchCampsMore,
 } from '~/store/modules/lostModule'
 
 const useStyles = makeStyles((theme) => ({
@@ -30,14 +31,14 @@ const useStyles = makeStyles((theme) => ({
 const Page: NextPage = () => {
   const classes = useStyles()
   const authUser = useAuth()
-  const loadMore = () => ({})
   const items = useCamps()
-  const { loading, hasMore } = useCampsPagination()
-  const loadingMore = false
+  const { loading, hasMore, lastLoaded, limit } = useCampsPagination()
   const dispatch = useDispatch()
+  const loadMore = () => dispatch(fetchCampsMore(lastLoaded, limit))
+
   useEffect(() => {
-    dispatch(fetchCamps())
-  }, [dispatch])
+    dispatch(fetchCamps(limit))
+  }, [])
   return (
     <Container>
       <Box my={4}>
@@ -68,9 +69,7 @@ const Page: NextPage = () => {
               <ListItemText primary={item.name} />
             </ListItemLink>
           ))}
-          {hasMore && !loadingMore && (
-            <Button onClick={loadMore}>次の10件</Button>
-          )}
+          {hasMore && !loading && <Button onClick={loadMore}>次の10件</Button>}
         </div>
       </Box>
       <Link href="/lostrpg">戻る</Link>

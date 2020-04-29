@@ -86,6 +86,7 @@ index.js:1 A non-serializable value was detected in an action, in the path: `pay
 
 [use effect](https://overreacted.io/ja/a-complete-guide-to-useeffect/)
 [redux toolkit advanced-tutorial](https://redux-toolkit.js.org/tutorials/advanced-tutorial)
+[](https://www.wakuwakubank.com/posts/702-react-hooks/)
 
 ### gear
 
