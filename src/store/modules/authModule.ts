@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { get, has } from 'lodash'
 import { auth } from '~/lib/firebase/initFirebase'
 import { setSession } from '~/utils/auth/firebaseSessionHandler'
+import { AppThunk } from '~/store/rootState'
 
 export interface AuthUser {
   uid: string
@@ -59,16 +60,13 @@ const authModule = createSlice({
       state.authUser = authUser
       state.token = token
     },
-    createClientSide: (state) => {
+    setAuth: (state) => {
       const user = auth.currentUser
-      setSession(user)
       state.authUser = createAuthUser(user)
     },
-    logout: (state) => {
+    clearAuth: (state) => {
       state.authUser = null
       state.token = null
-      setSession(null)
-      auth.signOut()
     },
   },
 })
@@ -81,3 +79,17 @@ export const useAuth = () => {
 }
 
 export default authModule
+const { setAuth, clearAuth } = authModule.actions
+export const createAuthClientSide = (): AppThunk => async (dispatch) => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      dispatch(setAuth())
+      setSession(user)
+    }
+  })
+}
+export const logout = (): AppThunk => async (dispatch) => {
+  setSession(null)
+  auth.signOut()
+  dispatch(clearAuth())
+}

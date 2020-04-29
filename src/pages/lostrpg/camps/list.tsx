@@ -11,14 +11,13 @@ import ListItemLink from '~/components/atoms/mui/ListItemLink'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import InputField from '~/components/form/InputField'
 import SearchIcon from '@material-ui/icons/Search'
-import { useAuth } from '~/store/modules/authModule'
+import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import {
   useCamps,
   useCampsPagination,
   fetchCamps,
   fetchCampsMore,
 } from '~/store/modules/lostModule'
-import AuthWrapper from '~/utils/context/AuthWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +46,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     dispatch(fetchCamps(pagenation.limit))
+    dispatch(createAuthClientSide())
   }, [])
 
   return (
@@ -104,4 +104,4 @@ const Page: NextPage = () => {
   )
 }
 
-export default AuthWrapper(Page)
+export default Page

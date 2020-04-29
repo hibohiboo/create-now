@@ -4,12 +4,10 @@ import App from 'next/app'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
-import withRedux, { ReduxWrapperAppProps } from 'next-redux-wrapper'
-import { makeStore } from '~/store'
-import { RootState } from '~/store/rootState'
+import { setupStore } from '~/store'
 import theme from '../theme'
-
-class MyApp extends App<ReduxWrapperAppProps<RootState>> {
+const store = setupStore()
+class MyApp extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
@@ -18,7 +16,7 @@ class MyApp extends App<ReduxWrapperAppProps<RootState>> {
     }
   }
   public render() {
-    const { Component, pageProps, store } = this.props
+    const { Component, pageProps } = this.props
     return (
       <Provider store={store}>
         <React.Fragment>
@@ -37,6 +35,4 @@ class MyApp extends App<ReduxWrapperAppProps<RootState>> {
   }
 }
 
-export default withRedux(makeStore, {
-  debug: process.env.NODE_ENV === 'development',
-})(MyApp)
+export default MyApp

@@ -27,13 +27,11 @@
     "konva": "^4.2.2",
     "lodash": "^4.17.15",
     "next": "^9.3.4",
-    "next-redux-wrapper": "^5.0.0",
     "pdfmake": "^0.1.65",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
-    "react-konva": "^16.12.0-0",
-    "redux-thunk": "^2.3.0"
+    "react-konva": "^16.12.0-0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -12,7 +12,7 @@ import {
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { useDispatch } from 'react-redux'
 import Footer from '../../components/organisms/common/Footer'
-import authModule, { useAuth } from '~/store/modules/authModule'
+import { useAuth, logout } from '~/store/modules/authModule'
 
 // スタイルを適用する
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,7 +36,7 @@ const MyPage = () => {
   const dispatch = useDispatch()
   const logoutHandler = () => {
     try {
-      dispatch(authModule.actions.logout())
+      dispatch(logout())
       Router.push('/')
     } catch (e) {
       console.error(e)

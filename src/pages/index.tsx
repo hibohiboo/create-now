@@ -1,15 +1,21 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
 import { Container, Box, Typography } from '@material-ui/core'
 import Footer from '../components/organisms/common/Footer'
 import OuterCreated from '../components/organisms/home/OuterCreated'
 import Created from '../components/organisms/home/Created'
 import CreatedWithLogin from '../components/organisms/home/CreatedWithLogin'
-import { useAuth } from '~/store/modules/authModule'
-import AuthWrapper from '~/utils/context/AuthWrapper'
+import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 
 const Home: NextPage = () => {
   const authUser = useAuth()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(createAuthClientSide())
+  }, [])
+
   return (
     <Container maxWidth="sm">
       <Box my={4} style={{ minHeight: '100vh' }}>
@@ -25,4 +31,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default AuthWrapper(Home)
+export default Home
