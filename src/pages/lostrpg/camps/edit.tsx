@@ -7,7 +7,13 @@ import InputField from '~/components/form/InputField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { Camp, initCamp } from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
-import { createCamp, canEdit, updateCamp, getCamp } from '~/firestore/camp'
+import {
+  createCamp,
+  getCamp,
+  updateCamp,
+  deleteCamp,
+  canEdit,
+} from '~/firestore/camp'
 
 const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id
@@ -29,12 +35,12 @@ const Page: NextPage = () => {
         const retId = await createCamp({ ...camp, uid: authUser.uid }, authUser)
         Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
       }
-  // const deleteHandler = async () => {
-  //   if (confirm('削除してもよいですか？')) {
-  //     await deleteCamp(firestore, id as string)
-  //     Router.push(beforePage)
-  //   }
-  // }
+  const deleteHandler = async () => {
+    if (confirm('削除してもよいですか？')) {
+      await deleteCamp(id)
+      Router.push(beforePage)
+    }
+  }
 
   useEffect(() => {
     if (!authUser || (id && canEdit(authUser, camp))) {
@@ -91,7 +97,7 @@ const Page: NextPage = () => {
             ) : (
               <Box my={4}>
                 <Button
-                  // onClick={deleteHandler}
+                  onClick={deleteHandler}
                   variant="contained"
                   color="secondary"
                 >

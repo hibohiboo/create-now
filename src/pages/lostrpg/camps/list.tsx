@@ -63,7 +63,7 @@ const Page: NextPage = () => {
               setSearch({ ...search, name: e.target.value })
             }
           />
-          <Button color="primary" onClick={filteredCamps}>
+          <Button variant="contained" color="primary" onClick={filteredCamps}>
             <SearchIcon />
           </Button>
         </Box>

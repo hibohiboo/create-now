@@ -38,12 +38,9 @@ export const updateCamp = async (id: string, camp: Camp, uid: string) =>
 export const canEdit = (authUser: { uid: string }, camp: Camp) =>
   authUser && authUser.uid === camp.uid
 
-// export const deleteCamp = (
-//   firestore: ExtendedFirestoreInstance,
-//   id: string,
-// ) => {
-//   return getCamps(firestore).doc(id).delete()
-// }
+export const deleteCamp = (id: string) => {
+  return getCamps(db).doc(id).delete()
+}
 
 export const readCamps = async (
   lastVisible: string | null = null,
