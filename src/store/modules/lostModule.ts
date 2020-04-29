@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
+import { AppThunk } from '~/store/rootState'
+import { getCamp } from '~/api/firestoreAPI'
 
 export interface Facility {
   name: string
@@ -30,11 +32,13 @@ export const initCamp = {
 type LostState = {
   camp: Camp | null
   camps: Camp[]
+  error: string | null
 }
 
 export const init: LostState = {
   camp: null,
   camps: [],
+  error: null,
 }
 
 // actions と reducers の定義
@@ -42,8 +46,11 @@ const campModule = createSlice({
   name: 'camp',
   initialState: init,
   reducers: {
-    update: (state, action: PayloadAction<Camp>) => {
-      action.payload
+    setCamp: (state, action: PayloadAction<Camp>) => {
+      state.camp = action.payload
+    },
+    setError: (state, action: PayloadAction<Camp>) => {
+      state.camp = action.payload
     },
   },
 })
@@ -56,4 +63,15 @@ export const useCamp = () => {
 
 export default campModule
 
+// actions
+export const { setCamp, setError } = campModule.actions
+
 // thunk
+export const fetchCamp = (id: string): AppThunk => async (dispatch) => {
+  try {
+    const camp = await getCamp(id)
+    dispatch(setCamp(camp))
+  } catch (err) {
+    dispatch(setError(err.toString()))
+  }
+}
