@@ -6,6 +6,7 @@ import OuterCreated from '../components/organisms/home/OuterCreated'
 import Created from '../components/organisms/home/Created'
 import CreatedWithLogin from '../components/organisms/home/CreatedWithLogin'
 import { useAuth } from '~/store/modules/authModule'
+import AuthWrapper from '~/utils/context/AuthWrapper'
 
 const Home: NextPage = () => {
   const authUser = useAuth()
@@ -24,4 +25,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default AuthWrapper(Home)

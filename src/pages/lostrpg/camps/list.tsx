@@ -18,6 +18,7 @@ import {
   fetchCamps,
   fetchCampsMore,
 } from '~/store/modules/lostModule'
+import AuthWrapper from '~/utils/context/AuthWrapper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,4 +104,4 @@ const Page: NextPage = () => {
   )
 }
 
-export default Page
+export default AuthWrapper(Page)
