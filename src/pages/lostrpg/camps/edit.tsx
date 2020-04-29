@@ -1,33 +1,34 @@
 import { NextPage } from 'next'
-import React, { useState, useEffect, ChangeEvent } from 'react'
-import Router, { useRouter } from 'next/router'
-import Link from '~/components/atoms/mui/Link'
+import React, { useState, useEffect } from 'react'
+import Router, { useRouter, NextRouter } from 'next/router'
 import { Box, Button } from '@material-ui/core'
+import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
-import { Camp, initCamp } from '~/store/modules/lostModule'
-import { createCamp, canEdit } from '~/firestore/camp'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
+import { Camp, initCamp } from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
+import { createCamp, canEdit, updateCamp } from '~/firestore/camp'
+import { getCamp } from '~/api/firestoreAPI'
+
+const getIdFromQuery = (router: NextRouter) => {
+  if (typeof router.query.id === 'string') return router.query.id
+  return null
+}
 
 const Page: NextPage = () => {
   const router = useRouter()
   const authUser = useAuth()
   const [camp, setCamp] = useState<Camp>(initCamp)
-  const { id } = router.query
+  const id = getIdFromQuery(router)
   const beforePage = '/lostrpg/camps/list'
   const editHandler = id
     ? async () => {
-        // await updateCamp(
-        //   firestore,
-        //   id as string,
-        //   { ...camp, uid: authUser.uid },
-        //   authUser.uid,
-        // )
-        // Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
+        await updateCamp(id, { ...camp, uid: authUser.uid }, authUser.uid)
+        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
       }
     : async () => {
-        const id = await createCamp({ ...camp, uid: authUser.uid }, authUser)
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
+        const retId = await createCamp({ ...camp, uid: authUser.uid }, authUser)
+        Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
       }
   // const deleteHandler = async () => {
   //   if (confirm('削除してもよいですか？')) {
@@ -46,10 +47,10 @@ const Page: NextPage = () => {
       return
     }
     ;(async () => {
-      // const data = await getDataById(id as string)
-      // if (data) {
-      //   setCamp(data)
-      // }
+      const data = await getCamp(id)
+      if (data) {
+        setCamp(data)
+      }
     })()
   }, [])
 

@@ -36,19 +36,14 @@ export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
   return id
 }
 
-// export const updateCamp = async (
-//   firestore: ExtendedFirestoreInstance,
-//   id: string,
-//   camp: Camp,
-//   uid: string,
-// ) =>
-//   await getCamps(firestore)
-//     .doc(id)
-//     .set({
-//       ...camp,
-//       uid,
-//       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-//     })
+export const updateCamp = async (id: string, camp: Camp, uid: string) =>
+  await getCamps(db)
+    .doc(id)
+    .set({
+      ...camp,
+      uid,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    })
 
 export const canEdit = (authUser: { uid: string }, camp: Camp) =>
   authUser && authUser.uid === camp.uid

@@ -10,15 +10,18 @@ const fetchFromFirestore = async (path: string) => {
   return data
 }
 
-const getStr = ({ stringValue }: { stringValue: string }): string => stringValue
+const getStr = ({
+  stringValue,
+}: { stringValue: string } | undefined): string | undefined => stringValue
 
 // LOSTRPG
 export const getCamp = async (id: string) => {
   const data = await fetchFromFirestore(`systems/lost/camps/${id}`)
-  const { name, uid } = data.fields
+  const { name, uid, playerName } = data.fields
   const ret: lost.Camp = {
     name: getStr(name),
     uid: getStr(uid),
+    playerName: getStr(playerName),
   }
   return ret
 }
