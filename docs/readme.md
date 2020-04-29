@@ -8,6 +8,9 @@
 
 [firebase 認証 react-redux-wrapper 使用時点のソース](https://github.com/hibohiboo/create-now/tree/51096761d068578c3846070f15c79149751e9bdd/)
 
+[firebase 認証 next のトークンに Firebase Document を使用時点のソース](https://github.com/hibohiboo/create-now/tree/58b1aef18a0453bca78285d2d2faf8338433a5b1/)
+index.js:1 A non-serializable value was detected in an action, in the path: `payload.camps.0.updatedAt`.
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)

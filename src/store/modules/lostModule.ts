@@ -40,7 +40,7 @@ type LostState = {
 
 type PaginationState = {
   hasMore: boolean
-  lastLoaded: firestore.QueryDocumentSnapshot | null
+  lastLoaded: string | null
   limit: number
   loading: boolean
 }
@@ -63,8 +63,8 @@ const campModule = createSlice({
   name: 'camp',
   initialState: init,
   reducers: {
-    campsLoadStart: (state) => {
-      state.campsPagination.loading = true
+    setCampsLoading: (state, action: PayloadAction<boolean>) => {
+      state.campsPagination.loading = action.payload
     },
     campsLoaded: (state, action: PayloadAction<CampLoaded>) => {
       const { camps, next, hasMore } = action.payload
@@ -93,19 +93,20 @@ export const useCampsPagination = () =>
 export default campModule
 
 // actions
-const { campsLoadStart, campsLoaded, setError } = campModule.actions
+const { setCampsLoading, campsLoaded, setError } = campModule.actions
 interface CampLoaded {
   camps: Camp[]
-  next: firestore.QueryDocumentSnapshot<firestore.DocumentData>
+  next: string
   hasMore: boolean
 }
 // thunk
 export const fetchCamps = (): AppThunk => async (dispatch) => {
-  dispatch(campsLoadStart())
+  dispatch(setCampsLoading(true))
   try {
     const ret: CampLoaded = await readCamps()
     dispatch(campsLoaded(ret))
   } catch (err) {
     dispatch(setError(err.toString()))
+    dispatch(setCampsLoading(false))
   }
 }
