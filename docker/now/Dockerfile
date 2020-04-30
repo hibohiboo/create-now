@@ -100,3 +100,4 @@ RUN npm install @material-ui/icons
 RUN npm install gray-matter
 
 RUN npm install sass --save-dev
+RUN npm install remark remark-html
