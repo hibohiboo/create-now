@@ -4,13 +4,13 @@ import Layout from '~/components/templates/posts/Layout'
 
 export default function FirstPost() {
   return (
-    <Layout>
+    <Layout home={false}>
       <Head>
         <title>First Post</title>
       </Head>
       <h1>First Post</h1>
       <h2>
-        <Link href="/">
+        <Link href="/posts">
           <a>Back to home</a>
         </Link>
       </h2>

@@ -97,3 +97,6 @@ RUN npm install firebase-admin
 
 RUN npm install @material-ui/icons
 
+RUN npm install gray-matter
+
+RUN npm install sass --save-dev
