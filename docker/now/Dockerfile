@@ -97,7 +97,8 @@ RUN npm install firebase-admin
 
 RUN npm install @material-ui/icons
 
+# next-js tutorial
 RUN npm install gray-matter
-
 RUN npm install sass --save-dev
 RUN npm install remark remark-html
+RUN npm install date-fns

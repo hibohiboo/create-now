@@ -7,7 +7,7 @@ import html from 'remark-html'
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export function getSortedPostsData() {
-  // /posts　配下のファイル名を取得する
+  // /posts配下のファイル名を取得する
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames.map((fileName) => {
     // id を取得するためにファイル名から ".md" を削除する
