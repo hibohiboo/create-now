@@ -8,6 +8,7 @@ services:
       - ../src:/app/src
       - ../public:/app/public
       - ../fonts:/app/fonts
+      - ../posts:/app/posts
       - ../api:/app/api
       - ../.now:/app/.now
       - ../now.json:/app/now.json
