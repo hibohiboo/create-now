@@ -6,7 +6,7 @@ import { readCamps } from '~/firestore/camp'
 export interface Facility {
   name: string
   type: string
-  speciality: string
+  specialty: string
   level: number
   effect: string
 }

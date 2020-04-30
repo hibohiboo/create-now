@@ -102,3 +102,6 @@ RUN npm install gray-matter
 RUN npm install sass --save-dev
 RUN npm install remark remark-html
 RUN npm install date-fns
+
+# material-ui tables
+RUN npm install material-table
