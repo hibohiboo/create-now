@@ -5,6 +5,11 @@ import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
 import Router, { useRouter, NextRouter } from 'next/router'
 import { Box, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
@@ -19,6 +24,16 @@ import {
   canEdit,
 } from '~/firestore/camp'
 import * as data from '~/data/lostrpg'
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}))
 
 const tableIcons = {
   Add: forwardRef<SVGSVGElement>((props, ref) => (
@@ -41,6 +56,14 @@ const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id
   return null
 }
+
+const createFacility = (item) => ({
+  name: item.name,
+  type: item.type,
+  specialty: item.specialty,
+  level: 1,
+  effect: item.effect,
+})
 
 const Page: NextPage = () => {
   const router = useRouter()
@@ -66,8 +89,10 @@ const Page: NextPage = () => {
 
   const [state, setState] = React.useState({
     columns: data.facilitiesColumns,
-    data: data.facilities,
+    data: data.defaultFacilities,
   })
+  const classes = useStyles()
+  const [equipment, setEquipment] = React.useState('')
 
   useEffect(() => {
     if (!authUser || (id && canEdit(authUser, camp))) {
@@ -179,6 +204,40 @@ const Page: NextPage = () => {
                   }),
               }}
             />
+            <Box my={2}>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="equipment-select-label">設備追加</InputLabel>
+                <Select
+                  labelId="equipment-select-label"
+                  id="equipment-select"
+                  value={equipment}
+                  onChange={(
+                    event: React.ChangeEvent<{
+                      name?: string
+                      value: string
+                    }>,
+                  ) => {
+                    setEquipment(event.target.value)
+                    const item = data.equipmentList.find(
+                      (i) => i.name === event.target.value,
+                    )
+                    if (item)
+                      setState((prevState) => {
+                        const data = [...prevState.data]
+                        data.push(createFacility(item))
+                        return { ...prevState, data }
+                      })
+                  }}
+                >
+                  <MenuItem value="">未選択</MenuItem>
+                  {data.equipmentList.map((item) => (
+                    <MenuItem value={item.name} key={item.name}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
             <Box my={2}>
               <Button onClick={editHandler} variant="contained" color="primary">
                 {id ? '更新' : '作成'}
