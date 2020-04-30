@@ -65,6 +65,8 @@ const createFacility = (item) => ({
   effect: item.effect,
 })
 
+const deleteMessage = '削除しますか？'
+
 const Page: NextPage = () => {
   const router = useRouter()
   const authUser = useAuth()
@@ -81,7 +83,7 @@ const Page: NextPage = () => {
         Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
       }
   const deleteHandler = async () => {
-    if (confirm('削除してもよいですか？')) {
+    if (confirm(deleteMessage)) {
       await deleteCamp(id)
       Router.push(beforePage)
     }
@@ -163,6 +165,7 @@ const Page: NextPage = () => {
                 header: {
                   actions: '',
                 },
+                body: { editRow: { deleteText: deleteMessage } },
               }}
               columns={state.columns}
               data={state.data}
@@ -231,6 +234,38 @@ const Page: NextPage = () => {
                 >
                   <MenuItem value="">未選択</MenuItem>
                   {data.equipmentList.map((item) => (
+                    <MenuItem value={item.name} key={item.name}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="personality-select-label">人材追加</InputLabel>
+                <Select
+                  labelId="personality-select-label"
+                  id="personality-select"
+                  value={equipment}
+                  onChange={(
+                    event: React.ChangeEvent<{
+                      name?: string
+                      value: string
+                    }>,
+                  ) => {
+                    setEquipment(event.target.value)
+                    const item = data.campPersonalityList.find(
+                      (i) => i.name === event.target.value,
+                    )
+                    if (item)
+                      setState((prevState) => {
+                        const data = [...prevState.data]
+                        data.push(createFacility(item))
+                        return { ...prevState, data }
+                      })
+                  }}
+                >
+                  <MenuItem value="">未選択</MenuItem>
+                  {data.campPersonalityList.map((item) => (
                     <MenuItem value={item.name} key={item.name}>
                       {item.name}
                     </MenuItem>

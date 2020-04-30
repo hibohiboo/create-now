@@ -44,6 +44,7 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
             search: false,
             sorting: false,
             paging: false,
+            draggable: false, // error server contextがtrueだと発生
             rowStyle: {
               whiteSpace: 'nowrap',
             },

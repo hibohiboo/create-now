@@ -18,7 +18,9 @@ const getInt = ({ integerValue }: { integerValue: string }) =>
 const getTimestamp = ({ timestampValue }: { timestampValue: Date }) =>
   timestampValue
 const getArray = ({ arrayValue }, decoder) =>
-  arrayValue.values.map(({ mapValue }) => decoder(mapValue.fields))
+  arrayValue.values
+    ? arrayValue.values.map(({ mapValue }) => decoder(mapValue.fields))
+    : []
 
 // LOSTRPG
 export const getCamp = async (id: string) => {
