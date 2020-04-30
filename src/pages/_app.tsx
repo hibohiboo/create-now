@@ -5,8 +5,11 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
 import { setupStore } from '~/store'
-import theme from '../theme'
+import theme from '~/theme'
+import '~/styles/global.css'
+
 const store = setupStore()
+
 class MyApp extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.
