@@ -1,6 +1,6 @@
 // import usePagination from 'firestore-pagination-hook'
+import firebase from 'firebase/app'
 import { Camp } from '~/store/modules/lostModule'
-import firebase from 'firebase'
 import { db } from '~/lib/firebase/initFirebase'
 import { toSerializeObject } from '~/firestore/utils'
 const { Timestamp } = firebase.firestore
