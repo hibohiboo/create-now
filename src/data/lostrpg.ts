@@ -43,3 +43,14 @@ export const facilities = [
     effect: '全員の【体力基準値】をプラス２する。',
   },
 ]
+export const facilitiesColumns = [
+  { title: '名前', field: 'name' },
+  { title: 'タイプ', field: 'type' },
+  { title: '特技', field: 'specialty' },
+  {
+    title: 'レベル',
+    field: 'level',
+    type: 'numeric' as 'numeric',
+  },
+  { title: '効果', field: 'effect' },
+]

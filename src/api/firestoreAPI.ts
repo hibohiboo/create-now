@@ -13,19 +13,37 @@ const fetchFromFirestore = async (path: string) => {
 const getStr = ({
   stringValue,
 }: { stringValue: string } | undefined): string | undefined => stringValue
+const getInt = ({ integerValue }: { integerValue: string }) =>
+  isNaN(Number(integerValue)) ? 0 : Number(integerValue)
 const getTimestamp = ({ timestampValue }: { timestampValue: Date }) =>
   timestampValue
+const getArray = ({ arrayValue }, decoder) =>
+  arrayValue.values.map(({ mapValue }) => decoder(mapValue.fields))
 
 // LOSTRPG
 export const getCamp = async (id: string) => {
   const data = await fetchFromFirestore(`systems/lost/camps/${id}`)
-  const { name, uid, playerName, createdAt, updatedAt } = data.fields
+  const {
+    name,
+    uid,
+    playerName,
+    createdAt,
+    updatedAt,
+    facilities,
+  } = data.fields
   const ret: lost.Camp = {
     name: getStr(name),
     uid: getStr(uid),
     playerName: getStr(playerName),
     createdAt: getTimestamp(createdAt),
     updatedAt: getTimestamp(updatedAt),
+    facilities: getArray(facilities, (item) => ({
+      name: getStr(item.name),
+      type: getStr(item.type),
+      specialty: getStr(item.specialty),
+      level: getInt(item.level),
+      effect: getStr(item.effect),
+    })),
   }
   return ret
 }

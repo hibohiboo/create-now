@@ -65,17 +65,7 @@ const Page: NextPage = () => {
   }
 
   const [state, setState] = React.useState({
-    columns: [
-      { title: '名前', field: 'name' },
-      { title: 'タイプ', field: 'type' },
-      { title: '特技', field: 'specialty' },
-      {
-        title: 'レベル',
-        field: 'level',
-        type: 'numeric' as 'numeric',
-      },
-      { title: '効果', field: 'effect' },
-    ],
+    columns: data.facilitiesColumns,
     data: data.facilities,
   })
 
@@ -92,6 +82,7 @@ const Page: NextPage = () => {
       const data = await getCamp(id)
       if (data) {
         setCamp(data)
+        setState({ ...state, data: data.facilities })
       }
     })()
   }, [])
