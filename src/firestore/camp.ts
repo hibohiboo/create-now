@@ -8,17 +8,30 @@ const { Timestamp } = firebase.firestore
 const getCamps = (firestore: firebase.firestore.Firestore) => {
   return firestore.collection('systems').doc('lost').collection('camps')
 }
+const getCampNames = (firestore: firebase.firestore.Firestore) => {
+  return firestore.collection('systems').doc('lost').collection('campNames')
+}
 
 export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
   const camps = getCamps(db)
+  const campNames = getCampNames(db)
   const { id } = await camps.doc()
   const { uid } = authUser
-  await camps.doc(id).set({
-    ...camp,
-    uid,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  })
+  await Promise.all([
+    camps.doc(id).set({
+      ...camp,
+      uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }),
+    campNames.doc(id).set({
+      name: camp.name,
+      uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }),
+  ])
+
   return id
 }
 
@@ -27,20 +40,29 @@ export const getCamp = async (id: string) => {
 }
 
 export const updateCamp = async (id: string, camp: Camp, uid: string) =>
-  await getCamps(db)
-    .doc(id)
-    .set({
-      ...camp,
+  await Promise.all([
+    getCamps(db)
+      .doc(id)
+      .set({
+        ...camp,
+        uid,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }),
+    getCampNames(db).doc(id).set({
+      name: camp.name,
       uid,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    })
+    }),
+  ])
 
 export const canEdit = (authUser: { uid: string }, camp: Camp) =>
   authUser && authUser.uid === camp.uid
 
-export const deleteCamp = (id: string) => {
-  return getCamps(db).doc(id).delete()
-}
+export const deleteCamp = async (id: string) =>
+  await Promise.all([
+    getCamps(db).doc(id).delete(),
+    getCampNames(db).doc(id).delete(),
+  ])
 
 export const readCamps = async (
   lastVisible: string | null = null,
@@ -49,8 +71,8 @@ export const readCamps = async (
 ) => {
   // 複合インデックスを作っていないので、orderBy出来るのは一つ
   let query = !searchName
-    ? getCamps(db).orderBy('createdAt', 'desc')
-    : getCamps(db)
+    ? getCampNames(db).orderBy('createdAt', 'desc')
+    : getCampNames(db)
         .orderBy('name')
         .startAt(searchName)
         .endAt(searchName + '\uf8ff')
