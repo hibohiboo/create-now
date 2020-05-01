@@ -10,6 +10,8 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import TextField from '@material-ui/core/TextField'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
@@ -23,7 +25,7 @@ import {
   deleteCamp,
   canEdit,
 } from '~/firestore/camp'
-import * as data from '~/data/lostrpg'
+import * as lostData from '~/data/lostrpg'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -71,14 +73,25 @@ const Page: NextPage = () => {
   const router = useRouter()
   const authUser = useAuth()
   const [camp, setCamp] = useState<Camp>(initCamp)
+  const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
   const beforePage = '/lostrpg/camps/list'
   const editHandler = id
     ? async () => {
+        if (!camp.name) {
+          setIsSubmit(true)
+          window.scrollTo(0, 0)
+          return
+        }
         await updateCamp(id, { ...camp, uid: authUser.uid }, authUser.uid)
         Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
       }
     : async () => {
+        if (!camp.name) {
+          window.scrollTo(0, 0)
+          setIsSubmit(true)
+          return
+        }
         const retId = await createCamp({ ...camp, uid: authUser.uid }, authUser)
         Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
       }
@@ -90,8 +103,8 @@ const Page: NextPage = () => {
   }
 
   const [state, setState] = React.useState({
-    columns: data.facilitiesColumns,
-    data: data.defaultFacilities,
+    columns: lostData.facilitiesColumns,
+    data: [],
   })
   const classes = useStyles()
   const [equipment, setEquipment] = React.useState('')
@@ -102,6 +115,7 @@ const Page: NextPage = () => {
     }
 
     if (!id) {
+      setState({ ...state, data: lostData.defaultFacilities })
       if (authUser) setCamp({ ...camp, playerName: authUser.displayName })
       return
     }
@@ -136,17 +150,22 @@ const Page: NextPage = () => {
                   setCamp({ ...camp, playerName: e.target.value })
                 }
               />
-              <InputField
-                model={camp}
-                type="text"
-                prop="name"
-                labelText="キャンプ名"
-                changeHandler={(e) =>
-                  setCamp({ ...camp, name: e.target.value })
-                }
-              />
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextField
+                  id="campName"
+                  required
+                  label="キャンプ名"
+                  error={!camp.name && isSubmit}
+                  helperText={
+                    camp.name || !isSubmit
+                      ? ''
+                      : '必須項目です。入力してください'
+                  }
+                  value={camp.name}
+                  onChange={(e) => setCamp({ ...camp, name: e.target.value })}
+                />
+              </FormControl>
             </Box>
-
             <MaterialTable
               title="施設"
               icons={tableIcons}
@@ -221,7 +240,7 @@ const Page: NextPage = () => {
                     }>,
                   ) => {
                     setEquipment(event.target.value)
-                    const item = data.equipmentList.find(
+                    const item = lostData.equipmentList.find(
                       (i) => i.name === event.target.value,
                     )
                     if (item)
@@ -233,7 +252,7 @@ const Page: NextPage = () => {
                   }}
                 >
                   <MenuItem value="">未選択</MenuItem>
-                  {data.equipmentList.map((item) => (
+                  {lostData.equipmentList.map((item) => (
                     <MenuItem value={item.name} key={item.name}>
                       {item.name}
                     </MenuItem>
@@ -253,7 +272,7 @@ const Page: NextPage = () => {
                     }>,
                   ) => {
                     setEquipment(event.target.value)
-                    const item = data.campPersonalityList.find(
+                    const item = lostData.campPersonalityList.find(
                       (i) => i.name === event.target.value,
                     )
                     if (item)
@@ -265,12 +284,24 @@ const Page: NextPage = () => {
                   }}
                 >
                   <MenuItem value="">未選択</MenuItem>
-                  {data.campPersonalityList.map((item) => (
+                  {lostData.campPersonalityList.map((item) => (
                     <MenuItem value={item.name} key={item.name}>
                       {item.name}
                     </MenuItem>
                   ))}
                 </Select>
+              </FormControl>
+            </Box>
+            <Box my={2}>
+              <InputLabel>メモ欄</InputLabel>
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  rowsMin={3}
+                  onChange={(e) =>
+                    setCamp({ ...camp, freeWriting: e.target.value })
+                  }
+                />
               </FormControl>
             </Box>
             <Box my={2}>
