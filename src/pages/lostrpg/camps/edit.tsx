@@ -166,6 +166,19 @@ const Page: NextPage = () => {
                 />
               </FormControl>
             </Box>
+            <Box my={2}>
+              <InputLabel>メモ欄</InputLabel>
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  rowsMin={3}
+                  value={camp.freeWriting}
+                  onChange={(e) =>
+                    setCamp({ ...camp, freeWriting: e.target.value })
+                  }
+                />
+              </FormControl>
+            </Box>
             <MaterialTable
               title="施設"
               icons={tableIcons}
@@ -292,18 +305,7 @@ const Page: NextPage = () => {
                 </Select>
               </FormControl>
             </Box>
-            <Box my={2}>
-              <InputLabel>メモ欄</InputLabel>
-              <FormControl fullWidth style={{ marginTop: '10px' }}>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  rowsMin={3}
-                  onChange={(e) =>
-                    setCamp({ ...camp, freeWriting: e.target.value })
-                  }
-                />
-              </FormControl>
-            </Box>
+
             <Box my={2}>
               <Button onClick={editHandler} variant="contained" color="primary">
                 {id ? '更新' : '作成'}

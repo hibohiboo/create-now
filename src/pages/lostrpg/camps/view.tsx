@@ -37,6 +37,9 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
           )}
         </div>
       </Box>
+      <Box border={1} p={1} style={{ whiteSpace: 'pre-wrap' }}>
+        {camp.freeWriting}
+      </Box>
       <Box my={4}>
         <MaterialTable
           title="施設"
@@ -61,6 +64,7 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
           data={camp.facilities}
         />
       </Box>
+
       <Link href={beforePage}>戻る</Link>
     </Container>
   )

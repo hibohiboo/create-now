@@ -51,6 +51,7 @@ export const updateCamp = async (id: string, camp: Camp, uid: string) =>
     getCampNames(db).doc(id).set({
       name: camp.name,
       uid,
+      createdAt: camp.createdAt,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }),
   ])

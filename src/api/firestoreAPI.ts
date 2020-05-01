@@ -32,6 +32,7 @@ export const getCamp = async (id: string) => {
     createdAt,
     updatedAt,
     facilities,
+    freeWriting,
   } = data.fields
   const ret: lost.Camp = {
     name: getStr(name),
@@ -46,6 +47,7 @@ export const getCamp = async (id: string) => {
       level: getInt(item.level),
       effect: getStr(item.effect),
     })),
+    freeWriting: getStr(freeWriting),
   }
   return ret
 }
