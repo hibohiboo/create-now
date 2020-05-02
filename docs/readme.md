@@ -10,6 +10,8 @@
 
 [firebase 認証 next のトークンに Firebase Document を使用時点のソース](https://github.com/hibohiboo/create-now/tree/58b1aef18a0453bca78285d2d2faf8338433a5b1/)
 
+[firebase storage](https://github.com/hibohiboo/create-now/tree/194d0e0beab4e9c36e7be0a765685e8b61b405db/)
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)
