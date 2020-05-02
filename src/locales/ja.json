@@ -3,6 +3,14 @@
     "index": {
       "title": "LOSTRPG サポートページ",
       "campList": "キャンプ一覧"
+    },
+    "camps": {
+      "list": {
+        "title": "LOSTRPG キャンプ一覧",
+        "create": "新規作成",
+        "campName": "キャンプ名",
+        "list": "キャンプ一覧"
+      }
     }
   },
   "common": {

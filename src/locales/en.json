@@ -3,6 +3,14 @@
     "index": {
       "title": "LOSTRPG Support Page",
       "campList": "Camp List"
+    },
+    "camps": {
+      "list": {
+        "title": "LOSTRPG Camp List",
+        "create": "create new",
+        "campName": "camp name",
+        "list": "camp list"
+      }
     }
   },
   "common": {

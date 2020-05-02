@@ -18,6 +18,7 @@ import {
   fetchCamps,
   fetchCampsMore,
 } from '~/store/modules/lostModule'
+import useI18n from '~/hooks/use-i18n'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Page: NextPage = () => {
+  const i18n = useI18n()
   const classes = useStyles()
   const authUser = useAuth()
   const items = useCamps()
@@ -52,14 +54,20 @@ const Page: NextPage = () => {
   return (
     <Container>
       <Box my={4}>
-        <h2>LOSTRPG キャンプ一覧</h2>
-        {authUser ? <Link href="/lostrpg/camps/edit">新規作成</Link> : <></>}
+        <h2>{i18n.t('lostrpg.camps.list.title')}</h2>
+        {authUser ? (
+          <Link href="/lostrpg/camps/edit">
+            {i18n.t('lostrpg.camps.list.create')}
+          </Link>
+        ) : (
+          <></>
+        )}
         <Box display="flex" style={{ maxWidth: '200px', minWidth: '50px' }}>
           <InputField
             model={search}
             type="text"
             prop="name"
-            labelText="キャンプ名"
+            labelText={i18n.t('lostrpg.camps.list.campName')}
             changeHandler={(e) =>
               setSearch({ ...search, name: e.target.value })
             }
@@ -77,7 +85,7 @@ const Page: NextPage = () => {
               aria-labelledby="nested-list-subheader"
               subheader={
                 <ListSubheader component="div" id="nested-list-subheader">
-                  キャンプ一覧
+                  {i18n.t('lostrpg.camps.list.list')}
                 </ListSubheader>
               }
               className={classes.root}
@@ -99,7 +107,7 @@ const Page: NextPage = () => {
           )}
         </div>
       </Box>
-      <Link href="/lostrpg">戻る</Link>
+      <Link href="/lostrpg">{i18n.t('common.back')}</Link>
     </Container>
   )
 }

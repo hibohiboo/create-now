@@ -108,4 +108,3 @@ RUN npm install material-table
 
 # i18n
 RUN npm install rosetta
-RUN npm install --save-dev json-loader yaml-flat-loader
