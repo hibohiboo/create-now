@@ -1,17 +1,58 @@
+import { useEffect } from 'react'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import Link from '~/components/atoms/mui/Link'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
+import useI18n from '~/hooks/use-i18n'
+import { contentLanguageMap } from '~/lib/i18n'
+import EN from '~/locales/en.json'
+import JA from '~/locales/ja.json'
 
 const Page: NextPage = () => {
+  const i18n = useI18n()
+
+  useEffect(() => {
+    i18n.locale('ja', JA)
+  }, [])
   return (
     <Container>
-      <h2>LOSTRPG サポートページ</h2>
+      <Head>
+        <meta
+          httpEquiv="content-language"
+          content={contentLanguageMap[i18n.activeLocale]}
+        />
+        <title>{i18n.t('lostrpg.index.title')}</title>
+      </Head>
+      <h2>{i18n.t('lostrpg.index.title')}</h2>
+      <div style={{ padding: '5px' }}>
+        <a
+          href="#"
+          onClick={() => {
+            i18n.locale('en', EN)
+          }}
+        >
+          English
+        </a>
+
+        <a
+          href="#"
+          style={{ marginLeft: '10px' }}
+          onClick={() => {
+            i18n.locale('ja', JA)
+          }}
+        >
+          日本語
+        </a>
+      </div>
       <ul>
         <li>
-          <Link href="/lostrpg/camps/list">キャンプ一覧</Link>
+          <Link href="/lostrpg/camps/list">
+            {i18n.t('lostrpg.index.campList')}
+          </Link>
         </li>
       </ul>
-      <Link href="/">戻る</Link>
+
+      <Link href="/"> {i18n.t('common.back')}</Link>
     </Container>
   )
 }

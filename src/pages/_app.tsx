@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { setupStore } from '~/store'
 import theme from '~/theme'
 import '~/styles/global.css'
+import I18n from '~/lib/i18n'
 
 const store = setupStore()
 
@@ -30,7 +31,9 @@ class MyApp extends App {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Component {...pageProps} />
+            <I18n lngDict={pageProps.lngDict} locale={pageProps.lng}>
+              <Component {...pageProps} />
+            </I18n>
           </ThemeProvider>
         </React.Fragment>
       </Provider>
