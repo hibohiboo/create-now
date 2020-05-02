@@ -10,21 +10,19 @@ const fetchFromFirestore = async (path: string) => {
   return data
 }
 
-const getStr = ({
-  stringValue,
-}: { stringValue: string } | undefined): string | undefined => stringValue
-const getInt = ({ integerValue }: { integerValue: string }) =>
-  isNaN(Number(integerValue)) ? 0 : Number(integerValue)
-const getTimestamp = ({ timestampValue }: { timestampValue: Date }) =>
-  timestampValue
-const getArray = ({ arrayValue }, decoder) =>
-  arrayValue.values
-    ? arrayValue.values.map(({ mapValue }) => decoder(mapValue.fields))
+const getStr = (obj): string | undefined => (obj ? obj.stringValue : null)
+const getInt = (obj) =>
+  obj && isNaN(Number(obj.integerValue)) ? 0 : Number(obj.integerValue)
+const getTimestamp = (obj) => (obj ? obj.timestampValue : null)
+const getArray = (obj, decoder) =>
+  obj && obj.arrayValue && obj.arrayValue.values
+    ? obj.arrayValue.values.map(({ mapValue }) => decoder(mapValue.fields))
     : []
 
 // LOSTRPG
 export const getCamp = async (id: string) => {
   const data = await fetchFromFirestore(`systems/lost/camps/${id}`)
+
   const {
     name,
     uid,
@@ -33,6 +31,7 @@ export const getCamp = async (id: string) => {
     updatedAt,
     facilities,
     freeWriting,
+    imageUrl,
   } = data.fields
   const ret: lost.Camp = {
     name: getStr(name),
@@ -48,6 +47,7 @@ export const getCamp = async (id: string) => {
       effect: getStr(item.effect),
     })),
     freeWriting: getStr(freeWriting),
+    imageUrl: getStr(imageUrl),
   }
   return ret
 }

@@ -3,6 +3,8 @@ import firebase from 'firebase/app'
 import { Camp } from '~/store/modules/lostModule'
 import { db } from '~/lib/firebase/initFirebase'
 import { toSerializeObject } from '~/firestore/utils'
+import { updateImage, deleteImage } from '~/firebaseStorage/image'
+
 const { Timestamp } = firebase.firestore
 
 const getCamps = (firestore: firebase.firestore.Firestore) => {
@@ -12,15 +14,27 @@ const getCampNames = (firestore: firebase.firestore.Firestore) => {
   return firestore.collection('systems').doc('lost').collection('campNames')
 }
 
-export const createCamp = async (camp: Camp, authUser: { uid: string }) => {
+export const createCamp = async (
+  camp: Camp,
+  authUser: { uid: string },
+  fileName?: string,
+  file?: File,
+) => {
   const camps = getCamps(db)
   const campNames = getCampNames(db)
   const { id } = await camps.doc()
   const { uid } = authUser
+  let url = ''
+  if (fileName && file) {
+    const ext = '' // fileName.replace(/(.*)\.(.*)$/gi, '$2')
+    const path = `${uid}/${id}.${ext}`
+    url = await updateImage(path, file)
+  }
   await Promise.all([
     camps.doc(id).set({
       ...camp,
       uid,
+      imageUrl: url,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }),
@@ -39,13 +53,26 @@ export const getCamp = async (id: string) => {
   return (await getCamps(db).doc(id).get()).data() as Camp
 }
 
-export const updateCamp = async (id: string, camp: Camp, uid: string) =>
+export const updateCamp = async (
+  id: string,
+  camp: Camp,
+  uid: string,
+  fileName?: string,
+  file?: File,
+) => {
+  let url = camp.imageUrl
+  if (fileName && file) {
+    const ext = '' // fileName.replace(/(.*)\.(.*)$/gi, '$2')
+    const path = `${uid}/${id}.${ext}`
+    url = await updateImage(path, file)
+  }
   await Promise.all([
     getCamps(db)
       .doc(id)
       .set({
         ...camp,
         uid,
+        imageUrl: url,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }),
     getCampNames(db).doc(id).set({
@@ -55,15 +82,23 @@ export const updateCamp = async (id: string, camp: Camp, uid: string) =>
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }),
   ])
-
+}
 export const canEdit = (authUser: { uid: string }, camp: Camp) =>
   authUser && authUser.uid === camp.uid
 
-export const deleteCamp = async (id: string) =>
+export const deleteCamp = async (id: string, uid: string) => {
+  try {
+    const path = `${uid}/${id}.`
+    await deleteImage(path)
+  } catch (e) {
+    console.log(e)
+  }
+
   await Promise.all([
     getCamps(db).doc(id).delete(),
     getCampNames(db).doc(id).delete(),
   ])
+}
 
 export const readCamps = async (
   lastVisible: string | null = null,

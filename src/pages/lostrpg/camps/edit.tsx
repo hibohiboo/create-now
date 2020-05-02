@@ -25,6 +25,8 @@ import {
 import * as lostData from '~/data/lostrpg'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
+import * as validate from '~/utils/validate'
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -55,31 +57,6 @@ const Page: NextPage = () => {
   const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
   const beforePage = '/lostrpg/camps/list'
-  const editHandler = id
-    ? async () => {
-        if (!camp.name) {
-          setIsSubmit(true)
-          window.scrollTo(0, 0)
-          return
-        }
-        await updateCamp(id, { ...camp, uid: authUser.uid }, authUser.uid)
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
-      }
-    : async () => {
-        if (!camp.name) {
-          window.scrollTo(0, 0)
-          setIsSubmit(true)
-          return
-        }
-        const retId = await createCamp({ ...camp, uid: authUser.uid }, authUser)
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
-      }
-  const deleteHandler = async () => {
-    if (confirm(deleteMessage)) {
-      await deleteCamp(id)
-      Router.push(beforePage)
-    }
-  }
 
   const [state, setState] = React.useState({
     columns: lostData.facilitiesColumns,
@@ -95,7 +72,64 @@ const Page: NextPage = () => {
     }))
 
   const classes = useStyles()
-  const [equipment, setEquipment] = React.useState('')
+  const [equipment, setEquipment] = useState('')
+  const [prevUrl, setPrevUrl] = useState('')
+  const [file, setFile] = useState<File>(null)
+  const [fileName, setFileName] = useState('')
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const reader = new FileReader()
+    const file = e.target.files[0]
+    if (!(await validate.validImageFile(file))) {
+      return
+    }
+    setFileName(file.name)
+    reader.onloadend = async () => {
+      setFile(file)
+      setPrevUrl(reader.result.toString())
+    }
+
+    reader.readAsDataURL(file)
+  }
+
+  const editHandler = id
+    ? async () => {
+        if (!camp.name) {
+          setIsSubmit(true)
+          window.scrollTo(0, 0)
+          return
+        }
+        await updateCamp(
+          id,
+          { ...camp, uid: authUser.uid },
+          authUser.uid,
+          fileName,
+          file,
+        )
+        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
+      }
+    : async () => {
+        if (!camp.name) {
+          window.scrollTo(0, 0)
+          setIsSubmit(true)
+          return
+        }
+        const retId = await createCamp(
+          { ...camp, uid: authUser.uid },
+          authUser,
+          fileName,
+          file,
+        )
+        Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
+      }
+
+  const deleteHandler = async () => {
+    if (confirm(deleteMessage)) {
+      await deleteCamp(id, authUser.uid)
+      Router.push(beforePage)
+    }
+  }
 
   useEffect(() => {
     if (!authUser || (id && canEdit(authUser, camp))) {
@@ -112,6 +146,7 @@ const Page: NextPage = () => {
       if (data) {
         setCamp(data)
         setState({ ...state, data: data.facilities })
+        if (data.imageUrl) setPrevUrl(data.imageUrl)
       }
     })()
   }, [])
@@ -153,6 +188,38 @@ const Page: NextPage = () => {
                   onChange={(e) => setCamp({ ...camp, name: e.target.value })}
                 />
               </FormControl>
+            </Box>
+            <Box my={2}>
+              <InputLabel>キャンプ画像</InputLabel>
+              <Box
+                border={1}
+                style={{
+                  maxWidth: '480px',
+                  height: '320px',
+                  overflow: 'hidden',
+                }}
+              >
+                {prevUrl ? (
+                  <img
+                    style={{ width: '100%' }}
+                    alt="キャンプ画像"
+                    src={prevUrl}
+                  />
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
+
+            <Box my={2}>
+              <Button component="label" color="primary">
+                画像ファイル送信
+                <input
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={handleImageChange}
+                />
+              </Button>
             </Box>
             <Box my={2}>
               <InputLabel>メモ欄</InputLabel>

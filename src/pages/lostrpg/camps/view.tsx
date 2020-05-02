@@ -37,9 +37,36 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
           )}
         </div>
       </Box>
-      <Box border={1} p={1} style={{ whiteSpace: 'pre-wrap' }}>
-        {camp.freeWriting}
+      <Box style={{ width: '100%' }} display="flex" flexWrap="wrap">
+        {camp.imageUrl ? (
+          <Box
+            border={1}
+            style={{
+              maxWidth: '480px',
+              minWidth: '320px',
+              maxHeight: '320px',
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              style={{ width: '100%' }}
+              alt="キャンプ画像"
+              src={camp.imageUrl}
+            />{' '}
+          </Box>
+        ) : (
+          <></>
+        )}
+
+        <Box
+          border={1}
+          p={1}
+          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+        >
+          {camp.freeWriting}
+        </Box>
       </Box>
+
       <Box my={4}>
         <MaterialTable
           title="施設"

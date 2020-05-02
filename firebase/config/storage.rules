@@ -1,0 +1,29 @@
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /lostrpg/images {
+      // Anyone can view any image (no auth, publicly readable)
+      match /{allImages=**} {
+        allow read;
+      }
+
+      // Only authenticated users can write to "public" images
+      // match /public/{imageId} {
+      //   allow write: if request.auth != null;
+      // }
+
+      // Only an individual user can write to "their" images
+      match /{userId}/{imageId} {
+        allow write: if request.auth.uid == userId;
+      }
+
+      // Allow a "group" of users to read/write to shared images
+      // An owner metadata property on the object contains the groupId for reads
+      // A custom token has been minted with a groupId property for writes
+      // match /{groupId}/{imageId} {
+      //   allow read: if resource.metadata.owner == request.auth.token.groupId;
+      //   allow write: if request.auth.token.groupId == groupId;
+      // }
+    }
+  }
+}

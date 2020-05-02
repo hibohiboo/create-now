@@ -5,7 +5,8 @@ services:
     build: ./firebase
     env_file: .env
     volumes:
-      - ./config/firebase.json:/app/firebase.json
-      - ./config/firestore.rules:/app/firestore.rules
+      - ../config/firebase.json:/app/firebase.json
+      - ../config/firestore.rules:/app/firestore.rules
+      - ../config/storage.rules:/app/storage.rules
     ports:
       - 9005:9005

@@ -18,6 +18,7 @@ export interface Camp {
   freeWriting?: string
   playerName?: string
   uid?: string
+  imageUrl?: string
   twitterId?: string
   createdAt?: any
   updatedAt?: any
