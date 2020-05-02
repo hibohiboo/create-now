@@ -10,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
+import Dropzone from 'react-dropzone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
@@ -77,20 +78,28 @@ const Page: NextPage = () => {
   const [file, setFile] = useState<File>(null)
   const [fileName, setFileName] = useState('')
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    const reader = new FileReader()
-    const file = e.target.files[0]
+  const setImageFile = async (file: File) => {
     if (!(await validate.validImageFile(file))) {
       return
     }
     setFileName(file.name)
+    const reader = new FileReader()
     reader.onloadend = async () => {
       setFile(file)
       setPrevUrl(reader.result.toString())
     }
 
     reader.readAsDataURL(file)
+  }
+
+  const handleOnDrop = (files: File[]) => {
+    console.log(files)
+    setImageFile(files[0])
+  }
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setImageFile(e.target.files[0])
   }
 
   const editHandler = id
@@ -191,29 +200,36 @@ const Page: NextPage = () => {
             </Box>
             <Box my={2}>
               <InputLabel>キャンプ画像</InputLabel>
-              <Box
-                border={1}
-                style={{
-                  maxWidth: '480px',
-                  height: '320px',
-                  overflow: 'hidden',
-                }}
-              >
-                {prevUrl ? (
-                  <img
-                    style={{ width: '100%' }}
-                    alt="キャンプ画像"
-                    src={prevUrl}
-                  />
-                ) : (
-                  <></>
+              <Dropzone onDrop={handleOnDrop} accept="image/*">
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <Box
+                      border={1}
+                      style={{
+                        maxWidth: '480px',
+                        height: '320px',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {prevUrl ? (
+                        <img
+                          style={{ width: '100%' }}
+                          alt="キャンプ画像"
+                          src={prevUrl}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </Box>
+                    <input {...getInputProps()} />
+                  </div>
                 )}
-              </Box>
+              </Dropzone>
             </Box>
 
             <Box my={2}>
               <Button component="label" color="primary">
-                画像ファイル送信
+                画像ファイル選択
                 <input
                   type="file"
                   style={{ display: 'none' }}

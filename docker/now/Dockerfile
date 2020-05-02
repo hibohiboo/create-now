@@ -108,3 +108,6 @@ RUN npm install material-table
 
 # i18n
 RUN npm install rosetta
+
+# drop file
+RUN npm install react-dropzone

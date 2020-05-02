@@ -19,6 +19,8 @@ import {
   fetchCampsMore,
 } from '~/store/modules/lostModule'
 import useI18n from '~/hooks/use-i18n'
+import { contentLanguageMap } from '~/lib/i18n'
+import JA from '~/locales/ja.json'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +52,10 @@ const Page: NextPage = () => {
     dispatch(fetchCamps(pagenation.limit))
     dispatch(createAuthClientSide())
   }, [])
-
+  useEffect(() => {
+    if (i18n.activeLocale !== 'ja') return
+    i18n.locale('ja', JA)
+  }, [])
   return (
     <Container>
       <Box my={4}>

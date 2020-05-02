@@ -12,6 +12,8 @@
 
 [firebase storage](https://github.com/hibohiboo/create-now/tree/194d0e0beab4e9c36e7be0a765685e8b61b405db/)
 
+[国際化](https://github.com/hibohiboo/create-now/tree/cc6d3043f909eb112982f33bca3ac8bd7d0287e8/)
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)
