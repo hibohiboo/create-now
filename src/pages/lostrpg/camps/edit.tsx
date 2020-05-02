@@ -1,6 +1,4 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from 'react'
-import { AddBox, Edit, DeleteOutline, Check, Clear } from '@material-ui/icons'
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
 import Router, { useRouter, NextRouter } from 'next/router'
@@ -12,7 +10,6 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
-import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
@@ -26,7 +23,8 @@ import {
   canEdit,
 } from '~/firestore/camp'
 import * as lostData from '~/data/lostrpg'
-
+import { deleteMessage } from '~/config/messages'
+import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -37,23 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const tableIcons = {
-  Add: forwardRef<SVGSVGElement>((props, ref) => (
-    <AddBox {...props} ref={ref} />
-  )),
-  Delete: forwardRef<SVGSVGElement>((props, ref) => (
-    <DeleteOutline {...props} ref={ref} />
-  )),
-  Edit: forwardRef<SVGSVGElement>((props, ref) => (
-    <Edit {...props} ref={ref} />
-  )),
-  Check: forwardRef<SVGSVGElement>((props, ref) => (
-    <Check {...props} ref={ref} />
-  )),
-  Clear: forwardRef<SVGSVGElement>((props, ref) => (
-    <Clear {...props} ref={ref} />
-  )),
-}
 const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id
   return null
@@ -66,8 +47,6 @@ const createFacility = (item) => ({
   level: 1,
   effect: item.effect,
 })
-
-const deleteMessage = '削除しますか？'
 
 const Page: NextPage = () => {
   const router = useRouter()
@@ -106,6 +85,15 @@ const Page: NextPage = () => {
     columns: lostData.facilitiesColumns,
     data: [],
   })
+  type TableState = typeof state
+  const updateRowData = (
+    toNextState: (prevData: TableState['data']) => TableState['data'],
+  ) =>
+    setState((prevState) => ({
+      ...prevState,
+      data: toNextState([...prevState.data]),
+    }))
+
   const classes = useStyles()
   const [equipment, setEquipment] = React.useState('')
 
@@ -179,64 +167,24 @@ const Page: NextPage = () => {
                 />
               </FormControl>
             </Box>
-            <MaterialTable
+            <EditableMaterialTable
               title="施設"
-              icons={tableIcons}
-              options={{
-                search: false,
-                sorting: false,
-                paging: false,
-                rowStyle: {
-                  whiteSpace: 'nowrap',
-                },
-                headerStyle: {
-                  whiteSpace: 'nowrap',
-                },
-              }}
-              localization={{
-                header: {
-                  actions: '',
-                },
-                body: { editRow: { deleteText: deleteMessage } },
-              }}
               columns={state.columns}
               data={state.data}
-              editable={{
-                onRowAdd: (newData) =>
-                  new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve()
-                      setState((prevState) => {
-                        const data = [...prevState.data]
-                        data.push(newData)
-                        return { ...prevState, data }
-                      })
-                    }, 600)
-                  }),
-                onRowUpdate: (newData, oldData) =>
-                  new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve()
-                      if (oldData) {
-                        setState((prevState) => {
-                          const data = [...prevState.data]
-                          data[data.indexOf(oldData)] = newData
-                          return { ...prevState, data }
-                        })
-                      }
-                    }, 600)
-                  }),
-                onRowDelete: (oldData) =>
-                  new Promise((resolve) => {
-                    setTimeout(() => {
-                      resolve()
-                      setState((prevState) => {
-                        const data = [...prevState.data]
-                        data.splice(data.indexOf(oldData), 1)
-                        return { ...prevState, data }
-                      })
-                    }, 600)
-                  }),
+              rowAddHandler={(newData) => {
+                updateRowData((d) => [...d, newData])
+              }}
+              rowUpdateHandler={(newData, oldData) => {
+                updateRowData((d) => {
+                  d[d.indexOf(oldData)] = newData
+                  return d
+                })
+              }}
+              rowDeleteHandler={(oldData) => {
+                updateRowData((d) => {
+                  d.splice(d.indexOf(oldData), 1)
+                  return d
+                })
               }}
             />
             <Box my={2}>
