@@ -1,19 +1,9 @@
 {
-  "lostrpg": {
-    "index": {
-      "title": "LOSTRPG Support Page",
-      "campList": "Camp List"
-    },
-    "camps": {
-      "list": {
-        "title": "LOSTRPG Camp List",
-        "create": "create new",
-        "campName": "camp name",
-        "list": "camp list"
-      }
-    }
-  },
-  "common": {
-    "back": "Back"
-  }
+  "lostrpg_index_title": "LOSTRPG Support Page",
+  "lostrpg_index_campList": "Camp List",
+  "lostrpg_camps_list_title": "LOSTRPG Camp List",
+  "lostrpg_camps_list_campName": "camp name",
+  "lostrpg_camps_list_campList": "camp list",
+  "common_back": "Back",
+  "common_create": "Create"
 }

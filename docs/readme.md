@@ -103,6 +103,7 @@
 
 [TypeScript + React で i18n (国際化/多言語) 対応を楽して続けるためのアレコレ](https://qiita.com/mojibakeo/items/25930bb6eee33594af54)
 [next-js i18n example](https://github.com/zeit/next.js/tree/canary/examples/with-i18n-rosetta)
+[rosetta](https://github.com/lukeed/rosetta)
 
 ### テーブル
 

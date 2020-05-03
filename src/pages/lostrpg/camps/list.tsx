@@ -59,11 +59,9 @@ const Page: NextPage = () => {
   return (
     <Container>
       <Box my={4}>
-        <h2>{i18n.t('lostrpg.camps.list.title')}</h2>
+        <h2>{i18n.t('lostrpg_camps_list_title')}</h2>
         {authUser ? (
-          <Link href="/lostrpg/camps/edit">
-            {i18n.t('lostrpg.camps.list.create')}
-          </Link>
+          <Link href="/lostrpg/camps/edit">{i18n.t('common_create')}</Link>
         ) : (
           <></>
         )}
@@ -72,7 +70,7 @@ const Page: NextPage = () => {
             model={search}
             type="text"
             prop="name"
-            labelText={i18n.t('lostrpg.camps.list.campName')}
+            labelText={i18n.t('lostrpg_camps_list_campName')}
             changeHandler={(e) =>
               setSearch({ ...search, name: e.target.value })
             }
@@ -90,7 +88,7 @@ const Page: NextPage = () => {
               aria-labelledby="nested-list-subheader"
               subheader={
                 <ListSubheader component="div" id="nested-list-subheader">
-                  {i18n.t('lostrpg.camps.list.list')}
+                  {i18n.t('lostrpg_camps_list_campList')}
                 </ListSubheader>
               }
               className={classes.root}
@@ -112,7 +110,7 @@ const Page: NextPage = () => {
           )}
         </div>
       </Box>
-      <Link href="/lostrpg">{i18n.t('common.back')}</Link>
+      <Link href="/lostrpg">{i18n.t('common_back')}</Link>
     </Container>
   )
 }

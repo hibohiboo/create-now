@@ -1,19 +1,9 @@
 {
-  "lostrpg": {
-    "index": {
-      "title": "LOSTRPG サポートページ",
-      "campList": "キャンプ一覧"
-    },
-    "camps": {
-      "list": {
-        "title": "LOSTRPG キャンプ一覧",
-        "create": "新規作成",
-        "campName": "キャンプ名",
-        "list": "キャンプ一覧"
-      }
-    }
-  },
-  "common": {
-    "back": "戻る"
-  }
+  "lostrpg_index_title": "LOSTRPG サポートページ",
+  "lostrpg_index_campList": "キャンプ一覧",
+  "lostrpg_camps_list_title": "LOSTRPG キャンプ一覧",
+  "lostrpg_camps_list_campName": "キャンプ名",
+  "lostrpg_camps_list_campList": "キャンプ一覧",
+  "common_back": "戻る",
+  "common_create": "新規作成"
 }

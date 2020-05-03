@@ -21,9 +21,9 @@ const Page: NextPage = () => {
           httpEquiv="content-language"
           content={contentLanguageMap[i18n.activeLocale]}
         />
-        <title>{i18n.t('lostrpg.index.title')}</title>
+        <title>{i18n.t('lostrpg_index_title')}</title>
       </Head>
-      <h2>{i18n.t('lostrpg.index.title')}</h2>
+      <h2>{i18n.t('lostrpg_index_title')}</h2>
       <div style={{ padding: '5px' }}>
         <a
           href="#"
@@ -47,12 +47,12 @@ const Page: NextPage = () => {
       <ul>
         <li>
           <Link href="/lostrpg/camps/list">
-            {i18n.t('lostrpg.index.campList')}
+            {i18n.t('lostrpg_index_campList')}
           </Link>
         </li>
       </ul>
 
-      <Link href="/"> {i18n.t('common.back')}</Link>
+      <Link href="/"> {i18n.t('common_back')}</Link>
     </Container>
   )
 }
