@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
 import * as lostData from '~/data/lostrpg'
-
+import useI18n from '~/hooks/use-i18n'
 export interface Facility {
   name: string
   type: string
@@ -189,11 +189,16 @@ export const useCharacter = () =>
 
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
+    const i18n = useI18n()
     const { character } = state.lost
     return {
       classList: lostData.classList.filter(
         (item) => !character.classes.includes(item),
       ),
+      abilitiesColumns:
+        i18n.activeLocale === 'ja'
+          ? lostData.abilitiesColumns
+          : lostData.abilitiesColumnsEn,
       abilityList: lostData.abilityList
         .filter(
           (item) =>

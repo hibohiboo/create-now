@@ -5,25 +5,27 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Router, { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
+import Dropzone from 'react-dropzone'
 import { Box, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
-import Dropzone from 'react-dropzone'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import { DeleteOutline } from '@material-ui/icons'
-
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
+import { useAuth } from '~/store/modules/authModule'
+import { deleteMessage } from '~/config/messages'
+import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
+import useI18n from '~/hooks/use-i18n'
+import { contentLanguageMap } from '~/lib/i18n'
+import { createSetImageFile } from '~/utils/formHelper'
 import {
   setCharacter,
   useCharacter,
@@ -31,7 +33,6 @@ import {
   CharacterClass,
   Ability,
 } from '~/store/modules/lostModule'
-import { useAuth } from '~/store/modules/authModule'
 import {
   createCharacter,
   getCharacter,
@@ -39,35 +40,11 @@ import {
   deleteCharacter,
   canEdit,
 } from '~/firestore/character'
-import * as lostData from '~/data/lostrpg'
-import { deleteMessage } from '~/config/messages'
-import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
-import useI18n from '~/hooks/use-i18n'
-import { contentLanguageMap } from '~/lib/i18n'
-import { createSetImageFile } from '~/utils/formHelper'
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}))
 
 const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id
   return null
 }
-
-const createFacility = (item) => ({
-  name: item.name,
-  type: item.type,
-  specialty: item.specialty,
-  level: 1,
-  effect: item.effect,
-})
 
 const Page: NextPage = () => {
   const authUser = useAuth()
@@ -269,7 +246,7 @@ const Page: NextPage = () => {
 
             <EditableMaterialTable
               title={t('lostrpg_character_common_ability')}
-              columns={lostData.abilitiesColumns}
+              columns={vm.abilitiesColumns}
               data={_.cloneDeep(character.abilities)}
               rowAddHandler={(newData) => {
                 updateRowData((d) => [...d, newData])

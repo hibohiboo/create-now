@@ -424,6 +424,16 @@ export const abilitiesColumns = [
   { title: '効果', field: 'effect' },
 ]
 
+export const abilitiesColumnsEn = [
+  { title: 'name', field: 'name' },
+  { title: 'group', field: 'group' },
+  { title: 'type', field: 'type' },
+  { title: 'specialty', field: 'specialty' },
+  { title: 'target', field: 'target' },
+  { title: 'recoil', field: 'recoil' },
+  { title: 'effect', field: 'effect' },
+]
+
 export const classList = [
   { name: 'ビッグ', id: 'big' },
   { name: 'チビ', id: 'little' },
