@@ -24,6 +24,15 @@ export interface Camp {
   updatedAt?: any
 }
 
+interface Ability {
+  name: string
+  group: string
+  type: string
+  recoil: string
+  specialty: string
+  target: string
+  effect: string
+}
 export const initCamp = {
   name: '',
   facilities: [],
@@ -32,6 +41,69 @@ export const initCamp = {
   createdAt: '',
   updatedAt: '',
   twitterId: '',
+  uid: '',
+}
+interface CharacterClass {
+  id: string
+  name: string
+}
+interface Specialty {
+  name: string
+  area: 'Talent' | 'Head' | 'Arms' | 'Torso' | 'Legs' | 'Survival'
+  type: 'BodyParts' | 'Action'
+  point: { x: number; y: number }
+  checked: boolean
+}
+
+interface Item {
+  name: string
+  j: number
+  weight: number
+  type: string
+  area: string
+  specialty: string
+  target: string
+  trait: string
+  effect: string
+}
+export interface Character {
+  name: string
+  classes: CharacterClass[]
+  specialties: Specialty[]
+  abilities: Ability[]
+  gap: number[]
+  items: Item[]
+  staminaBase: number
+  stamina: number
+  willPowerBase: number
+  willPower: number
+  statusAilments: string[]
+  carryingCapacity: number
+  freeWriting?: string
+  playerName?: string
+  uid?: string
+  imageUrl?: string
+  id?: string
+  createdAt?: any
+  updatedAt?: any
+}
+export const initCharacter: Character = {
+  name: '',
+  classes: [],
+  specialties: [],
+  abilities: [],
+  gap: [],
+  items: [],
+  staminaBase: 5,
+  stamina: 10,
+  willPowerBase: 10,
+  willPower: 10,
+  statusAilments: [],
+  carryingCapacity: 10,
+  freeWriting: '',
+  playerName: '',
+  createdAt: '',
+  updatedAt: '',
   uid: '',
 }
 

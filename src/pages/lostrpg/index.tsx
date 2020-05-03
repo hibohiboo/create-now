@@ -29,14 +29,14 @@ const Page: NextPage = () => {
         <li>
           <Link
             href="/lostrpg/characters/[lng]/list"
-            as={`/lostrpg/characters/${'ja'}/list`}
+            as={`/lostrpg/characters/${i18n.activeLocale}/list`}
           >
-            <a>{i18n.t('lostrpg_index_characters')}</a>
+            {i18n.t('lostrpg_index_characters')}
           </Link>
         </li>
       </ul>
 
-      <Link href="/"> {i18n.t('common_back')}</Link>
+      <Link href="/">{i18n.t('common_back')}</Link>
     </Container>
   )
 }

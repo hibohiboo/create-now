@@ -5,7 +5,21 @@
   "lostrpg_camps_list_title": "LOSTRPG キャンプ一覧",
   "lostrpg_camps_list_campName": "キャンプ名",
   "lostrpg_camps_list_campList": "キャンプ一覧",
+  "lostrpg_character_common_ability": "アビリティ",
+  "lostrpg_character_common_memo": "設定",
+  "lostrpg_character_common_characterName": "キャラクター名",
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
+  "lostrpg_character_edit_title": "LOSTRPG キャラクター",
+  "lostrpg_character_edit_addAbility": "アビリティ追加",
+  "common_unselected": "未選択",
   "common_back": "戻る",
-  "common_create": "新規作成"
+  "common_create": "新規作成",
+  "common_edit": "編集",
+  "common_update": "更新",
+  "common_delete": "削除",
+  "common_image": "画像",
+  "common_config": "設定",
+  "common_playerName": "プレイヤー名",
+  "message_required": "必須項目です。入力してください",
+  "message_please_drop_image": "クリックかドロップで画像を設定"
 }

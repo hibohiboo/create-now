@@ -2,6 +2,7 @@
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
 import Router, { useRouter, NextRouter } from 'next/router'
+import Head from 'next/head'
 import { Box, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
@@ -14,19 +15,21 @@ import Dropzone from 'react-dropzone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import { Camp, initCamp } from '~/store/modules/lostModule'
+import { Character, initCharacter } from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
 import {
-  createCamp,
-  getCamp,
-  updateCamp,
-  deleteCamp,
+  createCharacter,
+  getCharacter,
+  updateCharacter,
+  deleteCharacter,
   canEdit,
-} from '~/firestore/camp'
+} from '~/firestore/character'
 import * as lostData from '~/data/lostrpg'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import * as validate from '~/utils/validate'
+import useI18n from '~/hooks/use-i18n'
+import { contentLanguageMap } from '~/lib/i18n'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -52,37 +55,37 @@ const createFacility = (item) => ({
 })
 
 const Page: NextPage = () => {
-  const router = useRouter()
   const authUser = useAuth()
-  const [camp, setCamp] = useState<Camp>(initCamp)
+  const i18n = useI18n()
+  const t = i18n.t
+  const router = useRouter()
+  const [character, setCharacter] = useState<Character>(initCharacter)
   const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
-  const beforePage = '/lostrpg/camps/list'
+  const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
 
-  const [state, setState] = React.useState({
-    columns: lostData.facilitiesColumns,
+  const [abilities, setAbilities] = React.useState({
+    columns: lostData.abilitiesColumns,
     data: [],
   })
-  type TableState = typeof state
+  type TableState = typeof abilities
   const updateRowData = (
     toNextState: (prevData: TableState['data']) => TableState['data'],
   ) =>
-    setState((prevState) => ({
+    setAbilities((prevState) => ({
       ...prevState,
       data: toNextState([...prevState.data]),
     }))
 
   const classes = useStyles()
-  const [equipment, setEquipment] = useState('')
+  const [equipment, setAbility] = useState('')
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
-  const [fileName, setFileName] = useState('')
 
   const setImageFile = async (file: File) => {
     if (!(await validate.validImageFile(file))) {
       return
     }
-    setFileName(file.name)
     const reader = new FileReader()
     reader.onloadend = async () => {
       setFile(file)
@@ -96,72 +99,69 @@ const Page: NextPage = () => {
     setImageFile(files[0])
   }
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setImageFile(e.target.files[0])
-  }
-
   const editHandler = id
     ? async () => {
-        if (!camp.name) {
+        if (!character.name) {
           setIsSubmit(true)
           window.scrollTo(0, 0)
           return
         }
-        await updateCamp(
+        await updateCharacter(
           id,
-          { ...camp, uid: authUser.uid },
+          { ...character, uid: authUser.uid },
           authUser.uid,
-          fileName,
           file,
         )
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
+        Router.push({ pathname: `/lostrpg/characters/view`, query: { id } })
       }
     : async () => {
-        if (!camp.name) {
+        if (!character.name) {
           window.scrollTo(0, 0)
           setIsSubmit(true)
           return
         }
-        const retId = await createCamp(
-          { ...camp, uid: authUser.uid },
+        const retId = await createCharacter(
+          { ...character, uid: authUser.uid },
           authUser,
-          fileName,
           file,
         )
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
+        Router.push({
+          pathname: `/lostrpg/characters/view`,
+          query: { id: retId },
+        })
       }
 
   const deleteHandler = async () => {
     if (confirm(deleteMessage)) {
-      await deleteCamp(id, authUser.uid)
+      await deleteCharacter(id, authUser.uid)
       Router.push(beforePage)
     }
   }
 
   useEffect(() => {
-    if (!authUser || (id && canEdit(authUser, camp))) {
+    if (!authUser || (id && canEdit(authUser, character))) {
       Router.push(beforePage)
     }
 
     if (!id) {
-      setState({ ...state, data: lostData.defaultFacilities })
-      if (authUser) setCamp({ ...camp, playerName: authUser.displayName })
+      setAbilities({ ...abilities })
+      if (authUser)
+        setCharacter({ ...character, playerName: authUser.displayName })
       return
     }
     ;(async () => {
-      const data = await getCamp(id)
+      const data = await getCharacter(id)
       if (data) {
-        setCamp(data)
-        setState({ ...state, data: data.facilities })
+        setCharacter(data)
+        setAbilities({ ...abilities, data: data.abilities })
         if (data.imageUrl) setPrevUrl(data.imageUrl)
       }
     })()
   }, [])
 
   useEffect(() => {
-    setCamp({ ...camp, facilities: state.data })
-  }, [state])
+    setCharacter({ ...character, abilities: abilities.data })
+  }, [abilities])
 
   return (
     <>
@@ -169,36 +169,46 @@ const Page: NextPage = () => {
         <></>
       ) : (
         <Container>
+          <Head>
+            <meta
+              httpEquiv="content-language"
+              content={contentLanguageMap[i18n.activeLocale]}
+            />
+            <title>{i18n.t('lostrpg_index_title')}</title>
+          </Head>
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
-            <h2>LOSTRPG キャンプ{id ? '編集' : '作成'}</h2>
+            <h2>
+              {t('lostrpg_character_edit_title')}
+              {id ? t('common_edit') : t('common_create')}
+            </h2>
             <Box my={2}>
               <InputField
-                model={camp}
+                model={character}
                 type="text"
                 prop="playerName"
-                labelText="プレイヤー名"
+                labelText={t('common_playerName')}
                 changeHandler={(e) =>
-                  setCamp({ ...camp, playerName: e.target.value })
+                  setCharacter({ ...character, playerName: e.target.value })
                 }
               />
               <FormControl fullWidth style={{ marginTop: '10px' }}>
                 <TextField
-                  id="campName"
+                  id="characterName"
                   required
-                  label="キャンプ名"
-                  error={!camp.name && isSubmit}
+                  label={t('lostrpg_character_common_characterName')}
+                  error={!character.name && isSubmit}
                   helperText={
-                    camp.name || !isSubmit
-                      ? ''
-                      : '必須項目です。入力してください'
+                    character.name || !isSubmit ? '' : t('message_required')
                   }
-                  value={camp.name}
-                  onChange={(e) => setCamp({ ...camp, name: e.target.value })}
+                  value={character.name}
+                  onChange={(e) =>
+                    setCharacter({ ...character, name: e.target.value })
+                  }
                 />
               </FormControl>
             </Box>
             <Box my={2}>
-              <InputLabel>キャンプ画像</InputLabel>
+              <InputLabel>{t('common_image')}</InputLabel>
               <Dropzone onDrop={handleOnDrop} accept="image/*">
                 {({ getRootProps, getInputProps }) => (
                   <div {...getRootProps()}>
@@ -206,14 +216,14 @@ const Page: NextPage = () => {
                       border={1}
                       style={{
                         maxWidth: '480px',
-                        height: '320px',
+                        minHeight: '100px',
                         overflow: 'hidden',
                       }}
                     >
                       {prevUrl ? (
                         <img
                           style={{ width: '100%' }}
-                          alt="キャンプ画像"
+                          alt={t('common_image')}
                           src={prevUrl}
                         />
                       ) : (
@@ -225,34 +235,23 @@ const Page: NextPage = () => {
                 )}
               </Dropzone>
             </Box>
-
             <Box my={2}>
-              <Button component="label" color="primary">
-                画像ファイル選択
-                <input
-                  type="file"
-                  style={{ display: 'none' }}
-                  onChange={handleImageChange}
-                />
-              </Button>
-            </Box>
-            <Box my={2}>
-              <InputLabel>メモ欄</InputLabel>
+              <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>
                 <TextareaAutosize
                   aria-label="minimum height"
                   rowsMin={3}
-                  value={camp.freeWriting}
+                  value={character.freeWriting}
                   onChange={(e) =>
-                    setCamp({ ...camp, freeWriting: e.target.value })
+                    setCharacter({ ...character, freeWriting: e.target.value })
                   }
                 />
               </FormControl>
             </Box>
             <EditableMaterialTable
-              title="施設"
-              columns={state.columns}
-              data={state.data}
+              title={t('lostrpg_character_common_ability')}
+              columns={abilities.columns}
+              data={abilities.data}
               rowAddHandler={(newData) => {
                 updateRowData((d) => [...d, newData])
               }}
@@ -271,7 +270,9 @@ const Page: NextPage = () => {
             />
             <Box my={2}>
               <FormControl className={classes.formControl}>
-                <InputLabel id="equipment-select-label">設備追加</InputLabel>
+                <InputLabel id="equipment-select-label">
+                  {t('lostrpg_character_edit_addAbility')}
+                </InputLabel>
                 <Select
                   labelId="equipment-select-label"
                   id="equipment-select"
@@ -282,52 +283,20 @@ const Page: NextPage = () => {
                       value: string
                     }>,
                   ) => {
-                    setEquipment(event.target.value)
-                    const item = lostData.equipmentList.find(
+                    setAbility(event.target.value)
+                    const item = lostData.abilityList.find(
                       (i) => i.name === event.target.value,
                     )
                     if (item)
-                      setState((prevState) => {
+                      setAbilities((prevState) => {
                         const data = [...prevState.data]
                         data.push(createFacility(item))
                         return { ...prevState, data }
                       })
                   }}
                 >
-                  <MenuItem value="">未選択</MenuItem>
-                  {lostData.equipmentList.map((item) => (
-                    <MenuItem value={item.name} key={item.name}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="personality-select-label">人材追加</InputLabel>
-                <Select
-                  labelId="personality-select-label"
-                  id="personality-select"
-                  value={equipment}
-                  onChange={(
-                    event: React.ChangeEvent<{
-                      name?: string
-                      value: string
-                    }>,
-                  ) => {
-                    setEquipment(event.target.value)
-                    const item = lostData.campPersonalityList.find(
-                      (i) => i.name === event.target.value,
-                    )
-                    if (item)
-                      setState((prevState) => {
-                        const data = [...prevState.data]
-                        data.push(createFacility(item))
-                        return { ...prevState, data }
-                      })
-                  }}
-                >
-                  <MenuItem value="">未選択</MenuItem>
-                  {lostData.campPersonalityList.map((item) => (
+                  <MenuItem value="">{t('common_unselected')}</MenuItem>
+                  {lostData.abilityList[0].list.map((item) => (
                     <MenuItem value={item.name} key={item.name}>
                       {item.name}
                     </MenuItem>
@@ -335,10 +304,9 @@ const Page: NextPage = () => {
                 </Select>
               </FormControl>
             </Box>
-
             <Box my={2}>
               <Button onClick={editHandler} variant="contained" color="primary">
-                {id ? '更新' : '作成'}
+                {id ? t('common_update') : t('common_create')}
               </Button>
             </Box>
             {!id ? (
@@ -350,13 +318,13 @@ const Page: NextPage = () => {
                   variant="contained"
                   color="secondary"
                 >
-                  削除
+                  {t('common_delete')}
                 </Button>
               </Box>
             )}
           </Box>
 
-          <Link href={beforePage}>戻る</Link>
+          <Link href={beforePage}>{t('common_back')}</Link>
         </Container>
       )}
     </>

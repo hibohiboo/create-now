@@ -42,17 +42,10 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
           <Box
             border={1}
             style={{
-              maxWidth: '480px',
               minWidth: '320px',
-              maxHeight: '320px',
-              overflow: 'hidden',
             }}
           >
-            <img
-              style={{ width: '100%' }}
-              alt="キャンプ画像"
-              src={camp.imageUrl}
-            />{' '}
+            <img alt="キャンプ画像" src={camp.imageUrl} />{' '}
           </Box>
         ) : (
           <></>
