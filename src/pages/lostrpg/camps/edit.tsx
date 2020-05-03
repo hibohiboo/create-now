@@ -26,7 +26,7 @@ import {
 import * as lostData from '~/data/lostrpg'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
-import * as validate from '~/utils/validate'
+import { createSetImageFile } from '~/utils/formHelper'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -76,21 +76,8 @@ const Page: NextPage = () => {
   const [equipment, setEquipment] = useState('')
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
-  const [fileName, setFileName] = useState('')
 
-  const setImageFile = async (file: File) => {
-    if (!(await validate.validImageFile(file))) {
-      return
-    }
-    setFileName(file.name)
-    const reader = new FileReader()
-    reader.onloadend = async () => {
-      setFile(file)
-      setPrevUrl(reader.result.toString())
-    }
-
-    reader.readAsDataURL(file)
-  }
+  const setImageFile = createSetImageFile(setFile, setPrevUrl)
 
   const handleOnDrop = (files: File[]) => {
     setImageFile(files[0])
@@ -108,13 +95,7 @@ const Page: NextPage = () => {
           window.scrollTo(0, 0)
           return
         }
-        await updateCamp(
-          id,
-          { ...camp, uid: authUser.uid },
-          authUser.uid,
-          fileName,
-          file,
-        )
+        await updateCamp(id, { ...camp, uid: authUser.uid }, authUser.uid, file)
         Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
       }
     : async () => {
@@ -126,7 +107,6 @@ const Page: NextPage = () => {
         const retId = await createCamp(
           { ...camp, uid: authUser.uid },
           authUser,
-          fileName,
           file,
         )
         Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })

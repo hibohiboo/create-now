@@ -17,7 +17,6 @@ const getCampNames = (firestore: firebase.firestore.Firestore) => {
 export const createCamp = async (
   camp: Camp,
   authUser: { uid: string },
-  fileName?: string,
   file?: File,
 ) => {
   const camps = getCamps(db)
@@ -25,7 +24,7 @@ export const createCamp = async (
   const { id } = await camps.doc()
   const { uid } = authUser
   let url = ''
-  if (fileName && file) {
+  if (file) {
     const ext = '' // fileName.replace(/(.*)\.(.*)$/gi, '$2')
     const path = `${uid}/${id}.${ext}`
     url = await updateImage(path, file)
@@ -57,11 +56,10 @@ export const updateCamp = async (
   id: string,
   camp: Camp,
   uid: string,
-  fileName?: string,
   file?: File,
 ) => {
   let url = camp.imageUrl
-  if (fileName && file) {
+  if (file) {
     const ext = '' // fileName.replace(/(.*)\.(.*)$/gi, '$2')
     const path = `${uid}/${id}.${ext}`
     url = await updateImage(path, file)

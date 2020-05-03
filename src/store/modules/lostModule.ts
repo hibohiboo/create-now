@@ -112,6 +112,7 @@ type LostState = {
   camps: Camp[]
   campsPagination: PaginationState
   error: string | null
+  character: Character
 }
 
 type PaginationState = {
@@ -132,11 +133,12 @@ export const init: LostState = {
   camps: [],
   campsPagination: initialState,
   error: null,
+  character: initCharacter,
 }
 
 // actions と reducers の定義
-const campModule = createSlice({
-  name: 'camp',
+const lostModule = createSlice({
+  name: 'lost',
   initialState: init,
   reducers: {
     setCampsLoading: (state, action: PayloadAction<boolean>) => {
@@ -154,6 +156,10 @@ const campModule = createSlice({
     addCamps: (state, action: PayloadAction<Camp[]>) => {
       state.camps = state.camps.concat(action.payload)
     },
+    setCharacter: (state, action: PayloadAction<Character>) => {
+      console.log('aaa', action)
+      state.character = action.payload
+    },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload
       state.camps = []
@@ -161,17 +167,24 @@ const campModule = createSlice({
   },
 })
 
+export default lostModule
+
+// state
 export const useCamps = () =>
   useSelector(
-    (state: { lost: ReturnType<typeof campModule.reducer> }) =>
+    (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
       state.lost.camps,
   )
 export const useCampsPagination = () =>
   useSelector(
-    (state: { lost: ReturnType<typeof campModule.reducer> }) =>
+    (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
       state.lost.campsPagination,
   )
-export default campModule
+export const useCharacter = () =>
+  useSelector(
+    (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
+      state.lost.character,
+  )
 
 // actions
 const {
@@ -180,7 +193,10 @@ const {
   setCamps,
   addCamps,
   setError,
-} = campModule.actions
+} = lostModule.actions
+
+export const { setCharacter } = lostModule.actions
+
 interface CampLoaded {
   camps: Camp[]
   next: string

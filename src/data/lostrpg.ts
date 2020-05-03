@@ -423,6 +423,22 @@ export const abilitiesColumns = [
   { title: '反動', field: 'recoil' },
   { title: '効果', field: 'effect' },
 ]
+
+export const classList = [
+  { name: 'ビッグ', id: 'big' },
+  { name: 'チビ', id: 'little' },
+  { name: 'オトナ', id: 'adult' },
+  { name: 'ニューエイジ', id: 'newage' },
+  { name: 'キズモノ', id: 'wounded' },
+  { name: 'センシ', id: 'fighter' },
+  { name: 'スカウト', id: 'scount' },
+  { name: 'ハンター', id: 'hunter' },
+  { name: 'ハカセ', id: 'professor' },
+  { name: 'ショクニン', id: 'worker' },
+  { name: 'ホープ', id: 'hope' },
+  { name: 'ママ', id: 'mama' },
+]
+
 export const abilityList = [
   {
     name: '汎用グループ',

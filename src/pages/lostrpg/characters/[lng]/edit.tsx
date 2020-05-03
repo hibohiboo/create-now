@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Router, { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import { Box, Button } from '@material-ui/core'
@@ -15,7 +16,7 @@ import Dropzone from 'react-dropzone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import { Character, initCharacter } from '~/store/modules/lostModule'
+import { setCharacter, useCharacter } from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
 import {
   createCharacter,
@@ -27,9 +28,9 @@ import {
 import * as lostData from '~/data/lostrpg'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
-import * as validate from '~/utils/validate'
 import useI18n from '~/hooks/use-i18n'
 import { contentLanguageMap } from '~/lib/i18n'
+import { createSetImageFile } from '~/utils/formHelper'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -59,7 +60,8 @@ const Page: NextPage = () => {
   const i18n = useI18n()
   const t = i18n.t
   const router = useRouter()
-  const [character, setCharacter] = useState<Character>(initCharacter)
+  const dispatch = useDispatch()
+  const character = useCharacter()
   const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
@@ -78,22 +80,11 @@ const Page: NextPage = () => {
     }))
 
   const classes = useStyles()
-  const [equipment, setAbility] = useState('')
+  const [ability, setAbility] = useState('')
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
 
-  const setImageFile = async (file: File) => {
-    if (!(await validate.validImageFile(file))) {
-      return
-    }
-    const reader = new FileReader()
-    reader.onloadend = async () => {
-      setFile(file)
-      setPrevUrl(reader.result.toString())
-    }
-
-    reader.readAsDataURL(file)
-  }
+  const setImageFile = createSetImageFile(setFile, setPrevUrl)
 
   const handleOnDrop = (files: File[]) => {
     setImageFile(files[0])
@@ -146,13 +137,15 @@ const Page: NextPage = () => {
     if (!id) {
       setAbilities({ ...abilities })
       if (authUser)
-        setCharacter({ ...character, playerName: authUser.displayName })
+        dispatch(
+          setCharacter({ ...character, playerName: authUser.displayName }),
+        )
       return
     }
     ;(async () => {
       const data = await getCharacter(id)
       if (data) {
-        setCharacter(data)
+        dispatch(setCharacter(data))
         setAbilities({ ...abilities, data: data.abilities })
         if (data.imageUrl) setPrevUrl(data.imageUrl)
       }
@@ -160,7 +153,7 @@ const Page: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    setCharacter({ ...character, abilities: abilities.data })
+    dispatch(setCharacter({ ...character, abilities: abilities.data }))
   }, [abilities])
 
   return (
@@ -188,7 +181,9 @@ const Page: NextPage = () => {
                 prop="playerName"
                 labelText={t('common_playerName')}
                 changeHandler={(e) =>
-                  setCharacter({ ...character, playerName: e.target.value })
+                  dispatch(
+                    setCharacter({ ...character, playerName: e.target.value }),
+                  )
                 }
               />
               <FormControl fullWidth style={{ marginTop: '10px' }}>
@@ -202,7 +197,9 @@ const Page: NextPage = () => {
                   }
                   value={character.name}
                   onChange={(e) =>
-                    setCharacter({ ...character, name: e.target.value })
+                    dispatch(
+                      setCharacter({ ...character, name: e.target.value }),
+                    )
                   }
                 />
               </FormControl>
@@ -243,7 +240,12 @@ const Page: NextPage = () => {
                   rowsMin={3}
                   value={character.freeWriting}
                   onChange={(e) =>
-                    setCharacter({ ...character, freeWriting: e.target.value })
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        freeWriting: e.target.value,
+                      }),
+                    )
                   }
                 />
               </FormControl>
@@ -276,7 +278,7 @@ const Page: NextPage = () => {
                 <Select
                   labelId="equipment-select-label"
                   id="equipment-select"
-                  value={equipment}
+                  value={ability}
                   onChange={(
                     event: React.ChangeEvent<{
                       name?: string
