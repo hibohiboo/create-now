@@ -24,7 +24,7 @@ i18n.locale(defaultLanguage)
 
 export type I18n = {
   activeLocale: Language
-  t: (...args: [keyof Dict | (string | number)[], any?, string?]) => string
+  t: (...args: [keyof Dict | (string | number)[], any?, Language?]) => string
   locale: (l: Language, dict: Dict) => void
 }
 

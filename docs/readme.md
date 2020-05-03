@@ -12,7 +12,7 @@
 
 [firebase storage](https://github.com/hibohiboo/create-now/tree/194d0e0beab4e9c36e7be0a765685e8b61b405db/)
 
-[国際化](https://github.com/hibohiboo/create-now/tree/cc6d3043f909eb112982f33bca3ac8bd7d0287e8/)
+[国際化](https://github.com/hibohiboo/create-now/tree/f4fe39604ab00883220bf72d41656b0c8b639dd7/)
 
 ## 参考
 
