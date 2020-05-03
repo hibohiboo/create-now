@@ -14,6 +14,7 @@ const languageSelector: React.FC<{ i18n: I18n }> = ({ i18n }) => {
         href="#"
         onClick={() => {
           i18n.locale('en', EN)
+          i18n.activeLocale = 'en'
         }}
       >
         English
@@ -24,6 +25,7 @@ const languageSelector: React.FC<{ i18n: I18n }> = ({ i18n }) => {
         style={{ marginLeft: '10px' }}
         onClick={() => {
           i18n.locale('ja', JA)
+          i18n.activeLocale = 'ja'
         }}
       >
         日本語

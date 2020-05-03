@@ -5,7 +5,6 @@ import Head from 'next/head'
 import { Box, Button } from '@material-ui/core'
 import useI18n from '~/hooks/use-i18n'
 import { languages, contentLanguageMap } from '~/lib/i18n'
-import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 
@@ -26,7 +25,6 @@ const HomePage = () => {
         />
       </Head>
       <h2>{t('lostrpg_character_list_title')}</h2>
-      <LanguageSelector i18n={i18n} />
       <Box mt={2}>
         {authUser ? (
           <Link

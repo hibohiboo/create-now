@@ -416,7 +416,7 @@ export const campPersonalityList = [
 
 export const abilitiesColumns = [
   { title: '名前', field: 'name' },
-  { title: 'グループ', field: 'グループ' },
+  { title: 'グループ', field: 'group' },
   { title: 'タイプ', field: 'type' },
   { title: '特技', field: 'specialty' },
   { title: '対象', field: 'target' },

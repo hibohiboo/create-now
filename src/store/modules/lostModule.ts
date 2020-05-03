@@ -25,7 +25,7 @@ export interface Camp {
   updatedAt?: any
 }
 
-interface Ability {
+export interface Ability {
   name: string
   group: string
   type: string
@@ -48,7 +48,7 @@ export interface CharacterClass {
   id: string
   name: string
 }
-interface Specialty {
+export interface Specialty {
   name: string
   area: 'Talent' | 'Head' | 'Arms' | 'Torso' | 'Legs' | 'Survival'
   type: 'BodyParts' | 'Action'
@@ -56,7 +56,7 @@ interface Specialty {
   checked: boolean
 }
 
-interface Item {
+export interface Item {
   name: string
   j: number
   weight: number
@@ -194,6 +194,15 @@ export const useCharacterEditViewModel = () =>
       classList: lostData.classList.filter(
         (item) => !character.classes.includes(item),
       ),
+      abilityList: lostData.abilityList
+        .filter(
+          (item) =>
+            item.id === 'general' ||
+            character.classes.findIndex((c) => c.id === item.id) !== -1,
+        )
+        .map((item) => item.list)
+        .flat()
+        .filter((item) => !character.abilities.includes(item)),
     }
   })
 // actions

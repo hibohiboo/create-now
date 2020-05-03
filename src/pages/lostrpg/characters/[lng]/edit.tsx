@@ -27,8 +27,9 @@ import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import {
   setCharacter,
   useCharacter,
-  CharacterClass,
   useCharacterEditViewModel,
+  CharacterClass,
+  Ability,
 } from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
 import {
@@ -80,21 +81,14 @@ const Page: NextPage = () => {
   const id = getIdFromQuery(router)
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
 
-  const [abilities, setAbilities] = React.useState({
-    columns: lostData.abilitiesColumns,
-    data: [],
-  })
-  type TableState = typeof abilities
-  const updateRowData = (
-    toNextState: (prevData: TableState['data']) => TableState['data'],
-  ) =>
-    setAbilities((prevState) => ({
-      ...prevState,
-      data: toNextState([...prevState.data]),
-    }))
+  const updateRowData = (toNextState: (d: Ability[]) => Ability[]) =>
+    dispatch(
+      setCharacter({
+        ...character,
+        abilities: toNextState([...character.abilities]),
+      }),
+    )
 
-  const classes = useStyles()
-  const [ability, setAbility] = useState('')
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
   const setImageFile = createSetImageFile(setFile, setPrevUrl)
@@ -144,26 +138,17 @@ const Page: NextPage = () => {
     }
 
     if (!id) {
-      setAbilities({ ...abilities })
-      if (authUser)
-        dispatch(
-          setCharacter({ ...character, playerName: authUser.displayName }),
-        )
+      dispatch(setCharacter({ ...character, playerName: authUser.displayName }))
       return
     }
     ;(async () => {
       const data = await getCharacter(id)
       if (data) {
         dispatch(setCharacter(data))
-        setAbilities({ ...abilities, data: data.abilities })
         if (data.imageUrl) setPrevUrl(data.imageUrl)
       }
     })()
   }, [])
-
-  useEffect(() => {
-    dispatch(setCharacter({ ...character, abilities: abilities.data }))
-  }, [abilities])
 
   return (
     <>
@@ -213,6 +198,35 @@ const Page: NextPage = () => {
                 />
               </FormControl>
             </Box>
+
+            <Box my={2}>
+              <InputLabel>{t('common_image')}</InputLabel>
+              <Dropzone onDrop={handleOnDrop} accept="image/*">
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()}>
+                    <Box
+                      border={1}
+                      style={{
+                        maxWidth: '480px',
+                        minHeight: '100px',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {prevUrl ? (
+                        <img
+                          style={{ width: '100%' }}
+                          alt={t('common_image')}
+                          src={prevUrl}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </Box>
+                    <input {...getInputProps()} />
+                  </div>
+                )}
+              </Dropzone>
+            </Box>
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>
               <List aria-label="classes">
@@ -253,33 +267,45 @@ const Page: NextPage = () => {
               />
             </Box>
 
+            <EditableMaterialTable
+              title={t('lostrpg_character_common_ability')}
+              columns={lostData.abilitiesColumns}
+              data={_.cloneDeep(character.abilities)}
+              rowAddHandler={(newData) => {
+                updateRowData((d) => [...d, newData])
+              }}
+              rowUpdateHandler={(newData, oldData) => {
+                updateRowData((d) => {
+                  d[d.findIndex((i) => i.name === oldData.name)] = newData
+                  return d
+                })
+              }}
+              rowDeleteHandler={(oldData) => {
+                updateRowData((d) => {
+                  d.splice(
+                    d.findIndex((i) => i.name === oldData.name),
+                    1,
+                  )
+                  return d
+                })
+              }}
+            />
             <Box my={2}>
-              <InputLabel>{t('common_image')}</InputLabel>
-              <Dropzone onDrop={handleOnDrop} accept="image/*">
-                {({ getRootProps, getInputProps }) => (
-                  <div {...getRootProps()}>
-                    <Box
-                      border={1}
-                      style={{
-                        maxWidth: '480px',
-                        minHeight: '100px',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {prevUrl ? (
-                        <img
-                          style={{ width: '100%' }}
-                          alt={t('common_image')}
-                          src={prevUrl}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                    <input {...getInputProps()} />
-                  </div>
-                )}
-              </Dropzone>
+              <SelectField
+                id="ability-select"
+                items={vm.abilityList}
+                value={''}
+                unselectedText={t('common_unselected')}
+                labelText={t('lostrpg_character_edit_addAbility')}
+                changeHandler={(item: Ability) => {
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      abilities: [...character.abilities, item],
+                    }),
+                  )
+                }}
+              />
             </Box>
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
@@ -299,62 +325,7 @@ const Page: NextPage = () => {
                 />
               </FormControl>
             </Box>
-            <EditableMaterialTable
-              title={t('lostrpg_character_common_ability')}
-              columns={abilities.columns}
-              data={abilities.data}
-              rowAddHandler={(newData) => {
-                updateRowData((d) => [...d, newData])
-              }}
-              rowUpdateHandler={(newData, oldData) => {
-                updateRowData((d) => {
-                  d[d.indexOf(oldData)] = newData
-                  return d
-                })
-              }}
-              rowDeleteHandler={(oldData) => {
-                updateRowData((d) => {
-                  d.splice(d.indexOf(oldData), 1)
-                  return d
-                })
-              }}
-            />
-            <Box my={2}>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="equipment-select-label">
-                  {t('lostrpg_character_edit_addAbility')}
-                </InputLabel>
-                <Select
-                  labelId="equipment-select-label"
-                  id="equipment-select"
-                  value={ability}
-                  onChange={(
-                    event: React.ChangeEvent<{
-                      name?: string
-                      value: string
-                    }>,
-                  ) => {
-                    setAbility(event.target.value)
-                    const item = lostData.abilityList.find(
-                      (i) => i.name === event.target.value,
-                    )
-                    if (item)
-                      setAbilities((prevState) => {
-                        const data = [...prevState.data]
-                        data.push(createFacility(item))
-                        return { ...prevState, data }
-                      })
-                  }}
-                >
-                  <MenuItem value="">{t('common_unselected')}</MenuItem>
-                  {lostData.abilityList[0].list.map((item) => (
-                    <MenuItem value={item.name} key={item.name}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+
             <Box my={2}>
               <Button onClick={editHandler} variant="contained" color="primary">
                 {id ? t('common_update') : t('common_create')}
