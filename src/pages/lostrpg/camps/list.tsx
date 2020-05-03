@@ -19,8 +19,7 @@ import {
   fetchCampsMore,
 } from '~/store/modules/lostModule'
 import useI18n from '~/hooks/use-i18n'
-import { contentLanguageMap } from '~/lib/i18n'
-import JA from '~/locales/ja.json'
+import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,19 +51,19 @@ const Page: NextPage = () => {
     dispatch(fetchCamps(pagenation.limit))
     dispatch(createAuthClientSide())
   }, [])
-  useEffect(() => {
-    if (i18n.activeLocale !== 'ja') return
-    i18n.locale('ja', JA)
-  }, [])
+
   return (
     <Container>
       <Box my={4}>
         <h2>{i18n.t('lostrpg_camps_list_title')}</h2>
-        {authUser ? (
-          <Link href="/lostrpg/camps/edit">{i18n.t('common_create')}</Link>
-        ) : (
-          <></>
-        )}
+        <LanguageSelector i18n={i18n} />
+        <Box mt={2}>
+          {authUser ? (
+            <Link href="/lostrpg/camps/edit">{i18n.t('common_create')}</Link>
+          ) : (
+            <></>
+          )}
+        </Box>
         <Box display="flex" style={{ maxWidth: '200px', minWidth: '50px' }}>
           <InputField
             model={search}
