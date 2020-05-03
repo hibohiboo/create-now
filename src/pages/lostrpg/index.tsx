@@ -26,6 +26,14 @@ const Page: NextPage = () => {
             {i18n.t('lostrpg_index_campList')}
           </Link>
         </li>
+        <li>
+          <Link
+            href="/lostrpg/characters/[lng]/list"
+            as={`/lostrpg/characters/${'ja'}/list`}
+          >
+            <a>{i18n.t('lostrpg_index_characters')}</a>
+          </Link>
+        </li>
       </ul>
 
       <Link href="/"> {i18n.t('common_back')}</Link>

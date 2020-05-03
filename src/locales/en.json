@@ -1,9 +1,11 @@
 {
   "lostrpg_index_title": "LOSTRPG Support Page",
   "lostrpg_index_campList": "Camp List",
+  "lostrpg_index_characters": "Character List",
   "lostrpg_camps_list_title": "LOSTRPG Camp List",
   "lostrpg_camps_list_campName": "camp name",
   "lostrpg_camps_list_campList": "camp list",
+  "lostrpg_character_list_title": "LOSTRPG Character List",
   "common_back": "Back",
   "common_create": "Create"
 }
