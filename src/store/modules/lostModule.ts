@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
+import * as lostData from '~/data/lostrpg'
 
 export interface Facility {
   name: string
@@ -43,7 +44,7 @@ export const initCamp = {
   twitterId: '',
   uid: '',
 }
-interface CharacterClass {
+export interface CharacterClass {
   id: string
   name: string
 }
@@ -186,6 +187,15 @@ export const useCharacter = () =>
       state.lost.character,
   )
 
+export const useCharacterEditViewModel = () =>
+  useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
+    const { character } = state.lost
+    return {
+      classList: lostData.classList.filter(
+        (item) => !character.classes.includes(item),
+      ),
+    }
+  })
 // actions
 const {
   setCampsLoading,

@@ -8,10 +8,12 @@
   "lostrpg_character_common_memo": "memo",
   "lostrpg_character_common_ability": "Ability",
   "lostrpg_character_common_characterName": "Character Name",
-
+  "lostrpg_character_common_class": "Class",
   "lostrpg_character_list_title": "LOSTRPG Character List",
   "lostrpg_character_edit_title": "LOSTRPG Character",
   "lostrpg_character_edit_addAbility": "Add Ability",
+  "lostrpg_character_edit_addClass": "Add Class",
+
   "common_unselected": "Unselected",
   "common_back": "Back",
   "common_create": "Create",

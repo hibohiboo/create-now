@@ -76,7 +76,6 @@ const Page: NextPage = () => {
   const [equipment, setEquipment] = useState('')
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
-
   const setImageFile = createSetImageFile(setFile, setPrevUrl)
 
   const handleOnDrop = (files: File[]) => {

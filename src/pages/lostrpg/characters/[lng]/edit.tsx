@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+import * as _ from 'lodash'
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -13,10 +14,22 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
 import Dropzone from 'react-dropzone'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import { DeleteOutline } from '@material-ui/icons'
+
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
+import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import { setCharacter, useCharacter } from '~/store/modules/lostModule'
+import {
+  setCharacter,
+  useCharacter,
+  CharacterClass,
+  useCharacterEditViewModel,
+} from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
 import {
   createCharacter,
@@ -62,6 +75,7 @@ const Page: NextPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const character = useCharacter()
+  const vm = useCharacterEditViewModel()
   const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
@@ -83,44 +97,39 @@ const Page: NextPage = () => {
   const [ability, setAbility] = useState('')
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
-
   const setImageFile = createSetImageFile(setFile, setPrevUrl)
-
   const handleOnDrop = (files: File[]) => {
     setImageFile(files[0])
   }
 
-  const editHandler = id
-    ? async () => {
-        if (!character.name) {
-          setIsSubmit(true)
-          window.scrollTo(0, 0)
-          return
-        }
-        await updateCharacter(
-          id,
-          { ...character, uid: authUser.uid },
-          authUser.uid,
-          file,
-        )
-        Router.push({ pathname: `/lostrpg/characters/view`, query: { id } })
-      }
-    : async () => {
-        if (!character.name) {
-          window.scrollTo(0, 0)
-          setIsSubmit(true)
-          return
-        }
-        const retId = await createCharacter(
-          { ...character, uid: authUser.uid },
-          authUser,
-          file,
-        )
-        Router.push({
-          pathname: `/lostrpg/characters/view`,
-          query: { id: retId },
-        })
-      }
+  const editHandler = async () => {
+    if (!character.name) {
+      setIsSubmit(true)
+      window.scrollTo(0, 0)
+      return
+    }
+
+    let retId = id
+    if (!retId) {
+      retId = await createCharacter(
+        { ...character, uid: authUser.uid },
+        authUser,
+        file,
+      )
+    } else {
+      await updateCharacter(
+        id,
+        { ...character, uid: authUser.uid },
+        authUser.uid,
+        file,
+      )
+    }
+
+    Router.push({
+      pathname: `/lostrpg/characters/view`,
+      query: { id: retId },
+    })
+  }
 
   const deleteHandler = async () => {
     if (confirm(deleteMessage)) {
@@ -204,6 +213,46 @@ const Page: NextPage = () => {
                 />
               </FormControl>
             </Box>
+            <Box my={2}>
+              <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>
+              <List aria-label="classes">
+                {character.classes.map((item) => (
+                  <ListItem button key={item.name}>
+                    <ListItemIcon
+                      onClick={() => {
+                        dispatch(
+                          setCharacter({
+                            ...character,
+                            classes: character.classes.filter(
+                              (i) => i.name !== item.name,
+                            ),
+                          }),
+                        )
+                      }}
+                    >
+                      <DeleteOutline />
+                    </ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItem>
+                ))}
+              </List>
+              <SelectField
+                id="class-select"
+                items={vm.classList}
+                value={''}
+                unselectedText={t('common_unselected')}
+                labelText={t('lostrpg_character_edit_addClass')}
+                changeHandler={(item: CharacterClass) => {
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      classes: [...character.classes, item],
+                    }),
+                  )
+                }}
+              />
+            </Box>
+
             <Box my={2}>
               <InputLabel>{t('common_image')}</InputLabel>
               <Dropzone onDrop={handleOnDrop} accept="image/*">
