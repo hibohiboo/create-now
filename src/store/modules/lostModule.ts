@@ -191,17 +191,17 @@ export const useCharacter = () =>
 const specialtiesTableRows = () =>
   _.range(11).map((y) => ({
     number: y + 2,
-    talent: lostData.specialties[0 + y * 6],
+    talent: lostData.specialties[y],
     a: '',
-    head: lostData.specialties[1 + y * 6],
+    head: lostData.specialties[11 + y],
     b: '',
-    arms: lostData.specialties[2 + y * 6],
+    arms: lostData.specialties[22 + y],
     c: '',
-    torso: lostData.specialties[3 + y * 6],
+    torso: lostData.specialties[33 + y],
     d: '',
-    legs: lostData.specialties[4 + y * 6],
+    legs: lostData.specialties[44 + y],
     e: '',
-    survival: lostData.specialties[5 + y * 6],
+    survival: lostData.specialties[55 + y],
   }))
 
 export const useCharacterEditViewModel = () =>
