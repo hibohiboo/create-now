@@ -20,6 +20,7 @@ import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
+import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { useAuth } from '~/store/modules/authModule'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
@@ -54,7 +55,6 @@ const Page: NextPage = () => {
   const dispatch = useDispatch()
   const character = useCharacter()
   const vm = useCharacterEditViewModel()
-  const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
 
@@ -66,6 +66,7 @@ const Page: NextPage = () => {
       }),
     )
 
+  const [isSubmit, setIsSubmit] = useState(false)
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
   const setImageFile = createSetImageFile(setFile, setPrevUrl)
@@ -203,6 +204,13 @@ const Page: NextPage = () => {
                   </div>
                 )}
               </Dropzone>
+            </Box>
+            <Box my={2}>
+              <InputLabel>{t('lostrpg_character_common_specialty')}</InputLabel>
+              <SpecialtiesTable
+                columns={vm.specialtiesTableColumns}
+                rows={vm.specialtiesTableRows}
+              />
             </Box>
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>

@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
 import { setupStore } from '~/store'
 import theme from '~/theme'
-import '~/styles/global.css'
+import '~/styles/global.scss'
 import I18n from '~/lib/i18n'
 
 const store = setupStore()

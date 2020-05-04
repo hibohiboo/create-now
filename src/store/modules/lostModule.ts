@@ -50,8 +50,8 @@ export interface CharacterClass {
 }
 export interface Specialty {
   name: string
-  area: 'Talent' | 'Head' | 'Arms' | 'Torso' | 'Legs' | 'Survival'
-  type: 'BodyParts' | 'Action'
+  area: 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
+  type: 'bodyParts' | 'zction'
   point: { x: number; y: number }
   checked: boolean
 }
@@ -208,6 +208,24 @@ export const useCharacterEditViewModel = () =>
         .map((item) => item.list)
         .flat()
         .filter((item) => !character.abilities.includes(item)),
+      specialtiesTableColumns: lostData.specialtiesTableColumns,
+      // 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
+      specialtiesTableRows: [
+        {
+          number: '2',
+          talent: '追跡',
+          a: '',
+          head: '聴く',
+          b: '',
+          arms: '操作',
+          c: '',
+          torso: '塞ぐ',
+          d: '',
+          legs: '泳ぐ',
+          e: '',
+          survival: '地理',
+        },
+      ],
     }
   })
 // actions

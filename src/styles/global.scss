@@ -24,3 +24,12 @@ img {
   max-width: 100%;
   display: block;
 }
+
+.spacialty-table {
+  td,
+  th {
+    border: 1px solid rgba(224, 224, 224, 1);
+    white-space: nowrap;
+    padding: 0;
+  }
+}
