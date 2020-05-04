@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import Router, { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import Dropzone from 'react-dropzone'
-import { Box, Button } from '@material-ui/core'
+import { Box, Button, Chip } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
@@ -205,13 +205,7 @@ const Page: NextPage = () => {
                 )}
               </Dropzone>
             </Box>
-            <Box my={2}>
-              <InputLabel>{t('lostrpg_character_common_specialty')}</InputLabel>
-              <SpecialtiesTable
-                columns={vm.specialtiesTableColumns}
-                rows={vm.specialtiesTableRows}
-              />
-            </Box>
+
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>
               <List aria-label="classes">
@@ -250,6 +244,28 @@ const Page: NextPage = () => {
                   )
                 }}
               />
+            </Box>
+
+            <Box my={2}>
+              <InputLabel>{t('lostrpg_character_common_specialty')}</InputLabel>
+              <SpecialtiesTable
+                columns={vm.specialtiesTableColumns}
+                rows={vm.specialtiesTableRows}
+              />
+            </Box>
+            <Box my={2}>
+              <InputLabel>
+                {t('lostrpg_character_common_choosedSpacialty')}
+              </InputLabel>
+              <Box m={2}>
+                {character.specialties.map((name) => (
+                  <Chip
+                    style={{ marginLeft: '0.5rem' }}
+                    key={name}
+                    label={name}
+                  />
+                ))}
+              </Box>
             </Box>
 
             <EditableMaterialTable

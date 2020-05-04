@@ -49,13 +49,6 @@ export interface CharacterClass {
   id: string
   name: string
 }
-export interface Specialty {
-  name: string
-  area: 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
-  type: 'bodyParts' | 'zction'
-  point: { x: number; y: number }
-  checked: boolean
-}
 
 export interface Item {
   name: string
@@ -72,7 +65,7 @@ export interface Item {
 export interface Character {
   name: string
   classes: CharacterClass[]
-  specialties: Specialty[]
+  specialties: string[]
   abilities: Ability[]
   gaps: ('A' | 'B' | 'C' | 'D' | 'E')[]
   items: Item[]
@@ -93,7 +86,7 @@ export interface Character {
 export const initCharacter: Character = {
   name: '',
   classes: [],
-  specialties: [],
+  specialties: ['追跡', '口'],
   abilities: [],
   gaps: ['A', 'B'],
   items: [],
@@ -160,7 +153,6 @@ const lostModule = createSlice({
       state.camps = state.camps.concat(action.payload)
     },
     setCharacter: (state, action: PayloadAction<Character>) => {
-      console.log('aaa', action)
       state.character = action.payload
     },
     setError: (state, action: PayloadAction<string>) => {
@@ -200,7 +192,9 @@ const specialtiesTableColumns = (character: Character) => {
 const specialtiesTableRows = (character: Character) => {
   const makeData = (name, gap?) => {
     const isBodyParts = lostData.bodyParts.includes(name)
-    const selected = gap && character.gaps.includes(gap)
+    const selected =
+      (gap && character.gaps.includes(gap)) ||
+      character.specialties.includes(name)
     return { name, isBodyParts, selected }
   }
 
