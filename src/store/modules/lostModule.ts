@@ -60,6 +60,14 @@ export interface Item {
   target: string
   trait: string
   effect: string
+  number?: number
+  id?: string
+}
+
+export interface Bag {
+  name: string
+  capacity: number
+  items: Item[]
 }
 
 export interface Character {
@@ -68,6 +76,7 @@ export interface Character {
   specialties: string[]
   abilities: Ability[]
   gaps: ('A' | 'B' | 'C' | 'D' | 'E')[]
+  bags: Bag[]
   items: Item[]
   staminaBase: number
   willPowerBase: number
@@ -91,6 +100,7 @@ export const initCharacter: Character = {
   specialties: [],
   abilities: [],
   gaps: [],
+  bags: [],
   items: [],
   staminaBase: 5,
   willPowerBase: 10,
@@ -276,6 +286,11 @@ export const useCharacterEditViewModel = () =>
       // 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
       specialtiesTableRows: specialtiesTableRows(character),
       damageBodyParts: damageBodyParts(character),
+      itemsColumns:
+        i18n.activeLocale === 'ja'
+          ? lostData.itemsColumns
+          : lostData.itemsColumnsEn,
+      items: i18n.activeLocale === 'ja' ? lostData.itemList : lostData.itemList,
     }
   })
 // actions

@@ -36,6 +36,7 @@ import {
   useCharacterEditViewModel,
   CharacterClass,
   Ability,
+  Item,
 } from '~/store/modules/lostModule'
 import {
   createCharacter,
@@ -61,13 +62,11 @@ const Page: NextPage = () => {
   const id = getIdFromQuery(router)
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
 
-  const updateRowData = (toNextState: (d: Ability[]) => Ability[]) =>
-    dispatch(
-      setCharacter({
-        ...character,
-        abilities: toNextState([...character.abilities]),
-      }),
-    )
+  const updateRowData = (prop: string, toNextState: (d: any[]) => any[]) => {
+    const newData = { ...character }
+    newData[prop] = toNextState([...character[prop]])
+    dispatch(setCharacter(newData))
+  }
 
   const [isSubmit, setIsSubmit] = useState(false)
   const [prevUrl, setPrevUrl] = useState('')
@@ -341,16 +340,16 @@ const Page: NextPage = () => {
               columns={vm.abilitiesColumns}
               data={_.cloneDeep(character.abilities)}
               rowAddHandler={(newData) => {
-                updateRowData((d) => [...d, newData])
+                updateRowData('abilities', (d) => [...d, newData])
               }}
               rowUpdateHandler={(newData, oldData) => {
-                updateRowData((d) => {
+                updateRowData('abilities', (d) => {
                   d[d.findIndex((i) => i.name === oldData.name)] = newData
                   return d
                 })
               }}
               rowDeleteHandler={(oldData) => {
-                updateRowData((d) => {
+                updateRowData('abilities', (d) => {
                   d.splice(
                     d.findIndex((i) => i.name === oldData.name),
                     1,
@@ -421,7 +420,7 @@ const Page: NextPage = () => {
               />
             </Box>
 
-            <Box my={2}>
+            <Box my={2} display="flex">
               <InputField
                 model={character}
                 type="number"
@@ -435,6 +434,66 @@ const Page: NextPage = () => {
                     }),
                   )
                 }
+              />
+              <InputField
+                model={{
+                  weight: character.items.reduce(
+                    (sum, { weight, number }) => sum + weight * number,
+                    0,
+                  ),
+                }}
+                type="number"
+                prop="weight"
+                labelText={t('lostrpg_character_common_item_weight')}
+                readonly={true}
+              />
+            </Box>
+            <Box my={2}>
+              <Box my={2}>
+                <SelectField
+                  id="items-select"
+                  items={vm.items}
+                  value={''}
+                  unselectedText={t('common_unselected')}
+                  labelText={t('lostrpg_character_edit_addItem')}
+                  changeHandler={(item: Item) => {
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        items: [
+                          ...character.items,
+                          { ...item, id: _.uniqueId(item.name), number: 1 },
+                        ],
+                      }),
+                    )
+                  }}
+                />
+              </Box>
+              <EditableMaterialTable
+                title={t('lostrpg_character_common_item')}
+                columns={vm.itemsColumns}
+                data={_.cloneDeep(character.items)}
+                rowAddHandler={(newData) => {
+                  updateRowData('items', (d) => [
+                    ...d,
+                    { ...newData, id: _.uniqueId(newData.name) },
+                  ])
+                }}
+                rowUpdateHandler={(newData, oldData) => {
+                  updateRowData('items', (d) => {
+                    d[d.findIndex((i) => i.id === oldData.id)] = newData
+                    return d
+                  })
+                }}
+                rowDeleteHandler={(oldData) => {
+                  updateRowData('items', (d) => {
+                    d.splice(
+                      d.findIndex((i) => i.id === oldData.id),
+                      1,
+                    )
+                    return d
+                  })
+                }}
               />
             </Box>
 

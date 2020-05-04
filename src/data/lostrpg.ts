@@ -1431,6 +1431,32 @@ export const abilityList = [
   },
 ]
 
+export const itemsColumns = [
+  { title: '名前', field: 'name' },
+  { title: '個数', field: 'number', type: 'numeric' as 'numeric' },
+
+  { title: '価格', field: 'j', type: 'numeric' as 'numeric' },
+  { title: '重量', field: 'weight', type: 'numeric' as 'numeric' },
+  { title: 'タイプ', field: 'type' },
+  { title: '部位', field: 'area' },
+  { title: '特技', field: 'specialty' },
+  { title: '対象', field: 'target' },
+  { title: '特性', field: 'trait' },
+  { title: '効果', field: 'effect' },
+]
+export const itemsColumnsEn = [
+  { title: 'Name', field: 'name' },
+  { title: 'Number', field: 'number', type: 'numeric' as 'numeric' },
+  { title: 'Value', field: 'j', type: 'numeric' as 'numeric' },
+  { title: 'Weight', field: 'weight', type: 'numeric' as 'numeric' },
+  { title: 'Type', field: 'type' },
+  { title: 'Area', field: 'area' },
+  { title: 'Specialty', field: 'specialty' },
+  { title: 'Target', field: 'target' },
+  { title: 'Trait', field: 'trait' },
+  { title: 'Effect', field: 'effect' },
+]
+
 export const itemList = [
   {
     name: 'ジャーキー',

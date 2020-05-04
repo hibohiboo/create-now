@@ -17,10 +17,19 @@ const InputField: React.FC<{
   type: string
   prop: string
   labelText: string
-  changeHandler: (
+  changeHandler?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => void
-}> = ({ model, type, prop, labelText, changeHandler }) => (
+  readonly?: boolean
+}> = ({
+  model,
+  type,
+  prop,
+  labelText,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  changeHandler = () => {},
+  readonly = false,
+}) => (
   <FormControl fullWidth style={{ marginTop: '10px' }}>
     <InputLabel>{labelText}</InputLabel>
     <Input type={type} value={model[prop]} onChange={changeHandler} />

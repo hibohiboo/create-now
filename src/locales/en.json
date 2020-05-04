@@ -18,12 +18,15 @@
   "lostrpg_character_common_stamina": "Stamina",
   "lostrpg_character_common_willPower": "Will Power",
   "lostrpg_character_common_carryingCapacity": "Carrying Capacity",
+  "lostrpg_character_common_item": "Items",
+  "lostrpg_character_common_item_weight": "Items Weight",
 
   "lostrpg_character_list_title": "LOSTRPG Character List",
   "lostrpg_character_edit_title": "LOSTRPG Character",
   "lostrpg_character_edit_addAbility": "Add Ability",
   "lostrpg_character_edit_addClass": "Add Class",
   "lostrpg_character_edit_resetDamage": "Reset Damage",
+  "lostrpg_character_edit_addItem": "Add Item",
 
   "common_unselected": "Unselected",
   "common_back": "Back",
