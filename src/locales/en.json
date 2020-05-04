@@ -15,6 +15,7 @@
   "lostrpg_character_edit_title": "LOSTRPG Character",
   "lostrpg_character_edit_addAbility": "Add Ability",
   "lostrpg_character_edit_addClass": "Add Class",
+  "lostrpg_character_edit_resetDamage": "Reset Damage",
 
   "common_unselected": "Unselected",
   "common_back": "Back",

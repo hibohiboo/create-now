@@ -249,6 +249,17 @@ const Page: NextPage = () => {
 
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_specialty')}</InputLabel>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  dispatch(
+                    setCharacter({ ...character, damagedSpecialties: [] }),
+                  )
+                }
+              >
+                {t('lostrpg_character_edit_resetDamage')}
+              </Button>
               <SpecialtiesTable
                 columns={vm.specialtiesTableColumns}
                 rows={vm.specialtiesTableRows}

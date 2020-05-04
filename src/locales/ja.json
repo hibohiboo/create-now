@@ -15,6 +15,7 @@
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",
   "lostrpg_character_edit_addClass": "クラス追加",
+  "lostrpg_character_edit_resetDamage": "ダメージを全て回復",
 
   "common_unselected": "未選択",
   "common_back": "戻る",
