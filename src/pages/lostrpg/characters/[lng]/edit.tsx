@@ -35,6 +35,7 @@ import {
   setCharacterBag,
   useCharacter,
   useCharacterEditViewModel,
+  initBag,
   CharacterClass,
   Ability,
   Item,
@@ -509,7 +510,25 @@ const Page: NextPage = () => {
               }}
             >
               <InputLabel>{t('lostrpg_character_common_bag')}</InputLabel>
-
+              <Box my={2}>
+                <Button
+                  onClick={(e) =>
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        bags: [
+                          ...character.bags,
+                          { ...initBag, id: _.uniqueId(initBag.id) },
+                        ],
+                      }),
+                    )
+                  }
+                  variant="contained"
+                  color="primary"
+                >
+                  {`${t('lostrpg_character_common_bag')}${t('common_add')}`}
+                </Button>
+              </Box>
               {character.bags.map((bag) => {
                 return (
                   <Box
@@ -520,20 +539,39 @@ const Page: NextPage = () => {
                       border: 'solid 1px rgba(224, 224, 224, 1)',
                     }}
                   >
-                    <InputField
-                      model={bag}
-                      type="string"
-                      prop="name"
-                      labelText={t('common_name')}
-                      changeHandler={(e) =>
-                        dispatch(
-                          setCharacterBag({
-                            ...bag,
-                            name: e.target.value,
-                          }),
-                        )
-                      }
-                    />
+                    <Box display="flex">
+                      <InputField
+                        model={bag}
+                        type="string"
+                        prop="name"
+                        labelText={t('common_name')}
+                        changeHandler={(e) =>
+                          dispatch(
+                            setCharacterBag({
+                              ...bag,
+                              name: e.target.value,
+                            }),
+                          )
+                        }
+                      />
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {
+                          if (!confirm(t('message_are_you_sure_remove'))) return
+                          dispatch(
+                            setCharacter({
+                              ...character,
+                              bags: character.bags.filter(
+                                (b) => b.id !== bag.id,
+                              ),
+                            }),
+                          )
+                        }}
+                      >
+                        <DeleteOutline />
+                      </Button>
+                    </Box>
 
                     <Box my={2} display="flex">
                       <InputField

@@ -94,6 +94,12 @@ export interface Character {
   createdAt?: any
   updatedAt?: any
 }
+export const initBag = {
+  id: 'bag',
+  name: '新しい袋',
+  capacity: 1,
+  items: [],
+}
 
 export const initCharacter: Character = {
   name: '',

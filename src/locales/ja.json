@@ -29,6 +29,7 @@
   "lostrpg_character_edit_resetDamage": "ダメージを全て回復",
   "lostrpg_character_edit_addItem": "アイテム追加",
 
+  "common_add": "追加",
   "common_name": "名前",
   "common_unselected": "未選択",
   "common_back": "戻る",
@@ -40,5 +41,6 @@
   "common_config": "設定",
   "common_playerName": "プレイヤー名",
   "message_required": "必須項目です。入力してください",
-  "message_please_drop_image": "クリックかドロップで画像を設定"
+  "message_please_drop_image": "クリックかドロップで画像を設定",
+  "message_are_you_sure_remove": "削除してよいですか？"
 }

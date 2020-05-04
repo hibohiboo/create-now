@@ -30,6 +30,7 @@
   "lostrpg_character_edit_resetDamage": "Reset Damage",
   "lostrpg_character_edit_addItem": "Add Item",
 
+  "common_add": "Add",
   "common_name": "Name",
   "common_unselected": "Unselected",
   "common_back": "Back",
@@ -41,5 +42,6 @@
   "common_config": "Config",
   "common_playerName": "Player Name",
   "message_required": "required",
-  "message_please_drop_image": "drop on image"
+  "message_please_drop_image": "drop on image",
+  "message_are_you_sure_remove": "Are you sure remove"
 }
