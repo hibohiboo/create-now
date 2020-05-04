@@ -11,6 +11,8 @@
   "lostrpg_character_common_specialty": "特技",
   "lostrpg_character_common_characterName": "キャラクター名",
   "lostrpg_character_common_choosedSpacialty": "習得特技",
+  "lostrpg_character_common_bodyPartsTable": "身体部位決定表",
+  "lostrpg_character_common_attackersChoice": "攻撃したキャラクターの任意の部位",
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",

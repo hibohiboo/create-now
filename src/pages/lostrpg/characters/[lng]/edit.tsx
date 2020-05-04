@@ -21,6 +21,8 @@ import InputField from '~/components/form/InputField'
 import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
+import DamageTable from '~/components/organisms/lostrpg/DamageTable'
+
 import { useAuth } from '~/store/modules/authModule'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
@@ -301,6 +303,16 @@ const Page: NextPage = () => {
                   />
                 ))}
               </Box>
+            </Box>
+            <Box my={2}>
+              <InputLabel>
+                {t('lostrpg_character_common_bodyPartsTable')}
+              </InputLabel>
+
+              <DamageTable
+                rows={vm.damageBodyParts}
+                damageHandler={(name) => dispatch(toggleCharacterDamage(name))}
+              />
             </Box>
 
             <EditableMaterialTable

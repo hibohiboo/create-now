@@ -88,9 +88,9 @@ export interface Character {
 export const initCharacter: Character = {
   name: '',
   classes: [],
-  specialties: ['追跡', '口'],
+  specialties: [],
   abilities: [],
-  gaps: ['A', 'B'],
+  gaps: [],
   items: [],
   staminaBase: 5,
   willPowerBase: 10,
@@ -98,7 +98,7 @@ export const initCharacter: Character = {
   carryingCapacity: 10,
   stamina: 10,
   willPower: 10,
-  damagedSpecialties: ['殴る'],
+  damagedSpecialties: [],
   freeWriting: '',
   playerName: '',
   createdAt: '',
@@ -243,6 +243,14 @@ const specialtiesTableRows = (character: Character) => {
   }))
 }
 
+const damageBodyParts = (character: Character) => {
+  const makeData = (name) => {
+    const damaged = character.damagedSpecialties.includes(name)
+    return { name, damaged }
+  }
+  return lostData.bodyParts.map(makeData)
+}
+
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
     const i18n = useI18n()
@@ -267,6 +275,7 @@ export const useCharacterEditViewModel = () =>
       specialtiesTableColumns: specialtiesTableColumns(character),
       // 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
       specialtiesTableRows: specialtiesTableRows(character),
+      damageBodyParts: damageBodyParts(character),
     }
   })
 // actions
