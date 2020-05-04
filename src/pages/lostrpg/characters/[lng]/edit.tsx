@@ -683,12 +683,23 @@ const Page: NextPage = () => {
                     title: t('common_name'),
                     field: 'name',
                     render: (rowData) => {
-                      console.log('row', rowData)
+                      const items = vm.items.filter(
+                        (i) =>
+                          i.area === rowData['equipedArea'] ||
+                          ([
+                            t('lostrpg_character_common_rightHand'),
+                            t('lostrpg_character_common_leftHand'),
+                          ].includes(rowData['equipedArea']) &&
+                            [
+                              t('lostrpg_character_common_oneHand'),
+                              t('lostrpg_character_common_twoHand'),
+                            ].includes(i.area)),
+                      )
                       return (
                         <Box style={{ minWidth: '100px' }}>
                           <SelectField
                             id={`${rowData['equipedArea']}-equip-items-select`}
-                            items={vm.items}
+                            items={items}
                             value={rowData['name']}
                             unselectedText={t('common_unselected')}
                             labelText={`${t(
