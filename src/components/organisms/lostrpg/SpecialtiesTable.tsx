@@ -72,7 +72,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 })}
               >
                 {row.talent.name}
-                <Checkbox />
+                <Checkbox checked={row.talent.damaged} />
               </TableCell>
               <TableCell
                 className={cn({
@@ -89,7 +89,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 })}
               >
                 <span>{row.head.name}</span>
-                <Checkbox />
+                <Checkbox checked={row.head.damaged} />
               </TableCell>
               <TableCell
                 className={cn({
@@ -106,7 +106,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 })}
               >
                 <span>{row.arms.name}</span>
-                <Checkbox />
+                <Checkbox checked={row.arms.damaged} />
               </TableCell>
               <TableCell
                 className={cn({
@@ -123,7 +123,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 })}
               >
                 <span>{row.torso.name}</span>
-                <Checkbox />
+                <Checkbox checked={row.torso.damaged} />
               </TableCell>
               <TableCell
                 className={cn({
@@ -140,7 +140,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 })}
               >
                 <span>{row.legs.name}</span>
-                <Checkbox />
+                <Checkbox checked={row.legs.damaged} />
               </TableCell>
               <TableCell
                 className={cn({
@@ -156,7 +156,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 })}
               >
                 {row.survival.name}
-                <Checkbox />
+                <Checkbox checked={row.survival.damaged} />
               </TableCell>
             </TableRow>
           ))}

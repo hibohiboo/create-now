@@ -70,11 +70,12 @@ export interface Character {
   gaps: ('A' | 'B' | 'C' | 'D' | 'E')[]
   items: Item[]
   staminaBase: number
-  stamina: number
   willPowerBase: number
-  willPower: number
   statusAilments: string[]
   carryingCapacity: number
+  stamina: number
+  willPower: number
+  damagedSpecialties: string[]
   freeWriting?: string
   playerName?: string
   uid?: string
@@ -83,6 +84,7 @@ export interface Character {
   createdAt?: any
   updatedAt?: any
 }
+
 export const initCharacter: Character = {
   name: '',
   classes: [],
@@ -91,11 +93,12 @@ export const initCharacter: Character = {
   gaps: ['A', 'B'],
   items: [],
   staminaBase: 5,
-  stamina: 10,
   willPowerBase: 10,
-  willPower: 10,
   statusAilments: [],
   carryingCapacity: 10,
+  stamina: 10,
+  willPower: 10,
+  damagedSpecialties: ['殴る'],
   freeWriting: '',
   playerName: '',
   createdAt: '',
@@ -195,7 +198,8 @@ const specialtiesTableRows = (character: Character) => {
     const selected =
       (gap && character.gaps.includes(gap)) ||
       character.specialties.includes(name)
-    return { name, isBodyParts, selected }
+    const damaged = character.damagedSpecialties.includes(name)
+    return { name, isBodyParts, selected, damaged }
   }
 
   return _.range(11).map((y) => ({
