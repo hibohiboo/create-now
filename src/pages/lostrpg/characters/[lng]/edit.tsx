@@ -32,11 +32,13 @@ import { createSetImageFile } from '~/utils/formHelper'
 import {
   setCharacter,
   toggleCharacterDamage,
+  setCharacterBag,
   useCharacter,
   useCharacterEditViewModel,
   CharacterClass,
   Ability,
   Item,
+  Bag,
 } from '~/store/modules/lostModule'
 import {
   createCharacter,
@@ -66,6 +68,9 @@ const Page: NextPage = () => {
     const newData = { ...character }
     newData[prop] = toNextState([...character[prop]])
     dispatch(setCharacter(newData))
+  }
+  const updateRowDataBags = (bag: Bag, toNextState: (d: any[]) => any[]) => {
+    dispatch(setCharacterBag({ ...bag, items: toNextState([...bag.items]) }))
   }
 
   const [isSubmit, setIsSubmit] = useState(false)
@@ -496,7 +501,117 @@ const Page: NextPage = () => {
                 }}
               />
             </Box>
+            <Box
+              my={2}
+              style={{
+                padding: '5px',
+                border: 'solid 1px rgba(224, 224, 224, 1)',
+              }}
+            >
+              <InputLabel>{t('lostrpg_character_common_bag')}</InputLabel>
 
+              {character.bags.map((bag) => {
+                return (
+                  <Box
+                    key={bag.id}
+                    my={2}
+                    style={{
+                      padding: '5px',
+                      border: 'solid 1px rgba(224, 224, 224, 1)',
+                    }}
+                  >
+                    <InputField
+                      model={bag}
+                      type="string"
+                      prop="name"
+                      labelText={t('common_name')}
+                      changeHandler={(e) =>
+                        dispatch(
+                          setCharacterBag({
+                            ...bag,
+                            name: e.target.value,
+                          }),
+                        )
+                      }
+                    />
+
+                    <Box my={2} display="flex">
+                      <InputField
+                        model={bag}
+                        type="number"
+                        prop="capacity"
+                        labelText={t('lostrpg_character_common_bag_capacity')}
+                        changeHandler={(e) =>
+                          dispatch(
+                            setCharacterBag({
+                              ...bag,
+                              capacity: Number(e.target.value),
+                            }),
+                          )
+                        }
+                      />
+                      <InputField
+                        model={{
+                          weight: bag.items.reduce(
+                            (sum, { weight, number }) => sum + weight * number,
+                            0,
+                          ),
+                        }}
+                        type="number"
+                        prop="weight"
+                        labelText={t('lostrpg_character_common_item_weight')}
+                        readonly={true}
+                      />
+                    </Box>
+                    <SelectField
+                      id={`${bag.id}-items-select`}
+                      items={vm.items}
+                      value={''}
+                      unselectedText={t('common_unselected')}
+                      labelText={t('lostrpg_character_edit_addItem')}
+                      changeHandler={(item: Item) => {
+                        dispatch(
+                          setCharacterBag({
+                            ...bag,
+                            items: [
+                              ...bag.items,
+                              { ...item, id: _.uniqueId(item.name), number: 1 },
+                            ],
+                          }),
+                        )
+                      }}
+                    />
+
+                    <EditableMaterialTable
+                      title={t('lostrpg_character_common_item')}
+                      columns={vm.itemsColumns}
+                      data={_.cloneDeep(bag.items)}
+                      rowAddHandler={(newData) => {
+                        updateRowDataBags(bag, (d) => [
+                          ...d,
+                          { ...newData, id: _.uniqueId(newData.name) },
+                        ])
+                      }}
+                      rowUpdateHandler={(newData, oldData) => {
+                        updateRowDataBags(bag, (d) => {
+                          d[d.findIndex((i) => i.id === oldData.id)] = newData
+                          return d
+                        })
+                      }}
+                      rowDeleteHandler={(oldData) => {
+                        updateRowDataBags(bag, (d) => {
+                          d.splice(
+                            d.findIndex((i) => i.id === oldData.id),
+                            1,
+                          )
+                          return d
+                        })
+                      }}
+                    />
+                  </Box>
+                )
+              })}
+            </Box>
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>

@@ -61,13 +61,14 @@ export interface Item {
   trait: string
   effect: string
   number?: number
-  id?: string
+  id: string // テーブルで編集するとき用のユニークなID
 }
 
 export interface Bag {
   name: string
   capacity: number
   items: Item[]
+  id: string // テーブルで編集するとき用のユニークなID
 }
 
 export interface Character {
@@ -100,8 +101,44 @@ export const initCharacter: Character = {
   specialties: [],
   abilities: [],
   gaps: [],
-  bags: [],
-  items: [],
+  bags: [
+    {
+      id: 'first-bag-リュック',
+      name: 'リュックサック',
+      capacity: 10,
+      items: [
+        {
+          id: 'first-jurkey',
+          name: 'ジャーキー',
+          number: 10,
+          j: 1,
+          weight: 1,
+          type: '支援',
+          area: '-',
+          specialty: '-',
+          target: '自身',
+          trait: '食料',
+          effect: '1日分の食料。【気力】が1点増加する。通貨単位J。',
+        },
+      ],
+    },
+  ],
+  items: [
+    {
+      id: 'first-bag',
+      name: 'リュックサック',
+      number: 1,
+      j: 5,
+      weight: 2,
+      type: '道具',
+      area: '-',
+      specialty: '-',
+      target: '-',
+      trait: '袋',
+      effect:
+        '総重量10まで袋の中にアイテムを入れることができる。袋の中のアイテムの重量は所持限界から無視する。',
+    },
+  ],
   staminaBase: 5,
   willPowerBase: 10,
   statusAilments: [],
@@ -193,6 +230,16 @@ const lostModule = createSlice({
         if (!target || damagedSpecialties.includes(target)) return
         state.character.damagedSpecialties.push(target)
       })
+    },
+    setCharacterBag: (state, action: PayloadAction<Bag>) => {
+      const { bags } = state.character
+
+      const index = bags.findIndex((bag) => bag.id === action.payload.id)
+      if (index === -1) {
+        state.character.bags = [...bags, action.payload]
+        return
+      }
+      state.character.bags[index] = action.payload
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload
@@ -302,7 +349,11 @@ const {
   setError,
 } = lostModule.actions
 
-export const { setCharacter, toggleCharacterDamage } = lostModule.actions
+export const {
+  setCharacter,
+  toggleCharacterDamage,
+  setCharacterBag,
+} = lostModule.actions
 
 interface CampLoaded {
   camps: Camp[]

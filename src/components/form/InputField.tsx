@@ -32,7 +32,12 @@ const InputField: React.FC<{
 }) => (
   <FormControl fullWidth style={{ marginTop: '10px' }}>
     <InputLabel>{labelText}</InputLabel>
-    <Input type={type} value={model[prop]} onChange={changeHandler} />
+    <Input
+      type={type}
+      value={model[prop]}
+      onChange={changeHandler}
+      readOnly={readonly}
+    />
   </FormControl>
 )
 export default InputField
