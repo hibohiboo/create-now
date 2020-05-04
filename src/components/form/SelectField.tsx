@@ -17,7 +17,7 @@ const SelectField: React.FC<{
       value={value}
       onChange={(event) => {
         const item = items.find((i) => i.name === event.target.value)
-        if (item) changeHandler(item)
+        changeHandler(item)
       }}
     >
       <MenuItem value="">{unselectedText}</MenuItem>

@@ -223,13 +223,14 @@ const Page: NextPage = () => {
                   value={''}
                   unselectedText={t('common_unselected')}
                   labelText={t('lostrpg_character_edit_addClass')}
-                  changeHandler={(item: CharacterClass) => {
-                    dispatch(
-                      setCharacter({
-                        ...character,
-                        classes: [...character.classes, item],
-                      }),
-                    )
+                  changeHandler={(item: CharacterClass | null) => {
+                    item &&
+                      dispatch(
+                        setCharacter({
+                          ...character,
+                          classes: [...character.classes, item],
+                        }),
+                      )
                   }}
                 />
               </Box>
@@ -331,13 +332,14 @@ const Page: NextPage = () => {
                 value={''}
                 unselectedText={t('common_unselected')}
                 labelText={t('lostrpg_character_edit_addAbility')}
-                changeHandler={(item: Ability) => {
-                  dispatch(
-                    setCharacter({
-                      ...character,
-                      abilities: [...character.abilities, item],
-                    }),
-                  )
+                changeHandler={(item: Ability | null) => {
+                  item &&
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        abilities: [...character.abilities, item],
+                      }),
+                    )
                 }}
               />
             </Box>
@@ -463,16 +465,17 @@ const Page: NextPage = () => {
                   value={''}
                   unselectedText={t('common_unselected')}
                   labelText={t('lostrpg_character_edit_addItem')}
-                  changeHandler={(item: Item) => {
-                    dispatch(
-                      setCharacter({
-                        ...character,
-                        items: [
-                          ...character.items,
-                          { ...item, id: _.uniqueId(item.name), number: 1 },
-                        ],
-                      }),
-                    )
+                  changeHandler={(item: Item | null) => {
+                    item &&
+                      dispatch(
+                        setCharacter({
+                          ...character,
+                          items: [
+                            ...character.items,
+                            { ...item, id: _.uniqueId(item.name), number: 1 },
+                          ],
+                        }),
+                      )
                   }}
                 />
               </Box>
@@ -608,16 +611,21 @@ const Page: NextPage = () => {
                       value={''}
                       unselectedText={t('common_unselected')}
                       labelText={t('lostrpg_character_edit_addItem')}
-                      changeHandler={(item: Item) => {
-                        dispatch(
-                          setCharacterBag({
-                            ...bag,
-                            items: [
-                              ...bag.items,
-                              { ...item, id: _.uniqueId(item.name), number: 1 },
-                            ],
-                          }),
-                        )
+                      changeHandler={(item: Item | null) => {
+                        item &&
+                          dispatch(
+                            setCharacterBag({
+                              ...bag,
+                              items: [
+                                ...bag.items,
+                                {
+                                  ...item,
+                                  id: _.uniqueId(item.name),
+                                  number: 1,
+                                },
+                              ],
+                            }),
+                          )
                       }}
                     />
 
@@ -670,6 +678,50 @@ const Page: NextPage = () => {
                   {
                     title: t('lostrpg_character_common_area'),
                     field: 'equipedArea',
+                  },
+                  {
+                    title: t('common_name'),
+                    field: 'name',
+                    render: (rowData) => {
+                      console.log('row', rowData)
+                      return (
+                        <Box style={{ minWidth: '100px' }}>
+                          <SelectField
+                            id={`${rowData['equipedArea']}-equip-items-select`}
+                            items={vm.items}
+                            value={rowData['name']}
+                            unselectedText={t('common_unselected')}
+                            labelText={`${t(
+                              'lostrpg_character_common_equipment',
+                            )}${t('common_add')}`}
+                            changeHandler={(item: Item | null) => {
+                              let data = {
+                                ...character,
+                                equipments: character.equipments.filter(
+                                  (i) =>
+                                    i.equipedArea !== rowData['equipedArea'],
+                                ),
+                              }
+                              if (item) {
+                                data = {
+                                  ...character,
+                                  equipments: [
+                                    ...data.equipments,
+                                    {
+                                      ...item,
+                                      id: _.uniqueId(item.name),
+                                      equipedArea: rowData['equipedArea'],
+                                    },
+                                  ],
+                                }
+                              }
+
+                              dispatch(setCharacter(data))
+                            }}
+                          />
+                        </Box>
+                      )
+                    },
                   },
                   ...vm.equipmentColumns,
                 ]}

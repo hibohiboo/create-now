@@ -1458,7 +1458,6 @@ export const itemsColumnsEn = [
 ]
 
 export const equipmentColumns = [
-  { title: '名前', field: 'name' },
   { title: 'タイプ', field: 'type' },
   { title: '特技', field: 'specialty' },
   { title: '対象', field: 'target' },
@@ -1467,7 +1466,6 @@ export const equipmentColumns = [
 ]
 
 export const equipmentColumnsEn = [
-  { title: 'Name', field: 'name' },
   { title: 'Type', field: 'type' },
   { title: 'Specialty', field: 'specialty' },
   { title: 'Target', field: 'target' },
