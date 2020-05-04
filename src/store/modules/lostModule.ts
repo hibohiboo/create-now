@@ -135,6 +135,8 @@ export const init: LostState = {
   character: initCharacter,
 }
 
+const isBodyParts = (name) => lostData.bodyParts.includes(name)
+
 // actions と reducers の定義
 const lostModule = createSlice({
   name: 'lost',
@@ -157,6 +159,30 @@ const lostModule = createSlice({
     },
     setCharacter: (state, action: PayloadAction<Character>) => {
       state.character = action.payload
+    },
+    toggleCharacterDamage: (state, action: PayloadAction<string>) => {
+      const name = action.payload
+      const { damagedSpecialties } = state.character
+      if (damagedSpecialties.includes(name)) {
+        state.character.damagedSpecialties = damagedSpecialties.filter(
+          (item) => item !== name,
+        )
+        return
+      }
+      if (!isBodyParts(name)) {
+        state.character.damagedSpecialties = [
+          ...state.character.damagedSpecialties,
+          name,
+        ]
+        return
+      }
+      // 部位を負傷した場合、8近傍にチェック
+      const index = lostData.specialties.indexOf(name)
+      ;[-12, -11, -10, -1, 0, 1, 10, 11, 12].forEach((i) => {
+        const target = lostData.specialties[index + i]
+        if (!target || damagedSpecialties.includes(target)) return
+        state.character.damagedSpecialties.push(target)
+      })
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload
@@ -194,12 +220,11 @@ const specialtiesTableColumns = (character: Character) => {
 
 const specialtiesTableRows = (character: Character) => {
   const makeData = (name, gap?) => {
-    const isBodyParts = lostData.bodyParts.includes(name)
     const selected =
       (gap && character.gaps.includes(gap)) ||
       character.specialties.includes(name)
     const damaged = character.damagedSpecialties.includes(name)
-    return { name, isBodyParts, selected, damaged }
+    return { name, selected, damaged, isBodyParts: isBodyParts(name) }
   }
 
   return _.range(11).map((y) => ({
@@ -253,7 +278,7 @@ const {
   setError,
 } = lostModule.actions
 
-export const { setCharacter } = lostModule.actions
+export const { setCharacter, toggleCharacterDamage } = lostModule.actions
 
 interface CampLoaded {
   camps: Camp[]

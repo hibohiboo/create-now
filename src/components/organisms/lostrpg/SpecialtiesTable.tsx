@@ -49,7 +49,8 @@ const SpecialtiesTable: React.FC<{
   columns: any[]
   gapHandler: Function
   specialtyHandler: Function
-}> = ({ rows, columns, gapHandler, specialtyHandler }) => {
+  damageHandler: Function
+}> = ({ rows, columns, gapHandler, specialtyHandler, damageHandler }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -98,7 +99,10 @@ const SpecialtiesTable: React.FC<{
                   {row[col].name === '' ? (
                     <></>
                   ) : (
-                    <Checkbox checked={row[col].damaged} />
+                    <Checkbox
+                      checked={row[col].damaged}
+                      onChange={() => damageHandler(row[col].name)}
+                    />
                   )}
                 </TableCell>
               ))}

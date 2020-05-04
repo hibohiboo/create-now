@@ -29,6 +29,7 @@ import { contentLanguageMap } from '~/lib/i18n'
 import { createSetImageFile } from '~/utils/formHelper'
 import {
   setCharacter,
+  toggleCharacterDamage,
   useCharacter,
   useCharacterEditViewModel,
   CharacterClass,
@@ -273,6 +274,7 @@ const Page: NextPage = () => {
                     }),
                   )
                 }}
+                damageHandler={(name) => dispatch(toggleCharacterDamage(name))}
               />
             </Box>
             <Box my={2}>
