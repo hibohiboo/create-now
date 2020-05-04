@@ -1457,6 +1457,24 @@ export const itemsColumnsEn = [
   { title: 'Effect', field: 'effect' },
 ]
 
+export const equipmentColumns = [
+  { title: '名前', field: 'name' },
+  { title: 'タイプ', field: 'type' },
+  { title: '特技', field: 'specialty' },
+  { title: '対象', field: 'target' },
+  { title: '特性', field: 'trait' },
+  { title: '効果', field: 'effect' },
+]
+
+export const equipmentColumnsEn = [
+  { title: 'Name', field: 'name' },
+  { title: 'Type', field: 'type' },
+  { title: 'Specialty', field: 'specialty' },
+  { title: 'Target', field: 'target' },
+  { title: 'Trait', field: 'trait' },
+  { title: 'Effect', field: 'effect' },
+]
+
 export const itemList = [
   {
     name: 'ジャーキー',

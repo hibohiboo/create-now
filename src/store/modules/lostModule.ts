@@ -61,7 +61,8 @@ export interface Item {
   trait: string
   effect: string
   number?: number
-  id: string // テーブルで編集するとき用のユニークなID
+  id?: string // テーブルで編集するとき用のユニークなID
+  equipedArea?: string // 装備用
 }
 
 export interface Bag {
@@ -79,6 +80,7 @@ export interface Character {
   gaps: ('A' | 'B' | 'C' | 'D' | 'E')[]
   bags: Bag[]
   items: Item[]
+  equipments: Item[]
   staminaBase: number
   willPowerBase: number
   statusAilments: string[]
@@ -143,6 +145,22 @@ export const initCharacter: Character = {
       trait: '袋',
       effect:
         '総重量10まで袋の中にアイテムを入れることができる。袋の中のアイテムの重量は所持限界から無視する。',
+    },
+  ],
+  equipments: [
+    {
+      name: 'ほうちょう',
+      j: 3,
+      weight: 1,
+      type: '装備',
+      area: '片手',
+      specialty: '《斬る》《刺す》',
+      target: '単体',
+      trait: '武器、白兵',
+      effect:
+        '攻撃力1。この武器は割込みのタイミングで装備できる。この武器は破壊して死亡判定をキャンセルできない。',
+      id: 'test',
+      equipedArea: '右手',
     },
   ],
   staminaBase: 5,
@@ -314,6 +332,41 @@ const damageBodyParts = (character: Character) => {
   return lostData.bodyParts.map(makeData)
 }
 
+const equipments = (character: Character, i18n) => {
+  const areas = [
+    i18n.t('lostrpg_character_common_rightHand'),
+    i18n.t('lostrpg_character_common_leftHand'),
+    i18n.t('lostrpg_character_common_head'),
+    i18n.t('lostrpg_character_common_arms'),
+    i18n.t('lostrpg_character_common_torso'),
+    i18n.t('lostrpg_character_common_legs'),
+  ]
+  const makeData = (name) => {
+    const item = character.equipments.find((i) => i.equipedArea === name)
+    if (!item) {
+      return {
+        equipedArea: name,
+        name: '',
+        type: '',
+        specialty: '',
+        target: '',
+        trait: '',
+        effect: '',
+      }
+    }
+    return {
+      equipedArea: name,
+      name: item.name,
+      type: item.type,
+      specialty: item.specialty,
+      target: item.target,
+      trait: item.trait,
+      effect: item.effect,
+    }
+  }
+  return areas.map(makeData)
+}
+
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
     const i18n = useI18n()
@@ -344,6 +397,11 @@ export const useCharacterEditViewModel = () =>
           ? lostData.itemsColumns
           : lostData.itemsColumnsEn,
       items: i18n.activeLocale === 'ja' ? lostData.itemList : lostData.itemList,
+      equipmentColumns:
+        i18n.activeLocale === 'ja'
+          ? lostData.equipmentColumns
+          : lostData.equipmentColumnsEn,
+      equipments: equipments(character, i18n),
     }
   })
 // actions

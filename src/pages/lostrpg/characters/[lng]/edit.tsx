@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import { DeleteOutline } from '@material-ui/icons'
+import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import SelectField from '~/components/form/SelectField'
@@ -649,6 +650,31 @@ const Page: NextPage = () => {
                   </Box>
                 )
               })}
+            </Box>
+            <Box my={2}>
+              <MaterialTable
+                title={t('lostrpg_character_common_equipment')}
+                options={{
+                  search: false,
+                  sorting: false,
+                  paging: false,
+                  draggable: false,
+                  rowStyle: {
+                    whiteSpace: 'nowrap',
+                  },
+                  headerStyle: {
+                    whiteSpace: 'nowrap',
+                  },
+                }}
+                columns={[
+                  {
+                    title: t('lostrpg_character_common_area'),
+                    field: 'equipedArea',
+                  },
+                  ...vm.equipmentColumns,
+                ]}
+                data={vm.equipments}
+              />
             </Box>
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
