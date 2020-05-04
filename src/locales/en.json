@@ -13,6 +13,12 @@
   "lostrpg_character_common_choosedSpacialty": "Choosed Specialty",
   "lostrpg_character_common_attackersChoice": "Attacker's Choice",
   "lostrpg_character_common_bodyPartsTable": "Body Parts Table",
+  "lostrpg_character_common_staminaBase": "Stamina Base",
+  "lostrpg_character_common_willPowerBase": "Will Power Base",
+  "lostrpg_character_common_stamina": "Stamina",
+  "lostrpg_character_common_willPower": "Will Power",
+  "lostrpg_character_common_carryingCapacity": "Carrying Capacity",
+
   "lostrpg_character_list_title": "LOSTRPG Character List",
   "lostrpg_character_edit_title": "LOSTRPG Character",
   "lostrpg_character_edit_addAbility": "Add Ability",

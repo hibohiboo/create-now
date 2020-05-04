@@ -95,7 +95,7 @@ export const initCharacter: Character = {
   staminaBase: 5,
   willPowerBase: 10,
   statusAilments: [],
-  carryingCapacity: 10,
+  carryingCapacity: 5,
   stamina: 10,
   willPower: 10,
   damagedSpecialties: [],

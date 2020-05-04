@@ -13,6 +13,12 @@
   "lostrpg_character_common_choosedSpacialty": "習得特技",
   "lostrpg_character_common_bodyPartsTable": "身体部位決定表",
   "lostrpg_character_common_attackersChoice": "攻撃したキャラクターの任意の部位",
+  "lostrpg_character_common_staminaBase": "体力基準値",
+  "lostrpg_character_common_willPowerBase": "気力基準値",
+  "lostrpg_character_common_carryingCapacity": "所持限界",
+  "lostrpg_character_common_stamina": "体力",
+  "lostrpg_character_common_willPower": "気力",
+
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",

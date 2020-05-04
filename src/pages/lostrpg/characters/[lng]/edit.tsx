@@ -356,6 +356,84 @@ const Page: NextPage = () => {
                 }}
               />
             </Box>
+            <Box my={2} display="flex">
+              <InputField
+                model={character}
+                type="number"
+                prop="staminaBase"
+                labelText={t('lostrpg_character_common_staminaBase')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      staminaBase: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+              <InputField
+                model={character}
+                type="number"
+                prop="stamina"
+                labelText={t('lostrpg_character_common_stamina')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      stamina: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+            </Box>
+            <Box my={2} display="flex">
+              <InputField
+                model={character}
+                type="number"
+                prop="willPowerBase"
+                labelText={t('lostrpg_character_common_willPowerBase')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      willPowerBase: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+              <InputField
+                model={character}
+                type="number"
+                prop="willPower"
+                labelText={t('lostrpg_character_common_willPower')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      willPower: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+            </Box>
+
+            <Box my={2}>
+              <InputField
+                model={character}
+                type="number"
+                prop="carryingCapacity"
+                labelText={t('lostrpg_character_common_carryingCapacity')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      carryingCapacity: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+            </Box>
+
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>
