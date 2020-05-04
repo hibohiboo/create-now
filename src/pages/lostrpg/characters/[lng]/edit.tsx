@@ -251,14 +251,25 @@ const Page: NextPage = () => {
               <SpecialtiesTable
                 columns={vm.specialtiesTableColumns}
                 rows={vm.specialtiesTableRows}
-                gapHandler={(gapName) => {
-                  const gaps = character.gaps.includes(gapName)
-                    ? character.gaps.filter((item) => item !== gapName)
-                    : [...character.gaps, gapName]
+                gapHandler={(name) => {
+                  const gaps = character.gaps.includes(name)
+                    ? character.gaps.filter((item) => item !== name)
+                    : [...character.gaps, name]
                   dispatch(
                     setCharacter({
                       ...character,
                       gaps,
+                    }),
+                  )
+                }}
+                specialtyHandler={(name) => {
+                  const specialties = character.specialties.includes(name)
+                    ? character.specialties.filter((item) => item !== name)
+                    : [...character.specialties, name]
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      specialties,
                     }),
                   )
                 }}

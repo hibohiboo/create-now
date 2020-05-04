@@ -48,7 +48,8 @@ const SpecialtiesTable: React.FC<{
   rows: any[]
   columns: any[]
   gapHandler: Function
-}> = ({ rows, columns, gapHandler }) => {
+  specialtyHandler: Function
+}> = ({ rows, columns, gapHandler, specialtyHandler }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -91,7 +92,9 @@ const SpecialtiesTable: React.FC<{
                     ['body-parts']: row[col].isBodyParts,
                   })}
                 >
-                  <span>{row[col].name}</span>
+                  <span onClick={() => specialtyHandler(row[col].name)}>
+                    {row[col].name}
+                  </span>
                   {row[col].name === '' ? (
                     <></>
                   ) : (
