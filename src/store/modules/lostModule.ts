@@ -74,7 +74,7 @@ export interface Character {
   classes: CharacterClass[]
   specialties: Specialty[]
   abilities: Ability[]
-  gap: number[]
+  gaps: ('A' | 'B' | 'C' | 'D' | 'E')[]
   items: Item[]
   staminaBase: number
   stamina: number
@@ -95,7 +95,7 @@ export const initCharacter: Character = {
   classes: [],
   specialties: [],
   abilities: [],
-  gap: [],
+  gaps: ['A', 'B'],
   items: [],
   staminaBase: 5,
   stamina: 10,
@@ -189,26 +189,33 @@ export const useCharacter = () =>
       state.lost.character,
   )
 
-const specialtiesTableRows = () => {
+const specialtiesTableColumns = (character: Character) => {
   const makeData = (name) => {
+    const selected = character.gaps.includes(name)
+    return { name, selected }
+  }
+  return lostData.specialtiesTableColumns.map(makeData)
+}
+
+const specialtiesTableRows = (character: Character) => {
+  const makeData = (name, gap?) => {
     const isBodyParts = lostData.bodyParts.includes(name)
-    console.log(name, isBodyParts)
-    const selected = false
+    const selected = gap && character.gaps.includes(gap)
     return { name, isBodyParts, selected }
   }
 
   return _.range(11).map((y) => ({
     number: y + 2,
     talent: makeData(lostData.specialties[y]),
-    a: makeData(''),
+    a: makeData('', 'A'),
     head: makeData(lostData.specialties[11 + y]),
-    b: makeData(''),
+    b: makeData('', 'B'),
     arms: makeData(lostData.specialties[22 + y]),
-    c: makeData(''),
+    c: makeData('', 'C'),
     torso: makeData(lostData.specialties[33 + y]),
-    d: makeData(''),
+    d: makeData('', 'D'),
     legs: makeData(lostData.specialties[44 + y]),
-    e: makeData(''),
+    e: makeData('', 'E'),
     survival: makeData(lostData.specialties[55 + y]),
   }))
 }
@@ -234,9 +241,9 @@ export const useCharacterEditViewModel = () =>
         .map((item) => item.list)
         .flat()
         .filter((item) => !character.abilities.includes(item)),
-      specialtiesTableColumns: lostData.specialtiesTableColumns,
+      specialtiesTableColumns: specialtiesTableColumns(character),
       // 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
-      specialtiesTableRows: specialtiesTableRows(),
+      specialtiesTableRows: specialtiesTableRows(character),
     }
   })
 // actions

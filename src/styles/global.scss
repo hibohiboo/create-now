@@ -36,7 +36,9 @@ img {
 
   td {
     font-size: 0.8rem;
-    cursor: pointer;
+    span {
+      cursor: pointer;
+    }
   }
 
   .body-parts {

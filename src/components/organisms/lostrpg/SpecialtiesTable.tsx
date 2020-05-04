@@ -19,17 +19,22 @@ const useStyles = makeStyles({
 })
 
 const makeCol = (col) => {
-  const isGap = ['A', 'B', 'C', 'D', 'E'].includes(col)
+  const isGap = ['A', 'B', 'C', 'D', 'E'].includes(col.name)
   return (
-    <TableCell component="th" align="center" key={col} style={{ padding: 0 }}>
+    <TableCell
+      component="th"
+      align="center"
+      key={col.name}
+      style={{ padding: 0 }}
+    >
       {isGap ? (
         <>
-          <Checkbox style={{ padding: '3px' }} />
+          <Checkbox style={{ padding: '3px' }} checked={col.selected} />
           <br />
-          <span>{col}</span>
+          <span>{col.name}</span>
         </>
       ) : (
-        <span>{col}</span>
+        <span>{col.name}</span>
       )}
     </TableCell>
   )
@@ -71,7 +76,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               </TableCell>
               <TableCell
                 className={cn({
-                  ['selected']: row.talent.selected,
+                  ['selected']: row.a.selected,
                 })}
               >
                 {row.a.name}
@@ -88,7 +93,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               </TableCell>
               <TableCell
                 className={cn({
-                  ['selected']: row.talent.selected,
+                  ['selected']: row.b.selected,
                 })}
               >
                 {row.b.name}
@@ -105,7 +110,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               </TableCell>
               <TableCell
                 className={cn({
-                  ['selected']: row.talent.selected,
+                  ['selected']: row.c.selected,
                 })}
               >
                 {row.c.name}
@@ -122,7 +127,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               </TableCell>
               <TableCell
                 className={cn({
-                  ['selected']: row.talent.selected,
+                  ['selected']: row.d.selected,
                 })}
               >
                 {row.d.name}
@@ -139,7 +144,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               </TableCell>
               <TableCell
                 className={cn({
-                  ['selected']: row.talent.selected,
+                  ['selected']: row.e.selected,
                 })}
               >
                 {row.e.name}
@@ -147,7 +152,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               <TableCell
                 align="right"
                 className={cn({
-                  ['selected']: row.legs.selected,
+                  ['selected']: row.survival.selected,
                 })}
               >
                 {row.survival.name}
