@@ -34,4 +34,21 @@ img {
     padding-left: 5px;
     font-size: 0.8rem;
   }
+
+  tbody .Mui-checked svg.MuiSvgIcon-root {
+    color: red;
+  }
+
+  .selected {
+    color: #fff;
+    background-color: #303030;
+
+    svg.MuiSvgIcon-root {
+      color: #fff;
+    }
+    .Mui-checked svg.MuiSvgIcon-root {
+      color: red;
+      background-color: #fff;
+    }
+  }
 }

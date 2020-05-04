@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Table,
@@ -17,21 +18,22 @@ const useStyles = makeStyles({
   },
 })
 
-const makeCol = (col) => (
-  <>
-    {['A', 'B', 'C', 'D', 'E'].includes(col) ? (
-      <TableCell component="th" align="center" key={col} style={{ padding: 0 }}>
-        <Checkbox style={{ padding: '3px' }} />
-        <br />
+const makeCol = (col) => {
+  const isGap = ['A', 'B', 'C', 'D', 'E'].includes(col)
+  return (
+    <TableCell component="th" align="center" key={col} style={{ padding: 0 }}>
+      {isGap ? (
+        <>
+          <Checkbox style={{ padding: '3px' }} />
+          <br />
+          <span>{col}</span>
+        </>
+      ) : (
         <span>{col}</span>
-      </TableCell>
-    ) : (
-      <TableCell component="th" align="center" key={col}>
-        {col}
-      </TableCell>
-    )}
-  </>
-)
+      )}
+    </TableCell>
+  )
+}
 
 const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
   rows,
@@ -58,33 +60,38 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               >
                 {row.number}
               </TableCell>
-              <TableCell align="right">
-                {row.talent}
+              <TableCell
+                align="right"
+                className={cn({
+                  ['selected']: row.talent.selected,
+                })}
+              >
+                {row.talent.name}
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.a}</TableCell>
+              <TableCell>{row.a.name}</TableCell>
               <TableCell align="right">
-                {row.head}
+                {row.head.name}
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.b}</TableCell>
+              <TableCell>{row.b.name}</TableCell>
               <TableCell align="right">
-                {row.arms}
+                {row.arms.name}
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.c}</TableCell>
+              <TableCell>{row.c.name}</TableCell>
               <TableCell align="right">
-                {row.torso}
+                {row.torso.name}
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.d}</TableCell>
+              <TableCell>{row.d.name}</TableCell>
               <TableCell align="right">
-                {row.legs}
+                {row.legs.name}
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.e}</TableCell>
+              <TableCell>{row.e.name}</TableCell>
               <TableCell align="right">
-                {row.survival}
+                {row.survival.name}
                 <Checkbox />
               </TableCell>
             </TableRow>

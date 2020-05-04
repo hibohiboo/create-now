@@ -188,21 +188,24 @@ export const useCharacter = () =>
       state.lost.character,
   )
 
-const specialtiesTableRows = () =>
-  _.range(11).map((y) => ({
+const specialtiesTableRows = () => {
+  const makeData = (name) => ({ name, selected: true })
+
+  return _.range(11).map((y) => ({
     number: y + 2,
-    talent: lostData.specialties[y],
-    a: '',
-    head: lostData.specialties[11 + y],
-    b: '',
-    arms: lostData.specialties[22 + y],
-    c: '',
-    torso: lostData.specialties[33 + y],
-    d: '',
-    legs: lostData.specialties[44 + y],
-    e: '',
-    survival: lostData.specialties[55 + y],
+    talent: makeData(lostData.specialties[y]),
+    a: makeData(''),
+    head: makeData(lostData.specialties[11 + y]),
+    b: makeData(''),
+    arms: makeData(lostData.specialties[22 + y]),
+    c: makeData(''),
+    torso: makeData(lostData.specialties[33 + y]),
+    d: makeData(''),
+    legs: makeData(lostData.specialties[44 + y]),
+    e: makeData(''),
+    survival: makeData(lostData.specialties[55 + y]),
   }))
+}
 
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {

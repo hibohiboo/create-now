@@ -20,6 +20,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
+    "classnames": "^2.2.6",
     "cookie-session": "^1.4.0",
     "date-fns": "^2.12.0",
     "firebase": "^7.14.2",

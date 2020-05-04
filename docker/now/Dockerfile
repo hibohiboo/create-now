@@ -111,3 +111,6 @@ RUN npm install rosetta
 
 # drop file
 RUN npm install react-dropzone
+
+# classname切替
+RUN npm install classnames
