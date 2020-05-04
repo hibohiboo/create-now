@@ -78,6 +78,14 @@ export const bodyParts = [
   '逆腕',
   '心臓',
 ]
+export const initiativeSpecialties = [
+  '反応',
+  '予感',
+  '動かない',
+  '走る',
+  '隠れる',
+  '追い込む',
+]
 
 export const specialtiesTableColumns = [
   '',

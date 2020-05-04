@@ -310,6 +310,7 @@ const Page: NextPage = () => {
               </InputLabel>
 
               <DamageTable
+                sevenLabel={t('lostrpg_character_common_attackersChoice')}
                 rows={vm.damageBodyParts}
                 damageHandler={(name) => dispatch(toggleCharacterDamage(name))}
               />

@@ -21,7 +21,8 @@ const useStyles = makeStyles({
 const DamageTable: React.FC<{
   rows: any[]
   damageHandler: Function
-}> = ({ rows, damageHandler }) => {
+  sevenLabel: string
+}> = ({ rows, damageHandler, sevenLabel }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -57,7 +58,7 @@ const DamageTable: React.FC<{
               7
             </TableCell>
             <TableCell colSpan={5} align="center">
-              任意の部位
+              {sevenLabel}
             </TableCell>
           </TableRow>
           <TableRow>
