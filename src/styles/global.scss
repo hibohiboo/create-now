@@ -32,7 +32,20 @@ img {
     white-space: nowrap;
     padding: 0;
     padding-left: 5px;
+  }
+
+  td {
     font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .body-parts {
+    border: 3px solid rgba(200, 200, 200, 1);
+    font-size: 0.9rem;
+
+    > span:first-child::after {
+      content: '*';
+    }
   }
 
   tbody .Mui-checked svg.MuiSvgIcon-root {

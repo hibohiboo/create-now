@@ -69,28 +69,87 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
                 {row.talent.name}
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.a.name}</TableCell>
-              <TableCell align="right">
-                {row.head.name}
+              <TableCell
+                className={cn({
+                  ['selected']: row.talent.selected,
+                })}
+              >
+                {row.a.name}
+              </TableCell>
+              <TableCell
+                align="right"
+                className={cn({
+                  ['selected']: row.head.selected,
+                  ['body-parts']: row.head.isBodyParts,
+                })}
+              >
+                <span>{row.head.name}</span>
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.b.name}</TableCell>
-              <TableCell align="right">
-                {row.arms.name}
+              <TableCell
+                className={cn({
+                  ['selected']: row.talent.selected,
+                })}
+              >
+                {row.b.name}
+              </TableCell>
+              <TableCell
+                align="right"
+                className={cn({
+                  ['selected']: row.arms.selected,
+                  ['body-parts']: row.arms.isBodyParts,
+                })}
+              >
+                <span>{row.arms.name}</span>
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.c.name}</TableCell>
-              <TableCell align="right">
-                {row.torso.name}
+              <TableCell
+                className={cn({
+                  ['selected']: row.talent.selected,
+                })}
+              >
+                {row.c.name}
+              </TableCell>
+              <TableCell
+                align="right"
+                className={cn({
+                  ['selected']: row.torso.selected,
+                  ['body-parts']: row.torso.isBodyParts,
+                })}
+              >
+                <span>{row.torso.name}</span>
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.d.name}</TableCell>
-              <TableCell align="right">
-                {row.legs.name}
+              <TableCell
+                className={cn({
+                  ['selected']: row.talent.selected,
+                })}
+              >
+                {row.d.name}
+              </TableCell>
+              <TableCell
+                align="right"
+                className={cn({
+                  ['selected']: row.legs.selected,
+                  ['body-parts']: row.legs.isBodyParts,
+                })}
+              >
+                <span>{row.legs.name}</span>
                 <Checkbox />
               </TableCell>
-              <TableCell>{row.e.name}</TableCell>
-              <TableCell align="right">
+              <TableCell
+                className={cn({
+                  ['selected']: row.talent.selected,
+                })}
+              >
+                {row.e.name}
+              </TableCell>
+              <TableCell
+                align="right"
+                className={cn({
+                  ['selected']: row.legs.selected,
+                })}
+              >
                 {row.survival.name}
                 <Checkbox />
               </TableCell>

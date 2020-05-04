@@ -46,7 +46,7 @@ export const specialties = [
   '泳ぐ',
   '走る',
   '蹴る',
-  '利き足',
+  '利き脚',
   '跳ぶ',
   '仕掛ける',
   'しゃがむ',
@@ -65,6 +65,18 @@ export const specialties = [
   '追い込む',
   '逃げる',
   '罠',
+]
+export const bodyParts = [
+  '脳',
+  '利き腕',
+  '利き脚',
+  '消化器',
+  '感覚器',
+  '口',
+  '呼吸器',
+  '逆脚',
+  '逆腕',
+  '心臓',
 ]
 
 export const specialtiesTableColumns = [

@@ -68,6 +68,7 @@ export interface Item {
   trait: string
   effect: string
 }
+
 export interface Character {
   name: string
   classes: CharacterClass[]
@@ -189,7 +190,12 @@ export const useCharacter = () =>
   )
 
 const specialtiesTableRows = () => {
-  const makeData = (name) => ({ name, selected: true })
+  const makeData = (name) => {
+    const isBodyParts = lostData.bodyParts.includes(name)
+    console.log(name, isBodyParts)
+    const selected = false
+    return { name, isBodyParts, selected }
+  }
 
   return _.range(11).map((y) => ({
     number: y + 2,
