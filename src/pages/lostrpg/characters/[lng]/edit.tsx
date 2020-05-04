@@ -316,6 +316,24 @@ const Page: NextPage = () => {
               />
             </Box>
 
+            <Box my={2}>
+              <SelectField
+                id="ability-select"
+                items={vm.abilityList}
+                value={''}
+                unselectedText={t('common_unselected')}
+                labelText={t('lostrpg_character_edit_addAbility')}
+                changeHandler={(item: Ability) => {
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      abilities: [...character.abilities, item],
+                    }),
+                  )
+                }}
+              />
+            </Box>
+
             <EditableMaterialTable
               title={t('lostrpg_character_common_ability')}
               columns={vm.abilitiesColumns}
@@ -339,23 +357,7 @@ const Page: NextPage = () => {
                 })
               }}
             />
-            <Box my={2}>
-              <SelectField
-                id="ability-select"
-                items={vm.abilityList}
-                value={''}
-                unselectedText={t('common_unselected')}
-                labelText={t('lostrpg_character_edit_addAbility')}
-                changeHandler={(item: Ability) => {
-                  dispatch(
-                    setCharacter({
-                      ...character,
-                      abilities: [...character.abilities, item],
-                    }),
-                  )
-                }}
-              />
-            </Box>
+
             <Box my={2} display="flex">
               <InputField
                 model={character}

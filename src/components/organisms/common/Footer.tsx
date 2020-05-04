@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer: React.FC = () => {
   return (
-    <footer>
+    <footer style={{ fontSize: '0.7rem' }}>
       <a
         href="https://twitter.com/hibohiboo"
         target="_blank"
