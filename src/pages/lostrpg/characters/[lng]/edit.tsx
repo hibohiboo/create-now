@@ -251,6 +251,17 @@ const Page: NextPage = () => {
               <SpecialtiesTable
                 columns={vm.specialtiesTableColumns}
                 rows={vm.specialtiesTableRows}
+                gapHandler={(gapName) => {
+                  const gaps = character.gaps.includes(gapName)
+                    ? character.gaps.filter((item) => item !== gapName)
+                    : [...character.gaps, gapName]
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      gaps,
+                    }),
+                  )
+                }}
               />
             </Box>
             <Box my={2}>

@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
 })
 
-const makeCol = (col) => {
+const makeCol = (col, gapHandler) => {
   const isGap = ['A', 'B', 'C', 'D', 'E'].includes(col.name)
   return (
     <TableCell
@@ -29,7 +29,11 @@ const makeCol = (col) => {
     >
       {isGap ? (
         <>
-          <Checkbox style={{ padding: '3px' }} checked={col.selected} />
+          <Checkbox
+            style={{ padding: '3px' }}
+            checked={col.selected}
+            onChange={() => gapHandler(col.name)}
+          />
           <br />
           <span>{col.name}</span>
         </>
@@ -40,10 +44,11 @@ const makeCol = (col) => {
   )
 }
 
-const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
-  rows,
-  columns,
-}) => {
+const SpecialtiesTable: React.FC<{
+  rows: any[]
+  columns: any[]
+  gapHandler: Function
+}> = ({ rows, columns, gapHandler }) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -52,7 +57,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
         aria-label="spacialty table"
       >
         <TableHead>
-          <TableRow>{columns.map(makeCol)}</TableRow>
+          <TableRow>{columns.map((col) => makeCol(col, gapHandler))}</TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
