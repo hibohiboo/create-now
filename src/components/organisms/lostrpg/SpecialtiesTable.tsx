@@ -65,99 +65,35 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               >
                 {row.number}
               </TableCell>
-              <TableCell
-                align="right"
-                className={cn({
-                  ['selected']: row.talent.selected,
-                })}
-              >
-                {row.talent.name}
-                <Checkbox checked={row.talent.damaged} />
-              </TableCell>
-              <TableCell
-                className={cn({
-                  ['selected']: row.a.selected,
-                })}
-              >
-                {row.a.name}
-              </TableCell>
-              <TableCell
-                align="right"
-                className={cn({
-                  ['selected']: row.head.selected,
-                  ['body-parts']: row.head.isBodyParts,
-                })}
-              >
-                <span>{row.head.name}</span>
-                <Checkbox checked={row.head.damaged} />
-              </TableCell>
-              <TableCell
-                className={cn({
-                  ['selected']: row.b.selected,
-                })}
-              >
-                {row.b.name}
-              </TableCell>
-              <TableCell
-                align="right"
-                className={cn({
-                  ['selected']: row.arms.selected,
-                  ['body-parts']: row.arms.isBodyParts,
-                })}
-              >
-                <span>{row.arms.name}</span>
-                <Checkbox checked={row.arms.damaged} />
-              </TableCell>
-              <TableCell
-                className={cn({
-                  ['selected']: row.c.selected,
-                })}
-              >
-                {row.c.name}
-              </TableCell>
-              <TableCell
-                align="right"
-                className={cn({
-                  ['selected']: row.torso.selected,
-                  ['body-parts']: row.torso.isBodyParts,
-                })}
-              >
-                <span>{row.torso.name}</span>
-                <Checkbox checked={row.torso.damaged} />
-              </TableCell>
-              <TableCell
-                className={cn({
-                  ['selected']: row.d.selected,
-                })}
-              >
-                {row.d.name}
-              </TableCell>
-              <TableCell
-                align="right"
-                className={cn({
-                  ['selected']: row.legs.selected,
-                  ['body-parts']: row.legs.isBodyParts,
-                })}
-              >
-                <span>{row.legs.name}</span>
-                <Checkbox checked={row.legs.damaged} />
-              </TableCell>
-              <TableCell
-                className={cn({
-                  ['selected']: row.e.selected,
-                })}
-              >
-                {row.e.name}
-              </TableCell>
-              <TableCell
-                align="right"
-                className={cn({
-                  ['selected']: row.survival.selected,
-                })}
-              >
-                {row.survival.name}
-                <Checkbox checked={row.survival.damaged} />
-              </TableCell>
+              {[
+                'talent',
+                'a',
+                'head',
+                'b',
+                'arms',
+                'c',
+                'torso',
+                'd',
+                'legs',
+                'e',
+                'survival',
+              ].map((col) => (
+                <TableCell
+                  key={col}
+                  align="right"
+                  className={cn({
+                    ['selected']: row[col].selected,
+                    ['body-parts']: row[col].isBodyParts,
+                  })}
+                >
+                  <span>{row[col].name}</span>
+                  {row[col].name === '' ? (
+                    <></>
+                  ) : (
+                    <Checkbox checked={row[col].damaged} />
+                  )}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
