@@ -210,6 +210,23 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
+              <Box my={1}>
+                <SelectField
+                  id="class-select"
+                  items={vm.classList}
+                  value={''}
+                  unselectedText={t('common_unselected')}
+                  labelText={t('lostrpg_character_edit_addClass')}
+                  changeHandler={(item: CharacterClass) => {
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        classes: [...character.classes, item],
+                      }),
+                    )
+                  }}
+                />
+              </Box>
               <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>
               <List aria-label="classes">
                 {character.classes.map((item) => (
@@ -232,21 +249,6 @@ const Page: NextPage = () => {
                   </ListItem>
                 ))}
               </List>
-              <SelectField
-                id="class-select"
-                items={vm.classList}
-                value={''}
-                unselectedText={t('common_unselected')}
-                labelText={t('lostrpg_character_edit_addClass')}
-                changeHandler={(item: CharacterClass) => {
-                  dispatch(
-                    setCharacter({
-                      ...character,
-                      classes: [...character.classes, item],
-                    }),
-                  )
-                }}
-              />
             </Box>
 
             <Box my={2}>
