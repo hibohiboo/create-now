@@ -20,8 +20,8 @@ const useStyles = makeStyles({
 const makeCol = (col) => (
   <>
     {['A', 'B', 'C', 'D', 'E'].includes(col) ? (
-      <TableCell component="th" align="center" key={col}>
-        <Checkbox />
+      <TableCell component="th" align="center" key={col} style={{ padding: 0 }}>
+        <Checkbox style={{ padding: '3px' }} />
         <br />
         <span>{col}</span>
       </TableCell>
@@ -53,6 +53,7 @@ const SpecialtiesTable: React.FC<{ rows: any[]; columns: any[] }> = ({
               <TableCell
                 component="th"
                 scope="row"
+                align="center"
                 style={{ padding: '0 10px' }}
               >
                 {row.number}

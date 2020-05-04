@@ -1,4 +1,4 @@
-const specialties = [
+export const specialties = [
   '追跡',
   '探索',
   '鑑定',

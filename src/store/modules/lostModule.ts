@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
+import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
 import * as lostData from '~/data/lostrpg'
@@ -187,6 +188,22 @@ export const useCharacter = () =>
       state.lost.character,
   )
 
+const specialtiesTableRows = () =>
+  _.range(11).map((y) => ({
+    number: y + 2,
+    talent: lostData.specialties[0 + y * 6],
+    a: '',
+    head: lostData.specialties[1 + y * 6],
+    b: '',
+    arms: lostData.specialties[2 + y * 6],
+    c: '',
+    torso: lostData.specialties[3 + y * 6],
+    d: '',
+    legs: lostData.specialties[4 + y * 6],
+    e: '',
+    survival: lostData.specialties[5 + y * 6],
+  }))
+
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
     const i18n = useI18n()
@@ -210,22 +227,7 @@ export const useCharacterEditViewModel = () =>
         .filter((item) => !character.abilities.includes(item)),
       specialtiesTableColumns: lostData.specialtiesTableColumns,
       // 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
-      specialtiesTableRows: [
-        {
-          number: '2',
-          talent: '追跡',
-          a: '',
-          head: '聴く',
-          b: '',
-          arms: '操作',
-          c: '',
-          torso: '塞ぐ',
-          d: '',
-          legs: '泳ぐ',
-          e: '',
-          survival: '地理',
-        },
-      ],
+      specialtiesTableRows: specialtiesTableRows(),
     }
   })
 // actions
