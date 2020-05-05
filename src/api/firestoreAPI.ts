@@ -12,12 +12,20 @@ const fetchFromFirestore = async (path: string) => {
 
 const getStr = (obj): string | undefined => (obj ? obj.stringValue : null)
 const getInt = (obj) =>
-  (obj && isNaN(Number(obj.integerValue)) ? 0 : Number(obj.integerValue)) ||
-  (obj && isNaN(Number(obj.stringValue)) ? 0 : Number(obj.stringValue))
+  obj && obj.integerValue && !isNaN(Number(obj.integerValue))
+    ? Number(obj.integerValue)
+    : obj && obj.stringValue && !isNaN(Number(obj.stringValue))
+    ? Number(obj.stringValue)
+    : 0
+
 const getTimestamp = (obj) => (obj ? obj.timestampValue : null)
 const getArray = (obj, decoder) =>
   obj && obj.arrayValue && obj.arrayValue.values
-    ? obj.arrayValue.values.map(({ mapValue }) => decoder(mapValue.fields))
+    ? obj.arrayValue.values.map(({ mapValue }) => {
+        if (mapValue === null || mapValue === undefined) return null
+        if (mapValue.field) return decoder(mapValue.fields)
+        return decoder(mapValue)
+      })
     : []
 
 // LOSTRPG

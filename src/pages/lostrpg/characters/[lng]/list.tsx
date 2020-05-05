@@ -109,7 +109,14 @@ const HomePage = () => {
           ></List>
         )}
         {items.map((item) => (
-          <ListItemLink href="" key={item.id}>
+          <ListItemLink
+            href={{
+              pathname: '/lostrpg/public/[lng]/[view]',
+              query: { id: item.id },
+            }}
+            key={item.id}
+            as={`/lostrpg/public/${i18n.activeLocale}/character?id=${item.id}`}
+          >
             <ListItemText primary={item.name} />
           </ListItemLink>
         ))}
