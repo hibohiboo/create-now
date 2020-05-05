@@ -36,7 +36,7 @@
   "lostrpg_character_common_experiencePoint": "ExperiencePoint",
   "lostrpg_character_common_totalExperiencePoint": "Total Experience Point",
   "lostrpg_character_common_unusedExperiencePoint": "Unused Experience Point",
-
+  "lostrpg_character_common_characterList": "Character List",
   "lostrpg_character_list_title": "LOSTRPG Character List",
   "lostrpg_character_edit_title": "LOSTRPG Character",
   "lostrpg_character_edit_addAbility": "Add Ability",

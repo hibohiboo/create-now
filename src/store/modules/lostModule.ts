@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
+import { readCharacters } from '~/firestore/character'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
@@ -151,22 +152,7 @@ export const initCharacter: Character = {
         '総重量10まで袋の中にアイテムを入れることができる。袋の中のアイテムの重量は所持限界から無視する。',
     },
   ],
-  equipments: [
-    {
-      name: 'ほうちょう',
-      j: 3,
-      weight: 1,
-      type: '装備',
-      area: '片手',
-      specialty: '《斬る》《刺す》',
-      target: '単体',
-      trait: '武器、白兵',
-      effect:
-        '攻撃力1。この武器は割込みのタイミングで装備できる。この武器は破壊して死亡判定をキャンセルできない。',
-      id: 'test',
-      equipedArea: '右手',
-    },
-  ],
+  equipments: [],
   staminaBase: 5,
   willPowerBase: 10,
   statusAilments: [],
@@ -186,9 +172,10 @@ export const initCharacter: Character = {
 type LostState = {
   camp: Camp | null
   camps: Camp[]
-  campsPagination: PaginationState
+  listPagination: PaginationState
   error: string | null
   character: Character
+  characters: { name: string; id: string }[]
 }
 
 type PaginationState = {
@@ -207,9 +194,10 @@ const initialState = {
 export const init: LostState = {
   camp: null,
   camps: [],
-  campsPagination: initialState,
+  listPagination: initialState,
   error: null,
   character: initCharacter,
+  characters: [],
 }
 
 const isBodyParts = (name) => lostData.bodyParts.includes(name)
@@ -219,20 +207,35 @@ const lostModule = createSlice({
   name: 'lost',
   initialState: init,
   reducers: {
-    setCampsLoading: (state, action: PayloadAction<boolean>) => {
-      state.campsPagination.loading = action.payload
+    setPagenationLoading: (state, action: PayloadAction<boolean>) => {
+      state.listPagination.loading = action.payload
     },
-    campsLoaded: (state, action: PayloadAction<CampLoaded>) => {
+    paginationLoaded: (
+      state,
+      action: PayloadAction<{ next: string; hasMore: boolean }>,
+    ) => {
       const { next, hasMore } = action.payload
-      state.campsPagination.loading = false
-      state.campsPagination.hasMore = hasMore
-      state.campsPagination.lastLoaded = next
+      state.listPagination.loading = false
+      state.listPagination.hasMore = hasMore
+      state.listPagination.lastLoaded = next
     },
     setCamps: (state, action: PayloadAction<Camp[]>) => {
       state.camps = action.payload
     },
     addCamps: (state, action: PayloadAction<Camp[]>) => {
       state.camps = state.camps.concat(action.payload)
+    },
+    setCharacters: (
+      state,
+      action: PayloadAction<{ id: string; name: string }[]>,
+    ) => {
+      state.characters = action.payload
+    },
+    addCharacters: (
+      state,
+      action: PayloadAction<{ id: string; name: string }[]>,
+    ) => {
+      state.characters = state.characters.concat(action.payload)
     },
     setCharacter: (state, action: PayloadAction<Character>) => {
       state.character = action.payload
@@ -286,17 +289,21 @@ export const useCamps = () =>
     (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
       state.lost.camps,
   )
-export const useCampsPagination = () =>
+export const useListPagination = () =>
   useSelector(
     (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
-      state.lost.campsPagination,
+      state.lost.listPagination,
   )
 export const useCharacter = () =>
   useSelector(
     (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
       state.lost.character,
   )
-
+export const useCharacters = () =>
+  useSelector(
+    (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
+      state.lost.characters,
+  )
 const specialtiesTableColumns = (character: Character) => {
   const makeData = (name) => {
     const selected = character.gaps.includes(name)
@@ -421,11 +428,13 @@ export const useCharacterEditViewModel = () =>
   })
 // actions
 const {
-  setCampsLoading,
-  campsLoaded,
+  setPagenationLoading,
+  paginationLoaded,
   setCamps,
   addCamps,
   setError,
+  setCharacters,
+  addCharacters,
 } = lostModule.actions
 
 export const {
@@ -439,16 +448,23 @@ interface CampLoaded {
   next: string
   hasMore: boolean
 }
+
+interface CharactersLoaded {
+  characters: { name: string; id: string }[]
+  next: string
+  hasMore: boolean
+}
+
 // thunk
 const fetchCampsCommon = async (next, limit, dispatch, action, searchName) => {
-  dispatch(setCampsLoading(true))
+  dispatch(setPagenationLoading(true))
   try {
     const ret: CampLoaded = await readCamps(next, limit, searchName)
-    dispatch(campsLoaded(ret))
+    dispatch(paginationLoaded(ret))
     dispatch(action(ret.camps))
   } catch (err) {
     dispatch(setError(err.toString()))
-    dispatch(setCampsLoading(false))
+    dispatch(setPagenationLoading(false))
   }
 }
 export const fetchCamps = (limit: number, searchName = ''): AppThunk => async (
@@ -463,4 +479,36 @@ export const fetchCampsMore = (
   searchName: string,
 ): AppThunk => async (dispatch) => {
   await fetchCampsCommon(next, limit, dispatch, addCamps, searchName)
+}
+
+const fetchCharactersCommon = async (
+  next,
+  limit,
+  dispatch,
+  action,
+  searchName,
+) => {
+  dispatch(setPagenationLoading(true))
+  try {
+    const ret: CharactersLoaded = await readCharacters(next, limit, searchName)
+    dispatch(paginationLoaded(ret))
+    dispatch(action(ret.characters))
+  } catch (err) {
+    dispatch(setError(err.toString()))
+    dispatch(setPagenationLoading(false))
+  }
+}
+export const fetchCharacters = (
+  limit: number,
+  searchName = '',
+): AppThunk => async (dispatch) => {
+  await fetchCharactersCommon(null, limit, dispatch, setCharacters, searchName)
+}
+
+export const fetchCharactersMore = (
+  next: string,
+  limit: number,
+  searchName: string,
+): AppThunk => async (dispatch) => {
+  await fetchCharactersCommon(next, limit, dispatch, addCharacters, searchName)
 }

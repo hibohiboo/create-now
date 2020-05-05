@@ -14,7 +14,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import {
   useCamps,
-  useCampsPagination,
+  useListPagination,
   fetchCamps,
   fetchCampsMore,
 } from '~/store/modules/lostModule'
@@ -38,7 +38,7 @@ const Page: NextPage = () => {
   const authUser = useAuth()
   const items = useCamps()
   const [search, setSearch] = useState({ name: '' })
-  const pagenation = useCampsPagination()
+  const pagenation = useListPagination()
   const dispatch = useDispatch()
   const loadMore = () =>
     dispatch(
