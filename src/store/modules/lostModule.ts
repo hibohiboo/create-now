@@ -383,23 +383,14 @@ export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
     const i18n = useI18n()
     const { character } = state.lost
-    const abilitiesColumns =
-      i18n.activeLocale === 'ja'
-        ? lostData.abilitiesColumns
-        : lostDataEn.abilitiesColumns
-    const itemsColumns =
-      i18n.activeLocale === 'ja'
-        ? lostData.itemsColumns
-        : lostDataEn.itemsColumns
-    const items = i18n.activeLocale === 'ja' ? lostData.items : lostData.items
-    const equipmentColumns =
-      i18n.activeLocale === 'ja'
-        ? lostData.equipmentColumns
-        : lostDataEn.equipmentColumns
-    const statusAilments =
-      i18n.activeLocale === 'ja'
-        ? lostData.statusAilments
-        : lostDataEn.statusAilments
+    const {
+      abilitiesColumns,
+      itemsColumns,
+      items,
+      equipmentColumns,
+      statusAilments,
+    } = i18n.activeLocale === 'ja' ? lostData : lostDataEn
+
     return {
       classList: lostData.classList.filter(
         (item) => !character.classes.includes(item),
