@@ -400,14 +400,14 @@ export const useCharacterEditViewModel = () =>
       items,
       equipmentColumns,
       statusAilments,
+      classList,
+      abilityList,
     } = i18n.activeLocale === 'ja' ? lostData : lostDataEn
 
     return {
-      classList: lostData.classList.filter(
-        (item) => !character.classes.includes(item),
-      ),
+      classList: classList.filter((item) => !character.classes.includes(item)),
       abilitiesColumns,
-      abilityList: lostData.abilityList
+      abilityList: abilityList
         .filter(
           (item) =>
             item.id === 'general' ||
