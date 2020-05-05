@@ -11,16 +11,20 @@ import {
   Camp,
   useCampsCharacters,
   fetchCampsCharacters,
+  useCampViewModel,
 } from '~/store/modules/lostModule'
 import { AuthUser } from '~/store/modules/authModule'
 import * as data from '~/data/lostrpg'
 import useI18n from '~/hooks/use-i18n'
+import * as tableConfig from '~/config/table'
+
 const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
   ctx,
 ) => {
   const { camp, id, authUser } = ctx
   const beforePage = '/lostrpg/camps/list'
   const campsCharacters = useCampsCharacters()
+  const vm = useCampViewModel()
   const dispatch = useDispatch()
   const i18n = useI18n()
   const t = i18n.t
@@ -61,13 +65,17 @@ const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
           <></>
         )}
 
-        <Box
-          border={1}
-          p={1}
-          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
-        >
-          {camp.freeWriting}
-        </Box>
+        {camp.summary.trim() ? (
+          <Box
+            border={1}
+            p={1}
+            style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+          >
+            {camp.summary}
+          </Box>
+        ) : (
+          <></>
+        )}
       </Box>
       <Box my={2}>
         <InputLabel>メンバー</InputLabel>
@@ -110,7 +118,28 @@ const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
           data={camp.facilities}
         />
       </Box>
-
+      <Box my={4}>
+        <MaterialTable
+          title={t('lostrpg_common_storage')}
+          options={tableConfig.viewTable}
+          columns={vm.itemsColumns}
+          data={camp.items}
+        />
+      </Box>
+      {camp.freeWriting ? (
+        <Box my={2} style={{ width: '100%' }}>
+          <InputLabel>{t('common_detail')}</InputLabel>
+          <Box
+            border={1}
+            p={1}
+            style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+          >
+            {camp.freeWriting}
+          </Box>
+        </Box>
+      ) : (
+        <></>
+      )}
       <Link href={beforePage}>戻る</Link>
     </Container>
   )

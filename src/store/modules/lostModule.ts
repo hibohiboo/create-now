@@ -28,6 +28,8 @@ export interface Camp {
   twitterId?: string
   createdAt?: any
   updatedAt?: any
+  summary?: string
+  items: Item[]
 }
 
 export interface Ability {
@@ -48,6 +50,8 @@ export const initCamp = {
   updatedAt: '',
   twitterId: '',
   uid: '',
+  summary: '',
+  items: [],
 }
 export interface CharacterClass {
   id: string
@@ -481,6 +485,18 @@ export const useCharacterEditViewModel = () =>
       statusAilments: makeStatusAilments(character, statusAilments),
     }
   })
+export const useCampViewModel = () =>
+  useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
+    const i18n = useI18n()
+    const { itemsColumns, items } =
+      i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
+
+    return {
+      itemsColumns,
+      items,
+    }
+  })
+
 // actions
 const {
   setPagenationLoading,

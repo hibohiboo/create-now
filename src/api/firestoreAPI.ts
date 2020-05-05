@@ -43,6 +43,8 @@ export const getCamp = async (id: string) => {
     facilities,
     freeWriting,
     imageUrl,
+    items,
+    summary,
   } = data.fields
   const ret: lost.Camp = {
     name: getStr(name),
@@ -59,6 +61,19 @@ export const getCamp = async (id: string) => {
     })),
     freeWriting: getStr(freeWriting),
     imageUrl: getStr(imageUrl),
+    summary: getStr(summary),
+    items: getArray(items, (item) => ({
+      id: getStr(item.id),
+      name: getStr(item.name),
+      number: getInt(item.number),
+      j: getInt(item.j),
+      weight: getInt(item.weight),
+      type: getStr(item.type),
+      area: getStr(item.area),
+      trait: getStr(item.trait),
+      specialty: getStr(item.specialty),
+      effect: getStr(item.effect),
+    })),
   }
   return ret
 }

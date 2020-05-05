@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+import * as _ from 'lodash'
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
 import Router, { useRouter, NextRouter } from 'next/router'
@@ -13,8 +14,14 @@ import TextField from '@material-ui/core/TextField'
 import Dropzone from 'react-dropzone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
+import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import { Camp, initCamp } from '~/store/modules/lostModule'
+import {
+  Camp,
+  initCamp,
+  useCampViewModel,
+  Item,
+} from '~/store/modules/lostModule'
 import { useAuth } from '~/store/modules/authModule'
 import {
   createCamp,
@@ -54,8 +61,10 @@ const createFacility = (item) => ({
 
 const Page: NextPage = () => {
   const i18n = useI18n()
+  const t = i18n.t
   const router = useRouter()
   const authUser = useAuth()
+  const vm = useCampViewModel()
   const [camp, setCamp] = useState<Camp>(initCamp)
   const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
@@ -73,6 +82,12 @@ const Page: NextPage = () => {
       ...prevState,
       data: toNextState([...prevState.data]),
     }))
+
+  const updateItemRowData = (toNextState: (d: any[]) => any[]) => {
+    const newData = { ...camp }
+    newData.items = toNextState([...camp.items])
+    setCamp(newData)
+  }
 
   const classes = useStyles()
   const [equipment, setEquipment] = useState('')
@@ -163,13 +178,16 @@ const Page: NextPage = () => {
       ) : (
         <Container>
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
-            <h2>LOSTRPG キャンプ{id ? '編集' : '作成'}</h2>
+            <h2>
+              {t('lostrpg_camps_edit_title')}
+              {id ? t('common_edit') : t('common_create')}
+            </h2>
             <Box my={2}>
               <InputField
                 model={camp}
                 type="text"
                 prop="playerName"
-                labelText="プレイヤー名"
+                labelText={t('lostrpg_character_common_playerName')}
                 changeHandler={(e) =>
                   setCamp({ ...camp, playerName: e.target.value })
                 }
@@ -178,12 +196,10 @@ const Page: NextPage = () => {
                 <TextField
                   id="campName"
                   required
-                  label="キャンプ名"
+                  label={t('common_name')}
                   error={!camp.name && isSubmit}
                   helperText={
-                    camp.name || !isSubmit
-                      ? ''
-                      : '必須項目です。入力してください'
+                    camp.name || !isSubmit ? '' : t('message_required')
                   }
                   value={camp.name}
                   onChange={(e) => setCamp({ ...camp, name: e.target.value })}
@@ -191,7 +207,7 @@ const Page: NextPage = () => {
               </FormControl>
             </Box>
             <Box my={2}>
-              <InputLabel>キャンプ画像</InputLabel>
+              <InputLabel>{t('common_image')}</InputLabel>
               <Dropzone onDrop={handleOnDrop} accept="image/*">
                 {({ getRootProps, getInputProps }) => (
                   <div {...getRootProps()}>
@@ -206,7 +222,7 @@ const Page: NextPage = () => {
                       {prevUrl ? (
                         <img
                           style={{ width: '100%' }}
-                          alt="キャンプ画像"
+                          alt={t('common_image')}
                           src={prevUrl}
                         />
                       ) : (
@@ -221,26 +237,13 @@ const Page: NextPage = () => {
 
             <Box my={2}>
               <Button component="label" color="primary">
-                画像ファイル選択
+                {t('message_please_drop_image')}
                 <input
                   type="file"
                   style={{ display: 'none' }}
                   onChange={handleImageChange}
                 />
               </Button>
-            </Box>
-            <Box my={2}>
-              <InputLabel>メモ欄</InputLabel>
-              <FormControl fullWidth style={{ marginTop: '10px' }}>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  rowsMin={3}
-                  value={camp.freeWriting}
-                  onChange={(e) =>
-                    setCamp({ ...camp, freeWriting: e.target.value })
-                  }
-                />
-              </FormControl>
             </Box>
             <EditableMaterialTable
               title="施設"
@@ -326,6 +329,81 @@ const Page: NextPage = () => {
                     </MenuItem>
                   ))}
                 </Select>
+              </FormControl>
+            </Box>
+            <Box my={2}>
+              <Box my={2}>
+                <SelectField
+                  id="items-select"
+                  items={vm.items}
+                  value={''}
+                  unselectedText={t('common_unselected')}
+                  labelText={t('lostrpg_character_edit_addItem')}
+                  changeHandler={(item: Item | null) => {
+                    console.log(camp)
+                    item &&
+                      setCamp({
+                        ...camp,
+                        items: [
+                          ...camp.items,
+                          { ...item, id: _.uniqueId(item.name), number: 1 },
+                        ],
+                      })
+                  }}
+                />
+              </Box>
+              <EditableMaterialTable
+                title={t('lostrpg_common_storage')}
+                columns={vm.itemsColumns}
+                data={_.cloneDeep(camp.items)}
+                rowAddHandler={(newData) => {
+                  updateItemRowData((d) => [
+                    ...d,
+                    { ...newData, id: _.uniqueId(newData.name) },
+                  ])
+                }}
+                rowUpdateHandler={(newData, oldData) => {
+                  updateItemRowData((d) => {
+                    d[d.findIndex((i) => i.id === oldData.id)] = newData
+                    return d
+                  })
+                }}
+                rowDeleteHandler={(oldData) => {
+                  updateItemRowData((d) => {
+                    d.splice(
+                      d.findIndex((i) => i.id === oldData.id),
+                      1,
+                    )
+                    return d
+                  })
+                }}
+              />
+            </Box>
+
+            <Box my={2}>
+              <InputLabel>{t('common_summary')}</InputLabel>
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  rowsMin={3}
+                  value={camp.summary}
+                  onChange={(e) =>
+                    setCamp({ ...camp, summary: e.target.value })
+                  }
+                />
+              </FormControl>
+            </Box>
+            <Box my={2}>
+              <InputLabel>{t('common_detail')}</InputLabel>
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  rowsMin={3}
+                  value={camp.freeWriting}
+                  onChange={(e) =>
+                    setCamp({ ...camp, freeWriting: e.target.value })
+                  }
+                />
               </FormControl>
             </Box>
 

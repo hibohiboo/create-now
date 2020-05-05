@@ -1,5 +1,7 @@
 {
   "lostrpg_common_camp": "Camp",
+
+  "lostrpg_common_storage": "倉庫",
   "lostrpg_index_title": "LOSTRPG Support Page",
   "lostrpg_index_campList": "Camp List",
   "lostrpg_index_characters": "Character List",
@@ -9,7 +11,8 @@
   "lostrpg_camps_list_campName": "camp name",
   "lostrpg_camps_list_campList": "camp list",
   "lostrpg_camps_list_please_login": "Please Login",
-
+  "lostrpg_camps_edit_title": "LOSTRPG Camp",
+  "lostrpg_character_common_playerName": "プレイヤー名",
   "lostrpg_character_common_memo": "memo",
   "lostrpg_character_common_ability": "Ability",
   "lostrpg_character_common_specialty": "Specialty",
