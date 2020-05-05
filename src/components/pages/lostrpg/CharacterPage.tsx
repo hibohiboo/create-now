@@ -324,7 +324,9 @@ const Page: React.FC<{
       ) : (
         <></>
       )}
-      <Link href={beforePage}>{t('common_back')}</Link>
+      <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
+        {t('common_back')}
+      </Link>
     </Container>
   )
 }
