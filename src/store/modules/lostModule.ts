@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
-import { readCharacters } from '~/firestore/character'
+import { readCharacters, readCampsCharacters } from '~/firestore/character'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
@@ -179,7 +179,12 @@ export const initCharacter: Character = {
   updatedAt: '',
   uid: '',
 }
-
+interface CampsCharacters {
+  characterId: string
+  characterName: string
+  campId: string
+  campName: string
+}
 type LostState = {
   camp: Camp | null
   camps: Camp[]
@@ -188,6 +193,7 @@ type LostState = {
   character: Character
   characters: { name: string; id: string }[]
   locale: Language
+  campsCharacters: CampsCharacters[]
 }
 
 type PaginationState = {
@@ -211,6 +217,7 @@ export const init: LostState = {
   character: initCharacter,
   characters: [],
   locale: defaultLanguage,
+  campsCharacters: [],
 }
 
 const isBodyParts = (bodyParts, name) => bodyParts.includes(name)
@@ -296,6 +303,9 @@ const lostModule = createSlice({
     setLocale: (state, action: PayloadAction<Language>) => {
       state.locale = action.payload
     },
+    setCampsCharacters: (state, action: PayloadAction<CampsCharacters[]>) => {
+      state.campsCharacters = action.payload
+    },
   },
 })
 
@@ -321,6 +331,11 @@ export const useCharacters = () =>
   useSelector(
     (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
       state.lost.characters,
+  )
+export const useCampsCharacters = () =>
+  useSelector(
+    (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
+      state.lost.campsCharacters,
   )
 const makeSpecialtiesTableColumns = (
   specialtiesTableColumns: any[],
@@ -475,6 +490,7 @@ const {
   setError,
   setCharacters,
   addCharacters,
+  setCampsCharacters,
 } = lostModule.actions
 
 export const {
@@ -552,4 +568,11 @@ export const fetchCharactersMore = (
   searchName: string,
 ): AppThunk => async (dispatch) => {
   await fetchCharactersCommon(next, limit, dispatch, addCharacters, searchName)
+}
+
+export const fetchCampsCharacters = (id: string): AppThunk => async (
+  dispatch,
+) => {
+  const ret = await readCampsCharacters(id)
+  dispatch(setCampsCharacters(ret))
 }

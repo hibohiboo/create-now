@@ -30,6 +30,7 @@ const updateCampsCharacters = async (
   campName: string,
   characterId: string,
   characterName: string,
+  uid: string,
 ) => {
   if (campId) {
     return await getCampsCharacters(firestore).doc(characterId).set({
@@ -37,6 +38,7 @@ const updateCampsCharacters = async (
       campId,
       characterName,
       campName,
+      uid,
     })
   }
   try {
@@ -80,6 +82,7 @@ export const createCharacter = async (
       character.campName,
       id,
       character.name,
+      uid,
     ),
   ])
 
@@ -122,6 +125,7 @@ export const updateCharacter = async (
       character.campName,
       id,
       character.name,
+      uid,
     ),
   ])
 }
@@ -183,4 +187,13 @@ export const readCharacters = async (
     next: `${next.createdAt.seconds}${splitter}${next.createdAt.nanoseconds}`,
     hasMore: true,
   }
+}
+
+export const readCampsCharacters = async (id: string) => {
+  const querySnapshot = await getCampsCharacters(db)
+    .where('campId', '==', id)
+    .get()
+  const ret = []
+  querySnapshot.forEach((doc) => ret.push(doc.data()))
+  return ret
 }
