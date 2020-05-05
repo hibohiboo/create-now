@@ -24,7 +24,6 @@ import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 import { useAuth } from '~/store/modules/authModule'
-import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import useI18n from '~/hooks/use-i18n'
 import { contentLanguageMap } from '~/lib/i18n'
@@ -122,7 +121,7 @@ const Page: NextPage = () => {
   }
 
   const deleteHandler = async () => {
-    if (confirm(deleteMessage)) {
+    if (confirm(t('message_are_you_sure_remove'))) {
       await deleteCharacter(id, authUser.uid)
       Router.push(beforePage)
     }

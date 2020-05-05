@@ -31,7 +31,6 @@ import {
   canEdit,
 } from '~/firestore/camp'
 import * as lostData from '~/data/lostrpg'
-import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import { createSetImageFile } from '~/utils/formHelper'
 import useI18n from '~/hooks/use-i18n'
@@ -141,7 +140,7 @@ const Page: NextPage = () => {
       }
 
   const deleteHandler = async () => {
-    if (confirm(deleteMessage)) {
+    if (confirm(t('message_are_you_sure_remove'))) {
       await deleteCamp(id, authUser.uid)
       Router.push(beforePage)
     }

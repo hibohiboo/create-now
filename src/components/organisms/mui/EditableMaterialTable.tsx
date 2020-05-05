@@ -1,8 +1,7 @@
 import { forwardRef } from 'react'
 import { AddBox, Edit, DeleteOutline, Check, Clear } from '@material-ui/icons'
 import MaterialTable from 'material-table'
-import { deleteMessage } from '~/config/messages'
-
+import useI18n from '~/hooks/use-i18n'
 const tableIcons = {
   Add: forwardRef<SVGSVGElement>((props, ref) => (
     <AddBox {...props} ref={ref} />
@@ -38,54 +37,59 @@ const editableTable = ({
   rowAddHandler,
   rowUpdateHandler,
   rowDeleteHandler,
-}: Prop) => (
-  <MaterialTable
-    title={title}
-    icons={tableIcons}
-    options={{
-      search: false,
-      sorting: false,
-      paging: false,
-      rowStyle: {
-        whiteSpace: 'nowrap',
-      },
-      headerStyle: {
-        whiteSpace: 'nowrap',
-      },
-    }}
-    localization={{
-      header: {
-        actions: '',
-      },
-      body: { editRow: { deleteText: deleteMessage } },
-    }}
-    columns={columns}
-    data={data}
-    editable={{
-      onRowAdd: (newData) =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve()
-            rowAddHandler(newData)
-          }, waitTime)
-        }),
-      onRowUpdate: (newData, oldData) =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve()
-            if (oldData) {
-              rowUpdateHandler(newData, oldData)
-            }
-          }, waitTime)
-        }),
-      onRowDelete: (oldData) =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve()
-            rowDeleteHandler(oldData)
-          }, waitTime)
-        }),
-    }}
-  />
-)
+}: Prop) => {
+  const i18n = useI18n()
+  const t = i18n.t
+  return (
+    <MaterialTable
+      title={title}
+      icons={tableIcons}
+      options={{
+        search: false,
+        sorting: false,
+        paging: false,
+        rowStyle: {
+          whiteSpace: 'nowrap',
+        },
+        headerStyle: {
+          whiteSpace: 'nowrap',
+        },
+      }}
+      localization={{
+        header: {
+          actions: '',
+        },
+        body: { editRow: { deleteText: t('message_are_you_sure_remove') } },
+      }}
+      columns={columns}
+      data={data}
+      editable={{
+        onRowAdd: (newData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+              rowAddHandler(newData)
+            }, waitTime)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+              if (oldData) {
+                rowUpdateHandler(newData, oldData)
+              }
+            }, waitTime)
+          }),
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+              rowDeleteHandler(oldData)
+            }, waitTime)
+          }),
+      }}
+    />
+  )
+}
+
 export default editableTable
