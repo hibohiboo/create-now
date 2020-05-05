@@ -98,6 +98,8 @@ export interface Character {
   appearance?: string
   unusedExperience: number
   totalExperience: number
+  campName?: string
+  campId?: string
   playerName?: string
   uid?: string
   imageUrl?: string
@@ -171,6 +173,8 @@ export const initCharacter: Character = {
   appearance: '',
   freeWriting: '',
   playerName: '',
+  campName: '',
+  campId: '',
   createdAt: '',
   updatedAt: '',
   uid: '',

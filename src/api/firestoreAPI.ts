@@ -95,6 +95,8 @@ export const getCharacter = async (id: string) => {
     quote,
     summary,
     appearance,
+    campId,
+    campName,
   } = data.fields
   const ret: lost.Character = {
     name: getStr(name),
@@ -173,6 +175,8 @@ export const getCharacter = async (id: string) => {
     quote: getStr(quote),
     summary: getStr(summary),
     appearance: getStr(appearance),
+    campId: getStr(campId),
+    campName: getStr(campName),
   }
   return ret
 }

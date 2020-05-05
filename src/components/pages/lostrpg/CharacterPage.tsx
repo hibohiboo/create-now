@@ -42,6 +42,22 @@ const Page: React.FC<{
       </Head>
       <Box my={4}>
         <h1>{character.name}</h1>
+        {character.campId ? (
+          <h5>
+            {t('lostrpg_common_camp')}:
+            <Link
+              href={{
+                pathname: `/lostrpg/public/[lng]/[view]`,
+                query: { id: character.campId },
+              }}
+              as={`/lostrpg/public/${i18n.activeLocale}/camp?id=${character.campId}`}
+            >
+              {character.campName}
+            </Link>
+          </h5>
+        ) : (
+          <></>
+        )}
         {!canEdit(authUser, character) ? (
           <></>
         ) : (
@@ -59,7 +75,11 @@ const Page: React.FC<{
         )}
       </Box>
       <Box my={4}>
-        <q style={{ fontSize: '1.5rem' }}>{character.quote}</q>
+        {character.quote ? (
+          <q style={{ fontSize: '1.5rem' }}>{character.quote}</q>
+        ) : (
+          <></>
+        )}
       </Box>
       <Box my={2}>
         <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>
@@ -82,14 +102,17 @@ const Page: React.FC<{
         ) : (
           <></>
         )}
-
-        <Box
-          border={1}
-          p={1}
-          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
-        >
-          {character.summary}
-        </Box>
+        {character.summary.trim() ? (
+          <Box
+            border={1}
+            p={1}
+            style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+          >
+            {character.summary}
+          </Box>
+        ) : (
+          <></>
+        )}
       </Box>
       <Box my={2}>
         <SpecialtiesTable
@@ -266,27 +289,34 @@ const Page: React.FC<{
           data={vm.statusAilments}
         />
       </Box>
-      <Box my={2} style={{ width: '100%' }}>
-        <InputLabel>{t('lostrpg_character_common_appearance')}</InputLabel>
-        <Box
-          border={1}
-          p={1}
-          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
-        >
-          {character.appearance}
+      {character.appearance ? (
+        <Box my={2} style={{ width: '100%' }}>
+          <InputLabel>{t('lostrpg_character_common_appearance')}</InputLabel>
+          <Box
+            border={1}
+            p={1}
+            style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+          >
+            {character.appearance}
+          </Box>
         </Box>
-      </Box>
-
-      <Box my={2} style={{ width: '100%' }}>
-        <InputLabel>{t('common_detail')}</InputLabel>
-        <Box
-          border={1}
-          p={1}
-          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
-        >
-          {character.freeWriting}
+      ) : (
+        <></>
+      )}
+      {character.freeWriting ? (
+        <Box my={2} style={{ width: '100%' }}>
+          <InputLabel>{t('common_detail')}</InputLabel>
+          <Box
+            border={1}
+            p={1}
+            style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+          >
+            {character.freeWriting}
+          </Box>
         </Box>
-      </Box>
+      ) : (
+        <></>
+      )}
       <Link href={beforePage}>{t('common_back')}</Link>
     </Container>
   )

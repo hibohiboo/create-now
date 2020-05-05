@@ -7,22 +7,31 @@ const SelectField: React.FC<{
   unselectedText: string
   items: { name: string }[]
   value: string
+  valueProp?: string
   changeHandler: ({ name: string }) => void
-}> = ({ id, labelText, items, unselectedText, changeHandler, value }) => (
+}> = ({
+  id,
+  labelText,
+  items,
+  unselectedText,
+  changeHandler,
+  value,
+  valueProp = 'name',
+}) => (
   <FormControl fullWidth>
     <InputLabel id={`${id}-label`}>{labelText}</InputLabel>
     <Select
       labelId={`${id}-label`}
       id={id}
-      value={value}
+      value={value || ''}
       onChange={(event) => {
-        const item = items.find((i) => i.name === event.target.value)
+        const item = items.find((i) => i[valueProp] === event.target.value)
         changeHandler(item)
       }}
     >
       <MenuItem value="">{unselectedText}</MenuItem>
       {items.map((item) => (
-        <MenuItem value={item.name} key={item.name}>
+        <MenuItem value={item[valueProp]} key={item[valueProp]}>
           {item.name}
         </MenuItem>
       ))}

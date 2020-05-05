@@ -17,6 +17,35 @@ const getCharacterNames = (firestore: firebase.firestore.Firestore) => {
     .collection('characterNames')
 }
 
+const getCampsCharacters = (firestore: firebase.firestore.Firestore) => {
+  return firestore
+    .collection('systems')
+    .doc('lost')
+    .collection('campsCharacters')
+}
+
+const updateCampsCharacters = async (
+  firestore: firebase.firestore.Firestore,
+  campId: string,
+  campName: string,
+  characterId: string,
+  characterName: string,
+) => {
+  if (campId) {
+    return await getCampsCharacters(firestore).doc(characterId).set({
+      characterId,
+      campId,
+      characterName,
+      campName,
+    })
+  }
+  try {
+    return await getCampsCharacters(firestore).doc(characterId).delete()
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const createCharacter = async (
   character: Character,
   authUser: { uid: string },
@@ -45,6 +74,13 @@ export const createCharacter = async (
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }),
+    updateCampsCharacters(
+      db,
+      character.campId,
+      character.campName,
+      id,
+      character.name,
+    ),
   ])
 
   return id
@@ -80,6 +116,13 @@ export const updateCharacter = async (
       createdAt: character.createdAt,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }),
+    updateCampsCharacters(
+      db,
+      character.campId,
+      character.campName,
+      id,
+      character.name,
+    ),
   ])
 }
 export const canEdit = (authUser: { uid: string }, character: Character) =>

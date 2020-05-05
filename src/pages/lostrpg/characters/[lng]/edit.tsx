@@ -23,7 +23,6 @@ import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
-
 import { useAuth } from '~/store/modules/authModule'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
@@ -42,6 +41,8 @@ import {
   Ability,
   Item,
   Bag,
+  fetchCamps,
+  useCamps,
 } from '~/store/modules/lostModule'
 import {
   createCharacter,
@@ -51,6 +52,8 @@ import {
   canEdit,
 } from '~/firestore/character'
 import * as tableConfig from '~/config/table'
+
+const campLimit = 100
 
 const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id
@@ -64,6 +67,7 @@ const Page: NextPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const character = useCharacter()
+  const camps = useCamps()
   const vm = useCharacterEditViewModel()
   const id = getIdFromQuery(router)
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
@@ -129,6 +133,7 @@ const Page: NextPage = () => {
       Router.push(beforePage)
     }
     dispatch(setLocale(i18n.activeLocale))
+    dispatch(fetchCamps(campLimit))
 
     if (!id) {
       dispatch(setCharacter({ ...character, playerName: authUser.displayName }))
@@ -174,6 +179,38 @@ const Page: NextPage = () => {
                   )
                 }
               />
+              <Box my={1}>
+                <SelectField
+                  id="camp-select"
+                  items={_.cloneDeep(camps)}
+                  value={character.campId}
+                  valueProp={'id'}
+                  unselectedText={t('common_unselected')}
+                  labelText={t('lostrpg_common_camp')}
+                  changeHandler={(
+                    item: { id: string; name: string } | null,
+                  ) => {
+                    if (item) {
+                      dispatch(
+                        setCharacter({
+                          ...character,
+                          campName: item.name,
+                          campId: item.id,
+                        }),
+                      )
+                      return
+                    }
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        campName: '',
+                        campId: '',
+                      }),
+                    )
+                  }}
+                />
+              </Box>
+
               <FormControl fullWidth style={{ marginTop: '10px' }}>
                 <TextField
                   id="characterName"
