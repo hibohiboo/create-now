@@ -23,7 +23,7 @@ const getArray = (obj, decoder) =>
   obj && obj.arrayValue && obj.arrayValue.values
     ? obj.arrayValue.values.map(({ mapValue }) => {
         if (mapValue === null || mapValue === undefined) return null
-        if (mapValue.field) return decoder(mapValue.fields)
+        if (mapValue.fields) return decoder(mapValue.fields)
         return decoder(mapValue)
       })
     : []

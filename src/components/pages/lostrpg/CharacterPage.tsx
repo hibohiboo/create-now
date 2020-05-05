@@ -18,7 +18,7 @@ const Page: React.FC<{
   const i18n = useI18n()
   const t = i18n.t
   const { character, id, authUser } = ctx
-  const beforePage = '/lostrpg/characters/list'
+  const beforePage = '/lostrpg/characters/${i18n.activeLocale}/list'
 
   return (
     <Container>
@@ -37,7 +37,7 @@ const Page: React.FC<{
                   pathname: `/lostrpg/characters/[lng]/edit`,
                   query: { id },
                 }}
-                as={`/lostrpg/characters/${i18n.activeLocale}/edit`}
+                as={`/lostrpg/characters/${i18n.activeLocale}/edit?id=${id}`}
               >
                 {t('common_edit')}
               </Link>
@@ -75,7 +75,7 @@ const Page: React.FC<{
             search: false,
             sorting: false,
             paging: false,
-            draggable: false, // error server contextがtrueだと発生
+            draggable: false,
             rowStyle: {
               whiteSpace: 'nowrap',
             },
