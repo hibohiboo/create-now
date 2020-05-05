@@ -1424,7 +1424,6 @@ export const abilityList = [
 export const itemsColumns = [
   { title: '名前', field: 'name' },
   { title: '個数', field: 'number', type: 'numeric' as 'numeric' },
-
   { title: '価格', field: 'j', type: 'numeric' as 'numeric' },
   { title: '重量', field: 'weight', type: 'numeric' as 'numeric' },
   { title: 'タイプ', field: 'type' },

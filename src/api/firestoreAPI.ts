@@ -12,7 +12,8 @@ const fetchFromFirestore = async (path: string) => {
 
 const getStr = (obj): string | undefined => (obj ? obj.stringValue : null)
 const getInt = (obj) =>
-  obj && isNaN(Number(obj.integerValue)) ? 0 : Number(obj.integerValue)
+  (obj && isNaN(Number(obj.integerValue)) ? 0 : Number(obj.integerValue)) ||
+  (obj && isNaN(Number(obj.stringValue)) ? 0 : Number(obj.stringValue))
 const getTimestamp = (obj) => (obj ? obj.timestampValue : null)
 const getArray = (obj, decoder) =>
   obj && obj.arrayValue && obj.arrayValue.values
@@ -48,6 +49,113 @@ export const getCamp = async (id: string) => {
     })),
     freeWriting: getStr(freeWriting),
     imageUrl: getStr(imageUrl),
+  }
+  return ret
+}
+
+// LOSTRPG
+export const getCharacter = async (id: string) => {
+  const data = await fetchFromFirestore(`systems/lost/characters/${id}`)
+
+  const {
+    name,
+    uid,
+    playerName,
+    createdAt,
+    updatedAt,
+    freeWriting,
+    imageUrl,
+    classes,
+    abilities,
+    statusAilments,
+    damagedSpecialties,
+    specialties,
+    gaps,
+    items,
+    equipments,
+    bags,
+    willPowerBase,
+    willPower,
+    staminaBase,
+    stamina,
+    carryingCapacity,
+    totalExperience,
+    unusedExperience,
+  } = data.fields
+  const ret: lost.Character = {
+    name: getStr(name),
+    uid: getStr(uid),
+    playerName: getStr(playerName),
+    createdAt: getTimestamp(createdAt),
+    updatedAt: getTimestamp(updatedAt),
+    classes: getArray(classes, (item) => ({
+      name: getStr(item.name),
+      id: getStr(item.id),
+    })),
+    specialties: getArray(specialties, (item) => getStr(item)),
+    gaps: getArray(gaps, (item) => getStr(item)),
+    abilities: getArray(abilities, (item) => ({
+      name: getStr(item.name),
+      target: getStr(item.target),
+      specialty: getStr(item.specialty),
+      type: getStr(item.type),
+      recoil: getStr(item.recoil),
+      group: getStr(item.group),
+      effect: getStr(item.effect),
+    })),
+    items: getArray(items, (item) => ({
+      id: getStr(item.id),
+      name: getStr(item.name),
+      number: getInt(item.number),
+      j: getInt(item.j),
+      weight: getInt(item.weight),
+      type: getStr(item.type),
+      area: getStr(item.area),
+      trait: getStr(item.trait),
+      specialty: getStr(item.specialty),
+      effect: getStr(item.effect),
+    })),
+    equipments: getArray(equipments, (item) => ({
+      id: getStr(item.id),
+      name: getStr(item.name),
+      j: getInt(item.j),
+      weight: getInt(item.weight),
+      type: getStr(item.type),
+      area: getStr(item.area),
+      trait: getStr(item.trait),
+      target: getStr(item.target),
+      specialty: getStr(item.specialty),
+      effect: getStr(item.effect),
+      equipedArea: getStr(item.equipedArea),
+    })),
+    bags: getArray(bags, (bag) => ({
+      id: getStr(bag.id),
+      name: getStr(bag.name),
+      capacity: getInt(bag.capacity),
+      items: getArray(bag.items, (item) => ({
+        id: getStr(item.id),
+        name: getStr(item.name),
+        number: getInt(item.number),
+        j: getInt(item.j),
+        weight: getInt(item.weight),
+        type: getStr(item.type),
+        area: getStr(item.area),
+        trait: getStr(item.trait),
+        specialty: getStr(item.specialty),
+        effect: getStr(item.effect),
+      })),
+    })),
+    statusAilments: getArray(statusAilments, (item) => getStr(item)),
+    damagedSpecialties: getArray(damagedSpecialties, (item) => getStr(item)),
+    freeWriting: getStr(freeWriting),
+    imageUrl: getStr(imageUrl),
+    willPowerBase: getInt(willPowerBase),
+    willPower: getInt(willPower),
+    staminaBase: getInt(staminaBase),
+    stamina: getInt(stamina),
+    carryingCapacity: getInt(carryingCapacity),
+    totalExperience: getInt(totalExperience),
+    unusedExperience: getInt(unusedExperience),
   }
   return ret
 }
