@@ -7,6 +7,7 @@ import { readCharacters } from '~/firestore/character'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
+import { Language, defaultLanguage } from '~/lib/i18n'
 
 export interface Facility {
   name: string
@@ -176,6 +177,7 @@ type LostState = {
   error: string | null
   character: Character
   characters: { name: string; id: string }[]
+  locale: Language
 }
 
 type PaginationState = {
@@ -198,9 +200,10 @@ export const init: LostState = {
   error: null,
   character: initCharacter,
   characters: [],
+  locale: defaultLanguage,
 }
 
-const isBodyParts = (name) => lostData.bodyParts.includes(name)
+const isBodyParts = (bodyParts, name) => bodyParts.includes(name)
 
 // actions と reducers の定義
 const lostModule = createSlice({
@@ -243,13 +246,15 @@ const lostModule = createSlice({
     toggleCharacterDamage: (state, action: PayloadAction<string>) => {
       const name = action.payload
       const { damagedSpecialties } = state.character
+      const { specialties, bodyParts } =
+        state.locale === defaultLanguage ? lostData : lostDataEn
       if (damagedSpecialties.includes(name)) {
         state.character.damagedSpecialties = damagedSpecialties.filter(
           (item) => item !== name,
         )
         return
       }
-      if (!isBodyParts(name)) {
+      if (!isBodyParts(bodyParts, name)) {
         state.character.damagedSpecialties = [
           ...state.character.damagedSpecialties,
           name,
@@ -257,9 +262,9 @@ const lostModule = createSlice({
         return
       }
       // 部位を負傷した場合、8近傍にチェック
-      const index = lostData.specialties.indexOf(name)
+      const index = specialties.indexOf(name)
       ;[-12, -11, -10, -1, 0, 1, 10, 11, 12].forEach((i) => {
-        const target = lostData.specialties[index + i]
+        const target = specialties[index + i]
         if (!target || damagedSpecialties.includes(target)) return
         state.character.damagedSpecialties.push(target)
       })
@@ -277,6 +282,9 @@ const lostModule = createSlice({
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload
       state.camps = []
+    },
+    setLocale: (state, action: PayloadAction<Language>) => {
+      state.locale = action.payload
     },
   },
 })
@@ -304,45 +312,57 @@ export const useCharacters = () =>
     (state: { lost: ReturnType<typeof lostModule.reducer> }) =>
       state.lost.characters,
   )
-const specialtiesTableColumns = (character: Character) => {
+const makeSpecialtiesTableColumns = (
+  specialtiesTableColumns: any[],
+  character: Character,
+) => {
   const makeData = (name) => {
     const selected = character.gaps.includes(name)
     return { name, selected }
   }
-  return lostData.specialtiesTableColumns.map(makeData)
+  return specialtiesTableColumns.map(makeData)
 }
 
-const specialtiesTableRows = (character: Character) => {
+const specialtiesTableRows = (
+  bodyParts: string[],
+  specialties: any[],
+  character: Character,
+) => {
   const makeData = (name, gap?) => {
     const selected =
       (gap && character.gaps.includes(gap)) ||
       character.specialties.includes(name)
     const damaged = character.damagedSpecialties.includes(name)
-    return { name, selected, damaged, isBodyParts: isBodyParts(name) }
+    return {
+      name,
+      selected,
+      damaged,
+      isBodyParts: isBodyParts(bodyParts, name),
+    }
   }
 
   return _.range(11).map((y) => ({
     number: y + 2,
-    talent: makeData(lostData.specialties[y]),
+    talent: makeData(specialties[y]),
     a: makeData('', 'A'),
-    head: makeData(lostData.specialties[11 + y]),
+    head: makeData(specialties[11 + y]),
     b: makeData('', 'B'),
-    arms: makeData(lostData.specialties[22 + y]),
+    arms: makeData(specialties[22 + y]),
     c: makeData('', 'C'),
-    torso: makeData(lostData.specialties[33 + y]),
+    torso: makeData(specialties[33 + y]),
     d: makeData('', 'D'),
-    legs: makeData(lostData.specialties[44 + y]),
+    legs: makeData(specialties[44 + y]),
     e: makeData('', 'E'),
-    survival: makeData(lostData.specialties[55 + y]),
+    survival: makeData(specialties[55 + y]),
   }))
 }
 
-const damageBodyParts = (character: Character) => {
+const damageBodyParts = (bodyParts: string[], character: Character) => {
   const makeData = (name) => {
     const damaged = character.damagedSpecialties.includes(name)
     return { name, damaged }
   }
-  return lostData.bodyParts.map(makeData)
+  return bodyParts.map(makeData)
 }
 
 const equipments = (character: Character, i18n) => {
@@ -402,7 +422,10 @@ export const useCharacterEditViewModel = () =>
       statusAilments,
       classList,
       abilityList,
-    } = i18n.activeLocale === 'ja' ? lostData : lostDataEn
+      specialties,
+      bodyParts,
+      specialtiesTableColumns,
+    } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
 
     return {
       classList: classList.filter((item) => !character.classes.includes(item)),
@@ -416,9 +439,16 @@ export const useCharacterEditViewModel = () =>
         .map((item) => item.list)
         .flat()
         .filter((item) => !character.abilities.includes(item)),
-      specialtiesTableColumns: specialtiesTableColumns(character),
-      specialtiesTableRows: specialtiesTableRows(character),
-      damageBodyParts: damageBodyParts(character),
+      specialtiesTableColumns: makeSpecialtiesTableColumns(
+        specialtiesTableColumns,
+        character,
+      ),
+      specialtiesTableRows: specialtiesTableRows(
+        bodyParts,
+        specialties,
+        character,
+      ),
+      damageBodyParts: damageBodyParts(bodyParts, character),
       itemsColumns,
       items,
       equipmentColumns,
@@ -441,6 +471,7 @@ export const {
   setCharacter,
   toggleCharacterDamage,
   setCharacterBag,
+  setLocale,
 } = lostModule.actions
 
 interface CampLoaded {

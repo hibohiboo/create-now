@@ -10,7 +10,7 @@ const i18n = rosetta<Dict>()
 
 export const defaultLanguage = 'ja' // リテラル型
 export const languages = [defaultLanguage, 'en'] as const // const assertion.TypeScript 3.4^. readonly["ja", "en"]. 配列の要素の型をstring[]ではなく["ja", "en"]とリテラル型にできる
-type Language = typeof languages[number] // Union Typeに変換. T[number]は配列Tに対してnumber型のプロパティ名でアクセスできるプロパティの型 = 配列Tの要素の型
+export type Language = typeof languages[number] // Union Typeに変換. T[number]は配列Tに対してnumber型のプロパティ名でアクセスできるプロパティの型 = 配列Tの要素の型
 // Mapped Typesで定義。 languagesの定義を変更したときに足りなければ検知
 export const contentLanguageMap: { [K in Language]: string } = {
   ja: 'ja-JP',

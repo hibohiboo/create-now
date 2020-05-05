@@ -34,6 +34,7 @@ import {
   setCharacter,
   toggleCharacterDamage,
   setCharacterBag,
+  setLocale,
   useCharacter,
   useCharacterEditViewModel,
   initBag,
@@ -123,6 +124,7 @@ const Page: NextPage = () => {
     if (!authUser || (id && canEdit(authUser, character))) {
       Router.push(beforePage)
     }
+    dispatch(setLocale(i18n.activeLocale))
 
     if (!id) {
       dispatch(setCharacter({ ...character, playerName: authUser.displayName }))
