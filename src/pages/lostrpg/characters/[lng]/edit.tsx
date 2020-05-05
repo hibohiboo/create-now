@@ -51,7 +51,7 @@ import {
   deleteCharacter,
   canEdit,
 } from '~/firestore/character'
-import * as tableConfig from '~/config/table'
+import * as tableConfig from '~/lib/constants'
 
 const campLimit = 100
 

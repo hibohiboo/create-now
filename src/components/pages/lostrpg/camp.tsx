@@ -16,7 +16,8 @@ import {
 import { AuthUser } from '~/store/modules/authModule'
 import * as data from '~/data/lostrpg'
 import useI18n from '~/hooks/use-i18n'
-import * as tableConfig from '~/config/table'
+import * as tableConfig from '~/lib/constants'
+import SocialMeta from '~/components/SocialMeta'
 
 const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
   ctx,
@@ -37,6 +38,12 @@ const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
       <Head>
         <title>{camp.name}</title>
       </Head>
+      <SocialMeta
+        title={camp.name}
+        description={camp.summary}
+        url={`/lostrpg/public/ja/camp?id=${id}`}
+        image={camp.imageUrl}
+      />
       <Box my={4}>
         <div style={{ maxWidth: '500px', minWidth: '200px' }}>
           <h2>{camp.name}</h2>

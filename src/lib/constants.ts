@@ -10,3 +10,7 @@ export const viewTable = {
     whiteSpace: 'nowrap',
   },
 } as const
+
+export const TWITTER_USER_NAME = 'hibohiboo'
+export const SITE_NAME = 'hibohiboo TRPG サポートページ'
+export const SITE_DOMAIN = 'https://create-now.now.sh'

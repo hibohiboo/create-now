@@ -17,7 +17,8 @@ import {
   Character,
 } from '~/store/modules/lostModule'
 import { canEdit } from '~/firestore/character'
-import * as tableConfig from '~/config/table'
+import * as tableConfig from '~/lib/constants'
+import SocialMeta from '~/components/SocialMeta'
 
 const Page: React.FC<{
   character: Character
@@ -40,6 +41,12 @@ const Page: React.FC<{
       <Head>
         <title>{character.name}</title>
       </Head>
+      <SocialMeta
+        title={character.name}
+        description={character.summary}
+        url={`/lostrpg/public/ja/character?id=${id}`}
+        image={character.imageUrl}
+      />
       <Box my={4}>
         <h1>{character.name}</h1>
         {character.campId ? (
