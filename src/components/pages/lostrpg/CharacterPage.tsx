@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
-import { Box } from '@material-ui/core'
+import { Box, Button, Chip, Checkbox } from '@material-ui/core'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import { canEdit } from '~/firestore/character'
-import { Character } from '~/store/modules/lostModule'
 import { AuthUser } from '~/store/modules/authModule'
 import * as data from '~/data/lostrpg'
 import useI18n from '~/hooks/use-i18n'
+import { useDispatch } from 'react-redux'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import TextField from '@material-ui/core/TextField'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import { DeleteOutline } from '@material-ui/icons'
+import InputField from '~/components/form/InputField'
+import SelectField from '~/components/form/SelectField'
+import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
+import DamageTable from '~/components/organisms/lostrpg/DamageTable'
+import { useAuth } from '~/store/modules/authModule'
+import { deleteMessage } from '~/config/messages'
+import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
+import { contentLanguageMap } from '~/lib/i18n'
+import { createSetImageFile } from '~/utils/formHelper'
+import {
+  setCharacter,
+  useCharacterEditViewModel,
+  setLocale,
+  Character,
+} from '~/store/modules/lostModule'
+import { getCharacter, canEdit } from '~/firestore/character'
 
 const Page: React.FC<{
   character: Character
@@ -17,9 +41,14 @@ const Page: React.FC<{
 }> = (ctx) => {
   const i18n = useI18n()
   const t = i18n.t
+  const dispatch = useDispatch()
+  const vm = useCharacterEditViewModel()
   const { character, id, authUser } = ctx
   const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
-
+  useEffect(() => {
+    dispatch(setLocale(i18n.activeLocale))
+    dispatch(setCharacter(character))
+  }, [])
   return (
     <Container>
       <Head>
@@ -88,7 +117,7 @@ const Page: React.FC<{
               actions: '',
             },
           }}
-          columns={data.abilitiesColumns}
+          columns={vm.abilitiesColumns}
           data={character.abilities}
         />
       </Box>
