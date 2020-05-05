@@ -1,22 +1,18 @@
 import React from 'react'
-import { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { Box } from '@material-ui/core'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import { getCamp } from '~/api/firestoreAPI'
 import { canEdit } from '~/firestore/camp'
 import { Camp } from '~/store/modules/lostModule'
-import { useAuth } from '~/store/modules/authModule'
+import { AuthUser } from '~/store/modules/authModule'
 import * as data from '~/data/lostrpg'
 
-const Page: NextPage<{ camp: Camp }> = function (ctx) {
-  const router = useRouter()
-  const authUser = useAuth()
-  const { camp } = ctx
-  const { id } = router.query
+const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
+  ctx,
+) => {
+  const { camp, id, authUser } = ctx
   const beforePage = '/lostrpg/camps/list'
   return (
     <Container>
@@ -88,11 +84,6 @@ const Page: NextPage<{ camp: Camp }> = function (ctx) {
       <Link href={beforePage}>戻る</Link>
     </Container>
   )
-}
-
-Page.getInitialProps = async ({ query }) => {
-  const camp = await getCamp(query.id as string)
-  return { camp }
 }
 
 export default Page

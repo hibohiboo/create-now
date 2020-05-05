@@ -96,10 +96,11 @@ const Page: NextPage = () => {
           {items.map((item) => (
             <ListItemLink
               href={{
-                pathname: '/lostrpg/camps/view', // trailing slash(/lostrpg/camps/edit/)にするとエラー。
+                pathname: '/lostrpg/public/[lng]/[view]',
                 query: { id: item.id },
               }}
               key={item.id}
+              as={`/lostrpg/public/${i18n.activeLocale}/camp?id=${item.id}`}
             >
               <ListItemText primary={item.name} />
             </ListItemLink>

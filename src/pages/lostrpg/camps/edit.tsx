@@ -27,6 +27,7 @@ import * as lostData from '~/data/lostrpg'
 import { deleteMessage } from '~/config/messages'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import { createSetImageFile } from '~/utils/formHelper'
+import useI18n from '~/hooks/use-i18n'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -52,6 +53,7 @@ const createFacility = (item) => ({
 })
 
 const Page: NextPage = () => {
+  const i18n = useI18n()
   const router = useRouter()
   const authUser = useAuth()
   const [camp, setCamp] = useState<Camp>(initCamp)
@@ -95,7 +97,13 @@ const Page: NextPage = () => {
           return
         }
         await updateCamp(id, { ...camp, uid: authUser.uid }, authUser.uid, file)
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id } })
+        Router.push(
+          {
+            pathname: `/lostrpg/public/[lng]/[view]`,
+            query: { id },
+          },
+          `/lostrpg/public/${i18n.activeLocale}/camp?id=${id}`,
+        )
       }
     : async () => {
         if (!camp.name) {
