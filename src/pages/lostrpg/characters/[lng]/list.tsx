@@ -77,7 +77,7 @@ const HomePage = () => {
             {i18n.t('common_create')}
           </Link>
         ) : (
-          <></>
+          <Link href="/auth/login">{t('lostrpg_camps_list_please_login')}</Link>
         )}
       </Box>
 

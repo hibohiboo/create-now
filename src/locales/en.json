@@ -3,9 +3,13 @@
   "lostrpg_index_title": "LOSTRPG Support Page",
   "lostrpg_index_campList": "Camp List",
   "lostrpg_index_characters": "Character List",
+  "lostrpg_index_please_translate": "Translation support is still in progress. I would appreciate if you could translate the following files.",
+  "lostrpg_index_begin_translate": "File being translated",
   "lostrpg_camps_list_title": "LOSTRPG Camp List",
   "lostrpg_camps_list_campName": "camp name",
   "lostrpg_camps_list_campList": "camp list",
+  "lostrpg_camps_list_please_login": "Please Login",
+
   "lostrpg_character_common_memo": "memo",
   "lostrpg_character_common_ability": "Ability",
   "lostrpg_character_common_specialty": "Specialty",

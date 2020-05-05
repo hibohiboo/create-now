@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Button } from '@material-ui/core'
 import List from '@material-ui/core/List'
@@ -19,6 +20,7 @@ import {
   fetchCampsMore,
 } from '~/store/modules/lostModule'
 import useI18n from '~/hooks/use-i18n'
+import { contentLanguageMap } from '~/lib/i18n'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Page: NextPage = () => {
   const i18n = useI18n()
+  const t = i18n.t
   const classes = useStyles()
   const authUser = useAuth()
   const items = useCamps()
@@ -54,14 +57,24 @@ const Page: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <meta
+          httpEquiv="content-language"
+          content={contentLanguageMap[i18n.activeLocale]}
+        />
+      </Head>
       <Box my={4}>
-        <h2>{i18n.t('lostrpg_camps_list_title')}</h2>
-        <LanguageSelector i18n={i18n} />
+        <h2>{t('lostrpg_camps_list_title')}</h2>
+        <div style={{ display: 'none' }}>
+          <LanguageSelector i18n={i18n} />
+        </div>
         <Box mt={2}>
           {authUser ? (
-            <Link href="/lostrpg/camps/edit">{i18n.t('common_create')}</Link>
+            <Link href="/lostrpg/camps/edit">{t('common_create')}</Link>
           ) : (
-            <></>
+            <Link href="/auth/login">
+              {t('lostrpg_camps_list_please_login')}
+            </Link>
           )}
         </Box>
         <Box display="flex" style={{ maxWidth: '200px', minWidth: '50px' }}>
@@ -69,7 +82,7 @@ const Page: NextPage = () => {
             model={search}
             type="text"
             prop="name"
-            labelText={i18n.t('lostrpg_camps_list_campName')}
+            labelText={t('lostrpg_camps_list_campName')}
             changeHandler={(e) =>
               setSearch({ ...search, name: e.target.value })
             }
@@ -110,7 +123,7 @@ const Page: NextPage = () => {
           )}
         </div>
       </Box>
-      <Link href="/lostrpg">{i18n.t('common_back')}</Link>
+      <Link href="/lostrpg">{t('common_back')}</Link>
     </Container>
   )
 }

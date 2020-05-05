@@ -35,7 +35,16 @@ const Page: NextPage = () => {
           </Link>
         </li>
       </ul>
-
+      <div style={{ padding: '10px' }}>
+        {i18n.t('lostrpg_index_please_translate')}
+        <a
+          target="_blank"
+          href="https://github.com/hibohiboo/create-now/blob/master/src/data/lostrpg-en.ts"
+          rel="noopener noreferrer"
+        >
+          {i18n.t('lostrpg_index_begin_translate')}
+        </a>
+      </div>
       <Link href="/">{i18n.t('common_back')}</Link>
     </Container>
   )
