@@ -21,7 +21,9 @@ const getInt = (obj) =>
 const getTimestamp = (obj) => (obj ? obj.timestampValue : null)
 const getArray = (obj, decoder) =>
   obj && obj.arrayValue && obj.arrayValue.values
-    ? obj.arrayValue.values.map(({ mapValue }) => {
+    ? obj.arrayValue.values.map((item) => {
+        if (!item.mapValue) return decoder(item)
+        const { mapValue } = item
         if (mapValue === null || mapValue === undefined) return null
         if (mapValue.fields) return decoder(mapValue.fields)
         return decoder(mapValue)

@@ -50,6 +50,7 @@ import {
   deleteCharacter,
   canEdit,
 } from '~/firestore/character'
+import * as tableConfig from '~/config/table'
 
 const getIdFromQuery = (router: NextRouter) => {
   if (typeof router.query.id === 'string') return router.query.id
@@ -107,10 +108,13 @@ const Page: NextPage = () => {
       )
     }
 
-    Router.push({
-      pathname: `/lostrpg/characters/view`,
-      query: { id: retId },
-    })
+    Router.push(
+      {
+        pathname: `/lostrpg/public/[lng]/[view]`,
+        query: { retId },
+      },
+      `/lostrpg/public/${i18n.activeLocale}/character?id=${retId}`,
+    )
   }
 
   const deleteHandler = async () => {
@@ -121,7 +125,7 @@ const Page: NextPage = () => {
   }
 
   useEffect(() => {
-    if (!authUser || (id && canEdit(authUser, character))) {
+    if (!authUser || (id && !canEdit(authUser, character))) {
       Router.push(beforePage)
     }
     dispatch(setLocale(i18n.activeLocale))
@@ -133,7 +137,8 @@ const Page: NextPage = () => {
     ;(async () => {
       const data = await getCharacter(id)
       if (data) {
-        dispatch(setCharacter(data))
+        // createdAtがserializeではないオブジェクトなのでstringifyを経由することによりserialize化
+        dispatch(setCharacter(JSON.parse(JSON.stringify(data))))
         if (data.imageUrl) setPrevUrl(data.imageUrl)
       }
     })()
@@ -307,11 +312,7 @@ const Page: NextPage = () => {
               </InputLabel>
               <Box m={2}>
                 {character.specialties.map((name) => (
-                  <Chip
-                    style={{ marginLeft: '0.5rem' }}
-                    key={name}
-                    label={name}
-                  />
+                  <Chip style={{ margin: '0.5rem' }} key={name} label={name} />
                 ))}
               </Box>
             </Box>
@@ -664,18 +665,7 @@ const Page: NextPage = () => {
             <Box my={2}>
               <MaterialTable
                 title={t('lostrpg_character_common_equipment')}
-                options={{
-                  search: false,
-                  sorting: false,
-                  paging: false,
-                  draggable: false,
-                  rowStyle: {
-                    whiteSpace: 'nowrap',
-                  },
-                  headerStyle: {
-                    whiteSpace: 'nowrap',
-                  },
-                }}
+                options={tableConfig.viewTable}
                 columns={[
                   {
                     title: t('lostrpg_character_common_area'),
@@ -745,18 +735,7 @@ const Page: NextPage = () => {
             <Box my={2}>
               <MaterialTable
                 title={t('lostrpg_character_common_statusAilments')}
-                options={{
-                  search: false,
-                  sorting: false,
-                  paging: false,
-                  draggable: false,
-                  rowStyle: {
-                    whiteSpace: 'nowrap',
-                  },
-                  headerStyle: {
-                    whiteSpace: 'nowrap',
-                  },
-                }}
+                options={tableConfig.viewTable}
                 columns={[
                   {
                     title: '',

@@ -116,7 +116,13 @@ const Page: NextPage = () => {
           authUser,
           file,
         )
-        Router.push({ pathname: `/lostrpg/camps/view`, query: { id: retId } })
+        Router.push(
+          {
+            pathname: `/lostrpg/public/[lng]/[view]`,
+            query: { retId },
+          },
+          `/lostrpg/public/${i18n.activeLocale}/camp?id=${retId}`,
+        )
       }
 
   const deleteHandler = async () => {
