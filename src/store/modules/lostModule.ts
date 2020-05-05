@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { readCamps } from '~/firestore/camp'
-import * as lostData from '~/data/lostrpg'
 import useI18n from '~/hooks/use-i18n'
+import * as lostData from '~/data/lostrpg'
+import * as lostDataEn from '~/data/lostrpg-en'
+
 export interface Facility {
   name: string
   type: string
@@ -367,18 +369,42 @@ const equipments = (character: Character, i18n) => {
   return areas.map(makeData)
 }
 
+const makeStatusAilments = (
+  character: Character,
+  ailments: { name: string; effect: string }[],
+) =>
+  ailments.map(({ name, effect }) => ({
+    name,
+    effect,
+    isChecked: character.statusAilments.includes(name),
+  }))
+
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
     const i18n = useI18n()
     const { character } = state.lost
+    const abilitiesColumns =
+      i18n.activeLocale === 'ja'
+        ? lostData.abilitiesColumns
+        : lostDataEn.abilitiesColumns
+    const itemsColumns =
+      i18n.activeLocale === 'ja'
+        ? lostData.itemsColumns
+        : lostDataEn.itemsColumns
+    const items = i18n.activeLocale === 'ja' ? lostData.items : lostData.items
+    const equipmentColumns =
+      i18n.activeLocale === 'ja'
+        ? lostData.equipmentColumns
+        : lostDataEn.equipmentColumns
+    const statusAilments =
+      i18n.activeLocale === 'ja'
+        ? lostData.statusAilments
+        : lostDataEn.statusAilments
     return {
       classList: lostData.classList.filter(
         (item) => !character.classes.includes(item),
       ),
-      abilitiesColumns:
-        i18n.activeLocale === 'ja'
-          ? lostData.abilitiesColumns
-          : lostData.abilitiesColumnsEn,
+      abilitiesColumns,
       abilityList: lostData.abilityList
         .filter(
           (item) =>
@@ -389,19 +415,13 @@ export const useCharacterEditViewModel = () =>
         .flat()
         .filter((item) => !character.abilities.includes(item)),
       specialtiesTableColumns: specialtiesTableColumns(character),
-      // 'talent' | 'head' | 'arms' | 'torso' | 'legs' | 'survival'
       specialtiesTableRows: specialtiesTableRows(character),
       damageBodyParts: damageBodyParts(character),
-      itemsColumns:
-        i18n.activeLocale === 'ja'
-          ? lostData.itemsColumns
-          : lostData.itemsColumnsEn,
-      items: i18n.activeLocale === 'ja' ? lostData.itemList : lostData.itemList,
-      equipmentColumns:
-        i18n.activeLocale === 'ja'
-          ? lostData.equipmentColumns
-          : lostData.equipmentColumnsEn,
+      itemsColumns,
+      items,
+      equipmentColumns,
       equipments: equipments(character, i18n),
+      statusAilments: makeStatusAilments(character, statusAilments),
     }
   })
 // actions

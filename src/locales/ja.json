@@ -32,6 +32,7 @@
   "lostrpg_character_common_arms": "腕部",
   "lostrpg_character_common_torso": "胴部",
   "lostrpg_character_common_legs": "脚部",
+  "lostrpg_character_common_statusAilments": "変調",
 
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
@@ -42,6 +43,7 @@
 
   "common_add": "追加",
   "common_name": "名前",
+  "common_effect": "効果",
   "common_unselected": "未選択",
   "common_back": "戻る",
   "common_create": "新規作成",

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import Router, { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import Dropzone from 'react-dropzone'
-import { Box, Button, Chip } from '@material-ui/core'
+import { Box, Button, Chip, Checkbox } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
@@ -739,6 +739,61 @@ const Page: NextPage = () => {
                 data={vm.equipments}
               />
             </Box>
+
+            <Box my={2}>
+              <MaterialTable
+                title={t('lostrpg_character_common_statusAilments')}
+                options={{
+                  search: false,
+                  sorting: false,
+                  paging: false,
+                  draggable: false,
+                  rowStyle: {
+                    whiteSpace: 'nowrap',
+                  },
+                  headerStyle: {
+                    whiteSpace: 'nowrap',
+                  },
+                }}
+                columns={[
+                  {
+                    title: '',
+                    render: (rowData) => {
+                      return (
+                        <Checkbox
+                          checked={rowData['isChecked']}
+                          onChange={() =>
+                            dispatch(
+                              setCharacter({
+                                ...character,
+                                statusAilments: rowData['isChecked']
+                                  ? character.statusAilments.filter(
+                                      (name) => name !== rowData['name'],
+                                    )
+                                  : [
+                                      ...character.statusAilments,
+                                      rowData['name'],
+                                    ],
+                              }),
+                            )
+                          }
+                        />
+                      )
+                    },
+                  },
+                  {
+                    title: t('common_name'),
+                    field: 'name',
+                  },
+                  {
+                    title: t('common_effect'),
+                    field: 'effect',
+                  },
+                ]}
+                data={vm.statusAilments}
+              />
+            </Box>
+
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>

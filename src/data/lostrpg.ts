@@ -528,16 +528,6 @@ export const abilitiesColumns = [
   { title: '効果', field: 'effect' },
 ]
 
-export const abilitiesColumnsEn = [
-  { title: 'name', field: 'name' },
-  { title: 'group', field: 'group' },
-  { title: 'type', field: 'type' },
-  { title: 'specialty', field: 'specialty' },
-  { title: 'target', field: 'target' },
-  { title: 'recoil', field: 'recoil' },
-  { title: 'effect', field: 'effect' },
-]
-
 export const classList = [
   { name: 'ビッグ', id: 'big' },
   { name: 'チビ', id: 'little' },
@@ -1444,18 +1434,6 @@ export const itemsColumns = [
   { title: '特性', field: 'trait' },
   { title: '効果', field: 'effect' },
 ]
-export const itemsColumnsEn = [
-  { title: 'Name', field: 'name' },
-  { title: 'Number', field: 'number', type: 'numeric' as 'numeric' },
-  { title: 'Value', field: 'j', type: 'numeric' as 'numeric' },
-  { title: 'Weight', field: 'weight', type: 'numeric' as 'numeric' },
-  { title: 'Type', field: 'type' },
-  { title: 'Area', field: 'area' },
-  { title: 'Specialty', field: 'specialty' },
-  { title: 'Target', field: 'target' },
-  { title: 'Trait', field: 'trait' },
-  { title: 'Effect', field: 'effect' },
-]
 
 export const equipmentColumns = [
   { title: 'タイプ', field: 'type' },
@@ -1465,15 +1443,7 @@ export const equipmentColumns = [
   { title: '効果', field: 'effect' },
 ]
 
-export const equipmentColumnsEn = [
-  { title: 'Type', field: 'type' },
-  { title: 'Specialty', field: 'specialty' },
-  { title: 'Target', field: 'target' },
-  { title: 'Trait', field: 'trait' },
-  { title: 'Effect', field: 'effect' },
-]
-
-export const itemList = [
+export const items = [
   {
     name: 'ジャーキー',
     j: 1,
@@ -2082,5 +2052,39 @@ export const itemList = [
     target: '-',
     trait: '購入不可',
     effect: 'もふもふ',
+  },
+]
+
+export const statusAilments = [
+  {
+    name: '毒',
+    effect:
+      'ラウンドの終了時にキャラクターの【体力】が1D6点減少します。 部位ダメージは発生しません。',
+  },
+  {
+    name: '炎上',
+    effect: 'ラウンドの終了時に【体力】と【気力】が1点減少します。',
+  },
+  {
+    name: '麻痺',
+    effect:
+      'キャラクターが行う全ての行為判定の達成値にマイナス1の修正がつきます。',
+  },
+  {
+    name: '捕縛',
+    effect: 'キャラクターが行う命中判定の達成値にマイナス1の修正がつきます。',
+  },
+  {
+    name: '転倒',
+    effect: 'キャラクターが行う回避判定の達成値にマイナス2の修正がつきます。',
+  },
+  {
+    name: '重傷',
+    effect: 'キャラクターが行う死亡判定にマイナス1の修正がつきます。',
+  },
+  {
+    name: '暴露',
+    effect:
+      'キャラクターのデータが公開されます。また、攻撃により受けるダメージが 1点増加します。',
   },
 ]
