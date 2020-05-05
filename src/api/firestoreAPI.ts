@@ -65,6 +65,7 @@ export const getCamp = async (id: string) => {
 
 // LOSTRPG
 export const getCharacter = async (id: string) => {
+  if (!id) throw new Error('empty id')
   const data = await fetchFromFirestore(`systems/lost/characters/${id}`)
 
   const {
@@ -91,6 +92,9 @@ export const getCharacter = async (id: string) => {
     carryingCapacity,
     totalExperience,
     unusedExperience,
+    quote,
+    summary,
+    appearance,
   } = data.fields
   const ret: lost.Character = {
     name: getStr(name),
@@ -166,6 +170,9 @@ export const getCharacter = async (id: string) => {
     carryingCapacity: getInt(carryingCapacity),
     totalExperience: getInt(totalExperience),
     unusedExperience: getInt(unusedExperience),
+    quote: getStr(quote),
+    summary: getStr(summary),
+    appearance: getStr(appearance),
   }
   return ret
 }

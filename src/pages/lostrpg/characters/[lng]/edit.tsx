@@ -111,7 +111,7 @@ const Page: NextPage = () => {
     Router.push(
       {
         pathname: `/lostrpg/public/[lng]/[view]`,
-        query: { retId },
+        query: { id: retId },
       },
       `/lostrpg/public/${i18n.activeLocale}/character?id=${retId}`,
     )
@@ -807,6 +807,44 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
+              <InputLabel>{t('common_summary')}</InputLabel>
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  rowsMin={3}
+                  value={character.summary}
+                  onChange={(e) =>
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        summary: e.target.value,
+                      }),
+                    )
+                  }
+                />
+              </FormControl>
+            </Box>
+            <Box my={2}>
+              <InputLabel>
+                {t('lostrpg_character_common_appearance')}
+              </InputLabel>
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  rowsMin={3}
+                  value={character.appearance}
+                  onChange={(e) =>
+                    dispatch(
+                      setCharacter({
+                        ...character,
+                        appearance: e.target.value,
+                      }),
+                    )
+                  }
+                />
+              </FormControl>
+            </Box>
+            <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>
                 <TextareaAutosize
@@ -823,6 +861,20 @@ const Page: NextPage = () => {
                   }
                 />
               </FormControl>
+            </Box>
+
+            <Box my={2}>
+              <InputField
+                model={character}
+                type="text"
+                prop="quote"
+                labelText={t('lostrpg_character_common_quote')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({ ...character, quote: e.target.value }),
+                  )
+                }
+              />
             </Box>
 
             <Box my={2}>

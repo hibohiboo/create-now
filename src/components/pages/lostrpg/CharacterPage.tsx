@@ -1,30 +1,15 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import { Box, Button, Chip, Checkbox } from '@material-ui/core'
+import { Box, Chip, Checkbox } from '@material-ui/core'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { AuthUser } from '~/store/modules/authModule'
 import useI18n from '~/hooks/use-i18n'
 import { useDispatch } from 'react-redux'
-import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
-import TextField from '@material-ui/core/TextField'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import { DeleteOutline } from '@material-ui/icons'
 import InputField from '~/components/form/InputField'
-import SelectField from '~/components/form/SelectField'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
-import DamageTable from '~/components/organisms/lostrpg/DamageTable'
-import { useAuth } from '~/store/modules/authModule'
-import { deleteMessage } from '~/config/messages'
-import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
-import { contentLanguageMap } from '~/lib/i18n'
-import { createSetImageFile } from '~/utils/formHelper'
 import {
   setCharacter,
   useCharacterEditViewModel,
@@ -56,24 +41,25 @@ const Page: React.FC<{
         <title>{character.name}</title>
       </Head>
       <Box my={4}>
-        <div style={{ maxWidth: '500px', minWidth: '200px' }}>
-          <h2>{character.name}</h2>
-          {!canEdit(authUser, character) ? (
-            <></>
-          ) : (
-            <Box my={1}>
-              <Link
-                href={{
-                  pathname: `/lostrpg/characters/[lng]/edit`,
-                  query: { id },
-                }}
-                as={`/lostrpg/characters/${i18n.activeLocale}/edit?id=${id}`}
-              >
-                {t('common_edit')}
-              </Link>
-            </Box>
-          )}
-        </div>
+        <h1>{character.name}</h1>
+        {!canEdit(authUser, character) ? (
+          <></>
+        ) : (
+          <Box my={1}>
+            <Link
+              href={{
+                pathname: `/lostrpg/characters/[lng]/edit`,
+                query: { id },
+              }}
+              as={`/lostrpg/characters/${i18n.activeLocale}/edit?id=${id}`}
+            >
+              {t('common_edit')}
+            </Link>
+          </Box>
+        )}
+      </Box>
+      <Box my={4}>
+        <q style={{ fontSize: '1.5rem' }}>{character.quote}</q>
       </Box>
       <Box my={2}>
         <InputLabel>{t('lostrpg_character_common_class')}</InputLabel>
@@ -102,7 +88,7 @@ const Page: React.FC<{
           p={1}
           style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
         >
-          {character.freeWriting}
+          {character.summary}
         </Box>
       </Box>
       <Box my={2}>
@@ -279,6 +265,27 @@ const Page: React.FC<{
           ]}
           data={vm.statusAilments}
         />
+      </Box>
+      <Box my={2} style={{ width: '100%' }}>
+        <InputLabel>{t('lostrpg_character_common_appearance')}</InputLabel>
+        <Box
+          border={1}
+          p={1}
+          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+        >
+          {character.appearance}
+        </Box>
+      </Box>
+
+      <Box my={2} style={{ width: '100%' }}>
+        <InputLabel>{t('common_detail')}</InputLabel>
+        <Box
+          border={1}
+          p={1}
+          style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
+        >
+          {character.freeWriting}
+        </Box>
       </Box>
       <Link href={beforePage}>{t('common_back')}</Link>
     </Container>

@@ -37,6 +37,8 @@
   "lostrpg_character_common_totalExperiencePoint": "Total Experience Point",
   "lostrpg_character_common_unusedExperiencePoint": "Unused Experience Point",
   "lostrpg_character_common_characterList": "Character List",
+  "lostrpg_character_common_appearance": "Appearance",
+  "lostrpg_character_common_quote": "Quote",
   "lostrpg_character_list_title": "LOSTRPG Character List",
   "lostrpg_character_edit_title": "LOSTRPG Character",
   "lostrpg_character_edit_addAbility": "Add Ability",
@@ -44,6 +46,8 @@
   "lostrpg_character_edit_resetDamage": "Reset Damage",
   "lostrpg_character_edit_addItem": "Add Item",
 
+  "common_summary": "Summary",
+  "common_detail": "Detail",
   "common_add": "Add",
   "common_name": "Name",
   "common_effect": "Effect",

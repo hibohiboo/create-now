@@ -37,6 +37,8 @@
   "lostrpg_character_common_totalExperiencePoint": "総経験点",
   "lostrpg_character_common_unusedExperiencePoint": "未使用経験点",
   "lostrpg_character_common_characterList": "キャラクター一覧",
+  "lostrpg_character_common_appearance": "容姿",
+  "lostrpg_character_common_quote": "セリフ",
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",
@@ -44,6 +46,8 @@
   "lostrpg_character_edit_resetDamage": "ダメージを全て回復",
   "lostrpg_character_edit_addItem": "アイテム追加",
 
+  "common_summary": "概要",
+  "common_detail": "詳細",
   "common_add": "追加",
   "common_name": "名前",
   "common_effect": "効果",
