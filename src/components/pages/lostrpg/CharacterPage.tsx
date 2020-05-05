@@ -18,7 +18,7 @@ const Page: React.FC<{
   const i18n = useI18n()
   const t = i18n.t
   const { character, id, authUser } = ctx
-  const beforePage = '/lostrpg/characters/${i18n.activeLocale}/list'
+  const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
 
   return (
     <Container>
