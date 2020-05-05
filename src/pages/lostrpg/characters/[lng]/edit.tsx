@@ -485,15 +485,17 @@ const Page: NextPage = () => {
                 }
               />
               <InputField
-                model={{
-                  weight: character.items.reduce(
-                    (sum, { weight, number }) => sum + weight * number,
-                    0,
-                  ),
-                }}
+                model={vm}
                 type="number"
-                prop="weight"
+                prop="totalWeight"
                 labelText={t('lostrpg_character_common_item_weight')}
+                readonly={true}
+              />
+              <InputField
+                model={vm}
+                type="number"
+                prop="totalValue"
+                labelText={t('lostrpg_character_common_totalValue')}
                 readonly={true}
               />
             </Box>

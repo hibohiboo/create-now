@@ -182,7 +182,7 @@ const Page: React.FC<{
           />
         </Box>
 
-        <Box my={2} display="flex" style={{ maxWidth: 200, minWidth: 100 }}>
+        <Box my={2} display="flex" style={{ maxWidth: 300, minWidth: 150 }}>
           <InputField
             model={character}
             type="number"
@@ -191,15 +191,17 @@ const Page: React.FC<{
             readonly={true}
           />
           <InputField
-            model={{
-              weight: character.items.reduce(
-                (sum, { weight, number }) => sum + weight * number,
-                0,
-              ),
-            }}
+            model={vm}
             type="number"
-            prop="weight"
+            prop="totalWeight"
             labelText={t('lostrpg_character_common_item_weight')}
+            readonly={true}
+          />
+          <InputField
+            model={vm}
+            type="number"
+            prop="totalValue"
+            labelText={t('lostrpg_character_common_totalValue')}
             readonly={true}
           />
         </Box>

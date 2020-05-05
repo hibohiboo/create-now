@@ -418,6 +418,7 @@ const equipments = (character: Character, i18n) => {
         target: '',
         trait: '',
         effect: '',
+        j: 0,
       }
     }
     return {
@@ -428,6 +429,7 @@ const equipments = (character: Character, i18n) => {
       target: item.target,
       trait: item.trait,
       effect: item.effect,
+      j: item.j,
     }
   }
   return areas.map(makeData)
@@ -487,6 +489,17 @@ export const useCharacterEditViewModel = () =>
       equipmentColumns,
       equipments: equipments(character, i18n),
       statusAilments: makeStatusAilments(character, statusAilments),
+      totalWeight: character.items.reduce(
+        (sum, { weight, number }) => sum + weight * number,
+        0,
+      ),
+      totalValue:
+        character.items.reduce((sum, { j, number }) => sum + j * number, 0) +
+        character.bags
+          .map((bag) => bag.items)
+          .flat()
+          .reduce((sum, { j, number }) => sum + j * number, 0) +
+        character.equipments.reduce((sum, { j }) => sum + j, 0),
     }
   })
 export const useCampViewModel = () =>
