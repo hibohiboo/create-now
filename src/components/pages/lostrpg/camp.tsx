@@ -5,7 +5,7 @@ import { Box, Chip, InputLabel } from '@material-ui/core'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-
+import InputField from '~/components/form/InputField'
 import { canEdit } from '~/firestore/camp'
 import {
   Camp,
@@ -124,6 +124,22 @@ const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
           options={tableConfig.viewTable}
           columns={vm.itemsColumns}
           data={camp.items}
+        />
+      </Box>
+      <Box my={2} display="flex" style={{ maxWidth: 400, minWidth: 200 }}>
+        <InputField
+          model={camp}
+          type="number"
+          prop="unusedCampPoint"
+          labelText={t('lostrpg_common_unusedCampPoint')}
+          readonly={true}
+        />
+        <InputField
+          model={camp}
+          type="number"
+          prop="totalCampPoint"
+          labelText={t('lostrpg_common_totalCampPoint')}
+          readonly={true}
         />
       </Box>
       {camp.freeWriting ? (

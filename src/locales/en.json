@@ -1,6 +1,7 @@
 {
   "lostrpg_common_camp": "Camp",
-
+  "lostrpg_common_unusedCampPoint": "未使用キャンプポイント",
+  "lostrpg_common_totalCampPoint": "総キャンプポイント",
   "lostrpg_common_storage": "倉庫",
   "lostrpg_index_title": "LOSTRPG Support Page",
   "lostrpg_index_campList": "Camp List",

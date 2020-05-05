@@ -380,6 +380,33 @@ const Page: NextPage = () => {
               />
             </Box>
 
+            <Box my={2} display="flex">
+              <InputField
+                model={camp}
+                type="number"
+                prop="unusedCampPoint"
+                labelText={t('lostrpg_common_unusedCampPoint')}
+                changeHandler={(e) =>
+                  setCamp({
+                    ...camp,
+                    unusedCampPoint: Number(e.target.value),
+                  })
+                }
+              />
+              <InputField
+                model={camp}
+                type="number"
+                prop="totalCampPoint"
+                labelText={t('lostrpg_common_totalCampPoint')}
+                changeHandler={(e) =>
+                  setCamp({
+                    ...camp,
+                    totalCampPoint: Number(e.target.value),
+                  })
+                }
+              />
+            </Box>
+
             <Box my={2}>
               <InputLabel>{t('common_summary')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>

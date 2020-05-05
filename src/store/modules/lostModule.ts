@@ -30,6 +30,8 @@ export interface Camp {
   updatedAt?: any
   summary?: string
   items: Item[]
+  unusedCampPoint: number
+  totalCampPoint: number
 }
 
 export interface Ability {
@@ -52,6 +54,8 @@ export const initCamp = {
   uid: '',
   summary: '',
   items: [],
+  unusedCampPoint: 0,
+  totalCampPoint: 0,
 }
 export interface CharacterClass {
   id: string
