@@ -91,6 +91,8 @@ export interface Character {
   willPower: number
   damagedSpecialties: string[]
   freeWriting?: string
+  unusedExperience: number
+  totalExperience: number
   playerName?: string
   uid?: string
   imageUrl?: string
@@ -171,6 +173,8 @@ export const initCharacter: Character = {
   carryingCapacity: 5,
   stamina: 10,
   willPower: 10,
+  unusedExperience: 0,
+  totalExperience: 0,
   damagedSpecialties: [],
   freeWriting: '',
   playerName: '',

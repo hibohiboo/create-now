@@ -794,6 +794,37 @@ const Page: NextPage = () => {
               />
             </Box>
 
+            <Box my={2} display="flex">
+              <InputField
+                model={character}
+                type="number"
+                prop="unusedExperience"
+                labelText={t('lostrpg_character_common_unusedExperiencePoint')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      unusedExperience: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+              <InputField
+                model={character}
+                type="number"
+                prop="totalExperience"
+                labelText={t('lostrpg_character_common_totalExperiencePoint')}
+                changeHandler={(e) =>
+                  dispatch(
+                    setCharacter({
+                      ...character,
+                      totalExperience: Number(e.target.value),
+                    }),
+                  )
+                }
+              />
+            </Box>
+
             <Box my={2}>
               <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
               <FormControl fullWidth style={{ marginTop: '10px' }}>

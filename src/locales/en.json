@@ -33,6 +33,9 @@
   "lostrpg_character_common_torso": "Torso",
   "lostrpg_character_common_legs": "Legs",
   "lostrpg_character_common_statusAilments": "Status Ailments",
+  "lostrpg_character_common_experiencePoint": "ExperiencePoint",
+  "lostrpg_character_common_totalExperiencePoint": "Total Experience Point",
+  "lostrpg_character_common_unusedExperiencePoint": "Unused Experience Point",
 
   "lostrpg_character_list_title": "LOSTRPG Character List",
   "lostrpg_character_edit_title": "LOSTRPG Character",
