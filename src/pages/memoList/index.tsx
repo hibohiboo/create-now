@@ -22,9 +22,12 @@ import ViewColumn from '@material-ui/icons/ViewColumn'
 import MaterialTable from 'material-table'
 import { resetServerContext } from 'react-beautiful-dnd'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
-import { useList } from '~/store/modules/memoListModule'
+import { useViewModel } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
+
+// material-table の内部のdraggableで使用している模様
+resetServerContext()
 
 const tableIcons: {
   [key: string]: React.ForwardRefExoticComponent<
@@ -57,13 +60,10 @@ const tableIcons: {
 const Page: NextPage = () => {
   const dispatch = useDispatch()
   const authUser = useAuth()
-  const items = useList()
+  const vm = useViewModel()
 
   useEffect(() => {
     dispatch(createAuthClientSide())
-
-    // material-table の内部のdraggableで使用している模様
-    resetServerContext()
   }, [])
 
   return (
@@ -81,8 +81,8 @@ const Page: NextPage = () => {
             url += 'per_page=' + query.pageSize
             url += '&page=' + (query.page + 1)
             console.log('query', query)
-            console.log('item', items)
-            resolve({ data: items, page: 0, totalCount: 0 })
+            console.log('item', vm.data)
+            resolve({ data: vm.data, page: 0, totalCount: 0 })
           })
         }
       />
