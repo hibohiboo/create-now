@@ -75,16 +75,14 @@ const Page: NextPage = () => {
         title={'システム'}
         icons={tableIcons}
         columns={[{ title: 'name', field: 'name' }]}
-        data={(query) =>
-          new Promise((resolve, reject) => {
-            let url = 'https://reqres.in/api/users?'
-            url += 'per_page=' + query.pageSize
-            url += '&page=' + (query.page + 1)
-            console.log('query', query)
-            console.log('item', vm.data)
-            resolve({ data: vm.data, page: 0, totalCount: 0 })
-          })
-        }
+        data={async (query) => {
+          let url = 'https://reqres.in/api/users?'
+          url += 'per_page=' + query.pageSize
+          url += '&page=' + (query.page + 1)
+          console.log('query', query)
+          console.log('item', vm.data)
+          return { data: vm.data, page: 0, totalCount: 0 }
+        }}
       />
       <Link href="/">戻る</Link>
     </Container>
