@@ -6,7 +6,14 @@ import { useDispatch } from 'react-redux'
 import Router, { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import Dropzone from 'react-dropzone'
-import { Box, Button, Chip, Checkbox, Tooltip } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  Chip,
+  Checkbox,
+  Tooltip,
+  ClickAwayListener,
+} from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
@@ -80,7 +87,10 @@ const Page: NextPage = () => {
     dispatch(setCharacterBag({ ...bag, items: toNextState([...bag.items]) }))
   }
 
+  // Validation State
   const [isSubmit, setIsSubmit] = useState(false)
+
+  // Image State
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
   const setImageFile = createSetImageFile(setFile, setPrevUrl)
@@ -125,6 +135,15 @@ const Page: NextPage = () => {
       await deleteCharacter(id, authUser.uid)
       Router.push(beforePage)
     }
+  }
+
+  // ToolTip State
+  const [open, setOpen] = React.useState(false)
+  const handleTooltipClose = () => {
+    setOpen(false)
+  }
+  const handleTooltipOpen = () => {
+    setOpen(true)
   }
 
   useEffect(() => {
@@ -302,17 +321,33 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
-              <Box display="flex" alignItems="center">
-                <InputLabel>
-                  {t('lostrpg_character_common_specialty')}
-                </InputLabel>
-                <Tooltip
-                  title={t('lostrpg_character_edit_specialtiesHelp')}
-                  placement="right-start"
+              <ClickAwayListener onClickAway={handleTooltipClose}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  onClick={handleTooltipOpen}
+                  onMouseEnter={handleTooltipOpen}
+                  onMouseLeave={handleTooltipClose}
                 >
-                  <Help />
-                </Tooltip>
-              </Box>
+                  <InputLabel>
+                    {t('lostrpg_character_common_specialty')}
+                  </InputLabel>
+                  <Tooltip
+                    PopperProps={{
+                      disablePortal: true,
+                    }}
+                    onClose={handleTooltipClose}
+                    open={open}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title={t('lostrpg_character_edit_specialtiesHelp')}
+                    placement="bottom-end"
+                  >
+                    <Help />
+                  </Tooltip>
+                </Box>
+              </ClickAwayListener>
 
               <Button
                 variant="contained"
