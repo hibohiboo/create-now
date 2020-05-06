@@ -20,7 +20,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
 import ViewColumn from '@material-ui/icons/ViewColumn'
 import MaterialTable from 'material-table'
-
+import { resetServerContext } from 'react-beautiful-dnd'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import { useList } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
@@ -61,6 +61,9 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     dispatch(createAuthClientSide())
+
+    // material-table の内部のdraggableで使用している模様
+    resetServerContext()
   }, [])
 
   return (
