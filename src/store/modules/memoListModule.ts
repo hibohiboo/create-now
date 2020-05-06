@@ -12,10 +12,11 @@ export interface MemoListItem {
   nickname?: string
   url?: string
 }
-type collectionName = 'systems'
+type CollectionName = 'systems'
 interface MemoListState {
-  current: collectionName
+  current: CollectionName
   currentList: MemoListItem[]
+  counts: { [k in CollectionName]: number }
 }
 export const init: MemoListState = {
   current: 'systems',
@@ -29,6 +30,9 @@ export const init: MemoListState = {
       nickname: '',
     },
   ],
+  counts: {
+    systems: 0,
+  },
 }
 
 // actions と reducers の定義
@@ -38,13 +42,30 @@ const memoListModule = createSlice({
   reducers: {
     setList: (
       state,
-      action: PayloadAction<{ current: collectionName; list: MemoListItem[] }>,
+      action: PayloadAction<{ current: CollectionName; list: MemoListItem[] }>,
     ) => {
       state.currentList = action.payload.list
       state.current = action.payload.current
     },
+    setCounts: (
+      state,
+      action: PayloadAction<{ [k in CollectionName]: number }>,
+    ) => {
+      state.counts = action.payload
+    },
   },
 })
+
+const options = {
+  sorting: false,
+  paging: false,
+  rowStyle: {
+    whiteSpace: 'nowrap',
+  },
+  headerStyle: {
+    whiteSpace: 'nowrap',
+  },
+} as const
 
 export const useViewModel = () => {
   return useSelector(
@@ -60,21 +81,26 @@ export const useViewModel = () => {
         { title: 'タグ', field: 'tags' },
         { title: '★', field: 'point', type: 'numeric' } as const, // typeを指定するときはconst
       ],
+      options,
     }),
   )
 }
 
 export default memoListModule
 
-const { setList } = memoListModule.actions
+const { setList, setCounts } = memoListModule.actions
 
-export const readSystems = (limit = 10, searchName = ''): AppThunk => async (
+export const readSystems = (limit = 50, searchName = ''): AppThunk => async (
   dispatch,
 ) => {
   const current = 'systems'
   const list = await readMemoListCollection(current)
-  const data = await readMemoList()
   console.log('list', list)
-  console.log('data', data)
   dispatch(setList({ current, list }))
+}
+export const readCounts = (): AppThunk => async (dispatch) => {
+  const data = await readMemoList()
+  // console.log('data', data)
+
+  dispatch(setCounts(data as any))
 }
