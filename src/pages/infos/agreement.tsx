@@ -36,6 +36,20 @@ const Page: NextPage = () => {
             <Link href="/infos/privacy-policy">プライバシーポリシー</Link>
             については、こちらをご覧ください。
           </p>
+          <p>
+            本サイトではログイン後のセッション情報の保存にcookieを使用しています。
+            Cookie を受け取りたくない場合、または Cookie
+            を受け取る際に通知されるようにする場合は、ウェブブラウザの設定を変更してください。
+            (cookieについては
+            <a
+              href="https://hrtechprivacy.com/ja/brands/about-indeed#Cookies"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Indeed Cookie ポリシー
+            </a>
+            が詳しいです。)
+          </p>
           <h2>第4条 本サイトの利用条件</h2>
           <p>
             ユーザーは、本サイトを無償で利用できます。なお、本サイトは、Twitterアカウントを使用してTwitter内で認証（OAuth認証）を行いますので、本サイトの全ての機能を利用するにあたっては、Twitterアカウントが必要になります。Twitterアカウントおよびパスワードの取り扱いについては、Twitter社の利用規約に準じます。

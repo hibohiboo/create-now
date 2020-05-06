@@ -18,6 +18,7 @@ export const addSession = (req: any, res: any) => {
     httpOnly: true,
     overwrite: true,
     sameSite: 'lax',
+    secure: process.env.NODE_ENV !== 'development',
   })
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   includeSession(req, res, () => {})
