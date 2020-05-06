@@ -2,22 +2,16 @@ import { forwardRef } from 'react'
 import { AddBox, Edit, DeleteOutline, Check, Clear } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import useI18n from '~/hooks/use-i18n'
-const tableIcons = {
-  Add: forwardRef<SVGSVGElement>((props, ref) => (
-    <AddBox {...props} ref={ref} />
-  )),
-  Delete: forwardRef<SVGSVGElement>((props, ref) => (
-    <DeleteOutline {...props} ref={ref} />
-  )),
-  Edit: forwardRef<SVGSVGElement>((props, ref) => (
-    <Edit {...props} ref={ref} />
-  )),
-  Check: forwardRef<SVGSVGElement>((props, ref) => (
-    <Check {...props} ref={ref} />
-  )),
-  Clear: forwardRef<SVGSVGElement>((props, ref) => (
-    <Clear {...props} ref={ref} />
-  )),
+const tableIcons: {
+  [key: string]: React.ForwardRefExoticComponent<
+    React.RefAttributes<SVGSVGElement>
+  >
+} = {
+  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
 }
 
 const waitTime = 600

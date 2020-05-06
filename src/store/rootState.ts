@@ -4,11 +4,14 @@ import scenarioModule, { init as scenarioInit } from './modules/scenarioModule'
 import entrySheetModule, { init as entryInit } from './modules/entrySheetModule'
 import authModule, { init as authInit } from './modules/authModule'
 import lostModule, { init as lostInit } from './modules/lostModule'
+import memoListModule, { init as memoListInit } from './modules/memoListModule'
+
 const rootReducer = combineReducers({
   scenario: scenarioModule.reducer,
   entrySheet: entrySheetModule.reducer,
   auth: authModule.reducer,
   lost: lostModule.reducer,
+  memoList: memoListModule.reducer,
 })
 export default rootReducer
 
@@ -17,6 +20,7 @@ const rootPreloadedState = {
   entrySheet: entryInit,
   auth: authInit,
   lost: lostInit,
+  memoList: memoListInit,
 }
 
 export type RootState = typeof rootPreloadedState
