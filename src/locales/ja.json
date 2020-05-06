@@ -56,6 +56,7 @@
   "lostrpg_character_edit_addClass": "クラス追加",
   "lostrpg_character_edit_resetDamage": "ダメージを全て回復",
   "lostrpg_character_edit_addItem": "アイテム追加",
+  "lostrpg_character_edit_specialtiesHelp": "テキスト部分クリックで特技取得。チェックでダメージ",
 
   "common_summary": "概要",
   "common_detail": "詳細",

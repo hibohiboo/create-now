@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import Router, { useRouter, NextRouter } from 'next/router'
 import Head from 'next/head'
 import Dropzone from 'react-dropzone'
-import { Box, Button, Chip, Checkbox } from '@material-ui/core'
+import { Box, Button, Chip, Checkbox, Tooltip } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
@@ -15,7 +15,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import { DeleteOutline } from '@material-ui/icons'
+import { DeleteOutline, Help } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
@@ -302,7 +302,18 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
-              <InputLabel>{t('lostrpg_character_common_specialty')}</InputLabel>
+              <Box display="flex" alignItems="center">
+                <InputLabel>
+                  {t('lostrpg_character_common_specialty')}
+                </InputLabel>
+                <Tooltip
+                  title={t('lostrpg_character_edit_specialtiesHelp')}
+                  placement="right-start"
+                >
+                  <Help />
+                </Tooltip>
+              </Box>
+
               <Button
                 variant="contained"
                 color="primary"
@@ -314,6 +325,7 @@ const Page: NextPage = () => {
               >
                 {t('lostrpg_character_edit_resetDamage')}
               </Button>
+
               <SpecialtiesTable
                 columns={vm.specialtiesTableColumns}
                 rows={vm.specialtiesTableRows}
