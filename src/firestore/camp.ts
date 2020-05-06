@@ -2,7 +2,7 @@
 import firebase from 'firebase/app'
 import { Camp } from '~/store/modules/lostModule'
 import { db } from '~/lib/firebase/initFirebase'
-import { toSerializeObject } from '~/firestore/utils'
+import { toSerializeObject, toTimestamp } from '~/firestore/utils'
 import { updateImage, deleteImage } from '~/firebaseStorage/image'
 
 const { Timestamp } = firebase.firestore
@@ -71,14 +71,17 @@ export const updateCamp = async (
         ...camp,
         uid,
         imageUrl: url,
+        createdAt: toTimestamp(camp.createdAt),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }),
-    getCampNames(db).doc(id).set({
-      name: camp.name,
-      uid,
-      createdAt: camp.createdAt,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    }),
+    getCampNames(db)
+      .doc(id)
+      .set({
+        name: camp.name,
+        uid,
+        createdAt: toTimestamp(camp.createdAt),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }),
   ])
 }
 export const canEdit = (authUser: { uid: string }, camp: Camp) =>

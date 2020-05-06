@@ -2,10 +2,8 @@
 import firebase from 'firebase/app'
 import { Character } from '~/store/modules/lostModule'
 import { db } from '~/lib/firebase/initFirebase'
-import { toSerializeObject } from '~/firestore/utils'
+import { toSerializeObject, toTimestamp } from '~/firestore/utils'
 import { updateImage, deleteImage } from '~/firebaseStorage/image'
-
-const { Timestamp } = firebase.firestore
 
 const getCharacters = (firestore: firebase.firestore.Firestore) => {
   return firestore.collection('systems').doc('lost').collection('characters')
@@ -111,14 +109,17 @@ export const updateCharacter = async (
         ...character,
         uid,
         imageUrl: url,
+        createdAt: toTimestamp(character.createdAt),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }),
-    getCharacterNames(db).doc(id).set({
-      name: character.name,
-      uid,
-      createdAt: character.createdAt,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    }),
+    getCharacterNames(db)
+      .doc(id)
+      .set({
+        name: character.name,
+        uid,
+        createdAt: toTimestamp(character.createdAt),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }),
     updateCampsCharacters(
       db,
       character.campId,
@@ -161,7 +162,7 @@ export const readCharacters = async (
 
   if (lastVisible && !searchName) {
     const [seconds, nanoseconds] = lastVisible.split(splitter)
-    const timestamp = new Timestamp(Number(seconds), Number(nanoseconds))
+    const timestamp = toTimestamp({ seconds, nanoseconds })
     query = query.startAfter(timestamp)
   }
   query = query.limit(limit)
