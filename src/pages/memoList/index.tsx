@@ -20,13 +20,13 @@ import SaveAlt from '@material-ui/icons/SaveAlt'
 import Search from '@material-ui/icons/Search'
 import ViewColumn from '@material-ui/icons/ViewColumn'
 import MaterialTable from 'material-table'
-import { resetServerContext } from 'react-beautiful-dnd'
+import { resetServerContext } from 'react-beautiful-dnd' // material-table の内部のdraggableで使用している模様
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
-import { useViewModel } from '~/store/modules/memoListModule'
+import { useViewModel, readSystems } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
 
-// material-table の内部のdraggableで使用している模様
+// next.jsのSSR時にリセットしないとエラー
 resetServerContext()
 
 const tableIcons: {
@@ -64,6 +64,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     dispatch(createAuthClientSide())
+    dispatch(readSystems())
   }, [])
 
   return (
@@ -74,14 +75,11 @@ const Page: NextPage = () => {
       <MaterialTable
         title={'システム'}
         icons={tableIcons}
-        columns={[{ title: 'name', field: 'name' }]}
-        data={async (query) => {
-          let url = 'https://reqres.in/api/users?'
-          url += 'per_page=' + query.pageSize
-          url += '&page=' + (query.page + 1)
+        columns={vm.columns}
+        data={vm.data}
+        onQueryChange={(query) => {
           console.log('query', query)
-          console.log('item', vm.data)
-          return { data: vm.data, page: 0, totalCount: 0 }
+          dispatch(readSystems(query.pageSize))
         }}
       />
       <Link href="/">戻る</Link>

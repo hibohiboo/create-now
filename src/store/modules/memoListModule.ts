@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
+import { readMemoListCollection, readMemoList } from '~/firestore/memoList'
+import { AppThunk } from '~/store/rootState'
 
 export interface MemoListItem {
   name: string
@@ -18,7 +20,14 @@ interface MemoListState {
 export const init: MemoListState = {
   current: 'systems',
   currentList: [
-    { name: 'クトゥルフ', tags: ['ホラー'], memo: '', point: 0, uid: '' },
+    {
+      name: 'クトゥルフ',
+      tags: ['ホラー'],
+      memo: '',
+      point: 0,
+      uid: '',
+      nickname: '',
+    },
   ],
 }
 
@@ -27,7 +36,7 @@ const memoListModule = createSlice({
   name: 'memoList',
   initialState: init,
   reducers: {
-    updateList: (
+    setList: (
       state,
       action: PayloadAction<{ current: collectionName; list: MemoListItem[] }>,
     ) => {
@@ -44,8 +53,28 @@ export const useViewModel = () => {
         ...item,
         tags: item.tags.join(','),
       })),
+      columns: [
+        { title: '略称', field: 'nickname' },
+        { title: '名前', field: 'name' },
+        { title: '備考', field: 'memo' },
+        { title: 'タグ', field: 'tags' },
+        { title: '★', field: 'point', type: 'numeric' } as const, // typeを指定するときはconst
+      ],
     }),
   )
 }
 
 export default memoListModule
+
+const { setList } = memoListModule.actions
+
+export const readSystems = (limit = 10, searchName = ''): AppThunk => async (
+  dispatch,
+) => {
+  const current = 'systems'
+  const list = await readMemoListCollection(current)
+  const data = await readMemoList()
+  console.log('list', list)
+  console.log('data', data)
+  dispatch(setList({ current, list }))
+}
