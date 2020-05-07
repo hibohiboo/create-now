@@ -45,6 +45,27 @@ const Page: NextPage = () => {
           console.log('query', query)
           dispatch(readSystems(query.pageSize))
         }}
+        editable={{
+          onRowAdd: async (newData) => {
+            console.log(newData)
+          },
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve) => {
+              setTimeout(() => {
+                resolve()
+                if (oldData) {
+                  0
+                }
+              }, 0)
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve) => {
+              setTimeout(() => {
+                resolve()
+                0
+              }, 0)
+            }),
+        }}
       />
       <Link href="/">戻る</Link>
     </Container>
