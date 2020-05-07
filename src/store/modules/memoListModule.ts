@@ -92,6 +92,7 @@ export const useViewModel = () => {
     (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => ({
       data: state.memoList.list[state.memoList.current].map((item) => ({
         ...item,
+        // 配列でTableRowに渡そうとするとエラー
         tags: item.tags.join(separator),
       })),
       columns: [
@@ -137,17 +138,7 @@ export const readCounts = (): AppThunk => async (dispatch) => {
   dispatch(setCounts(data as any))
 }
 
-interface TableRow {
-  name?: string
-  tags?: string
-  memo?: string
-  point?: number
-  nickname?: string
-  url?: string
-  id?: string
-  uid?: string
-}
-
+type TableRow = Omit<Partial<MemoListItem>, 'tags'> & { tags?: string }
 const createMemoListItem = (data: TableRow): MemoListItem => ({
   id: data.id || '',
   uid: data.uid || '',
