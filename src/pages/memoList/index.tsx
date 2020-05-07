@@ -19,19 +19,43 @@ import {
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
 import TableIcons from '~/components/molcures/TableIcons'
-// next.jsのSSR時にリセットしないとエラー
-resetServerContext()
 
 const Page: NextPage = () => {
   const dispatch = useDispatch()
   const authUser = useAuth()
   const vm = useViewModel()
 
+  const editHandler = !authUser
+    ? undefined
+    : {
+        onRowAdd: async (newData) => {
+          dispatch(addMemoItem(newData, authUser.uid))
+        },
+        onRowUpdate: async (newData, oldData) => {
+          dispatch(updateMemoItem(newData))
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+            }, 300)
+          })
+        },
+        onRowDelete: (oldData) => {
+          dispatch(deleteMemoItem(oldData))
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+            }, 300)
+          })
+        },
+      }
   useEffect(() => {
     dispatch(createAuthClientSide())
     dispatch(readMemoList())
     dispatch(readCounts())
   }, [])
+
+  // next.jsのSSR時にリセットしないとエラー
+  resetServerContext()
 
   return (
     <Container>
@@ -48,27 +72,7 @@ const Page: NextPage = () => {
           console.log('query', query)
           dispatch(readMemoList(query.pageSize))
         }}
-        editable={{
-          onRowAdd: async (newData) => {
-            dispatch(addMemoItem(newData, authUser.uid))
-          },
-          onRowUpdate: async (newData, oldData) => {
-            dispatch(updateMemoItem(newData))
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve()
-              }, 300)
-            })
-          },
-          onRowDelete: (oldData) => {
-            dispatch(deleteMemoItem(oldData))
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve()
-              }, 300)
-            })
-          },
-        }}
+        editable={editHandler}
       />
       <Link href="/">戻る</Link>
     </Container>
