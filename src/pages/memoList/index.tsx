@@ -4,14 +4,17 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
 import Head from 'next/head'
-
 import MaterialTable from 'material-table'
 import { resetServerContext } from 'react-beautiful-dnd' // material-table の内部のdraggableで使用している模様
+
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import {
   useViewModel,
-  readSystems,
+  readMemoList,
   readCounts,
+  addMemoItem,
+  updateMemoItem,
+  deleteMemoItem,
 } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
@@ -26,7 +29,7 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     dispatch(createAuthClientSide())
-    dispatch(readSystems())
+    dispatch(readMemoList())
     dispatch(readCounts())
   }, [])
 
@@ -43,28 +46,28 @@ const Page: NextPage = () => {
         data={vm.data}
         onQueryChange={(query) => {
           console.log('query', query)
-          dispatch(readSystems(query.pageSize))
+          dispatch(readMemoList(query.pageSize))
         }}
         editable={{
           onRowAdd: async (newData) => {
-            console.log(newData)
+            dispatch(addMemoItem(newData, authUser.uid))
           },
-          onRowUpdate: (newData, oldData) =>
-            new Promise((resolve) => {
+          onRowUpdate: async (newData, oldData) => {
+            dispatch(updateMemoItem(newData))
+            return new Promise((resolve) => {
               setTimeout(() => {
                 resolve()
-                if (oldData) {
-                  0
-                }
-              }, 0)
-            }),
-          onRowDelete: (oldData) =>
-            new Promise((resolve) => {
+              }, 300)
+            })
+          },
+          onRowDelete: (oldData) => {
+            dispatch(deleteMemoItem(oldData))
+            return new Promise((resolve) => {
               setTimeout(() => {
                 resolve()
-                0
-              }, 0)
-            }),
+              }, 300)
+            })
+          },
         }}
       />
       <Link href="/">戻る</Link>

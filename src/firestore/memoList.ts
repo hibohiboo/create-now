@@ -1,18 +1,13 @@
 // import usePagination from 'firestore-pagination-hook'
 import firebase from 'firebase/app'
-import { Camp } from '~/store/modules/lostModule'
+import { MemoListItem } from '~/store/modules/memoListModule'
 import { db } from '~/lib/firebase/initFirebase'
-import { toSerializeObject, toTimestamp } from '~/firestore/utils'
-import { updateImage, deleteImage } from '~/firebaseStorage/image'
-
-const { Timestamp } = firebase.firestore
 
 const memoList = (firestore: firebase.firestore.Firestore) =>
   firestore.collection('others').doc('memolist')
 
 export const readMemoListCollection = async (
   cn: string,
-  lastVisible: string | null = null,
   limit = 10,
   searchName = '',
 ) => {
@@ -38,3 +33,24 @@ export const readMemoList = async () => {
 
   return ref.data()
 }
+export const createMemo = async (
+  cn: string,
+  memo: MemoListItem,
+  uid: string,
+) => {
+  const memos = memoList(db).collection(cn)
+  const { id } = await memos.doc()
+  await Promise.all([
+    memos.doc(id).set({
+      ...memo,
+      uid,
+    }),
+  ])
+
+  return id
+}
+
+export const updateMemo = async (cn: string, memo: MemoListItem) =>
+  await memoList(db).collection(cn).doc(memo.id).set(memo)
+export const deleteMemo = async (cn: string, memo: MemoListItem) =>
+  await memoList(db).collection(cn).doc(memo.id).delete()
