@@ -16,13 +16,11 @@ export interface MemoListItem {
 type CollectionName = 'systems'
 interface MemoListState {
   current: CollectionName
-  currentList: MemoListItem[]
   counts: { [k in CollectionName]: number }
   list: { [k in CollectionName]: MemoListItem[] }
 }
 export const init: MemoListState = {
   current: 'systems',
-  currentList: [],
   counts: {
     systems: 0,
   },
@@ -40,7 +38,6 @@ const memoListModule = createSlice({
       state,
       action: PayloadAction<{ current: CollectionName; list: MemoListItem[] }>,
     ) => {
-      state.currentList = action.payload.list
       state.current = action.payload.current
       state.list[action.payload.current] = action.payload.list
     },
@@ -54,7 +51,6 @@ const memoListModule = createSlice({
       state,
       action: PayloadAction<{ current: CollectionName; item: MemoListItem }>,
     ) => {
-      state.currentList.push(action.payload.item)
       state.list[action.payload.current].push(action.payload.item)
     },
     setItem: (
@@ -63,9 +59,6 @@ const memoListModule = createSlice({
         payload: { current, item },
       }: PayloadAction<{ current: CollectionName; item: MemoListItem }>,
     ) => {
-      state.currentList[
-        state.currentList.findIndex((i) => i.id === item.id)
-      ] = item
       state.list[current][
         state.list[current].findIndex((i) => i.id === item.id)
       ] = item
@@ -76,7 +69,6 @@ const memoListModule = createSlice({
         payload: { current, item },
       }: PayloadAction<{ current: CollectionName; item: MemoListItem }>,
     ) => {
-      state.currentList = state.currentList.filter((i) => i.id !== item.id)
       state.list[current] = state.list[current].filter((i) => i.id !== item.id)
     },
   },
@@ -98,7 +90,7 @@ const separator = ' '
 export const useViewModel = () => {
   return useSelector(
     (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => ({
-      data: state.memoList.currentList.map((item) => ({
+      data: state.memoList.list[state.memoList.current].map((item) => ({
         ...item,
         tags: item.tags.join(separator),
       })),
