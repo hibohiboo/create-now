@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as store from '~/firestore/memoList'
 import { AppThunk } from '~/store/rootState'
@@ -21,6 +21,7 @@ interface MemoListState {
   current: CollectionName
   counts: { [k in CollectionName]: number }
   list: { [k in CollectionName]: MemoListItem[] }
+  searchTags: string
 }
 export const init: MemoListState = {
   current: 'systems',
@@ -30,6 +31,7 @@ export const init: MemoListState = {
   list: {
     systems: [],
   },
+  searchTags: '',
 }
 
 // actions と reducers の定義
@@ -74,6 +76,9 @@ const memoListModule = createSlice({
     ) => {
       state.list[current] = state.list[current].filter((i) => i.id !== item.id)
     },
+    setSearchTags: (state, action: PayloadAction<string>) => {
+      state.searchTags = action.payload
+    },
   },
 })
 
@@ -97,6 +102,7 @@ const {
   setCounts,
   addItem,
   setItem,
+  setSearchTags,
   deleteItem,
 } = memoListModule.actions
 
@@ -111,7 +117,6 @@ export const readMemoList = (limit = 50, searchName = ''): AppThunk => async (
 
 export const readCounts = (): AppThunk => async (dispatch) => {
   const data = await store.readMemoList()
-  // console.log('data', data)
 
   dispatch(setCounts(data as any))
 }
@@ -157,8 +162,6 @@ export const deleteMemoItem = (data: TableRow): AppThunk => async (
 }
 
 export const useViewModel = () => {
-  console.log('read2')
-
   const dispatch = useDispatch()
   const authUser = useAuth()
   const editHandler = !authUser
@@ -184,6 +187,7 @@ export const useViewModel = () => {
           })
         },
       }
+
   // next.jsのSSR時にリセットしないとエラー
   resetServerContext()
 
@@ -214,6 +218,10 @@ export const useViewModel = () => {
       ],
       options,
       editHandler,
+      searchHandler: () => {
+        console.log('search')
+      },
+      searchTagsChangeHandler: (e) => dispatch(setSearchTags(e.target.value)),
     }),
   )
 }
