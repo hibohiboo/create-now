@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
+import Save from '@material-ui/icons/Save'
 import Dropzone from 'react-dropzone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
@@ -434,8 +435,13 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
-              <Button onClick={editHandler} variant="contained" color="primary">
-                {id ? '更新' : '作成'}
+              <Button
+                startIcon={<Save />}
+                onClick={editHandler}
+                variant="contained"
+                color="primary"
+              >
+                {t('common_save')}
               </Button>
             </Box>
             {!id ? (

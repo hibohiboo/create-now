@@ -22,7 +22,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import { DeleteOutline, Help } from '@material-ui/icons'
+import { DeleteOutline, Help, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
@@ -49,6 +49,7 @@ import {
   Bag,
   fetchCamps,
   useCamps,
+  initCharacter,
 } from '~/store/modules/lostModule'
 import {
   createCharacter,
@@ -154,7 +155,9 @@ const Page: NextPage = () => {
     dispatch(fetchCamps(campLimit))
 
     if (!id) {
-      dispatch(setCharacter({ ...character, playerName: authUser.displayName }))
+      dispatch(
+        setCharacter({ ...initCharacter, playerName: authUser.displayName }),
+      )
       return
     }
     ;(async () => {
@@ -963,8 +966,13 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
-              <Button onClick={editHandler} variant="contained" color="primary">
-                {id ? t('common_update') : t('common_create')}
+              <Button
+                startIcon={<Save />}
+                onClick={editHandler}
+                variant="contained"
+                color="primary"
+              >
+                {t('common_save')}
               </Button>
             </Box>
             {!id ? (
