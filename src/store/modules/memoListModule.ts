@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import * as store from '~/firestore/memoList'
 import { AppThunk } from '~/store/rootState'
+import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
+import { resetServerContext } from 'react-beautiful-dnd' // material-table の内部のdraggableで使用している模様
 
 export interface MemoListItem {
   name: string
@@ -87,31 +90,6 @@ const options = {
 
 const separator = ' '
 
-export const useViewModel = () => {
-  return useSelector(
-    (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => ({
-      data: state.memoList.list[state.memoList.current].map((item) => ({
-        ...item,
-        // 配列でTableRowに渡そうとするとエラー
-        tags: item.tags.join(separator),
-      })),
-      columns: [
-        { title: '略称', field: 'nickname' },
-        { title: '名前', field: 'name' },
-        { title: '備考', field: 'memo' },
-        { title: 'タグ', field: 'tags' },
-        {
-          title: '★',
-          field: 'point',
-          type: 'numeric',
-          editable: 'never',
-        } as const, // typeを指定するときはconst
-      ],
-      options,
-    }),
-  )
-}
-
 export default memoListModule
 
 const {
@@ -176,4 +154,66 @@ export const deleteMemoItem = (data: TableRow): AppThunk => async (
   const item = createMemoListItem(data)
   await store.deleteMemo(current, item)
   dispatch(deleteItem({ current, item }))
+}
+
+export const useViewModel = () => {
+  console.log('read2')
+
+  const dispatch = useDispatch()
+  const authUser = useAuth()
+  const editHandler = !authUser
+    ? undefined
+    : {
+        onRowAdd: async (newData) => {
+          dispatch(addMemoItem(newData, authUser.uid))
+        },
+        onRowUpdate: async (newData, oldData) => {
+          dispatch(updateMemoItem(newData))
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+            }, 300)
+          })
+        },
+        onRowDelete: (oldData) => {
+          dispatch(deleteMemoItem(oldData))
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve()
+            }, 300)
+          })
+        },
+      }
+  // next.jsのSSR時にリセットしないとエラー
+  resetServerContext()
+
+  // 初期読込
+  useEffect(() => {
+    dispatch(createAuthClientSide())
+    dispatch(readMemoList())
+    dispatch(readCounts())
+  }, [])
+  return useSelector(
+    (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => ({
+      data: state.memoList.list[state.memoList.current].map((item) => ({
+        ...item,
+        // 配列でTableRowに渡そうとするとエラー
+        tags: item.tags.join(separator),
+      })),
+      columns: [
+        { title: '略称', field: 'nickname' },
+        { title: '名前', field: 'name' },
+        { title: '備考', field: 'memo' },
+        { title: 'タグ', field: 'tags' },
+        {
+          title: '★',
+          field: 'point',
+          type: 'numeric',
+          editable: 'never',
+        } as const, // typeを指定するときはconst
+      ],
+      options,
+      editHandler,
+    }),
+  )
 }

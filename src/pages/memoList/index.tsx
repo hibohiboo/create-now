@@ -5,57 +5,14 @@ import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import MaterialTable from 'material-table'
-import { resetServerContext } from 'react-beautiful-dnd' // material-table の内部のdraggableで使用している模様
-
-import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
-import {
-  useViewModel,
-  readMemoList,
-  readCounts,
-  addMemoItem,
-  updateMemoItem,
-  deleteMemoItem,
-} from '~/store/modules/memoListModule'
+import { useViewModel, readMemoList } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
 import TableIcons from '~/components/molcures/TableIcons'
 
 const Page: NextPage = () => {
   const dispatch = useDispatch()
-  const authUser = useAuth()
   const vm = useViewModel()
-
-  const editHandler = !authUser
-    ? undefined
-    : {
-        onRowAdd: async (newData) => {
-          dispatch(addMemoItem(newData, authUser.uid))
-        },
-        onRowUpdate: async (newData, oldData) => {
-          dispatch(updateMemoItem(newData))
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve()
-            }, 300)
-          })
-        },
-        onRowDelete: (oldData) => {
-          dispatch(deleteMemoItem(oldData))
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve()
-            }, 300)
-          })
-        },
-      }
-  useEffect(() => {
-    dispatch(createAuthClientSide())
-    dispatch(readMemoList())
-    dispatch(readCounts())
-  }, [])
-
-  // next.jsのSSR時にリセットしないとエラー
-  resetServerContext()
 
   return (
     <Container>
@@ -72,7 +29,7 @@ const Page: NextPage = () => {
           console.log('query', query)
           dispatch(readMemoList(query.pageSize))
         }}
-        editable={editHandler}
+        editable={vm.editHandler}
       />
       <Link href="/">戻る</Link>
     </Container>
