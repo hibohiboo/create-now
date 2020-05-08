@@ -106,11 +106,12 @@ const {
   deleteItem,
 } = memoListModule.actions
 
-export const readMemoList = (limit = 50, searchName = ''): AppThunk => async (
-  dispatch,
-) => {
+export const readMemoList = (
+  limit = 50,
+  searchTags: string[] = [],
+): AppThunk => async (dispatch) => {
   const current = 'systems'
-  const list = await store.readMemoListCollection(current)
+  const list = await store.readMemoListCollection(current, limit, searchTags)
   console.log('list', list)
   dispatch(setList({ current, list }))
 }
@@ -136,7 +137,6 @@ const createMemoListItem = (data: TableRow): MemoListItem => ({
 export const addMemoItem = (data: TableRow, uid: string): AppThunk => async (
   dispatch,
 ) => {
-  console.log('data', data)
   const current = 'systems'
   const item = createMemoListItem(data)
   const id = await store.createMemo(current, item, uid)
@@ -187,7 +187,7 @@ export const useViewModel = () => {
           })
         },
       }
-
+  const searchLimit = 50
   // next.jsのSSR時にリセットしないとエラー
   resetServerContext()
 
@@ -219,7 +219,9 @@ export const useViewModel = () => {
       options,
       editHandler,
       searchHandler: () => {
-        console.log('search')
+        dispatch(
+          readMemoList(searchLimit, state.memoList.searchTags.split(separator)),
+        )
       },
       searchTagsChangeHandler: (e) => dispatch(setSearchTags(e.target.value)),
     }),

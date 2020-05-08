@@ -9,11 +9,16 @@ const memoList = (firestore: firebase.firestore.Firestore) =>
 export const readMemoListCollection = async (
   cn: string,
   limit = 10,
-  searchName = '',
+  searchTags: string[] = [],
 ) => {
-  // 複合インデックスを作っていないので、orderBy出来るのは一つ
   let query = memoList(db).collection(cn).orderBy('point', 'desc')
 
+  if (searchTags.length !== 0) {
+    // or条件 https://blog.nabettu.com/entry/array-contains-any
+    // query = query.where('tags', 'array-contains-any', searchTags)
+    // and条件
+    query = query.where('tags', 'array-contains', searchTags[0])
+  }
   query = query.limit(limit)
   const querySnapshot = await query.get()
   const ret: any[] = []
