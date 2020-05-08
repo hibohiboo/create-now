@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Button } from '@material-ui/core'
+import { Box, Button, Switch, FormControlLabel } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 
@@ -28,6 +28,17 @@ const Page: NextPage = () => {
           prop="searchTags"
           labelText={'タグ'}
           changeHandler={vm.searchTagsChangeHandler}
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={vm.isSortCreated}
+              onChange={vm.toggleIsSortCreated}
+              name="isSortCreated"
+              inputProps={{ 'aria-label': 'secondary checkbox' }}
+            />
+          }
+          label="新着順"
         />
         <Button
           startIcon={<Search />}

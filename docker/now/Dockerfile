@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:14.1.0
+FROM node:14.2.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -8,6 +8,9 @@ WORKDIR /app
 # 後で確認出来るようにpackage.jsonを作成
 COPY .npmrc /app/.npmrc
 RUN npm init -y
+
+# TODO: vercel@19.0.0以上 にアップデート
+# https://github.com/zeit/now/releases
 RUN npm i -g now@latest
 
 RUN npm i next react react-dom
@@ -39,7 +42,7 @@ RUN npm i -D @typescript-eslint/parser @typescript-eslint/eslint-plugin
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"lint\": \"eslint --ext .ts,.tsx --ignore-path .gitignore .\", /g" /app/package.json
 
 # テストツール
-RUN npm i -D jest jest-dom jest-css-modules
+RUN npm i -D jest @testing-library/jest-dom0 jest-css-modules
 RUN npm i -D ts-jest @types/jest
 RUN npm i -D @testing-library/react
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tests\": \"jest src\/__tests__\/.*\/*.spec.tsx?$\", /g" /app/package.json
@@ -114,3 +117,5 @@ RUN npm install react-dropzone
 
 # classname切替
 RUN npm install classnames
+
+# @testing-library/jest-dom

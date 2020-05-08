@@ -22,6 +22,7 @@ interface MemoListState {
   counts: { [k in CollectionName]: number }
   list: { [k in CollectionName]: MemoListItem[] }
   searchTags: string
+  isSortCreated: boolean
 }
 export const init: MemoListState = {
   current: 'systems',
@@ -32,6 +33,7 @@ export const init: MemoListState = {
     systems: [],
   },
   searchTags: '',
+  isSortCreated: false,
 }
 
 // actions と reducers の定義
@@ -79,6 +81,9 @@ const memoListModule = createSlice({
     setSearchTags: (state, action: PayloadAction<string>) => {
       state.searchTags = action.payload
     },
+    setIsSortCreated: (state, action: PayloadAction<boolean>) => {
+      state.isSortCreated = action.payload
+    },
   },
 })
 
@@ -91,6 +96,7 @@ const options = {
   headerStyle: {
     whiteSpace: 'nowrap',
   },
+  actionsColumnIndex: 5,
 } as const
 
 const separator = ' '
@@ -104,15 +110,22 @@ const {
   setItem,
   setSearchTags,
   deleteItem,
+  setIsSortCreated,
 } = memoListModule.actions
 
 export const readMemoList = (
   limit = 50,
   searchTags: string[] = [],
+  isSortCreated = false,
 ): AppThunk => async (dispatch) => {
   const current = 'systems'
-  const list = await store.readMemoListCollection(current, limit, searchTags)
-  console.log('list', list)
+  const list = await store.readMemoListCollection(
+    current,
+    limit,
+    searchTags.filter(Boolean), // 空文字、0などを除去
+    isSortCreated,
+  )
+
   dispatch(setList({ current, list }))
 }
 
@@ -127,7 +140,7 @@ const createMemoListItem = (data: TableRow): MemoListItem => ({
   id: data.id || '',
   uid: data.uid || '',
   name: data.name || 'ななし',
-  tags: (data.tags && data.tags.split(separator)) || [],
+  tags: (data.tags && data.tags.trim().split(separator)) || [],
   memo: data.memo || '',
   point: data.point || 0,
   nickname: data.nickname || '',
@@ -218,12 +231,21 @@ export const useViewModel = () => {
       ],
       options,
       editHandler,
+      searchTags: state.memoList.searchTags,
       searchHandler: () => {
         dispatch(
-          readMemoList(searchLimit, state.memoList.searchTags.split(separator)),
+          readMemoList(
+            searchLimit,
+            state.memoList.searchTags.trim().split(separator),
+            state.memoList.isSortCreated,
+          ),
         )
       },
       searchTagsChangeHandler: (e) => dispatch(setSearchTags(e.target.value)),
+      toggleIsSortCreated: (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setIsSortCreated(event.target.checked))
+      },
+      isSortCreated: state.memoList.isSortCreated,
     }),
   )
 }
