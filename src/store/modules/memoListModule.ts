@@ -15,6 +15,7 @@ export interface MemoListItem {
   id: string
   nickname?: string
   url?: string
+  createdAt?: any
 }
 type CollectionName = 'systems'
 interface MemoListState {
@@ -87,18 +88,6 @@ const memoListModule = createSlice({
   },
 })
 
-const options = {
-  sorting: false,
-  paging: false,
-  rowStyle: {
-    whiteSpace: 'nowrap',
-  },
-  headerStyle: {
-    whiteSpace: 'nowrap',
-  },
-  actionsColumnIndex: 5,
-} as const
-
 const separator = ' '
 
 export default memoListModule
@@ -145,6 +134,7 @@ const createMemoListItem = (data: TableRow): MemoListItem => ({
   point: data.point || 0,
   nickname: data.nickname || '',
   url: data.url || '',
+  createdAt: data.createdAt || '',
 })
 
 export const addMemoItem = (data: TableRow, uid: string): AppThunk => async (
@@ -174,6 +164,18 @@ export const deleteMemoItem = (data: TableRow): AppThunk => async (
   dispatch(deleteItem({ current, item }))
 }
 
+const options = {
+  sorting: false,
+  paging: false,
+  rowStyle: {
+    whiteSpace: 'nowrap',
+  },
+  headerStyle: {
+    whiteSpace: 'nowrap',
+  },
+  actionsColumnIndex: 6,
+} as const
+const searchLimit = 50
 export const useViewModel = () => {
   const dispatch = useDispatch()
   const authUser = useAuth()
@@ -201,7 +203,7 @@ export const useViewModel = () => {
           })
         },
       }
-  const searchLimit = 50
+
   // next.jsのSSR時にリセットしないとエラー
   resetServerContext()
 
@@ -219,16 +221,16 @@ export const useViewModel = () => {
         tags: item.tags.join(separator),
       })),
       columns: [
-        { title: '略称', field: 'nickname' },
-        { title: '名前', field: 'name' },
-        { title: '備考', field: 'memo' },
-        { title: 'タグ', field: 'tags' },
         {
           title: '★',
           field: 'point',
           type: 'numeric',
           editable: 'never',
         } as const, // typeを指定するときはconst
+        { title: '略称', field: 'nickname' },
+        { title: '名前', field: 'name' },
+        { title: 'タグ', field: 'tags' },
+        { title: '備考', field: 'memo' },
       ],
       options,
       editHandler,

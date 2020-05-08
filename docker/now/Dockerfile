@@ -42,7 +42,7 @@ RUN npm i -D @typescript-eslint/parser @typescript-eslint/eslint-plugin
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"lint\": \"eslint --ext .ts,.tsx --ignore-path .gitignore .\", /g" /app/package.json
 
 # テストツール
-RUN npm i -D jest @testing-library/jest-dom0 jest-css-modules
+RUN npm i -D jest @testing-library/jest-dom jest-css-modules
 RUN npm i -D ts-jest @types/jest
 RUN npm i -D @testing-library/react
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tests\": \"jest src\/__tests__\/.*\/*.spec.tsx?$\", /g" /app/package.json
@@ -119,3 +119,4 @@ RUN npm install react-dropzone
 RUN npm install classnames
 
 # @testing-library/jest-dom
+RUN npm install sanitize-html

@@ -12,10 +12,45 @@ import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
 import TableIcons from '~/components/molcures/TableIcons'
 import InputField from '~/components/form/InputField'
+import sanitize from 'sanitize-html'
 
 const Page: NextPage = () => {
   const vm = useViewModel()
-
+  const columns = [
+    ...vm.columns.slice(0, 3),
+    {
+      title: 'リンク',
+      field: 'url',
+      render: (rowData) =>
+        rowData.url ? (
+          <div
+            style={{
+              maxWidth: '100px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+            dangerouslySetInnerHTML={{
+              __html: sanitize(
+                `<a href="${rowData.url}">${rowData.url
+                  .replace('https://', '')
+                  .replace('http://', '')}</a>`,
+                {
+                  allowedTags: ['a'],
+                  allowedAttributes: {
+                    a: ['href'],
+                  },
+                  allowedSchemes: ['http', 'https'],
+                },
+              ),
+            }}
+          ></div>
+        ) : (
+          <></>
+        ),
+    },
+    ...vm.columns.slice(4),
+  ]
   return (
     <Container>
       <Head>
@@ -29,6 +64,7 @@ const Page: NextPage = () => {
           labelText={'タグ'}
           changeHandler={vm.searchTagsChangeHandler}
         />
+        <span style={{ margin: '20px' }}>★順</span>
         <FormControlLabel
           control={
             <Switch
@@ -54,7 +90,7 @@ const Page: NextPage = () => {
         title={'システム'}
         icons={TableIcons}
         options={vm.options}
-        columns={vm.columns}
+        columns={columns}
         data={vm.data}
         editable={vm.editHandler}
       />

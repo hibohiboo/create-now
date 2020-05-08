@@ -69,6 +69,9 @@ export const createMemo = async (
 }
 
 export const updateMemo = async (cn: string, memo: MemoListItem) =>
-  await memoList(db).collection(cn).doc(memo.id).set(memo)
+  await memoList(db)
+    .collection(cn)
+    .doc(memo.id)
+    .set({ ...memo, createdAt: toTimestamp(memo.createdAt) })
 export const deleteMemo = async (cn: string, memo: MemoListItem) =>
   await memoList(db).collection(cn).doc(memo.id).delete()

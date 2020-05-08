@@ -39,7 +39,8 @@
     "react-konva": "^16.13.0-0",
     "remark": "^12.0.0",
     "remark-html": "^11.0.1",
-    "rosetta": "^1.0.0"
+    "rosetta": "^1.0.0",
+    "sanitize-html": "^1.23.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
