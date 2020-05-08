@@ -180,6 +180,7 @@ export const useViewModel = () => {
   const editHandler = !authUser
     ? undefined
     : {
+        isDeletable: (rowData) => rowData.uid === authUser.uid,
         onRowAdd: async (newData) => {
           dispatch(addMemoItem(newData, authUser.uid))
         },
