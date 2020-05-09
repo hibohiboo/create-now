@@ -25,7 +25,7 @@ interface MemoListState {
   searchTags: string
   isSortCreated: boolean
 }
-const defaultGenre = 'supplements'
+const defaultGenre = 'systems'
 
 export const init: MemoListState = {
   current: defaultGenre,
@@ -46,7 +46,6 @@ const memoListModule = createSlice({
       state,
       action: PayloadAction<{ current: CollectionName; list: MemoListItem[] }>,
     ) => {
-      state.current = action.payload.current
       state.list[action.payload.current] = action.payload.list
     },
     addItem: (
@@ -79,6 +78,9 @@ const memoListModule = createSlice({
     setIsSortCreated: (state, action: PayloadAction<boolean>) => {
       state.isSortCreated = action.payload
     },
+    setCurrent: (state, action: PayloadAction<CollectionName>) => {
+      state.current = action.payload
+    },
   },
 })
 
@@ -93,6 +95,7 @@ const {
   setSearchTags,
   deleteItem,
   setIsSortCreated,
+  setCurrent,
 } = memoListModule.actions
 
 export const readMemoList = (
@@ -259,6 +262,19 @@ export const useViewModel = () => {
           )
         },
         currentName: genres[memoList.current],
+        genres: genres,
+        genreChangeHandler: (genre: CollectionName) => {
+          dispatch(setCurrent(genre))
+          if (memoList.list[genre].length !== 0) return
+          dispatch(
+            readMemoList(
+              genre,
+              searchLimit,
+              memoList.searchTags.trim().split(separator),
+              memoList.isSortCreated,
+            ),
+          )
+        },
       }
     },
   )

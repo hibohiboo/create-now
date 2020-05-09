@@ -44,11 +44,6 @@ export const readMemoListCollection = async (
   return ret
 }
 
-export const readMemoList = async () => {
-  const ref = await memoList(db).get()
-
-  return ref.data()
-}
 export const createMemo = async (
   cn: string,
   memo: MemoListItem,

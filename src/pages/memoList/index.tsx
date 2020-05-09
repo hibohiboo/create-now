@@ -3,7 +3,16 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Button, Switch, FormControlLabel, Chip } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  Switch,
+  FormControlLabel,
+  Chip,
+  Paper,
+  Tabs,
+  Tab,
+} from '@material-ui/core'
 import { Search, StarBorder } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 
@@ -89,11 +98,33 @@ const Page: NextPage = () => {
     },
     { title: '備考', field: 'memo' },
   ]
+  const [value, setValue] = React.useState(0)
+
   return (
     <Container>
       <Head>
         <title>TRPG関連メモ</title>
       </Head>
+      <Paper>
+        <Tabs
+          value={value}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={(e, v) => {
+            setValue(v)
+            console.log('test1')
+          }}
+          centered
+        >
+          {_.map(vm.genres, (value, key) => (
+            <Tab
+              key={key}
+              label={value}
+              onClick={() => vm.genreChangeHandler(key)}
+            />
+          ))}
+        </Tabs>
+      </Paper>
       <Box my={2}>
         <InputField
           model={vm}
