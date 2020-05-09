@@ -3,11 +3,11 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Button, Switch, FormControlLabel } from '@material-ui/core'
+import { Box, Button, Switch, FormControlLabel, Chip } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 
-import { useViewModel } from '~/store/modules/memoListModule'
+import { useViewModel, separator } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
 import TableIcons from '~/components/molcures/TableIcons'
@@ -18,6 +18,22 @@ const Page: NextPage = () => {
   const vm = useViewModel()
   const columns = [
     ...vm.columns.slice(0, 3),
+    {
+      title: 'タグ',
+      field: 'tags',
+      render: (rowData) =>
+        rowData.tags
+          .split(separator)
+          .map((tag, i) => (
+            <Chip
+              key={i}
+              label={tag}
+              onClick={() => vm.tagClickHandler(tag)}
+              variant="outlined"
+              style={{ marginRight: '0.5rem' }}
+            />
+          )),
+    },
     {
       title: 'リンク',
       field: 'url',

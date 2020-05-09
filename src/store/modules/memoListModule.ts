@@ -88,7 +88,7 @@ const memoListModule = createSlice({
   },
 })
 
-const separator = ' '
+export const separator = ' '
 
 export default memoListModule
 
@@ -214,41 +214,45 @@ export const useViewModel = () => {
     dispatch(readCounts())
   }, [])
   return useSelector(
-    (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => ({
-      data: state.memoList.list[state.memoList.current].map((item) => ({
-        ...item,
-        // 配列でTableRowに渡そうとするとエラー
-        tags: item.tags.join(separator),
-      })),
-      columns: [
-        {
-          title: '★',
-          field: 'point',
-          type: 'numeric',
-          editable: 'never',
-        } as const, // typeを指定するときはconst
-        { title: '略称', field: 'nickname' },
-        { title: '名前', field: 'name' },
-        { title: 'タグ', field: 'tags' },
-        { title: '備考', field: 'memo' },
-      ],
-      options,
-      editHandler,
-      searchTags: state.memoList.searchTags,
-      searchHandler: () => {
-        dispatch(
-          readMemoList(
-            searchLimit,
-            state.memoList.searchTags.trim().split(separator),
-            state.memoList.isSortCreated,
-          ),
-        )
-      },
-      searchTagsChangeHandler: (e) => dispatch(setSearchTags(e.target.value)),
-      toggleIsSortCreated: (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setIsSortCreated(event.target.checked))
-      },
-      isSortCreated: state.memoList.isSortCreated,
-    }),
+    (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => {
+      return {
+        data: state.memoList.list[state.memoList.current].map((item) => ({
+          ...item,
+          // 配列でTableRowに渡そうとするとエラー
+          tags: item.tags.join(separator),
+        })),
+        columns: [
+          {
+            title: '★',
+            field: 'point',
+            type: 'numeric',
+            editable: 'never',
+          } as const, // typeを指定するときはconst
+          { title: '略称', field: 'nickname' },
+          { title: '名前', field: 'name' },
+          { title: '備考', field: 'memo' },
+        ],
+        options,
+        editHandler,
+        searchTags: state.memoList.searchTags,
+        searchHandler: () => {
+          dispatch(
+            readMemoList(
+              searchLimit,
+              state.memoList.searchTags.trim().split(separator),
+              state.memoList.isSortCreated,
+            ),
+          )
+        },
+        searchTagsChangeHandler: (e) => dispatch(setSearchTags(e.target.value)),
+        toggleIsSortCreated: (event: React.ChangeEvent<HTMLInputElement>) => {
+          dispatch(setIsSortCreated(event.target.checked))
+        },
+        isSortCreated: state.memoList.isSortCreated,
+        tagClickHandler: async (tag: string) => {
+          dispatch(setSearchTags(tag))
+        },
+      }
+    },
   )
 }
