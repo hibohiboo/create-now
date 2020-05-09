@@ -24,18 +24,19 @@ const Page: NextPage = () => {
       editable: 'never',
       cellStyle: { textAlign: 'right' },
       render: (rowData) =>
-        !vm.auth ? (
-          rowData.point
-        ) : (
-          <Button
-            endIcon={<StarBorder />}
-            onClick={vm.searchHandler}
-            color="secondary"
-            style={{ width: '80px', justifyContent: 'flex-end' }}
-          >
-            {rowData.point}
-          </Button>
-        ),
+        !vm.auth
+          ? (rowData && rowData.point) || 0
+          : (rowData && (
+              <Button
+                endIcon={<StarBorder />}
+                onClick={() => vm.pointClickHandler(rowData)}
+                color="secondary"
+                style={{ width: '80px', justifyContent: 'flex-end' }}
+              >
+                {rowData.point}
+              </Button>
+            )) ||
+            0,
     } as const, // typeを指定するときはconst
     { title: '略称', field: 'nickname' },
     { title: '名前', field: 'name' },

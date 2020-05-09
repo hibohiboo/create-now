@@ -137,27 +137,28 @@ const createMemoListItem = (data: TableRow): MemoListItem => ({
   createdAt: data.createdAt || '',
 })
 
-export const addMemoItem = (data: TableRow, uid: string): AppThunk => async (
+const addMemoItem = (data: TableRow, uid: string): AppThunk => async (
   dispatch,
 ) => {
   const current = 'systems'
   const item = createMemoListItem(data)
-  const id = await store.createMemo(current, item, uid)
-  dispatch(addItem({ current, item: { ...item, uid, id } }))
+  const newItem = await store.createMemo(current, item, uid)
+  dispatch(
+    addItem({
+      current,
+      item: { ...item, ...newItem },
+    }),
+  )
 }
 
-export const updateMemoItem = (data: TableRow): AppThunk => async (
-  dispatch,
-) => {
+const updateMemoItem = (data: TableRow): AppThunk => async (dispatch) => {
   const current = 'systems'
   const item = createMemoListItem(data)
   await store.updateMemo(current, item)
   dispatch(setItem({ current, item }))
 }
 
-export const deleteMemoItem = (data: TableRow): AppThunk => async (
-  dispatch,
-) => {
+const deleteMemoItem = (data: TableRow): AppThunk => async (dispatch) => {
   const current = 'systems'
   const item = createMemoListItem(data)
   await store.deleteMemo(current, item)
@@ -254,6 +255,9 @@ export const useViewModel = () => {
           toolbar: { searchPlaceholder: '検索結果の絞り込み' },
         },
         auth: authUser,
+        pointClickHandler: async (memo: TableRow) => {
+          dispatch(updateMemoItem({ ...memo, point: memo.point + 1 }))
+        },
       }
     },
   )

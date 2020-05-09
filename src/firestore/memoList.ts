@@ -16,7 +16,6 @@ export const readMemoListCollection = async (
   let query = isOrderCreated
     ? memoList(db).collection(cn).orderBy('createdAt', 'desc')
     : memoList(db).collection(cn).orderBy('point', 'desc')
-  console.log('search', searchTags)
   if (searchTags.length !== 0) {
     // or条件 https://blog.nabettu.com/entry/array-contains-any
     // query = query.where('tags', 'array-contains-any', searchTags)
@@ -64,8 +63,9 @@ export const createMemo = async (
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     }),
   ])
-
-  return id
+  const newRef = await memos.doc(id).get()
+  const newItem = newRef.data()
+  return { ...newItem, id, createdAt: toSerializeObject(newItem.createdAt) }
 }
 
 export const updateMemo = async (cn: string, memo: MemoListItem) =>
