@@ -17,7 +17,11 @@ export interface MemoListItem {
   url?: string
   createdAt?: any
 }
-const genres = { systems: 'システム', supplements: 'サプリメント' } as const
+const genres = {
+  systems: 'システム',
+  supplements: 'サプリメント',
+  assets: '素材',
+} as const
 type CollectionName = keyof typeof genres
 interface MemoListState {
   current: CollectionName
@@ -32,6 +36,7 @@ export const init: MemoListState = {
   list: {
     systems: [],
     supplements: [],
+    assets: [],
   },
   searchTags: '',
   isSortCreated: false,
