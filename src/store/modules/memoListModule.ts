@@ -18,9 +18,11 @@ export interface MemoListItem {
   createdAt?: any
 }
 const genres = {
+  scenarios: 'シナリオ',
+  tools: 'ツール',
+  assets: '素材',
   systems: 'システム',
   supplements: 'サプリメント',
-  assets: '素材',
 } as const
 type CollectionName = keyof typeof genres
 interface MemoListState {
@@ -29,11 +31,13 @@ interface MemoListState {
   searchTags: string
   isSortCreated: boolean
 }
-const defaultGenre = 'systems'
+const defaultGenre = 'scenarios'
 
 export const init: MemoListState = {
   current: defaultGenre,
   list: {
+    scenarios: [],
+    tools: [],
     systems: [],
     supplements: [],
     assets: [],
