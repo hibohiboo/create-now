@@ -103,8 +103,18 @@ const Page: NextPage = () => {
   return (
     <Container>
       <Head>
-        <title>TRPG関連メモ</title>
+        <title>卓メモ~TRPG関連リンク集~</title>
       </Head>
+      <h1>卓メモ</h1>
+      <p>
+        {!vm.auth ? (
+          <>
+            <Link href={'/auth/login'}>ログイン</Link>
+          </>
+        ) : (
+          <></>
+        )}
+      </p>
       <Paper>
         <Tabs
           value={value}

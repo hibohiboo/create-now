@@ -19,7 +19,7 @@ const Created: React.FC = () => {
           <Link href="/posts"> チュートリアル ブログ </Link>
         </li>
         <li>
-          <Link href="/memoList"> TRPG関連メモ </Link>
+          <Link href="/memoList"> 卓メモ </Link>
         </li>
       </ul>
     </>
