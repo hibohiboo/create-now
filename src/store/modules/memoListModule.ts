@@ -21,6 +21,8 @@ const genres = {
   scenarios: 'シナリオ',
   tools: 'ツール',
   assets: '素材',
+  communities: 'コミュニティ',
+  readings: '読み物',
   systems: 'システム',
   supplements: 'サプリメント',
 } as const
@@ -39,6 +41,8 @@ export const init: MemoListState = {
     scenarios: [],
     tools: [],
     systems: [],
+    readings: [],
+    communities: [],
     supplements: [],
     assets: [],
   },

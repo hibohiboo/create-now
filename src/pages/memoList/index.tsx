@@ -114,7 +114,8 @@ const Page: NextPage = () => {
             setValue(v)
             console.log('test1')
           }}
-          centered
+          variant="scrollable"
+          scrollButtons="on"
         >
           {_.map(vm.genres, (value, key) => (
             <Tab
