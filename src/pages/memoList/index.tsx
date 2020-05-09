@@ -4,7 +4,7 @@ import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { Box, Button, Switch, FormControlLabel, Chip } from '@material-ui/core'
-import { Search } from '@material-ui/icons'
+import { Search, StarBorder } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 
 import { useViewModel, separator } from '~/store/modules/memoListModule'
@@ -17,7 +17,28 @@ import sanitize from 'sanitize-html'
 const Page: NextPage = () => {
   const vm = useViewModel()
   const columns = [
-    ...vm.columns.slice(0, 3),
+    {
+      title: '★',
+      field: 'point',
+      type: 'numeric',
+      editable: 'never',
+      cellStyle: { textAlign: 'right' },
+      render: (rowData) =>
+        !vm.auth ? (
+          rowData.point
+        ) : (
+          <Button
+            endIcon={<StarBorder />}
+            onClick={vm.searchHandler}
+            color="secondary"
+            style={{ width: '80px', justifyContent: 'flex-end' }}
+          >
+            {rowData.point}
+          </Button>
+        ),
+    } as const, // typeを指定するときはconst
+    { title: '略称', field: 'nickname' },
+    { title: '名前', field: 'name' },
     {
       title: 'タグ',
       field: 'tags',
@@ -65,7 +86,7 @@ const Page: NextPage = () => {
           <></>
         ),
     },
-    ...vm.columns.slice(4),
+    { title: '備考', field: 'memo' },
   ]
   return (
     <Container>

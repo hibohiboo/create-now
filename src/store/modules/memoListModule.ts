@@ -221,17 +221,6 @@ export const useViewModel = () => {
           // 配列でTableRowに渡そうとするとエラー
           tags: item.tags.join(separator),
         })),
-        columns: [
-          {
-            title: '★',
-            field: 'point',
-            type: 'numeric',
-            editable: 'never',
-          } as const, // typeを指定するときはconst
-          { title: '略称', field: 'nickname' },
-          { title: '名前', field: 'name' },
-          { title: '備考', field: 'memo' },
-        ],
         options,
         editHandler,
         searchTags: state.memoList.searchTags,
@@ -264,6 +253,7 @@ export const useViewModel = () => {
           },
           toolbar: { searchPlaceholder: '検索結果の絞り込み' },
         },
+        auth: authUser,
       }
     },
   )
