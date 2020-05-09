@@ -17,7 +17,8 @@ export interface MemoListItem {
   url?: string
   createdAt?: any
 }
-type CollectionName = 'systems'
+const genres = { systems: 'システム' } as const
+type CollectionName = keyof typeof genres
 interface MemoListState {
   current: CollectionName
   counts: { [k in CollectionName]: number }
@@ -25,6 +26,7 @@ interface MemoListState {
   searchTags: string
   isSortCreated: boolean
 }
+
 export const init: MemoListState = {
   current: 'systems',
   counts: {
@@ -175,6 +177,7 @@ const options = {
     whiteSpace: 'nowrap',
   },
   actionsColumnIndex: 6,
+  addRowPosition: 'first',
 } as const
 const searchLimit = 50
 export const useViewModel = () => {
@@ -258,6 +261,7 @@ export const useViewModel = () => {
         pointClickHandler: async (memo: TableRow) => {
           dispatch(updateMemoItem({ ...memo, point: memo.point + 1 }))
         },
+        currentName: genres[state.memoList.current],
       }
     },
   )

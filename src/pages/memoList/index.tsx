@@ -125,7 +125,7 @@ const Page: NextPage = () => {
       </Box>
 
       <MaterialTable
-        title={'システム'}
+        title={vm.currentName}
         icons={TableIcons}
         options={vm.options}
         columns={columns}
