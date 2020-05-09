@@ -252,6 +252,18 @@ export const useViewModel = () => {
         tagClickHandler: async (tag: string) => {
           dispatch(setSearchTags(tag))
         },
+        localization: {
+          header: {
+            actions: '',
+          },
+          body: {
+            editRow: { deleteText: '削除しますか?' },
+            addTooltip: '新しい行を追加',
+            deleteTooltip: '削除',
+            editTooltip: '削除',
+          },
+          toolbar: { searchPlaceholder: '検索結果の絞り込み' },
+        },
       }
     },
   )

@@ -109,6 +109,7 @@ const Page: NextPage = () => {
         columns={columns}
         data={vm.data}
         editable={vm.editHandler}
+        localization={vm.localization}
       />
       <Link href="/">戻る</Link>
     </Container>
