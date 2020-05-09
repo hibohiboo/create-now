@@ -97,8 +97,6 @@ const memoListModule = createSlice({
   },
 })
 
-export const separator = ' '
-
 export default memoListModule
 
 const {
@@ -128,11 +126,15 @@ export const readMemoList = (
 }
 
 type TableRow = Omit<Partial<MemoListItem>, 'tags'> & { tags?: string }
+const separator = ' '
+export const separateTags = (tags: string) =>
+  tags.trim().replace('　', separator).split(separator) || []
+
 const createMemoListItem = (data: TableRow): MemoListItem => ({
   id: data.id || '',
   uid: data.uid || '',
   name: data.name || 'ななし',
-  tags: (data.tags && data.tags.trim().split(separator)) || [],
+  tags: (data.tags && separateTags(data.tags)) || [],
   memo: data.memo || '',
   point: data.point || 0,
   nickname: data.nickname || '',
@@ -240,7 +242,7 @@ export const useViewModel = () => {
             readMemoList(
               memoList.current,
               searchLimit,
-              memoList.searchTags.trim().split(separator),
+              separateTags(memoList.searchTags),
               memoList.isSortCreated,
             ),
           )
@@ -283,7 +285,7 @@ export const useViewModel = () => {
             readMemoList(
               genre,
               searchLimit,
-              memoList.searchTags.trim().split(separator),
+              separateTags(memoList.searchTags),
               memoList.isSortCreated,
             ),
           )

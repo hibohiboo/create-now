@@ -16,7 +16,7 @@ import {
 import { Search, StarBorder } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 
-import { useViewModel, separator } from '~/store/modules/memoListModule'
+import { useViewModel, separateTags } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
 import TableIcons from '~/components/molcures/TableIcons'
@@ -53,17 +53,15 @@ const Page: NextPage = () => {
       title: 'タグ',
       field: 'tags',
       render: (rowData) =>
-        rowData.tags
-          .split(separator)
-          .map((tag, i) => (
-            <Chip
-              key={i}
-              label={tag}
-              onClick={() => vm.tagClickHandler(tag)}
-              variant="outlined"
-              style={{ marginRight: '0.5rem' }}
-            />
-          )),
+        separateTags(rowData.tags).map((tag, i) => (
+          <Chip
+            key={i}
+            label={tag}
+            onClick={() => vm.tagClickHandler(tag)}
+            variant="outlined"
+            style={{ marginRight: '0.5rem' }}
+          />
+        )),
     },
     {
       title: 'リンク',
