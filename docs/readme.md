@@ -14,6 +14,8 @@
 
 [国際化](https://github.com/hibohiboo/create-now/tree/f4fe39604ab00883220bf72d41656b0c8b639dd7/)
 
+[メモリスト 1 つ完成時点](317205852e77352b9ba6f2a9f26257f9f317025d)
+
 ## 参考
 
 [トレーラー画像 - hibi（げんこう） (@hibimarie)](https://twitter.com/hibimarie/status/1236259700192079873?ref_src=twsrc%5Etfw)

@@ -17,23 +17,21 @@ export interface MemoListItem {
   url?: string
   createdAt?: any
 }
-const genres = { systems: 'システム' } as const
+const genres = { systems: 'システム', supplements: 'サプリメント' } as const
 type CollectionName = keyof typeof genres
 interface MemoListState {
   current: CollectionName
-  counts: { [k in CollectionName]: number }
   list: { [k in CollectionName]: MemoListItem[] }
   searchTags: string
   isSortCreated: boolean
 }
+const defaultGenre = 'supplements'
 
 export const init: MemoListState = {
-  current: 'systems',
-  counts: {
-    systems: 0,
-  },
+  current: defaultGenre,
   list: {
     systems: [],
+    supplements: [],
   },
   searchTags: '',
   isSortCreated: false,
@@ -50,12 +48,6 @@ const memoListModule = createSlice({
     ) => {
       state.current = action.payload.current
       state.list[action.payload.current] = action.payload.list
-    },
-    setCounts: (
-      state,
-      action: PayloadAction<{ [k in CollectionName]: number }>,
-    ) => {
-      state.counts = action.payload
     },
     addItem: (
       state,
@@ -96,7 +88,6 @@ export default memoListModule
 
 const {
   setList,
-  setCounts,
   addItem,
   setItem,
   setSearchTags,
@@ -105,11 +96,11 @@ const {
 } = memoListModule.actions
 
 export const readMemoList = (
+  current: CollectionName,
   limit = 50,
   searchTags: string[] = [],
   isSortCreated = false,
 ): AppThunk => async (dispatch) => {
-  const current = 'systems'
   const list = await store.readMemoListCollection(
     current,
     limit,
@@ -118,12 +109,6 @@ export const readMemoList = (
   )
 
   dispatch(setList({ current, list }))
-}
-
-export const readCounts = (): AppThunk => async (dispatch) => {
-  const data = await store.readMemoList()
-
-  dispatch(setCounts(data as any))
 }
 
 type TableRow = Omit<Partial<MemoListItem>, 'tags'> & { tags?: string }
@@ -139,10 +124,11 @@ const createMemoListItem = (data: TableRow): MemoListItem => ({
   createdAt: data.createdAt || '',
 })
 
-const addMemoItem = (data: TableRow, uid: string): AppThunk => async (
-  dispatch,
-) => {
-  const current = 'systems'
+const addMemoItem = (
+  current: CollectionName,
+  data: TableRow,
+  uid: string,
+): AppThunk => async (dispatch) => {
   const item = createMemoListItem(data)
   const newItem = await store.createMemo(current, item, uid)
   dispatch(
@@ -153,15 +139,19 @@ const addMemoItem = (data: TableRow, uid: string): AppThunk => async (
   )
 }
 
-const updateMemoItem = (data: TableRow): AppThunk => async (dispatch) => {
-  const current = 'systems'
+const updateMemoItem = (
+  current: CollectionName,
+  data: TableRow,
+): AppThunk => async (dispatch) => {
   const item = createMemoListItem(data)
   await store.updateMemo(current, item)
   dispatch(setItem({ current, item }))
 }
 
-const deleteMemoItem = (data: TableRow): AppThunk => async (dispatch) => {
-  const current = 'systems'
+const deleteMemoItem = (
+  current: CollectionName,
+  data: TableRow,
+): AppThunk => async (dispatch) => {
   const item = createMemoListItem(data)
   await store.deleteMemo(current, item)
   dispatch(deleteItem({ current, item }))
@@ -183,30 +173,6 @@ const searchLimit = 50
 export const useViewModel = () => {
   const dispatch = useDispatch()
   const authUser = useAuth()
-  const editHandler = !authUser
-    ? undefined
-    : {
-        isDeletable: (rowData) => rowData.uid === authUser.uid,
-        onRowAdd: async (newData) => {
-          dispatch(addMemoItem(newData, authUser.uid))
-        },
-        onRowUpdate: async (newData, oldData) => {
-          dispatch(updateMemoItem(newData))
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve()
-            }, 300)
-          })
-        },
-        onRowDelete: (oldData) => {
-          dispatch(deleteMemoItem(oldData))
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve()
-            }, 300)
-          })
-        },
-      }
 
   // next.jsのSSR時にリセットしないとエラー
   resetServerContext()
@@ -214,26 +180,52 @@ export const useViewModel = () => {
   // 初期読込
   useEffect(() => {
     dispatch(createAuthClientSide())
-    dispatch(readMemoList())
-    dispatch(readCounts())
+    dispatch(readMemoList(defaultGenre))
   }, [])
   return useSelector(
     (state: { memoList: ReturnType<typeof memoListModule.reducer> }) => {
+      const memoList = state.memoList
+      const editHandler = !authUser
+        ? undefined
+        : {
+            isDeletable: (rowData) => rowData.uid === authUser.uid,
+            onRowAdd: async (newData) => {
+              dispatch(addMemoItem(memoList.current, newData, authUser.uid))
+            },
+            onRowUpdate: async (newData, oldData) => {
+              dispatch(updateMemoItem(memoList.current, newData))
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve()
+                }, 300)
+              })
+            },
+            onRowDelete: (oldData) => {
+              dispatch(deleteMemoItem(memoList.current, oldData))
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve()
+                }, 300)
+              })
+            },
+          }
+
       return {
-        data: state.memoList.list[state.memoList.current].map((item) => ({
+        data: memoList.list[memoList.current].map((item) => ({
           ...item,
           // 配列でTableRowに渡そうとするとエラー
           tags: item.tags.join(separator),
         })),
         options,
         editHandler,
-        searchTags: state.memoList.searchTags,
+        searchTags: memoList.searchTags,
         searchHandler: () => {
           dispatch(
             readMemoList(
+              memoList.current,
               searchLimit,
-              state.memoList.searchTags.trim().split(separator),
-              state.memoList.isSortCreated,
+              memoList.searchTags.trim().split(separator),
+              memoList.isSortCreated,
             ),
           )
         },
@@ -241,7 +233,7 @@ export const useViewModel = () => {
         toggleIsSortCreated: (event: React.ChangeEvent<HTMLInputElement>) => {
           dispatch(setIsSortCreated(event.target.checked))
         },
-        isSortCreated: state.memoList.isSortCreated,
+        isSortCreated: memoList.isSortCreated,
         tagClickHandler: async (tag: string) => {
           dispatch(setSearchTags(tag))
         },
@@ -259,9 +251,14 @@ export const useViewModel = () => {
         },
         auth: authUser,
         pointClickHandler: async (memo: TableRow) => {
-          dispatch(updateMemoItem({ ...memo, point: memo.point + 1 }))
+          dispatch(
+            updateMemoItem(memoList.current, {
+              ...memo,
+              point: memo.point + 1,
+            }),
+          )
         },
-        currentName: genres[state.memoList.current],
+        currentName: genres[memoList.current],
       }
     },
   )
