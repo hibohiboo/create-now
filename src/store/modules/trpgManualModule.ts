@@ -43,6 +43,9 @@ const initEntrySheet = {
   idFontSize: 20,
   rulebookFontSize: 30,
   commentFontSize: 30,
+  previewUrl: '',
+  imageX: 0,
+  imageY: 0,
 }
 export type EntrySheet = typeof initEntrySheet
 type EntrySheetState = { entrySheet: EntrySheet; pdfBase64: string }

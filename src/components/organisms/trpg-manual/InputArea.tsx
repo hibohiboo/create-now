@@ -6,6 +6,7 @@ import {
   InputLabel,
   FormControlLabel,
   Checkbox,
+  Button,
 } from '@material-ui/core'
 import entrySheetModule, {
   useEntrySheet,
@@ -24,6 +25,16 @@ const InputArea: React.FC = () => {
   ]
   if (!sheet) {
     return <div>読込失敗</div>
+  }
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const reader = new FileReader()
+    const file = e.target.files[0]
+    reader.onloadend = async () => {
+      dispatch(update({ ...sheet, previewUrl: reader.result.toString() }))
+    }
+
+    reader.readAsDataURL(file)
   }
   return (
     <div style={{ maxWidth: '500px', minWidth: '200px' }}>
@@ -60,6 +71,37 @@ const InputArea: React.FC = () => {
             { label: 'Senior', value: 2 },
           ]}
         />
+      </Box>
+      <Box my={2}>
+        <InputLabel>画像</InputLabel>
+        <Button component="label" color="primary">
+          画像ファイルを選択
+          <input
+            type="file"
+            style={{ display: 'none' }}
+            onChange={handleImageChange}
+          />
+        </Button>
+        <Box display="flex">
+          <InputField
+            model={sheet}
+            type="number"
+            prop="imageX"
+            labelText="横調整"
+            changeHandler={(e) =>
+              dispatch(update({ ...sheet, imageX: Number(e.target.value) }))
+            }
+          />
+          <InputField
+            model={sheet}
+            type="number"
+            prop="imageY"
+            labelText="縦調整"
+            changeHandler={(e) =>
+              dispatch(update({ ...sheet, imageY: Number(e.target.value) }))
+            }
+          />
+        </Box>
       </Box>
       <Box display="flex">
         <InputField

@@ -114,6 +114,12 @@ const ImageArea: React.FC = () => {
               height={canvasHight}
               fill={'#fff'}
             />
+            <URLImage
+              src={sheet.previewUrl}
+              x={sheet.imageX}
+              y={sheet.imageY}
+            />
+
             <URLImage src="/images/trpg-manual/black.png" x={0} y={0} />
 
             {
