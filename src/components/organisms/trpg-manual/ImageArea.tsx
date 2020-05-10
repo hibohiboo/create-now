@@ -102,8 +102,24 @@ const ImageArea: React.FC = () => {
               fontFamily={family.gothic}
               fontSize={30}
             />
+            {
+              // 左アイコン部
+            }
             <Check x={42} y={443} />
             <Heart x={40} y={525} />
+            <Check x={165} y={735} />
+            <Check x={370} y={735} />
+            <Check x={165} y={945} />
+            <Check x={370} y={945} />
+            <Check x={165} y={1155} />
+            <Check x={370} y={1155} />
+            <Check x={165} y={1335} />
+            <Check x={360} y={1335} />
+            <Check x={165} y={1545} />
+            <Check x={360} y={1545} />
+            {
+              // 右半分
+            }
             <Text
               x={640}
               y={174}

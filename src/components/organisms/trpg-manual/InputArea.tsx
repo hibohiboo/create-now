@@ -55,7 +55,19 @@ const InputArea: React.FC = () => {
           }
         />
       </Box>
-
+      <RadioField
+        model={sheet}
+        prop="mystery"
+        labelText="推理"
+        changeHandler={(e) =>
+          dispatch(update({ ...sheet, mystery: Number(e.target.value) }))
+        }
+        items={[
+          { label: '', value: 0 },
+          { label: 'No Problem', value: 1 },
+          { label: 'Favorite', value: 2 },
+        ]}
+      />
       <InputField
         model={sheet}
         type="text"
