@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
 
 const initEntrySheet = {
-  name: 'ひぼ',
-  id: '@hibohiboo',
+  name: '',
+  id: '',
   checkColor: '#80ff00',
   heartColor: '#ff0000',
   circleColor: '#ff0000',
