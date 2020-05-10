@@ -6,6 +6,7 @@ const initEntrySheet = {
   id: '@hibohiboo',
   checkColor: '#80ff00',
   heartColor: '#ff0000',
+  circleColor: '#ff0000',
   mystery: 0,
   battle: 0,
   horror: 0,
@@ -26,28 +27,17 @@ const initEntrySheet = {
   discord: false,
   skype: false,
   others: '',
+  gm: 0,
+  pl: 0,
+  rpMany: false,
+  rpOften: false,
+  scenario: false,
+  scenarioC: false,
+  lostNo: false,
+  lostYes: false,
+  ruleStrict: false,
+  ruleFasy: false,
 
-  gmName: '',
-  theme1: '無人島',
-  theme2: '現代',
-  theme3: 'サバイバル',
-  isExtend: 2, // 1:延長あり 2:なし
-  pcNumberMin: 4,
-  pcNumberBest: 4,
-  pcNumberMax: 4,
-  serious: 4, // 1: 必須、2:必須ではないが重視, 3: あると嬉しい, 4: 不要
-  role: 3, // 1: 必須、2:必須ではないが重視, 3: あると嬉しい, 4: 不要
-  diceFace: 6,
-  diceNumber: 2,
-  requiredRule: 2, // 1: 必須 2: 不要
-  requiredOther: 'スマホでルルブが見れます',
-  charMake: 2, // 1: サンプルキャラあり、2:持込・作成可
-  charOther: '特殊ルール', // キャラ作成備考
-  trpgBeginer: 4, // TRPG初心者x人まで
-  systemBeginer: 4, // システム初心者x任まで
-  ruleBook: 4,
-  summary: 4,
-  equipOther: '特になし', // 準備その他
   free: `・現代が舞台。日本はまだ終わっていない……はず
 ・漂流した経緯を各自考えておくこと。
   漂流表を振ってもよい。

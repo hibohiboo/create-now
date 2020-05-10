@@ -80,6 +80,15 @@ const InputArea: React.FC = () => {
             dispatch(update({ ...sheet, heartColor: e.target.value }))
           }
         />
+        <InputField
+          model={sheet}
+          type="color"
+          prop="circleColor"
+          labelText="マルの色"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, circleColor: e.target.value }))
+          }
+        />
       </Box>
       <RadioField
         model={sheet}
@@ -272,15 +281,6 @@ const InputArea: React.FC = () => {
           }
           label="Skype"
         />
-        {/* <InputField
-          model={sheet}
-          type="text"
-          prop="others"
-          labelText="Other"
-          changeHandler={(e) =>
-            dispatch(update({ ...sheet, others: e.target.value }))
-          }
-        /> */}
         <TextField
           id="tool-other"
           label="Other"
@@ -295,215 +295,146 @@ const InputArea: React.FC = () => {
           }
         />
       </Box>
+      <Box>
+        <RadioField
+          model={sheet}
+          prop="gm"
+          labelText="Game Master"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, gm: Number(e.target.value) }))
+          }
+          items={[
+            { label: 'Never', value: 0 },
+            { label: 'Often', value: 1 },
+            { label: 'Many', value: 2 },
+            { label: 'Shura', value: 3 },
+          ]}
+        />
+        <RadioField
+          model={sheet}
+          prop="pl"
+          labelText="Player"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, pl: Number(e.target.value) }))
+          }
+          items={[
+            { label: 'Never', value: 0 },
+            { label: 'Often', value: 1 },
+            { label: 'Many', value: 2 },
+            { label: 'Shura', value: 3 },
+          ]}
+        />
+      </Box>
 
-      <InputField
-        model={sheet}
-        type="text"
-        prop="gmName"
-        labelText="GM名"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, gmName: e.target.value }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="text"
-        prop="theme1"
-        labelText="テーマ"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, theme1: e.target.value }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="text"
-        prop="theme2"
-        labelText="テーマ"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, theme2: e.target.value }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="text"
-        prop="theme3"
-        labelText="テーマ"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, theme3: e.target.value }))
-        }
-      />
-      <RadioField
-        model={sheet}
-        prop="isExtend"
-        labelText="延長"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, isExtend: Number(e.target.value) }))
-        }
-        items={[
-          { label: 'あり', value: 1 },
-          { label: 'なし', value: 2 },
-        ]}
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="pcNumberMin"
-        labelText="最小PC人数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, pcNumberMin: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="pcNumberBest"
-        labelText="最適PC人数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, pcNumberBest: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="pcNumberMax"
-        labelText="最大PC人数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, pcNumberMax: Number(e.target.value) }))
-        }
-      />
-      <RadioField
-        model={sheet}
-        prop="serious"
-        labelText="シリアス度"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, serious: Number(e.target.value) }))
-        }
-        items={[
-          { label: '必須', value: 1 },
-          { label: '必須ではないが重視', value: 2 },
-          { label: 'あると嬉しい', value: 3 },
-          { label: '不要', value: 4 },
-        ]}
-      />
-      <RadioField
-        model={sheet}
-        prop="role"
-        labelText="演技の重要度"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, role: Number(e.target.value) }))
-        }
-        items={[
-          { label: '必須', value: 1 },
-          { label: '必須ではないが重視', value: 2 },
-          { label: 'あると嬉しい', value: 3 },
-          { label: '不要', value: 4 },
-        ]}
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="diceFace"
-        labelText="使用ダイス"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, diceFace: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="diceNumber"
-        labelText="ダイスの個数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, diceNumber: Number(e.target.value) }))
-        }
-      />
-      <RadioField
-        model={sheet}
-        prop="requiredRule"
-        labelText="ルールブック"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, requiredRule: Number(e.target.value) }))
-        }
-        items={[
-          { label: '必須', value: 1 },
-          { label: '不要', value: 2 },
-        ]}
-      />
-      <InputField
-        model={sheet}
-        type="text"
-        prop="requiredOther"
-        labelText="その他必要なもの"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, requiredOther: e.target.value }))
-        }
-      />
-      <RadioField
-        model={sheet}
-        prop="charMake"
-        labelText="キャラメイク"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, charMake: Number(e.target.value) }))
-        }
-        items={[
-          { label: 'サンプルキャラあり', value: 1 },
-          { label: '持込・作成可', value: 2 },
-        ]}
-      />
-      <InputField
-        model={sheet}
-        type="text"
-        prop="charOther"
-        labelText="キャラメイク備考"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, charOther: e.target.value }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="trpgBeginer"
-        labelText="TRPG初心者対応人数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, trpgBeginer: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="systemBeginer"
-        labelText="システム初心者対応人数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, systemBeginer: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="ruleBook"
-        labelText="準備しているルールブックの冊数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, ruleBook: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="number"
-        prop="summary"
-        labelText="準備しているサマリーの冊数"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, summary: Number(e.target.value) }))
-        }
-      />
-      <InputField
-        model={sheet}
-        type="text"
-        prop="equipOther"
-        labelText="その他準備"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, equipOther: e.target.value }))
-        }
-      />
+      <Box>
+        <InputLabel>Role Play</InputLabel>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.rpMany}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, rpMany: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="たくさんしたい！"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.rpOften}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, rpOften: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="ほどほどが良い"
+        />
+      </Box>
+
+      <Box>
+        <InputLabel>Scenario</InputLabel>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.scenario}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, scenario: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="過程を楽しみたい"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.scenarioC}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, scenarioC: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="ゲームクリアを目指したい"
+        />
+      </Box>
+      <Box>
+        <InputLabel>Character Lost</InputLabel>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.lostNo}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, lostNo: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="ぜったい嫌！"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.lostYes}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, lostYes: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="散り際こそ美しい"
+        />
+      </Box>
+      <Box>
+        <InputLabel>Rule</InputLabel>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.ruleStrict}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, ruleStrict: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="ルールを重視する"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={sheet.ruleFasy}
+              onChange={(e) =>
+                dispatch(update({ ...sheet, ruleFasy: e.target.checked }))
+              }
+              color="primary"
+            />
+          }
+          label="改変を許容する"
+        />
+      </Box>
       <TextField
         id="outlined-multiline-static"
         label="自由記入欄"

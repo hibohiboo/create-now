@@ -89,6 +89,16 @@ const ImageArea: React.FC = () => {
       )}
     </>
   )
+  const Circle: React.FC<{ x: number; y: number }> = ({ x, y }) => (
+    <Ellipse
+      x={x}
+      y={y}
+      radiusX={40}
+      radiusY={20}
+      stroke={sheet.circleColor}
+      strokeWidth={5}
+    />
+  )
 
   return (
     <>
@@ -120,7 +130,7 @@ const ImageArea: React.FC = () => {
               // 左アイコン部
             }
             <Check x={42} y={443} visible={true} />
-            <Heart x={40} y={525} visible={true} />
+            <Heart x={39} y={525} visible={true} />
             <Check x={165} y={735} visible={sheet.mystery === NO_PROBREM} />
             <Check x={370} y={735} visible={sheet.battle === NO_PROBREM} />
             <Heart x={165} y={754} visible={sheet.mystery === FAVORITE} />
@@ -180,23 +190,16 @@ const ImageArea: React.FC = () => {
               fontFamily={family.gothic}
               fontSize={20}
             />
-            <Ellipse
-              x={750 + (sheet.requiredRule === 1 ? 0 : 50)}
-              y={720}
-              radiusX={30}
-              radiusY={15}
-              stroke="#000"
-              strokeWidth={3}
-            />
-
-            <Check x={925} y={838} size="small" />
-            <Check x={1140} y={838} size="small" />
-            <Check x={925} y={898} size="small" />
-            <Check x={1140} y={898} size="small" />
-            <Check x={925} y={958} size="small" />
-            <Check x={1140} y={958} size="small" />
-            <Check x={925} y={1015} size="small" />
-            <Check x={1140} y={1015} size="small" />
+            <Circle x={820 + sheet.gm * 105} y={715} />
+            <Circle x={820 + sheet.pl * 105} y={775} />
+            <Check x={925} y={838} size="small" visible={sheet.rpMany} />
+            <Check x={1140} y={838} size="small" visible={sheet.rpOften} />
+            <Check x={925} y={898} size="small" visible={sheet.scenario} />
+            <Check x={1140} y={898} size="small" visible={sheet.scenarioC} />
+            <Check x={925} y={958} size="small" visible={sheet.lostNo} />
+            <Check x={1140} y={958} size="small" visible={sheet.lostYes} />
+            <Check x={925} y={1015} size="small" visible={sheet.ruleStrict} />
+            <Check x={1140} y={1015} size="small" visible={sheet.ruleFasy} />
 
             <Text
               x={480}
