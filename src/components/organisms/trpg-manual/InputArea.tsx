@@ -459,6 +459,49 @@ const InputArea: React.FC = () => {
         fullWidth={true}
         onChange={(e) => dispatch(update({ ...sheet, free: e.target.value }))}
       />
+      <InputLabel>フォントサイズ</InputLabel>
+      <Box m={2} display="flex">
+        <InputField
+          model={sheet}
+          type="number"
+          prop="nameFontSize"
+          labelText="Name"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, nameFontSize: Number(e.target.value) }))
+          }
+        />
+        <InputField
+          model={sheet}
+          type="number"
+          prop="idFontSize"
+          labelText="ID"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, idFontSize: Number(e.target.value) }))
+          }
+        />
+        <InputField
+          model={sheet}
+          type="number"
+          prop="rulebookFontSize"
+          labelText="Rule Book"
+          changeHandler={(e) =>
+            dispatch(
+              update({ ...sheet, rulebookFontSize: Number(e.target.value) }),
+            )
+          }
+        />
+        <InputField
+          model={sheet}
+          type="number"
+          prop="commentFontSize"
+          labelText="Comment"
+          changeHandler={(e) =>
+            dispatch(
+              update({ ...sheet, commentFontSize: Number(e.target.value) }),
+            )
+          }
+        />
+      </Box>
     </div>
   )
 }

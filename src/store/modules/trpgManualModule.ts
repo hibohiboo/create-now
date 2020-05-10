@@ -37,10 +37,12 @@ const initEntrySheet = {
   lostYes: false,
   ruleStrict: false,
   ruleFasy: false,
-  rulebook: `
-`,
-  free: `
-`, // 自由記入欄
+  rulebook: ``,
+  free: ``, // 自由記入欄
+  nameFontSize: 30,
+  idFontSize: 20,
+  rulebookFontSize: 30,
+  commentFontSize: 30,
 }
 export type EntrySheet = typeof initEntrySheet
 type EntrySheetState = { entrySheet: EntrySheet; pdfBase64: string }

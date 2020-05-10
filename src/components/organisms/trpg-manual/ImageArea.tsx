@@ -16,7 +16,6 @@ const ImageArea: React.FC = () => {
   const leftPadding = 215
   const themePadding = leftPadding + 350
   const inputWidth = canvasWidth - leftPadding
-  const fontSize = { system: 25, title: 80, titleRuby: 40, subTitle: 30 }
   const family = {
     gothic:
       '"Hiragino Sans W3", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif',
@@ -116,16 +115,7 @@ const ImageArea: React.FC = () => {
               fill={'#fff'}
             />
             <URLImage src="/images/trpg-manual/black.png" x={0} y={0} />
-            <Text
-              x={640}
-              y={115}
-              width={inputWidth}
-              align="left"
-              text={sheet.name}
-              fill="#000"
-              fontFamily={family.gothic}
-              fontSize={30}
-            />
+
             {
               // 左アイコン部
             }
@@ -157,13 +147,23 @@ const ImageArea: React.FC = () => {
             }
             <Text
               x={640}
+              y={115}
+              width={inputWidth}
+              align="left"
+              text={sheet.name}
+              fill="#000"
+              fontFamily={family.gothic}
+              fontSize={sheet.nameFontSize}
+            />
+            <Text
+              x={640}
               y={174}
               width={inputWidth}
               align="left"
               text={sheet.id}
               fill="#000"
               fontFamily={family.gothic}
-              fontSize={20}
+              fontSize={sheet.idFontSize}
             />
             <Check
               x={950 + sheet.exp * 102}
@@ -209,7 +209,7 @@ const ImageArea: React.FC = () => {
               text={String(sheet.rulebook)}
               fill="#000"
               fontFamily={family.gothic}
-              fontSize={fontSize.system}
+              fontSize={sheet.rulebookFontSize}
             />
             <Text
               x={480}
@@ -219,7 +219,7 @@ const ImageArea: React.FC = () => {
               text={String(sheet.free)}
               fill="#000"
               fontFamily={family.gothic}
-              fontSize={fontSize.system}
+              fontSize={sheet.commentFontSize}
             />
           </Layer>
         </Stage>
