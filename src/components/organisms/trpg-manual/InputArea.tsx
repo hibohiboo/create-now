@@ -13,6 +13,7 @@ import entrySheetModule, {
 } from '~/store/modules/trpgManualModule'
 import InputField from '~/components/form/InputField'
 import RadioField from '~/components/form/RadioField'
+import SelectField from '~/components/form/SelectField'
 
 const InputArea: React.FC = () => {
   const sheet = useEntrySheet()
@@ -38,6 +39,31 @@ const InputArea: React.FC = () => {
   }
   return (
     <div style={{ maxWidth: '500px', minWidth: '200px' }}>
+      <Box my={4} display="flex">
+        <SelectField
+          id="theme"
+          labelText="テンプレート選択"
+          items={[
+            { name: 'black' },
+            { name: 'aqua' },
+            { name: 'blue' },
+            { name: 'navy' },
+            { name: 'pink' },
+          ]}
+          unselectedText=""
+          value={sheet.theme}
+          changeHandler={(e) => dispatch(update({ ...sheet, theme: e.name }))}
+        />
+        <InputField
+          model={sheet}
+          type="color"
+          prop="fontColor"
+          labelText="文字色"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, fontColor: e.target.value }))
+          }
+        />
+      </Box>
       <InputLabel>Profile</InputLabel>
       <Box m={2}>
         <InputField

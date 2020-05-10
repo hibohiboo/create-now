@@ -29,7 +29,7 @@ const SelectField: React.FC<{
         changeHandler(item)
       }}
     >
-      <MenuItem value="">{unselectedText}</MenuItem>
+      {unselectedText && <MenuItem value="">{unselectedText}</MenuItem>}
       {items.map((item) => (
         <MenuItem value={item[valueProp]} key={item[valueProp]}>
           {item.name}

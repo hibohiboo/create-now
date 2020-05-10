@@ -119,7 +119,11 @@ const ImageArea: React.FC = () => {
               scale={sheet.scale / 100}
             />
 
-            <URLImage src="/images/trpg-manual/black.png" x={0} y={0} />
+            <URLImage
+              src={`/images/trpg-manual/${sheet.theme}.png`}
+              x={0}
+              y={0}
+            />
 
             {
               // 左アイコン部
@@ -156,7 +160,7 @@ const ImageArea: React.FC = () => {
               width={inputWidth}
               align="left"
               text={sheet.name}
-              fill="#000"
+              fill={sheet.fontColor}
               fontFamily={family.gothic}
               fontSize={sheet.nameFontSize}
             />
@@ -166,7 +170,7 @@ const ImageArea: React.FC = () => {
               width={inputWidth}
               align="left"
               text={sheet.id}
-              fill="#000"
+              fill={sheet.fontColor}
               fontFamily={family.gothic}
               fontSize={sheet.idFontSize}
             />
@@ -191,7 +195,7 @@ const ImageArea: React.FC = () => {
               width={inputWidth}
               align="left"
               text={sheet.others}
-              fill="#000"
+              fill={sheet.fontColor}
               fontFamily={family.gothic}
               fontSize={20}
             />
@@ -212,7 +216,7 @@ const ImageArea: React.FC = () => {
               width={inputWidth}
               align="left"
               text={String(sheet.rulebook)}
-              fill="#000"
+              fill={sheet.fontColor}
               fontFamily={family.gothic}
               fontSize={sheet.rulebookFontSize}
             />
@@ -222,7 +226,7 @@ const ImageArea: React.FC = () => {
               width={inputWidth}
               align="left"
               text={String(sheet.free)}
-              fill="#000"
+              fill={sheet.fontColor}
               fontFamily={family.gothic}
               fontSize={sheet.commentFontSize}
             />
