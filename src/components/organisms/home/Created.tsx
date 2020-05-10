@@ -7,6 +7,9 @@ const Created: React.FC = () => {
       <h4>now製作物</h4>
       <ul>
         <li>
+          <Link href="/trpg-manual"> 僕の私のTRPG説明書 </Link>
+        </li>
+        <li>
           <Link href="/pdf/entrySheet"> エントリーシートPDF作成 </Link>
         </li>
         <li>
