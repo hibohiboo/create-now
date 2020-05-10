@@ -37,18 +37,9 @@ const initEntrySheet = {
   lostYes: false,
   ruleStrict: false,
   ruleFasy: false,
-
-  free: `・現代が舞台。日本はまだ終わっていない……はず
-・漂流した経緯を各自考えておくこと。
-  漂流表を振ってもよい。
-・キャラ作成時に買い物なし。
-・キャンプ・施設なし。
-・25歳以上のPCも作成可能。
-・島から脱出したいキャラクターであること。
-  残してきたもの表をふってもよい。
-・ニューエイジをサイキックと読み替え。
-  【突然変異】のアビリティは取得不可。
-
+  rulebook: `
+`,
+  free: `
 `, // 自由記入欄
 }
 export type EntrySheet = typeof initEntrySheet

@@ -203,6 +203,16 @@ const ImageArea: React.FC = () => {
 
             <Text
               x={480}
+              y={1150}
+              width={inputWidth}
+              align="left"
+              text={String(sheet.rulebook)}
+              fill="#000"
+              fontFamily={family.gothic}
+              fontSize={fontSize.system}
+            />
+            <Text
+              x={480}
               y={1430}
               width={inputWidth}
               align="left"

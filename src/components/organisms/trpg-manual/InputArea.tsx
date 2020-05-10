@@ -437,7 +437,20 @@ const InputArea: React.FC = () => {
       </Box>
       <TextField
         id="outlined-multiline-static"
-        label="自由記入欄"
+        label="Rule Book / Supplement"
+        multiline
+        rows="10"
+        variant="outlined"
+        value={sheet.rulebook}
+        style={{ marginTop: '20px', marginBottom: '20px' }}
+        fullWidth={true}
+        onChange={(e) =>
+          dispatch(update({ ...sheet, rulebook: e.target.value }))
+        }
+      />
+      <TextField
+        id="outlined-multiline-static"
+        label="Comment"
         multiline
         rows="10"
         variant="outlined"
