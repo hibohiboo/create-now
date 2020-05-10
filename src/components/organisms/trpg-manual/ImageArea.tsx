@@ -27,6 +27,8 @@ const ImageArea: React.FC = () => {
   // Font Awesome のfont-weightのルール
   const faWeight = { solid: '900', regular: '400', brands: '400', light: '300' }
   const faUnicode = { heart: '\uf004', check: '\uf00c' }
+  const NO_PROBREM = 1
+  const FAVORITE = 2
 
   const [url, setUrl] = useState('')
   const stageRef = useRef(null)
@@ -119,26 +121,27 @@ const ImageArea: React.FC = () => {
             }
             <Check x={42} y={443} visible={true} />
             <Heart x={40} y={525} visible={true} />
-            <Check x={165} y={735} visible={sheet.mystery === 1} />
-            <Heart x={165} y={754} visible={sheet.mystery === 2} />
-            <Heart x={370} y={754} />
-            <Check x={370} y={735} />
-            <Check x={165} y={945} />
-            <Check x={370} y={945} />
-            <Heart x={165} y={965} />
-            <Heart x={370} y={965} />
-            <Check x={165} y={1155} />
-            <Check x={370} y={1155} />
-            <Heart x={165} y={1175} />
-            <Heart x={370} y={1175} />
-            <Check x={165} y={1335} />
-            <Check x={360} y={1335} />
-            <Heart x={165} y={1358} />
-            <Heart x={365} y={1358} />
-            <Check x={165} y={1545} />
-            <Check x={360} y={1545} />
-            <Heart x={165} y={1562} />
-            <Heart x={360} y={1562} />
+            <Check x={165} y={735} visible={sheet.mystery === NO_PROBREM} />
+            <Check x={370} y={735} visible={sheet.battle === NO_PROBREM} />
+            <Heart x={165} y={754} visible={sheet.mystery === FAVORITE} />
+            <Heart x={370} y={754} visible={sheet.battle === FAVORITE} />
+
+            <Check x={165} y={945} visible={sheet.horror === NO_PROBREM} />
+            <Check x={370} y={945} visible={sheet.grotesque === NO_PROBREM} />
+            <Heart x={165} y={965} visible={sheet.horror === FAVORITE} />
+            <Heart x={370} y={965} visible={sheet.grotesque === FAVORITE} />
+            <Check x={165} y={1155} visible={sheet.gl === NO_PROBREM} />
+            <Check x={370} y={1155} visible={sheet.bl === NO_PROBREM} />
+            <Heart x={165} y={1175} visible={sheet.gl === FAVORITE} />
+            <Heart x={370} y={1175} visible={sheet.bl === FAVORITE} />
+            <Check x={165} y={1335} visible={sheet.love === NO_PROBREM} />
+            <Check x={360} y={1335} visible={sheet.PvP === NO_PROBREM} />
+            <Heart x={165} y={1358} visible={sheet.love === FAVORITE} />
+            <Heart x={365} y={1358} visible={sheet.PvP === FAVORITE} />
+            <Check x={165} y={1545} visible={sheet.depression === NO_PROBREM} />
+            <Check x={360} y={1545} visible={sheet.decision === NO_PROBREM} />
+            <Heart x={165} y={1562} visible={sheet.depression === FAVORITE} />
+            <Heart x={360} y={1562} visible={sheet.decision === FAVORITE} />
             {
               // 右半分
             }
@@ -152,17 +155,31 @@ const ImageArea: React.FC = () => {
               fontFamily={family.gothic}
               fontSize={20}
             />
-            <Check x={950} y={168} size="small" />
+            <Check
+              x={950 + sheet.exp * 102}
+              y={168}
+              size="small"
+              visible={true}
+            />
 
-            <Check x={593} y={370} size="small" />
-            <Check x={950} y={368} size="small" />
-            <Check x={593} y={425} size="small" />
-            <Check x={950} y={425} size="small" />
-            <Check x={593} y={480} size="small" />
-            <Check x={950} y={480} size="small" />
-            <Check x={593} y={613} size="small" />
-            <Check x={950} y={535} size="small" />
-
+            <Check x={593} y={370} size="small" visible={sheet.voice} />
+            <Check x={950} y={368} size="small" visible={sheet.ccfolia} />
+            <Check x={593} y={425} size="small" visible={sheet.text} />
+            <Check x={950} y={425} size="small" visible={sheet.dodontof} />
+            <Check x={593} y={480} size="small" visible={sheet.textWithVoice} />
+            <Check x={950} y={480} size="small" visible={sheet.discord} />
+            <Check x={593} y={613} size="small" visible={sheet.onTheTable} />
+            <Check x={950} y={535} size="small" visible={sheet.skype} />
+            <Text
+              x={940}
+              y={610}
+              width={inputWidth}
+              align="left"
+              text={sheet.others}
+              fill="#000"
+              fontFamily={family.gothic}
+              fontSize={20}
+            />
             <Ellipse
               x={750 + (sheet.requiredRule === 1 ? 0 : 50)}
               y={720}
