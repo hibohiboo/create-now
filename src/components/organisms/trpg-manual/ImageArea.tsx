@@ -26,7 +26,7 @@ const ImageArea: React.FC = () => {
   }
   // Font Awesome のfont-weightのルール
   const faWeight = { solid: '900', regular: '400', brands: '400', light: '300' }
-  const faUnicode = { heart: '\uf004' }
+  const faUnicode = { heart: '\uf004', check: '\uf00c' }
   const checkChar = '✔'
 
   const [url, setUrl] = useState('')
@@ -58,6 +58,19 @@ const ImageArea: React.FC = () => {
       fontSize={60}
     />
   )
+  const Check: React.FC<{ x: number; y: number }> = ({ x, y }) => (
+    <Text
+      x={x}
+      y={y}
+      width={inputWidth}
+      align="left"
+      text={faUnicode.check}
+      fill={sheet.heartColor}
+      fontFamily={family.fontawesome}
+      fontStyle={faWeight.solid}
+      fontSize={70}
+    />
+  )
 
   return (
     <>
@@ -85,6 +98,7 @@ const ImageArea: React.FC = () => {
               fontFamily={family.gothic}
               fontSize={30}
             />
+            <Check x={42} y={443} />
             <Heart x={40} y={525} />
             <Text
               x={640}
