@@ -72,7 +72,7 @@ const ImageArea: React.FC = () => {
       fill={sheet.checkColor}
       fontFamily={family.fontawesome}
       fontStyle={faWeight.solid}
-      fontSize={size === 'big' ? 70 : 40}
+      fontSize={size === 'big' ? 70 : 30}
     />
   )
 
@@ -130,35 +130,34 @@ const ImageArea: React.FC = () => {
               fontFamily={family.gothic}
               fontSize={20}
             />
+            <Check x={950} y={168} size="small" />
 
-            <Text
-              x={
-                leftPadding +
-                (sheet.serious === 1
-                  ? 0
-                  : sheet.serious === 2
-                  ? 80
-                  : sheet.serious === 3
-                  ? 300
-                  : 465)
-              }
-              y={320}
-              width={inputWidth}
-              align="left"
-              text={checkChar}
-              fill="#000"
-              fontFamily={family.gothic}
-              fontSize={fontSize.system}
-            />
+            <Check x={593} y={370} size="small" />
+            <Check x={950} y={368} size="small" />
+            <Check x={593} y={425} size="small" />
+            <Check x={950} y={425} size="small" />
+            <Check x={593} y={480} size="small" />
+            <Check x={950} y={480} size="small" />
+            <Check x={593} y={613} size="small" />
+            <Check x={950} y={535} size="small" />
 
             <Ellipse
-              x={leftPadding + 335 + (sheet.requiredRule === 1 ? 0 : 50)}
-              y={435}
+              x={750 + (sheet.requiredRule === 1 ? 0 : 50)}
+              y={720}
               radiusX={30}
               radiusY={15}
               stroke="#000"
               strokeWidth={3}
             />
+
+            <Check x={925} y={838} size="small" />
+            <Check x={1140} y={838} size="small" />
+            <Check x={925} y={898} size="small" />
+            <Check x={1140} y={898} size="small" />
+            <Check x={925} y={958} size="small" />
+            <Check x={1140} y={958} size="small" />
+            <Check x={925} y={1015} size="small" />
+            <Check x={1140} y={1015} size="small" />
 
             <Text
               x={480}
