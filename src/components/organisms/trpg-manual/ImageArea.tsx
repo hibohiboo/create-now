@@ -58,22 +58,27 @@ const ImageArea: React.FC = () => {
       fontSize={60}
     />
   )
-  const Check: React.FC<{ x: number; y: number; size?: string }> = ({
-    x,
-    y,
-    size = 'big',
-  }) => (
-    <Text
-      x={x}
-      y={y}
-      width={inputWidth}
-      align="left"
-      text={faUnicode.check}
-      fill={sheet.checkColor}
-      fontFamily={family.fontawesome}
-      fontStyle={faWeight.solid}
-      fontSize={size === 'big' ? 70 : 30}
-    />
+  const Check: React.FC<{
+    x: number
+    y: number
+    size?: string
+    visible?: boolean
+  }> = ({ x, y, size = 'big', visible = false }) => (
+    <>
+      {visible && (
+        <Text
+          x={x}
+          y={y}
+          width={inputWidth}
+          align="left"
+          text={faUnicode.check}
+          fill={sheet.checkColor}
+          fontFamily={family.fontawesome}
+          fontStyle={faWeight.solid}
+          fontSize={size === 'big' ? 70 : 30}
+        />
+      )}
+    </>
   )
 
   return (
@@ -105,9 +110,9 @@ const ImageArea: React.FC = () => {
             {
               // 左アイコン部
             }
-            <Check x={42} y={443} />
+            <Check x={42} y={443} visible={true} />
             <Heart x={40} y={525} />
-            <Check x={165} y={735} />
+            <Check x={165} y={735} visible={sheet.mystery === 1} />
             <Check x={370} y={735} />
             <Check x={165} y={945} />
             <Check x={370} y={945} />

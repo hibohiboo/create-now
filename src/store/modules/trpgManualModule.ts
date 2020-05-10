@@ -7,6 +7,7 @@ const initEntrySheet = {
   checkColor: '#80ff00',
   heartColor: '#ff0000',
   mystery: 0,
+
   gmName: '',
   theme1: '無人島',
   theme2: '現代',
