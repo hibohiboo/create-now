@@ -45,6 +45,20 @@ const ImageArea: React.FC = () => {
   }
   useEffect(effect)
 
+  const Heart: React.FC<{ x: number; y: number }> = ({ x, y }) => (
+    <Text
+      x={x}
+      y={y}
+      width={inputWidth}
+      align="left"
+      text={faUnicode.heart}
+      fill={sheet.heartColor}
+      fontFamily={family.fontawesome}
+      fontStyle={faWeight.solid}
+      fontSize={60}
+    />
+  )
+
   return (
     <>
       <Hidden mdUp implementation="css">
@@ -71,17 +85,7 @@ const ImageArea: React.FC = () => {
               fontFamily={family.gothic}
               fontSize={30}
             />
-            <Text
-              x={640}
-              y={115}
-              width={inputWidth}
-              align="left"
-              text={faUnicode.heart}
-              fill="#000"
-              fontFamily={family.fontawesome}
-              fontStyle={faWeight.solid}
-              fontSize={50}
-            />
+            <Heart x={40} y={525} />
             <Text
               x={640}
               y={174}

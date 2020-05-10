@@ -37,6 +37,15 @@ const InputArea: React.FC = () => {
       />
       <InputField
         model={sheet}
+        type="color"
+        prop="heartColor"
+        labelText="ハートの色"
+        changeHandler={(e) =>
+          dispatch(update({ ...sheet, heartColor: e.target.value }))
+        }
+      />
+      <InputField
+        model={sheet}
         type="text"
         prop="gmName"
         labelText="GM名"

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 const initEntrySheet = {
   name: 'ひぼ',
   id: 'サバイバルデイズ',
+  heartColor: '#ff0000',
   gmName: '',
   theme1: '無人島',
   theme2: '現代',
