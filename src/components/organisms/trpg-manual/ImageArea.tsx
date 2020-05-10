@@ -27,7 +27,6 @@ const ImageArea: React.FC = () => {
   // Font Awesome のfont-weightのルール
   const faWeight = { solid: '900', regular: '400', brands: '400', light: '300' }
   const faUnicode = { heart: '\uf004', check: '\uf00c' }
-  const checkChar = '✔'
 
   const [url, setUrl] = useState('')
   const stageRef = useRef(null)
@@ -45,18 +44,26 @@ const ImageArea: React.FC = () => {
   }
   useEffect(effect)
 
-  const Heart: React.FC<{ x: number; y: number }> = ({ x, y }) => (
-    <Text
-      x={x}
-      y={y}
-      width={inputWidth}
-      align="left"
-      text={faUnicode.heart}
-      fill={sheet.heartColor}
-      fontFamily={family.fontawesome}
-      fontStyle={faWeight.solid}
-      fontSize={60}
-    />
+  const Heart: React.FC<{ x: number; y: number; visible?: boolean }> = ({
+    x,
+    y,
+    visible = false,
+  }) => (
+    <>
+      {visible && (
+        <Text
+          x={x}
+          y={y}
+          width={inputWidth}
+          align="left"
+          text={faUnicode.heart}
+          fill={sheet.heartColor}
+          fontFamily={family.fontawesome}
+          fontStyle={faWeight.solid}
+          fontSize={60}
+        />
+      )}
+    </>
   )
   const Check: React.FC<{
     x: number
@@ -111,17 +118,27 @@ const ImageArea: React.FC = () => {
               // 左アイコン部
             }
             <Check x={42} y={443} visible={true} />
-            <Heart x={40} y={525} />
+            <Heart x={40} y={525} visible={true} />
             <Check x={165} y={735} visible={sheet.mystery === 1} />
+            <Heart x={165} y={754} visible={sheet.mystery === 2} />
+            <Heart x={370} y={754} />
             <Check x={370} y={735} />
             <Check x={165} y={945} />
             <Check x={370} y={945} />
+            <Heart x={165} y={965} />
+            <Heart x={370} y={965} />
             <Check x={165} y={1155} />
             <Check x={370} y={1155} />
+            <Heart x={165} y={1175} />
+            <Heart x={370} y={1175} />
             <Check x={165} y={1335} />
             <Check x={360} y={1335} />
+            <Heart x={165} y={1358} />
+            <Heart x={365} y={1358} />
             <Check x={165} y={1545} />
             <Check x={360} y={1545} />
+            <Heart x={165} y={1562} />
+            <Heart x={360} y={1562} />
             {
               // 右半分
             }
