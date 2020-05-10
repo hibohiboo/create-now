@@ -58,17 +58,21 @@ const ImageArea: React.FC = () => {
       fontSize={60}
     />
   )
-  const Check: React.FC<{ x: number; y: number }> = ({ x, y }) => (
+  const Check: React.FC<{ x: number; y: number; size?: string }> = ({
+    x,
+    y,
+    size = 'big',
+  }) => (
     <Text
       x={x}
       y={y}
       width={inputWidth}
       align="left"
       text={faUnicode.check}
-      fill={sheet.heartColor}
+      fill={sheet.checkColor}
       fontFamily={family.fontawesome}
       fontStyle={faWeight.solid}
-      fontSize={70}
+      fontSize={size === 'big' ? 70 : 40}
     />
   )
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import TextField from '@material-ui/core/TextField'
+import { TextField, Box } from '@material-ui/core'
 import entrySheetModule, {
   useEntrySheet,
 } from '~/store/modules/trpgManualModule'
@@ -35,15 +35,27 @@ const InputArea: React.FC = () => {
           dispatch(update({ ...sheet, id: e.target.value }))
         }
       />
-      <InputField
-        model={sheet}
-        type="color"
-        prop="heartColor"
-        labelText="ハートの色"
-        changeHandler={(e) =>
-          dispatch(update({ ...sheet, heartColor: e.target.value }))
-        }
-      />
+      <Box display="flex">
+        <InputField
+          model={sheet}
+          type="color"
+          prop="checkColor"
+          labelText="チェックの色"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, checkColor: e.target.value }))
+          }
+        />
+        <InputField
+          model={sheet}
+          type="color"
+          prop="heartColor"
+          labelText="ハートの色"
+          changeHandler={(e) =>
+            dispatch(update({ ...sheet, heartColor: e.target.value }))
+          }
+        />
+      </Box>
+
       <InputField
         model={sheet}
         type="text"
