@@ -5,6 +5,7 @@ export default class URLImage extends React.Component<{
   src: string
   x: number
   y: number
+  scale?: number
 }> {
   private image: HTMLImageElement
   private imageNode: any
@@ -43,6 +44,8 @@ export default class URLImage extends React.Component<{
       <Image
         x={this.props.x}
         y={this.props.y}
+        scaleX={this.props.scale || 1}
+        scaleY={this.props.scale || 1}
         image={this.state.image}
         ref={(node) => {
           this.imageNode = node

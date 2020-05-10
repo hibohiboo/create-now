@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
-import { Favorite } from '@material-ui/icons'
 import URLImage from '../../atoms/URLImage'
 import Hidden from '@material-ui/core/Hidden'
 
@@ -14,7 +13,6 @@ const ImageArea: React.FC = () => {
   const canvasWidth = 1192
   const canvasHight = 1684
   const leftPadding = 215
-  const themePadding = leftPadding + 350
   const inputWidth = canvasWidth - leftPadding
   const family = {
     gothic:
@@ -112,12 +110,13 @@ const ImageArea: React.FC = () => {
               y={0}
               width={canvasWidth}
               height={canvasHight}
-              fill={'#fff'}
+              fill={sheet.imageBackColor}
             />
             <URLImage
               src={sheet.previewUrl}
               x={sheet.imageX}
               y={sheet.imageY}
+              scale={sheet.scale / 100}
             />
 
             <URLImage src="/images/trpg-manual/black.png" x={0} y={0} />

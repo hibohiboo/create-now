@@ -46,6 +46,8 @@ const initEntrySheet = {
   previewUrl: '',
   imageX: 0,
   imageY: 0,
+  scale: 100,
+  imageBackColor: '#ffffff',
 }
 export type EntrySheet = typeof initEntrySheet
 type EntrySheetState = { entrySheet: EntrySheet; pdfBase64: string }

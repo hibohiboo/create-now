@@ -101,6 +101,24 @@ const InputArea: React.FC = () => {
               dispatch(update({ ...sheet, imageY: Number(e.target.value) }))
             }
           />
+          <InputField
+            model={sheet}
+            type="number"
+            prop="scale"
+            labelText="拡大"
+            changeHandler={(e) =>
+              dispatch(update({ ...sheet, scale: Number(e.target.value) }))
+            }
+          />
+          <InputField
+            model={sheet}
+            type="color"
+            prop="imageBackColor"
+            labelText="画像背景色"
+            changeHandler={(e) =>
+              dispatch(update({ ...sheet, imageBackColor: e.target.value }))
+            }
+          />
         </Box>
       </Box>
       <Box display="flex">
