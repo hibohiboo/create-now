@@ -19,6 +19,12 @@ const Home: NextPage = () => {
         />
       </Head>
       <main>
+        <h1>TRPG自己紹介シートメーカー</h1>
+        <p>
+          <a href="https://twitter.com/Frog_003">かえる３号</a>
+          さんのTRPG自己紹介シートを入力できるようにしました。
+          作成した画像は、右クリック（スマホなら長押し）でダウンロードしてお使いください。
+        </p>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <InputArea />
           <ImageArea />
