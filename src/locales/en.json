@@ -57,6 +57,8 @@
   "lostrpg_character_edit_resetDamage": "Reset Damage",
   "lostrpg_character_edit_addItem": "Add Item",
   "lostrpg_character_edit_specialtiesHelp": "Click on the text to get specialty.Check Damage",
+  "lostrpg_character_edit_use_supplement": "使用サプリメント",
+  "lostrpg_character_edit_strange_field": "Strange Fields",
   "common_save": "Save",
   "common_summary": "Summary",
   "common_detail": "Detail",

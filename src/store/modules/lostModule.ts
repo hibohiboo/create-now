@@ -114,6 +114,7 @@ export interface Character {
   id?: string
   createdAt?: any
   updatedAt?: any
+  useStrangeField?: boolean
 }
 export const initBag = {
   id: 'bag',
@@ -186,6 +187,7 @@ export const initCharacter: Character = {
   createdAt: '',
   updatedAt: '',
   uid: '',
+  useStrangeField: false,
 }
 interface CampsCharacters {
   characterId: string
@@ -460,12 +462,21 @@ export const useCharacterEditViewModel = () =>
       specialties,
       bodyParts,
       specialtiesTableColumns,
+      strangeFieldsClassList,
+      strangeFieldsAbilityList,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
-
+    let mergedClassList = classList
+    let mergedAbilities = abilityList
+    if (character.useStrangeField) {
+      mergedClassList = _.union(mergedClassList, strangeFieldsClassList)
+      mergedAbilities = _.union(mergedAbilities, strangeFieldsAbilityList)
+    }
     return {
-      classList: classList.filter((item) => !character.classes.includes(item)),
+      classList: mergedClassList.filter(
+        (item) => !character.classes.includes(item),
+      ),
       abilitiesColumns,
-      abilityList: abilityList
+      abilityList: mergedAbilities
         .filter(
           (item) =>
             item.id === 'general' ||

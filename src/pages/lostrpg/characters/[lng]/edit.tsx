@@ -12,6 +12,7 @@ import {
   Chip,
   Checkbox,
   Tooltip,
+  FormControlLabel,
   ClickAwayListener,
 } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
@@ -181,7 +182,7 @@ const Page: NextPage = () => {
               httpEquiv="content-language"
               content={contentLanguageMap[i18n.activeLocale]}
             />
-            <title>{i18n.t('lostrpg_index_title')}</title>
+            <title>{t('lostrpg_index_title')}</title>
           </Head>
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
             <h2>
@@ -200,6 +201,28 @@ const Page: NextPage = () => {
                   )
                 }
               />
+              <Box m={2}>
+                <InputLabel>
+                  {t('lostrpg_character_edit_use_supplement')}
+                </InputLabel>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={character.useStrangeField}
+                      onChange={(e) =>
+                        dispatch(
+                          setCharacter({
+                            ...character,
+                            useStrangeField: e.target.checked,
+                          }),
+                        )
+                      }
+                      color="primary"
+                    />
+                  }
+                  label={t('lostrpg_character_edit_strange_field')}
+                />
+              </Box>
               <Box my={1}>
                 <SelectField
                   id="camp-select"

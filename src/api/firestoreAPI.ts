@@ -17,7 +17,7 @@ const getInt = (obj) =>
     : obj && obj.stringValue && !isNaN(Number(obj.stringValue))
     ? Number(obj.stringValue)
     : 0
-
+const getBool = (obj): boolean | undefined => obj && obj.booleanValue === true
 const getTimestamp = (obj) => (obj ? obj.timestampValue : null)
 const getArray = (obj, decoder) =>
   obj && obj.arrayValue && obj.arrayValue.values
@@ -116,6 +116,7 @@ export const getCharacter = async (id: string) => {
     appearance,
     campId,
     campName,
+    useStrangeField,
   } = data.fields
   const ret: lost.Character = {
     name: getStr(name),
@@ -196,6 +197,7 @@ export const getCharacter = async (id: string) => {
     appearance: getStr(appearance),
     campId: getStr(campId),
     campName: getStr(campName),
+    useStrangeField: getBool(useStrangeField),
   }
   return ret
 }
