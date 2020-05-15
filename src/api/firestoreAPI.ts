@@ -117,6 +117,7 @@ export const getCharacter = async (id: string) => {
     campId,
     campName,
     useStrangeField,
+    backbones,
   } = data.fields
   const ret: lost.Character = {
     name: getStr(name),
@@ -198,6 +199,12 @@ export const getCharacter = async (id: string) => {
     campId: getStr(campId),
     campName: getStr(campName),
     useStrangeField: getBool(useStrangeField),
+    backbones: getArray(backbones, (item) => ({
+      id: getStr(item.id),
+      name: getStr(item.name),
+      type: getStr(item.type),
+      effect: getStr(item.effect),
+    })),
   }
   return ret
 }

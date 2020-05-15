@@ -163,6 +163,7 @@ const Page: NextPage = () => {
     }
     ;(async () => {
       const data = await getCharacter(id)
+
       if (data) {
         // createdAtがserializeではないオブジェクトなのでstringifyを経由することによりserialize化
         dispatch(setCharacter(JSON.parse(JSON.stringify(data))))
@@ -885,6 +886,54 @@ const Page: NextPage = () => {
                 data={vm.statusAilments}
               />
             </Box>
+            {!character.useStrangeField ? (
+              <></>
+            ) : (
+              <>
+                {' '}
+                <Box my={2}>
+                  <SelectField
+                    id="backbone-select"
+                    items={vm.backboneList}
+                    value={''}
+                    unselectedText={t('common_unselected')}
+                    labelText={t('lostrpg_character_common_backbone')}
+                    changeHandler={(item: any) => {
+                      item &&
+                        dispatch(
+                          setCharacter({
+                            ...character,
+                            backbones: [...character.backbones, item],
+                          }),
+                        )
+                    }}
+                  />
+                </Box>
+                <EditableMaterialTable
+                  title={t('lostrpg_character_common_backbone')}
+                  columns={vm.backboneColumns}
+                  data={_.cloneDeep(character.backbones)}
+                  rowAddHandler={(newData) => {
+                    updateRowData('backbones', (d) => [...d, newData])
+                  }}
+                  rowUpdateHandler={(newData, oldData) => {
+                    updateRowData('backbones', (d) => {
+                      d[d.findIndex((i) => i.name === oldData.name)] = newData
+                      return d
+                    })
+                  }}
+                  rowDeleteHandler={(oldData) => {
+                    updateRowData('backbones', (d) => {
+                      d.splice(
+                        d.findIndex((i) => i.name === oldData.name),
+                        1,
+                      )
+                      return d
+                    })
+                  }}
+                />
+              </>
+            )}
 
             <Box my={2} display="flex">
               <InputField

@@ -84,6 +84,13 @@ export interface Bag {
   id: string // テーブルで編集するとき用のユニークなID
 }
 
+interface Backbone {
+  name: string
+  type: string
+  effect: string
+  id: string // テーブルで編集するとき用のユニークなID
+}
+
 export interface Character {
   name: string
   classes: CharacterClass[]
@@ -115,6 +122,7 @@ export interface Character {
   createdAt?: any
   updatedAt?: any
   useStrangeField?: boolean
+  backbones: Backbone[]
 }
 export const initBag = {
   id: 'bag',
@@ -188,6 +196,7 @@ export const initCharacter: Character = {
   updatedAt: '',
   uid: '',
   useStrangeField: false,
+  backbones: [],
 }
 interface CampsCharacters {
   characterId: string
@@ -269,6 +278,9 @@ const lostModule = createSlice({
     },
     setCharacter: (state, action: PayloadAction<Character>) => {
       state.character = action.payload
+
+      // サプリメント追加要素なので存在しない可能性のある項目
+      if (!state.character.backbones) state.character.backbones = []
     },
     toggleCharacterDamage: (state, action: PayloadAction<string>) => {
       const name = action.payload
@@ -465,6 +477,8 @@ export const useCharacterEditViewModel = () =>
       strangeFieldsClassList,
       strangeFieldsAbilityList,
       strangeFieldsItemList,
+      backboneList,
+      backboneColumns,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     let mergedClassList = classList
     let mergedAbilities = abilityList
@@ -514,6 +528,8 @@ export const useCharacterEditViewModel = () =>
           .flat()
           .reduce((sum, { j, number }) => sum + j * number, 0) +
         character.equipments.reduce((sum, { j }) => sum + j, 0),
+      backboneList,
+      backboneColumns,
     }
   })
 export const useCampViewModel = () =>

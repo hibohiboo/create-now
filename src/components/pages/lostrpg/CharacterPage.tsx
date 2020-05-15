@@ -298,6 +298,36 @@ const Page: React.FC<{
           data={vm.statusAilments}
         />
       </Box>
+      {character.backbones.length === 0 ? (
+        <></>
+      ) : (
+        <Box my={4}>
+          <MaterialTable
+            title={t('lostrpg_character_common_backbone')}
+            options={tableConfig.viewTable}
+            columns={vm.backboneColumns}
+            data={character.backbones}
+          />
+        </Box>
+      )}
+
+      <Box my={2} display="flex" style={{ maxWidth: 300, minWidth: 150 }}>
+        <InputField
+          model={character}
+          type="number"
+          prop="unusedExperience"
+          labelText={t('lostrpg_character_common_unusedExperiencePoint')}
+          readonly={true}
+        />
+        <InputField
+          model={character}
+          type="number"
+          prop="totalExperience"
+          labelText={t('lostrpg_character_common_totalExperiencePoint')}
+          readonly={true}
+        />
+      </Box>
+
       {character.appearance ? (
         <Box my={2} style={{ width: '100%' }}>
           <InputLabel>{t('lostrpg_character_common_appearance')}</InputLabel>
