@@ -326,6 +326,20 @@ const Page: React.FC<{
       ) : (
         <></>
       )}
+      {!character.useStrangeField ? (
+        <></>
+      ) : (
+        <Box my={2}>
+          <InputLabel>
+            {t('lostrpg_character_common_use_supplement')}
+          </InputLabel>
+          <Chip
+            style={{ margin: '0.5rem' }}
+            label={t('lostrpg_character_common_strange_field')}
+          />
+        </Box>
+      )}
+
       <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
         {t('common_back')}
       </Link>

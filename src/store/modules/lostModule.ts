@@ -464,12 +464,15 @@ export const useCharacterEditViewModel = () =>
       specialtiesTableColumns,
       strangeFieldsClassList,
       strangeFieldsAbilityList,
+      strangeFieldsItemList,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     let mergedClassList = classList
     let mergedAbilities = abilityList
+    let mergedItemList = items
     if (character.useStrangeField) {
       mergedClassList = _.union(mergedClassList, strangeFieldsClassList)
       mergedAbilities = _.union(mergedAbilities, strangeFieldsAbilityList)
+      mergedItemList = _.union(mergedItemList, strangeFieldsItemList)
     }
     return {
       classList: mergedClassList.filter(
@@ -496,7 +499,7 @@ export const useCharacterEditViewModel = () =>
       ),
       damageBodyParts: damageBodyParts(bodyParts, character),
       itemsColumns,
-      items,
+      items: mergedItemList,
       equipmentColumns,
       equipments: equipments(character, i18n),
       statusAilments: makeStatusAilments(character, statusAilments),

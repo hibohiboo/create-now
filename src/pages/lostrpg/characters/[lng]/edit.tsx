@@ -203,7 +203,7 @@ const Page: NextPage = () => {
               />
               <Box m={2}>
                 <InputLabel>
-                  {t('lostrpg_character_edit_use_supplement')}
+                  {t('lostrpg_character_common_use_supplement')}
                 </InputLabel>
                 <FormControlLabel
                   control={
@@ -220,7 +220,7 @@ const Page: NextPage = () => {
                       color="primary"
                     />
                   }
-                  label={t('lostrpg_character_edit_strange_field')}
+                  label={t('lostrpg_character_common_strange_field')}
                 />
               </Box>
               <Box my={1}>

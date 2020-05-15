@@ -50,6 +50,8 @@
   "lostrpg_character_common_appearance": "容姿",
   "lostrpg_character_common_quote": "セリフ",
   "lostrpg_character_common_totalValue": "合計価格",
+  "lostrpg_character_common_use_supplement": "使用サプリメント",
+  "lostrpg_character_common_strange_field": "終末列島百景",
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",
@@ -57,8 +59,6 @@
   "lostrpg_character_edit_resetDamage": "ダメージを全て回復",
   "lostrpg_character_edit_addItem": "アイテム追加",
   "lostrpg_character_edit_specialtiesHelp": "テキスト部分クリックで特技取得。チェックでダメージ",
-  "lostrpg_character_edit_use_supplement": "使用サプリメント",
-  "lostrpg_character_edit_strange_field": "終末列島百景",
 
   "common_save": "保存",
   "common_summary": "概要",
