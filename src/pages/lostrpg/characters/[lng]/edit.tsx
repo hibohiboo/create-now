@@ -17,7 +17,6 @@ import {
 } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -28,6 +27,7 @@ import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import SelectField from '~/components/form/SelectField'
+import TextAreaField from '~/components/form/TextAreaField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
@@ -960,62 +960,30 @@ const Page: NextPage = () => {
               />
             </Box>
 
-            <Box my={2}>
-              <InputLabel>{t('common_summary')}</InputLabel>
-              <FormControl fullWidth style={{ marginTop: '10px' }}>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  rowsMin={3}
-                  value={character.summary}
-                  onChange={(e) =>
-                    dispatch(
-                      setCharacter({
-                        ...character,
-                        summary: e.target.value,
-                      }),
-                    )
-                  }
-                />
-              </FormControl>
-            </Box>
-            <Box my={2}>
-              <InputLabel>
-                {t('lostrpg_character_common_appearance')}
-              </InputLabel>
-              <FormControl fullWidth style={{ marginTop: '10px' }}>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  rowsMin={3}
-                  value={character.appearance}
-                  onChange={(e) =>
-                    dispatch(
-                      setCharacter({
-                        ...character,
-                        appearance: e.target.value,
-                      }),
-                    )
-                  }
-                />
-              </FormControl>
-            </Box>
-            <Box my={2}>
-              <InputLabel>{t('lostrpg_character_common_memo')}</InputLabel>
-              <FormControl fullWidth style={{ marginTop: '10px' }}>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  rowsMin={3}
-                  value={character.freeWriting}
-                  onChange={(e) =>
-                    dispatch(
-                      setCharacter({
-                        ...character,
-                        freeWriting: e.target.value,
-                      }),
-                    )
-                  }
-                />
-              </FormControl>
-            </Box>
+            <TextAreaField
+              model={character}
+              prop="summary"
+              labelText={t('common_summary')}
+              changeHandler={(v) =>
+                dispatch(setCharacter({ ...character, summary: v }))
+              }
+            />
+            <TextAreaField
+              model={character}
+              prop="appearance"
+              labelText={t('lostrpg_character_common_appearance')}
+              changeHandler={(v) =>
+                dispatch(setCharacter({ ...character, appearance: v }))
+              }
+            />
+            <TextAreaField
+              model={character}
+              prop="freeWriting"
+              labelText={t('lostrpg_character_common_memo')}
+              changeHandler={(v) =>
+                dispatch(setCharacter({ ...character, freeWriting: v }))
+              }
+            />
 
             <Box my={2}>
               <InputField

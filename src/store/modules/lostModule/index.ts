@@ -12,7 +12,7 @@ import type {
   Bag,
   Item,
 } from './character'
-import type { Record } from './record'
+import type { Record, Member } from './record'
 import {
   initCamp,
   useCamps,
@@ -33,7 +33,7 @@ import {
   fetchCampsCharacters,
 } from './character'
 import { initialState, useListPagination } from './pagination'
-import { useRecordViewModel } from './record'
+import { useRecord, useRecordViewModel, initRecord } from './record'
 export type { Camp, Character, CharacterClass, Ability, Item, Bag }
 export { initCamp, initCharacter, initBag }
 
@@ -46,7 +46,7 @@ type LostState = {
   characters: { name: string; id: string }[]
   locale: Language
   campsCharacters: CampsCharacters[]
-  record: Record | null
+  record: Record
   records: Record[]
 }
 
@@ -59,7 +59,7 @@ export const init: LostState = {
   characters: [],
   locale: defaultLanguage,
   campsCharacters: [],
-  record: null,
+  record: initRecord,
   records: [],
 }
 
@@ -150,6 +150,19 @@ const lostModule = createSlice({
     setCampsCharacters: (state, action: PayloadAction<CampsCharacters[]>) => {
       state.campsCharacters = action.payload
     },
+    setRecord: (state, action: PayloadAction<Record>) => {
+      state.record = action.payload
+    },
+    setPartyMember: (state, action: PayloadAction<Member>) => {
+      const { members } = state.record
+
+      const index = members.findIndex((bag) => bag.id === action.payload.id)
+      if (index === -1) {
+        state.record.members = [...members, action.payload]
+        return
+      }
+      state.record.members[index] = action.payload
+    },
   },
 })
 
@@ -163,6 +176,7 @@ export {
   useCharacter,
   useCharacters,
   useCampsCharacters,
+  useRecord,
 }
 
 // actions
@@ -179,6 +193,8 @@ export const {
   toggleCharacterDamage,
   setCharacterBag,
   setLocale,
+  setRecord,
+  setPartyMember,
 } = lostModule.actions
 
 // ViewModel

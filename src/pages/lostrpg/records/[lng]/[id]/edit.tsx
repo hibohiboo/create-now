@@ -27,6 +27,7 @@ import { DeleteOutline, Help, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
+import TextAreaField from '~/components/form/TextAreaField'
 import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
@@ -38,27 +39,13 @@ import { contentLanguageMap } from '~/lib/i18n'
 import { createSetImageFile } from '~/utils/formHelper'
 import {
   setCharacter,
-  toggleCharacterDamage,
-  setCharacterBag,
+  useRecord,
   setLocale,
-  useCharacter,
+  setRecord,
   useRecordViewModel,
-  initBag,
-  CharacterClass,
-  Ability,
-  Item,
-  Bag,
-  fetchCamps,
-  useCamps,
-  initCharacter,
+  setPartyMember,
 } from '~/store/modules/lostModule'
-import {
-  createCharacter,
-  getCharacter,
-  updateCharacter,
-  deleteCharacter,
-  canEdit,
-} from '~/firestore/character'
+import { getCharacter } from '~/firestore/character'
 import * as tableConfig from '~/lib/constants'
 import { getIdFromQuery } from '~/utils/urlHelper'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
@@ -71,9 +58,9 @@ const Page: NextPage = () => {
   const t = i18n.t
   const router = useRouter()
   const dispatch = useDispatch()
+  const record = useRecord()
   const vm = useRecordViewModel()
   const id = getIdFromQuery(router)
-  console.log('i18n', i18n.activeLocale)
   const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${id}`
 
   // const updateRowData = (prop: string, toNextState: (d: any[]) => any[]) => {
@@ -196,17 +183,133 @@ const Page: NextPage = () => {
           </div>
           <h1>{t('lostrpg_records_common_title')}</h1>
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
-            <Box my={2}>
-              <ReadOnlyTextField
-                prop="playerName"
-                label={t('common_playerName')}
-              />
-            </Box>
-            <Box my={2}>
-              <ReadOnlyTextField
-                prop="name"
-                label={t('lostrpg_character_common_characterName')}
-              />
+            <ReadOnlyTextField
+              prop="playerName"
+              label={t('common_playerName')}
+            />
+
+            <ReadOnlyTextField
+              prop="name"
+              label={t('lostrpg_character_common_characterName')}
+            />
+
+            <InputField
+              model={record}
+              type="text"
+              prop="scenarioTitle"
+              labelText={t('lostrpg_record_common_scenarioTitle')}
+              changeHandler={(e) =>
+                dispatch(
+                  setRecord({ ...record, scenarioTitle: e.target.value }),
+                )
+              }
+            />
+            <InputField
+              model={record}
+              type="text"
+              prop="gmName"
+              labelText={t('lostrpg_record_common_gmName')}
+              changeHandler={(e) =>
+                dispatch(setRecord({ ...record, gmName: e.target.value }))
+              }
+            />
+            <Box
+              my={2}
+              style={{
+                padding: '5px',
+                border: 'solid 1px rgba(224, 224, 224, 1)',
+              }}
+            >
+              <InputLabel>{t('lostrpg_common_party')}</InputLabel>
+              <Box my={2}>
+                <Button
+                  onClick={(e) =>
+                    dispatch(
+                      setRecord({
+                        ...record,
+                        members: [
+                          ...record.members,
+                          {
+                            ...vm.initMember,
+                            id: _.uniqueId(vm.initMember.id),
+                          },
+                        ],
+                      }),
+                    )
+                  }
+                  variant="contained"
+                  color="primary"
+                >
+                  {`${t('lostrpg_common_member')}${t('common_add')}`}
+                </Button>
+                {record.members.map((member) => {
+                  return (
+                    <Box
+                      key={member.id}
+                      my={2}
+                      style={{
+                        padding: '5px',
+                        border: 'solid 1px rgba(224, 224, 224, 1)',
+                      }}
+                    >
+                      <InputField
+                        model={member}
+                        type="text"
+                        prop="name"
+                        labelText={t('common_name')}
+                        changeHandler={(e) =>
+                          dispatch(
+                            setPartyMember({ ...member, name: e.target.value }),
+                          )
+                        }
+                      />
+
+                      <TextAreaField
+                        model={member}
+                        prop="memo"
+                        labelText={t('common_memo')}
+                        changeHandler={(v) =>
+                          dispatch(setPartyMember({ ...member, memo: v }))
+                        }
+                      />
+                      <Box display="flex">
+                        <InputField
+                          model={member}
+                          type="text"
+                          prop="trophy"
+                          labelText={t('common_trophy')}
+                          changeHandler={(e) =>
+                            dispatch(
+                              setPartyMember({
+                                ...member,
+                                trophy: e.target.value,
+                              }),
+                            )
+                          }
+                        />
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => {
+                            if (!confirm(t('message_are_you_sure_remove')))
+                              return
+                            dispatch(
+                              setRecord({
+                                ...record,
+                                members: record.members.filter(
+                                  (m) => m.id !== member.id,
+                                ),
+                              }),
+                            )
+                          }}
+                        >
+                          <DeleteOutline />
+                        </Button>
+                      </Box>
+                    </Box>
+                  )
+                })}
+              </Box>
             </Box>
           </Box>
 
