@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
 import { getCamp, getCharacter } from '~/api/firestoreAPI'
 import { Camp, Character } from '~/store/modules/lostModule'
-import { useAuth } from '~/store/modules/authModule'
+import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import CampPage from '~/components/pages/lostrpg/camp'
 import CharacterPage from '~/components/pages/lostrpg/CharacterPage'
 
@@ -12,8 +13,13 @@ const Page: NextPage<{
   character?: Character
   id: string
 }> = function (ctx) {
+  const dispatch = useDispatch()
   const authUser = useAuth()
   const { view, id } = ctx
+
+  useEffect(() => {
+    dispatch(createAuthClientSide())
+  }, [])
   if (view === 'camp') {
     const { camp } = ctx
     return <CampPage camp={camp} id={id} authUser={authUser} />

@@ -82,8 +82,10 @@ const fetchData = (characterId: string, id: string): AppThunk => async (
   if (character && !id) {
     dispatch(setCharacter(character))
   }
+  if (!id) return
 
   const record = await getRecord(id)
+  if (!record) return
   dispatch(setRecord(record))
   dispatch(
     setCharacter({
@@ -238,6 +240,13 @@ export const useRecordViewModel = () =>
         if (confirm(t('message_are_you_sure_remove'))) {
           await deleteRecord(record.id, authUser.uid)
           Router.push(beforePage)
+          Router.push(
+            {
+              pathname: `/lostrpg/public/[lng]/[view]`,
+              query: { id: characterId },
+            },
+            `/lostrpg/public/${i18n.activeLocale}/character?id=${characterId}`,
+          )
         }
       },
     }

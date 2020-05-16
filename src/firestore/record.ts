@@ -102,7 +102,10 @@ export const canEdit = (authUser: { uid: string }, record: Record) =>
   authUser && authUser.uid === record.uid
 
 export const deleteRecord = async (id: string, uid: string) => {
-  await Promise.all([getRecords(db).doc(id).delete()])
+  await Promise.all([
+    getRecords(db).doc(id).delete(),
+    getCharactersRecords(db).doc(id).delete(),
+  ])
 }
 
 export const readCharactersRecords = async (id: string) => {
