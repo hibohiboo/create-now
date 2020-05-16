@@ -31,7 +31,12 @@ const Page: NextPage = () => {
       <LanguageSelector i18n={i18n} />
 
       <p>
-        <Link href="https://lostrpg-751c1.firebaseapp.com/lost/">LOSTRPG</Link>
+        <a
+          href="https://lostrpg-751c1.firebaseapp.com/lost/"
+          rel="noopener noreferrer"
+        >
+          LOSTRPG
+        </a>
       </p>
       <ul>
         <li>
