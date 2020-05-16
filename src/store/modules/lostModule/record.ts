@@ -3,12 +3,22 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
+import { defaultLanguage } from '~/lib/i18n'
 import useI18n from '~/hooks/use-i18n'
+import * as lostData from '~/data/lostrpg'
+import * as lostDataEn from '~/data/lostrpg-en'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import type { LostModule } from './index'
 import { getCharacter } from '~/firestore/character'
 import { getIdFromQuery } from '~/utils/urlHelper'
-import { setCharacter, setLocale, setRecord, setPartyMember } from './index'
+import {
+  setCharacter,
+  setLocale,
+  setRecord,
+  setPartyMember,
+  toggleCharacterDamage,
+} from './index'
+import { makeSpecialtiesTableColumns, specialtiesTableRows } from './character'
 
 export interface Member {
   name: string
@@ -62,26 +72,38 @@ export const useRecordViewModel = () =>
     const router = useRouter()
     const dispatch = useDispatch()
     const record = useRecord()
-
-    const id = getIdFromQuery(router)
-    const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${id}`
+    const characterId = router.query.characterId as string
+    const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${characterId}`
     const { character } = state.lost
+    const { specialties, bodyParts, specialtiesTableColumns } =
+      i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     useEffect(() => {
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
 
     useEffect(() => {
-      if (!id || !authUser) {
+      if (!characterId || !authUser) {
         return
       }
       ;(async () => {
-        const data = await getCharacter(id)
+        const data = await getCharacter(characterId)
         if (data) {
           dispatch(setCharacter(data))
+
+          // キズモノの場合の初期ダメージ
+          if (
+            data.damagedSpecialties.length > 0 &&
+            record.damagedSpecialties.length === 0
+          ) {
+            setRecord({
+              ...record,
+              damagedSpecialties: data.damagedSpecialties,
+            })
+          }
         }
       })()
-    }, [id, authUser])
+    }, [characterId, authUser])
     const dispatchSetRecord = (e, prop: string) => {
       const r = { ...record }
       r[prop] = e.target.value
@@ -100,6 +122,15 @@ export const useRecordViewModel = () =>
       i18n,
       record,
       beforePage,
+      specialtiesTableColumns: makeSpecialtiesTableColumns(
+        specialtiesTableColumns,
+        character,
+      ),
+      specialtiesTableRows: specialtiesTableRows(
+        bodyParts,
+        specialties,
+        character,
+      ),
       scenarioTitleHandler: (e) => dispatchSetRecord(e, 'scenarioTitle'),
       gmNameHanler: (e) => dispatchSetRecord(e, 'gmName'),
       memoHanler: (v) => dispatch(setRecord({ ...record, memo: v })),
@@ -131,5 +162,6 @@ export const useRecordViewModel = () =>
           }),
         )
       },
+      damageHandler: (name) => dispatch(toggleCharacterDamage(name)),
     }
   })

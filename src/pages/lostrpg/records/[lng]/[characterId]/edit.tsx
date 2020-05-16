@@ -183,6 +183,13 @@ const Page: NextPage = () => {
               labelText={t('common_memo')}
               changeHandler={(v) => vm.memoHanler(v)}
             />
+            <SpecialtiesTable
+              columns={vm.specialtiesTableColumns}
+              rows={vm.specialtiesTableRows}
+              gapHandler={() => {}}
+              specialtyHandler={() => {}}
+              damageHandler={vm.damageHandler}
+            />
           </Box>
 
           <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>

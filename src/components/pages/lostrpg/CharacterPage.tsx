@@ -370,23 +370,19 @@ const Page: React.FC<{
         </Box>
       )}
       <Box my={2}>
-        <Link
-          href={{
-            pathname: `/lostrpg/records/[lng]/[id]/list`,
-            query: { lng: i18n.activeLocale, id: character.campId },
-          }}
-          as={`/lostrpg/records/${i18n.activeLocale}/${id}/list`}
-        >
-          {t('lostrpg_records_common_recordsheet')}
-        </Link>
+        {t('lostrpg_records_common_recordsheet')}
+
         {!canEdit(authUser, character) ? (
           <></>
         ) : (
           <Box my={1}>
             <Link
               href={{
-                pathname: `/lostrpg/records/[lng]/[id]/edit`,
-                query: { lng: i18n.activeLocale, id: character.campId },
+                pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
+                query: {
+                  lng: i18n.activeLocale,
+                  characterId: character.campId,
+                },
               }}
               as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit`}
             >

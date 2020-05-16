@@ -183,7 +183,7 @@ export const useCampsCharacters = () =>
 // ViewModel
 export const isBodyParts = (bodyParts, name) => bodyParts.includes(name)
 
-const makeSpecialtiesTableColumns = (
+export const makeSpecialtiesTableColumns = (
   specialtiesTableColumns: any[],
   character: Character,
 ) => {
@@ -194,7 +194,7 @@ const makeSpecialtiesTableColumns = (
   return specialtiesTableColumns.map(makeData)
 }
 
-const specialtiesTableRows = (
+export const specialtiesTableRows = (
   bodyParts: string[],
   specialties: any[],
   character: Character,
