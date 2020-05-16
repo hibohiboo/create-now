@@ -369,6 +369,32 @@ const Page: React.FC<{
           />
         </Box>
       )}
+      <Box my={2}>
+        <Link
+          href={{
+            pathname: `/lostrpg/records/[lng]/[id]/list`,
+            query: { lng: i18n.activeLocale, id: character.campId },
+          }}
+          as={`/lostrpg/records/${i18n.activeLocale}/${id}/list`}
+        >
+          {t('lostrpg_records_common_recordsheet')}
+        </Link>
+        {!canEdit(authUser, character) ? (
+          <></>
+        ) : (
+          <Box my={1}>
+            <Link
+              href={{
+                pathname: `/lostrpg/records/[lng]/[id]/edit`,
+                query: { lng: i18n.activeLocale, id: character.campId },
+              }}
+              as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit`}
+            >
+              {t('common_create')}
+            </Link>
+          </Box>
+        )}
+      </Box>
 
       <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
         {t('common_back')}

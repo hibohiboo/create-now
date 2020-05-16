@@ -8,6 +8,10 @@ import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { Language, defaultLanguage } from '~/lib/i18n'
+import type { Record } from './record'
+import { useRecordViewModel } from './record'
+
+export { useRecordViewModel }
 
 export interface Facility {
   name: string
@@ -213,6 +217,8 @@ type LostState = {
   characters: { name: string; id: string }[]
   locale: Language
   campsCharacters: CampsCharacters[]
+  record: Record | null
+  records: Record[]
 }
 
 type PaginationState = {
@@ -237,6 +243,8 @@ export const init: LostState = {
   characters: [],
   locale: defaultLanguage,
   campsCharacters: [],
+  record: null,
+  records: [],
 }
 
 const isBodyParts = (bodyParts, name) => bodyParts.includes(name)

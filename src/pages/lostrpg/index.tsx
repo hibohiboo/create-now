@@ -29,6 +29,10 @@ const Page: NextPage = () => {
       </Head>
       <h2>{t('lostrpg_index_title')}</h2>
       <LanguageSelector i18n={i18n} />
+
+      <p>
+        <Link href="https://lostrpg-751c1.firebaseapp.com/lost/">LOSTRPG</Link>
+      </p>
       <ul>
         <li>
           <Link href="/lostrpg/camps/list">{t('lostrpg_index_campList')}</Link>

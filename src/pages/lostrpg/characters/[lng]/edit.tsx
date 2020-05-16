@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { NextPage } from 'next'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import Router, { useRouter, NextRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Head from 'next/head'
 import Dropzone from 'react-dropzone'
 import {
@@ -60,13 +60,8 @@ import {
   canEdit,
 } from '~/firestore/character'
 import * as tableConfig from '~/lib/constants'
-
+import { getIdFromQuery } from '~/utils/urlHelper'
 const campLimit = 100
-
-const getIdFromQuery = (router: NextRouter) => {
-  if (typeof router.query.id === 'string') return router.query.id
-  return null
-}
 
 const Page: NextPage = () => {
   const authUser = useAuth()
@@ -165,8 +160,7 @@ const Page: NextPage = () => {
       const data = await getCharacter(id)
 
       if (data) {
-        // createdAtがserializeではないオブジェクトなのでstringifyを経由することによりserialize化
-        dispatch(setCharacter(JSON.parse(JSON.stringify(data))))
+        dispatch(setCharacter(data))
         if (data.imageUrl) setPrevUrl(data.imageUrl)
       }
     })()
