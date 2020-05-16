@@ -1,11 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
-import { readCamps } from '~/firestore/camp'
-import { readCharacters, readCampsCharacters } from '~/firestore/character'
 import useI18n from '~/hooks/use-i18n'
-import lostModule from './index'
+import type { LostModule } from './index'
 
 export interface Record {
   sessionName: string
@@ -32,7 +29,7 @@ const initRecord: Record = {
 }
 
 export const useRecordViewModel = () =>
-  useSelector((state: { lost: ReturnType<typeof lostModule.reducer> }) => {
+  useSelector((state: { lost: LostModule }) => {
     const { character } = state.lost
     return {
       character,

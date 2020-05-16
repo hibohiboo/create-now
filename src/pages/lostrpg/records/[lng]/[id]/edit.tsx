@@ -81,9 +81,9 @@ const Page: NextPage = () => {
   //   newData[prop] = toNextState([...character[prop]])
   //   dispatch(setCharacter(newData))
   // }
-  const updateRowDataBags = (bag: Bag, toNextState: (d: any[]) => any[]) => {
-    dispatch(setCharacterBag({ ...bag, items: toNextState([...bag.items]) }))
-  }
+  // const updateRowDataBags = (bag: Bag, toNextState: (d: any[]) => any[]) => {
+  //   dispatch(setCharacterBag({ ...bag, items: toNextState([...bag.items]) }))
+  // }
 
   // Validation State
   const [isSubmit, setIsSubmit] = useState(false)
