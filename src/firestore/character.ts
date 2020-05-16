@@ -90,8 +90,7 @@ export const createCharacter = async (
 export const getCharacter = async (id: string) => {
   const data = (await getCharacters(db).doc(id).get()).data()
   if (!data) return null
-  // createdAtがserializeではないオブジェクトなのでstringifyを経由することによりserialize化
-  return JSON.parse(JSON.stringify(data)) as Character
+  return toSerializeObject(data) as Character
 }
 
 export const updateCharacter = async (

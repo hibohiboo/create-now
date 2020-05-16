@@ -96,13 +96,22 @@ const Page: NextPage = () => {
               label={t('lostrpg_character_common_characterName')}
             />
 
-            <InputField
-              model={vm.record}
-              type="text"
-              prop="scenarioTitle"
-              labelText={t('lostrpg_record_common_scenarioTitle')}
-              changeHandler={vm.scenarioTitleHandler}
-            />
+            <FormControl fullWidth style={{ marginTop: '10px' }}>
+              <TextField
+                id="characterName"
+                required
+                label={t('lostrpg_record_common_scenarioTitle')}
+                error={!vm.record.scenarioTitle && vm.isSubmit}
+                helperText={
+                  vm.record.scenarioTitle || !vm.isSubmit
+                    ? ''
+                    : t('message_required')
+                }
+                value={vm.record.scenarioTitle}
+                onChange={vm.scenarioTitleHandler}
+              />
+            </FormControl>
+
             <InputField
               model={vm.record}
               type="text"
@@ -190,6 +199,72 @@ const Page: NextPage = () => {
               specialtyHandler={() => {}}
               damageHandler={vm.damageHandler}
             />
+
+            <Box my={2}>
+              <MaterialTable
+                title={t('common_exp')}
+                options={tableConfig.viewTable}
+                columns={[
+                  {
+                    title: '',
+                    render: (rowData) => {
+                      return (
+                        <Checkbox
+                          checked={rowData['isChecked']}
+                          onChange={() => vm.expHelperHandler(rowData)}
+                        />
+                      )
+                    },
+                  },
+                  {
+                    title: t('common_name'),
+                    field: 'name',
+                  },
+                  {
+                    title: t('common_exp'),
+                    field: 'point',
+                  },
+                ]}
+                data={vm.expChecks}
+              />
+            </Box>
+            <InputField
+              model={vm.record}
+              type="number"
+              prop="exp"
+              labelText={t('common_exp')}
+              changeHandler={vm.expHelper}
+            />
+            <InputField
+              model={vm.record}
+              type="text"
+              prop="trophy"
+              labelText={t('common_trophy')}
+              changeHandler={(e) => vm.trophyHanler(e)}
+            />
+            <Box my={2}>
+              <Button
+                startIcon={<Save />}
+                onClick={vm.editHandler}
+                variant="contained"
+                color="primary"
+              >
+                {t('common_save')}
+              </Button>
+            </Box>
+            {!vm.record.id ? (
+              <></>
+            ) : (
+              <Box my={4}>
+                <Button
+                  onClick={vm.deleteHandler}
+                  variant="contained"
+                  color="secondary"
+                >
+                  {t('common_delete')}
+                </Button>
+              </Box>
+            )}
           </Box>
 
           <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>

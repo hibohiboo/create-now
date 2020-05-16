@@ -34,7 +34,7 @@ import {
 } from './character'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
-export type { Camp, Character, CharacterClass, Ability, Item, Bag }
+export type { Camp, Character, CharacterClass, Ability, Item, Bag, Record }
 export { initCamp, initCharacter, initBag }
 
 type LostState = {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { defaultLanguage } from '~/lib/i18n'
@@ -10,7 +10,14 @@ import * as lostDataEn from '~/data/lostrpg-en'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import type { LostModule } from './index'
 import { getCharacter } from '~/firestore/character'
-import { getIdFromQuery } from '~/utils/urlHelper'
+import {
+  createRecord,
+  getRecord,
+  updateRecord,
+  deleteRecord,
+  canEdit,
+  readCharactersRecords,
+} from '~/firestore/record'
 import {
   setCharacter,
   setLocale,
@@ -40,11 +47,14 @@ export interface Record {
   damagedSpecialties: string[]
   members: Member[]
   memo?: string
+  exp: number
+  trophy: string
   characterId: string
   uid?: string
   id?: string
   createdAt?: any
   updatedAt?: any
+  expChecks: string[]
 }
 
 export const initRecord: Record = {
@@ -54,14 +64,50 @@ export const initRecord: Record = {
   willPower: 0,
   damagedSpecialties: [],
   members: [],
+  exp: 0,
+  trophy: '',
+  expChecks: [],
   memo: '',
   characterId: '',
 }
-// state of
+// state
 export const useRecord = () =>
   useSelector((state: { lost: LostModule }) => state.lost.record)
 
+// thunks
+const fetchData = (characterId: string, id: string): AppThunk => async (
+  dispatch,
+) => {
+  const character = await getCharacter(characterId)
+  if (character && !id) {
+    dispatch(setCharacter(character))
+  }
+
+  const record = await getRecord(id)
+  dispatch(setRecord(record))
+  dispatch(
+    setCharacter({
+      ...character,
+      damagedSpecialties: record.damagedSpecialties,
+    }),
+  )
+}
+
+// const fetchCharactersRecords = (id: string): AppThunk => async (dispatch) => {
+//   const ret = await readCharactersRecords(id)
+//   dispatch(setCharactersRecords(ret))
+// }
+
 // View Model
+const makeExpChecks = (
+  record: Record,
+  list: { name: string; point: string }[],
+) =>
+  list.map(({ name, point }) => ({
+    name,
+    point,
+    isChecked: record.expChecks.includes(name),
+  }))
 export const useRecordViewModel = () =>
   useSelector((state: { lost: LostModule }) => {
     // Validation State
@@ -75,7 +121,7 @@ export const useRecordViewModel = () =>
     const characterId = router.query.characterId as string
     const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${characterId}`
     const { character } = state.lost
-    const { specialties, bodyParts, specialtiesTableColumns } =
+    const { specialties, bodyParts, specialtiesTableColumns, expCheckPoints } =
       i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     useEffect(() => {
       dispatch(createAuthClientSide())
@@ -86,24 +132,9 @@ export const useRecordViewModel = () =>
       if (!characterId || !authUser) {
         return
       }
-      ;(async () => {
-        const data = await getCharacter(characterId)
-        if (data) {
-          dispatch(setCharacter(data))
-
-          // キズモノの場合の初期ダメージ
-          if (
-            data.damagedSpecialties.length > 0 &&
-            record.damagedSpecialties.length === 0
-          ) {
-            setRecord({
-              ...record,
-              damagedSpecialties: data.damagedSpecialties,
-            })
-          }
-        }
-      })()
+      dispatch(fetchData(characterId, router.query.id as string))
     }, [characterId, authUser])
+
     const dispatchSetRecord = (e, prop: string) => {
       const r = { ...record }
       r[prop] = e.target.value
@@ -122,6 +153,7 @@ export const useRecordViewModel = () =>
       i18n,
       record,
       beforePage,
+      isSubmit,
       specialtiesTableColumns: makeSpecialtiesTableColumns(
         specialtiesTableColumns,
         character,
@@ -133,6 +165,9 @@ export const useRecordViewModel = () =>
       ),
       scenarioTitleHandler: (e) => dispatchSetRecord(e, 'scenarioTitle'),
       gmNameHanler: (e) => dispatchSetRecord(e, 'gmName'),
+      trophyHanler: (e) => dispatchSetRecord(e, 'trophy'),
+      expHelper: (e) =>
+        dispatch(setRecord({ ...record, exp: Number(e.target.value) })),
       memoHanler: (v) => dispatch(setRecord({ ...record, memo: v })),
       addMemberHandler: (e) =>
         dispatch(
@@ -163,5 +198,47 @@ export const useRecordViewModel = () =>
         )
       },
       damageHandler: (name) => dispatch(toggleCharacterDamage(name)),
+      expHelperHandler: (rowData) =>
+        dispatch(
+          setRecord({
+            ...record,
+            expChecks: rowData['isChecked']
+              ? record.expChecks.filter((name) => name !== rowData['name'])
+              : [...record.expChecks, rowData['name']],
+          }),
+        ),
+      expChecks: makeExpChecks(record, expCheckPoints),
+      editHandler: async () => {
+        if (!record.scenarioTitle) {
+          setIsSubmit(true)
+          window.scrollTo(0, 0)
+          return
+        }
+        const r = {
+          ...record,
+          damagedSpecialties: character.damagedSpecialties,
+          characterId,
+        }
+        let retId = record.id
+        if (!retId) {
+          retId = await createRecord({ ...r, uid: authUser.uid }, authUser)
+        } else {
+          await updateRecord(retId, { ...r, uid: authUser.uid }, authUser.uid)
+        }
+
+        Router.push(
+          {
+            pathname: `/lostrpg/public/[lng]/[view]`,
+            query: { id: retId },
+          },
+          `/lostrpg/public/${i18n.activeLocale}/record?id=${retId}`,
+        )
+      },
+      deleteHandler: async () => {
+        if (confirm(t('message_are_you_sure_remove'))) {
+          await deleteRecord(record.id, authUser.uid)
+          Router.push(beforePage)
+        }
+      },
     }
   })
