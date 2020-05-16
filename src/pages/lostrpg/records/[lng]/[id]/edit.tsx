@@ -32,11 +32,10 @@ import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
-import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
+
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import useI18n from '~/hooks/use-i18n'
 import { contentLanguageMap } from '~/lib/i18n'
-import { createSetImageFile } from '~/utils/formHelper'
 import {
   setCharacter,
   useRecord,
@@ -45,110 +44,14 @@ import {
   useRecordViewModel,
   setPartyMember,
 } from '~/store/modules/lostModule'
-import { getCharacter } from '~/firestore/character'
+
 import * as tableConfig from '~/lib/constants'
-import { getIdFromQuery } from '~/utils/urlHelper'
+
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 
-const campLimit = 100
-
 const Page: NextPage = () => {
-  const authUser = useAuth()
-  const i18n = useI18n()
-  const t = i18n.t
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const record = useRecord()
   const vm = useRecordViewModel()
-  const id = getIdFromQuery(router)
-  const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${id}`
-
-  // const updateRowData = (prop: string, toNextState: (d: any[]) => any[]) => {
-  //   const newData = { ...character }
-  //   newData[prop] = toNextState([...character[prop]])
-  //   dispatch(setCharacter(newData))
-  // }
-  // const updateRowDataBags = (bag: Bag, toNextState: (d: any[]) => any[]) => {
-  //   dispatch(setCharacterBag({ ...bag, items: toNextState([...bag.items]) }))
-  // }
-
-  // Validation State
-  const [isSubmit, setIsSubmit] = useState(false)
-
-  // Image State
-  const [prevUrl, setPrevUrl] = useState('')
-  const [file, setFile] = useState<File>(null)
-  const setImageFile = createSetImageFile(setFile, setPrevUrl)
-  const handleOnDrop = (files: File[]) => {
-    setImageFile(files[0])
-  }
-
-  // const editHandler = async () => {
-  //   if (!character.name) {
-  //     setIsSubmit(true)
-  //     window.scrollTo(0, 0)
-  //     return
-  //   }
-
-  //   let retId = id
-  //   if (!retId) {
-  //     retId = await createCharacter(
-  //       { ...character, uid: authUser.uid },
-  //       authUser,
-  //       file,
-  //     )
-  //   } else {
-  //     await updateCharacter(
-  //       id,
-  //       { ...character, uid: authUser.uid },
-  //       authUser.uid,
-  //       file,
-  //     )
-  //   }
-
-  //   Router.push(
-  //     {
-  //       pathname: `/lostrpg/public/[lng]/[view]`,
-  //       query: { id: retId },
-  //     },
-  //     `/lostrpg/public/${i18n.activeLocale}/character?id=${retId}`,
-  //   )
-  // }
-
-  // const deleteHandler = async () => {
-  //   if (confirm(t('message_are_you_sure_remove'))) {
-  //     await deleteCharacter(id, authUser.uid)
-  //     Router.push(beforePage)
-  //   }
-  // }
-
-  // // ToolTip State
-  // const [open, setOpen] = React.useState(false)
-  // const handleTooltipClose = () => {
-  //   setOpen(false)
-  // }
-  // const handleTooltipOpen = () => {
-  //   setOpen(true)
-  // }
-
-  useEffect(() => {
-    dispatch(createAuthClientSide())
-    dispatch(setLocale(i18n.activeLocale))
-  }, [])
-
-  useEffect(() => {
-    if (!id || !authUser) {
-      return
-    }
-    ;(async () => {
-      const data = await getCharacter(id)
-      if (data) {
-        dispatch(setCharacter(data))
-        if (data.imageUrl) setPrevUrl(data.imageUrl)
-      }
-    })()
-  }, [id, authUser])
-
+  const t = vm.i18n.t
   const ReadOnlyTextField = ({
     label,
     prop,
@@ -167,19 +70,19 @@ const Page: NextPage = () => {
 
   return (
     <>
-      {!authUser ? (
+      {!vm.authUser ? (
         <></>
       ) : (
         <Container>
           <Head>
             <meta
               httpEquiv="content-language"
-              content={contentLanguageMap[i18n.activeLocale]}
+              content={contentLanguageMap[vm.i18n.activeLocale]}
             />
             <title>{t('lostrpg_records_common_title')}</title>
           </Head>
           <div style={{ display: 'none' }}>
-            <LanguageSelector i18n={i18n} />
+            <LanguageSelector i18n={vm.i18n} />
           </div>
           <h1>{t('lostrpg_records_common_title')}</h1>
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
@@ -194,24 +97,18 @@ const Page: NextPage = () => {
             />
 
             <InputField
-              model={record}
+              model={vm.record}
               type="text"
               prop="scenarioTitle"
               labelText={t('lostrpg_record_common_scenarioTitle')}
-              changeHandler={(e) =>
-                dispatch(
-                  setRecord({ ...record, scenarioTitle: e.target.value }),
-                )
-              }
+              changeHandler={vm.scenarioTitleHandler}
             />
             <InputField
-              model={record}
+              model={vm.record}
               type="text"
               prop="gmName"
               labelText={t('lostrpg_record_common_gmName')}
-              changeHandler={(e) =>
-                dispatch(setRecord({ ...record, gmName: e.target.value }))
-              }
+              changeHandler={vm.gmNameHanler}
             />
             <Box
               my={2}
@@ -223,26 +120,13 @@ const Page: NextPage = () => {
               <InputLabel>{t('lostrpg_common_party')}</InputLabel>
               <Box my={2}>
                 <Button
-                  onClick={(e) =>
-                    dispatch(
-                      setRecord({
-                        ...record,
-                        members: [
-                          ...record.members,
-                          {
-                            ...vm.initMember,
-                            id: _.uniqueId(vm.initMember.id),
-                          },
-                        ],
-                      }),
-                    )
-                  }
+                  onClick={vm.addMemberHandler}
                   variant="contained"
                   color="primary"
                 >
                   {`${t('lostrpg_common_member')}${t('common_add')}`}
                 </Button>
-                {record.members.map((member) => {
+                {vm.record.members.map((member) => {
                   return (
                     <Box
                       key={member.id}
@@ -258,9 +142,7 @@ const Page: NextPage = () => {
                         prop="name"
                         labelText={t('common_name')}
                         changeHandler={(e) =>
-                          dispatch(
-                            setPartyMember({ ...member, name: e.target.value }),
-                          )
+                          vm.partyMemberNameHandler(e, member)
                         }
                       />
 
@@ -269,7 +151,7 @@ const Page: NextPage = () => {
                         prop="memo"
                         labelText={t('common_memo')}
                         changeHandler={(v) =>
-                          dispatch(setPartyMember({ ...member, memo: v }))
+                          vm.partyMemberMemoHandler(v, member)
                         }
                       />
                       <Box display="flex">
@@ -279,29 +161,13 @@ const Page: NextPage = () => {
                           prop="trophy"
                           labelText={t('common_trophy')}
                           changeHandler={(e) =>
-                            dispatch(
-                              setPartyMember({
-                                ...member,
-                                trophy: e.target.value,
-                              }),
-                            )
+                            vm.partyMemberTrophyHandler(e, member)
                           }
                         />
                         <Button
                           variant="contained"
                           color="secondary"
-                          onClick={() => {
-                            if (!confirm(t('message_are_you_sure_remove')))
-                              return
-                            dispatch(
-                              setRecord({
-                                ...record,
-                                members: record.members.filter(
-                                  (m) => m.id !== member.id,
-                                ),
-                              }),
-                            )
-                          }}
+                          onClick={() => vm.deleteMemberHandler(member)}
                         >
                           <DeleteOutline />
                         </Button>
@@ -313,7 +179,7 @@ const Page: NextPage = () => {
             </Box>
           </Box>
 
-          <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
+          <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>
             {t('common_back')}
           </Link>
         </Container>
