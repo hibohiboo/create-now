@@ -177,6 +177,12 @@ const Page: NextPage = () => {
                 })}
               </Box>
             </Box>
+            <TextAreaField
+              model={vm.record}
+              prop="memo"
+              labelText={t('common_memo')}
+              changeHandler={(v) => vm.memoHanler(v)}
+            />
           </Box>
 
           <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>

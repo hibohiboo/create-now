@@ -29,7 +29,7 @@ export interface Record {
   willPower: number
   damagedSpecialties: string[]
   members: Member[]
-  freeWriting?: string
+  memo?: string
   characterId: string
   uid?: string
   id?: string
@@ -44,7 +44,7 @@ export const initRecord: Record = {
   willPower: 0,
   damagedSpecialties: [],
   members: [],
-  freeWriting: '',
+  memo: '',
   characterId: '',
 }
 // state of
@@ -102,6 +102,7 @@ export const useRecordViewModel = () =>
       beforePage,
       scenarioTitleHandler: (e) => dispatchSetRecord(e, 'scenarioTitle'),
       gmNameHanler: (e) => dispatchSetRecord(e, 'gmName'),
+      memoHanler: (v) => dispatch(setRecord({ ...record, memo: v })),
       addMemberHandler: (e) =>
         dispatch(
           setRecord({
