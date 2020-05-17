@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Head from 'next/head'
@@ -15,6 +16,7 @@ import {
   useCharacterEditViewModel,
   setLocale,
   Character,
+  fetchCharactersRecords,
 } from '~/store/modules/lostModule'
 import { canEdit } from '~/firestore/character'
 import * as tableConfig from '~/lib/constants'
@@ -34,6 +36,7 @@ const Page: React.FC<{
   useEffect(() => {
     dispatch(setLocale(i18n.activeLocale))
     dispatch(setCharacter(character))
+    dispatch(fetchCharactersRecords(id))
   }, [])
 
   return (
@@ -388,6 +391,42 @@ const Page: React.FC<{
             >
               {t('common_create')}
             </Link>
+            {vm.records.length === 0 ? (
+              <></>
+            ) : (
+              <MaterialTable
+                title={t('lostrpg_records_common_recordsheet')}
+                options={tableConfig.viewTable}
+                columns={[
+                  {
+                    title: '',
+                    // eslint-disable-next-line react/display-name
+                    render: (rowData) => {
+                      if (!authUser) return <></>
+                      if (authUser.uid !== rowData['uid']) return <></>
+                      return (
+                        <Link
+                          href={{
+                            pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
+                            query: {
+                              lng: i18n.activeLocale,
+                              characterId: rowData['characterId'],
+                              id: rowData['recordId'],
+                            },
+                          }}
+                          as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit?id=${rowData['recordId']}`}
+                        >
+                          {' '}
+                          {t('common_edit')}
+                        </Link>
+                      )
+                    },
+                  },
+                  ...vm.recordsColumns,
+                ]}
+                data={_.cloneDeep(vm.records)}
+              />
+            )}
           </Box>
         )}
       </Box>

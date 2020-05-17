@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { readCharacters, readCampsCharacters } from '~/firestore/character'
+import { readCharactersRecords } from '~/firestore/record'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
@@ -14,6 +15,7 @@ import {
   setCharacters,
   addCharacters,
   setCampsCharacters,
+  setCharactersRecords,
 } from './index'
 
 export interface CharacterClass {
@@ -303,6 +305,7 @@ export const useCharacterEditViewModel = () =>
       strangeFieldsItemList,
       backboneList,
       backboneColumns,
+      recordsColumns,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     let mergedClassList = classList
     let mergedAbilities = abilityList
@@ -354,6 +357,8 @@ export const useCharacterEditViewModel = () =>
         character.equipments.reduce((sum, { j }) => sum + j, 0),
       backboneList,
       backboneColumns,
+      records: state.lost.records,
+      recordsColumns,
     }
   })
 
@@ -401,4 +406,10 @@ export const fetchCampsCharacters = (id: string): AppThunk => async (
 ) => {
   const ret = await readCampsCharacters(id)
   dispatch(setCampsCharacters(ret))
+}
+export const fetchCharactersRecords = (id: string): AppThunk => async (
+  dispatch,
+) => {
+  const ret = await readCharactersRecords(id)
+  dispatch(setCharactersRecords(ret))
 }

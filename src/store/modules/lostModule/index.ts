@@ -31,6 +31,7 @@ import {
   fetchCharacters,
   fetchCharactersMore,
   fetchCampsCharacters,
+  fetchCharactersRecords,
 } from './character'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
@@ -163,6 +164,9 @@ const lostModule = createSlice({
       }
       state.record.members[index] = action.payload
     },
+    setCharactersRecords: (state, action: PayloadAction<Record[]>) => {
+      state.records = action.payload
+    },
   },
 })
 
@@ -195,6 +199,7 @@ export const {
   setLocale,
   setRecord,
   setPartyMember,
+  setCharactersRecords,
 } = lostModule.actions
 
 // ViewModel
@@ -207,4 +212,5 @@ export {
   fetchCharacters,
   fetchCharactersMore,
   fetchCampsCharacters,
+  fetchCharactersRecords,
 }

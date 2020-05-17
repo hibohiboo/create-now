@@ -95,11 +95,6 @@ const fetchData = (characterId: string, id: string): AppThunk => async (
   )
 }
 
-// const fetchCharactersRecords = (id: string): AppThunk => async (dispatch) => {
-//   const ret = await readCharactersRecords(id)
-//   dispatch(setCharactersRecords(ret))
-// }
-
 // View Model
 const makeExpChecks = (
   record: Record,

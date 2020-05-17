@@ -2819,3 +2819,9 @@ export const expCheckPoints = [
   { name: '新たなアイテムを手に入れた', point: '1点' },
   { name: 'キャンプの仲間と友情を育んだ', point: '1点' },
 ]
+
+export const recordsColumns = [
+  { title: 'シナリオ名', field: 'scenarioTitle' },
+  { title: '経験点', field: 'exp', type: 'numeric' as 'numeric' },
+  { title: '称号', field: 'trophy' },
+]
