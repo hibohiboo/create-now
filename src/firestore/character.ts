@@ -146,6 +146,7 @@ export const deleteCharacter = async (id: string, uid: string) => {
   await Promise.all([
     getCharacters(db).doc(id).delete(),
     getCharacterNames(db).doc(id).delete(),
+    getCampsCharacters(db).doc(id).delete(),
   ])
 }
 
