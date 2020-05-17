@@ -398,6 +398,7 @@ const Page: React.FC<{
                 title={t('lostrpg_records_common_recordsheet')}
                 options={tableConfig.viewTable}
                 columns={[
+                  ...vm.recordsColumns,
                   {
                     title: '',
                     // eslint-disable-next-line react/display-name
@@ -416,13 +417,11 @@ const Page: React.FC<{
                           }}
                           as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit?id=${rowData['recordId']}`}
                         >
-                          {' '}
                           {t('common_edit')}
                         </Link>
                       )
                     },
                   },
-                  ...vm.recordsColumns,
                 ]}
                 data={_.cloneDeep(vm.records)}
               />

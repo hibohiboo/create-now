@@ -51,6 +51,7 @@ import {
   fetchCamps,
   useCamps,
   initCharacter,
+  fetchCharactersRecords,
 } from '~/store/modules/lostModule'
 import {
   createCharacter,
@@ -156,6 +157,7 @@ const Page: NextPage = () => {
       )
       return
     }
+    dispatch(fetchCharactersRecords(id))
     ;(async () => {
       const data = await getCharacter(id)
 
@@ -1023,7 +1025,61 @@ const Page: NextPage = () => {
               </Box>
             )}
           </Box>
+          {!id ? (
+            <></>
+          ) : (
+            <Box my={3}>
+              <InputLabel>{t('lostrpg_records_common_recordsheet')}</InputLabel>
 
+              <Link
+                href={{
+                  pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
+                  query: {
+                    lng: i18n.activeLocale,
+                    characterId: character.campId,
+                  },
+                }}
+                as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit`}
+              >
+                {t('common_create')}
+              </Link>
+              {vm.records.length === 0 ? (
+                <></>
+              ) : (
+                <MaterialTable
+                  title={t('lostrpg_records_common_recordsheet')}
+                  options={tableConfig.viewTable}
+                  columns={[
+                    ...vm.recordsColumns,
+                    {
+                      title: '',
+                      // eslint-disable-next-line react/display-name
+                      render: (rowData) => {
+                        if (!authUser) return <></>
+                        if (authUser.uid !== rowData['uid']) return <></>
+                        return (
+                          <Link
+                            href={{
+                              pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
+                              query: {
+                                lng: i18n.activeLocale,
+                                characterId: rowData['characterId'],
+                                id: rowData['recordId'],
+                              },
+                            }}
+                            as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit?id=${rowData['recordId']}`}
+                          >
+                            {t('common_edit')}
+                          </Link>
+                        )
+                      },
+                    },
+                  ]}
+                  data={_.cloneDeep(vm.records)}
+                />
+              )}
+            </Box>
+          )}
           <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
             {t('common_back')}
           </Link>
