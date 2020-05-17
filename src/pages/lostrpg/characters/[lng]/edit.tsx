@@ -86,8 +86,8 @@ const Page: NextPage = () => {
   }
 
   // Validation State
+  const [isValidError, setIsValidError] = useState(false)
   const [isSubmit, setIsSubmit] = useState(false)
-
   // Image State
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
@@ -98,10 +98,12 @@ const Page: NextPage = () => {
 
   const editHandler = async () => {
     if (!character.name) {
-      setIsSubmit(true)
+      setIsValidError(true)
       window.scrollTo(0, 0)
       return
     }
+    if (isSubmit) return
+    setIsSubmit(true)
 
     let retId = id
     if (!retId) {
@@ -257,9 +259,9 @@ const Page: NextPage = () => {
                   id="characterName"
                   required
                   label={t('lostrpg_character_common_characterName')}
-                  error={!character.name && isSubmit}
+                  error={!character.name && isValidError}
                   helperText={
-                    character.name || !isSubmit ? '' : t('message_required')
+                    character.name || !isValidError ? '' : t('message_required')
                   }
                   value={character.name}
                   onChange={(e) =>

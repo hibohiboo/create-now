@@ -66,6 +66,7 @@ const Page: NextPage = () => {
   const authUser = useAuth()
   const vm = useCampViewModel()
   const [camp, setCamp] = useState<Camp>(initCamp)
+  const [isValidError, setIsValidError] = useState(false)
   const [isSubmit, setIsSubmit] = useState(false)
   const id = getIdFromQuery(router)
   const beforePage = '/lostrpg/camps/list'
@@ -107,10 +108,12 @@ const Page: NextPage = () => {
   const editHandler = id
     ? async () => {
         if (!camp.name) {
-          setIsSubmit(true)
+          setIsValidError(true)
           window.scrollTo(0, 0)
           return
         }
+        if (isSubmit) return
+        setIsSubmit(true)
         await updateCamp(id, { ...camp, uid: authUser.uid }, authUser.uid, file)
         Router.push(
           {
@@ -123,7 +126,7 @@ const Page: NextPage = () => {
     : async () => {
         if (!camp.name) {
           window.scrollTo(0, 0)
-          setIsSubmit(true)
+          setIsValidError(true)
           return
         }
         const retId = await createCamp(
@@ -197,9 +200,9 @@ const Page: NextPage = () => {
                   id="campName"
                   required
                   label={t('common_name')}
-                  error={!camp.name && isSubmit}
+                  error={!camp.name && isValidError}
                   helperText={
-                    camp.name || !isSubmit ? '' : t('message_required')
+                    camp.name || !isValidError ? '' : t('message_required')
                   }
                   value={camp.name}
                   onChange={(e) => setCamp({ ...camp, name: e.target.value })}
