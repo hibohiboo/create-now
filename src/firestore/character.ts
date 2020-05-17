@@ -147,6 +147,21 @@ export const deleteCharacter = async (id: string, uid: string) => {
     getCharacters(db).doc(id).delete(),
     getCharacterNames(db).doc(id).delete(),
     getCampsCharacters(db).doc(id).delete(),
+    await (async () => {
+      const collection = db
+        .collection('systems')
+        .doc('lost')
+        .collection('charactersRecords')
+      const list = await collection.where('characterId', '==', id).get()
+      list.forEach((doc) => {
+        collection.doc(doc.id).delete()
+        db.collection('systems')
+          .doc('lost')
+          .collection('records')
+          .doc(doc.id)
+          .delete()
+      })
+    })(),
   ])
 }
 
