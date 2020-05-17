@@ -109,6 +109,7 @@ const makeExpChecks = (
 export const useRecordViewModel = (recordId?: string, cid?: string) =>
   useSelector((state: { lost: LostModule }) => {
     // Validation State
+    const [isValidError, setIsValidError] = useState(false)
     const [isSubmit, setIsSubmit] = useState(false)
     const authUser = useAuth()
     const i18n = useI18n()
@@ -152,7 +153,7 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
       i18n,
       record,
       beforePage,
-      isSubmit,
+      isSubmit: isValidError,
       specialtiesTableColumns: makeSpecialtiesTableColumns(
         specialtiesTableColumns,
         character,
@@ -209,10 +210,13 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
       expChecks: makeExpChecks(record, expCheckPoints),
       editHandler: async () => {
         if (!record.scenarioTitle) {
-          setIsSubmit(true)
+          setIsValidError(true)
           window.scrollTo(0, 0)
           return
         }
+        // 複数送信防止
+        if (isSubmit) return
+        setIsSubmit(true)
         const r = {
           ...record,
           damagedSpecialties: character.damagedSpecialties,

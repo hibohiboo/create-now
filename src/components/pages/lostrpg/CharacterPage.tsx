@@ -398,6 +398,24 @@ const Page: React.FC<{
                 title={t('lostrpg_records_common_recordsheet')}
                 options={tableConfig.viewTable}
                 columns={[
+                  {
+                    title: t('lostrpg_record_common_scenarioTitle'),
+                    // eslint-disable-next-line react/display-name
+                    render: (rowData) => (
+                      <Link
+                        href={{
+                          pathname: `/lostrpg/public/[lng]/record`,
+                          query: {
+                            lng: i18n.activeLocale,
+                            id: rowData['recordId'],
+                          },
+                        }}
+                        as={`/lostrpg/public/${i18n.activeLocale}/record?id=${rowData['recordId']}`}
+                      >
+                        {rowData['scenarioTitle']}
+                      </Link>
+                    ),
+                  },
                   ...vm.recordsColumns,
                   {
                     title: '',

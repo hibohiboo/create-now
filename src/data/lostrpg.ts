@@ -2821,7 +2821,6 @@ export const expCheckPoints = [
 ]
 
 export const recordsColumns = [
-  { title: 'シナリオ名', field: 'scenarioTitle' },
   { title: '経験点', field: 'exp', type: 'numeric' as 'numeric' },
   { title: '称号', field: 'trophy' },
 ]
