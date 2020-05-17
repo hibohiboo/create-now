@@ -52,6 +52,7 @@ export interface Record {
   characterId: string
   uid?: string
   id?: string
+  recordId?: string
   createdAt?: any
   updatedAt?: any
   expChecks: string[]
@@ -105,7 +106,7 @@ const makeExpChecks = (
     point,
     isChecked: record.expChecks.includes(name),
   }))
-export const useRecordViewModel = () =>
+export const useRecordViewModel = (recordId?: string, cid?: string) =>
   useSelector((state: { lost: LostModule }) => {
     // Validation State
     const [isSubmit, setIsSubmit] = useState(false)
@@ -115,11 +116,12 @@ export const useRecordViewModel = () =>
     const router = useRouter()
     const dispatch = useDispatch()
     const record = useRecord()
-    const characterId = router.query.characterId as string
+    const characterId = cid || (router.query.characterId as string)
     const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${characterId}`
     const { character } = state.lost
     const { specialties, bodyParts, specialtiesTableColumns, expCheckPoints } =
       i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
+    const id = recordId || (router.query.id as string)
     useEffect(() => {
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
@@ -129,7 +131,7 @@ export const useRecordViewModel = () =>
       if (!characterId || !authUser) {
         return
       }
-      dispatch(fetchData(characterId, router.query.id as string))
+      dispatch(fetchData(characterId, id))
     }, [characterId, authUser])
 
     const dispatchSetRecord = (e, prop: string) => {

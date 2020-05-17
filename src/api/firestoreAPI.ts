@@ -208,3 +208,16 @@ export const getCharacter = async (id: string) => {
   }
   return ret
 }
+export const getCharactersRecord = async (id: string) => {
+  if (!id) throw new Error('empty id')
+  const data = await fetchFromFirestore(`systems/lost/charactersRecords/${id}`)
+
+  const { scenarioTitle, uid, recordId, characterId } = data.fields
+  const ret = {
+    scenarioTitle: getStr(scenarioTitle),
+    uid: getStr(uid),
+    recordId: getStr(recordId),
+    characterId: getStr(characterId),
+  }
+  return ret
+}

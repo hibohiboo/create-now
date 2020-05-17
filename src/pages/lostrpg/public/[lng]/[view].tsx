@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
-import { getCamp, getCharacter } from '~/api/firestoreAPI'
-import { Camp, Character } from '~/store/modules/lostModule'
+import { getCamp, getCharacter, getCharactersRecord } from '~/api/firestoreAPI'
+import { Camp, Character, Record } from '~/store/modules/lostModule'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import CampPage from '~/components/pages/lostrpg/camp'
 import CharacterPage from '~/components/pages/lostrpg/CharacterPage'
+import RecordPage from '~/components/pages/lostrpg/Record'
 
 const Page: NextPage<{
   view: string
+  id: string
   camp?: Camp
   character?: Character
-  id: string
+  record?: Record
 }> = function (ctx) {
   const dispatch = useDispatch()
   const authUser = useAuth()
@@ -28,19 +30,34 @@ const Page: NextPage<{
     const { character } = ctx
     return <CharacterPage character={character} id={id} authUser={authUser} />
   }
+  if (view === 'record') {
+    const { record } = ctx
+    return (
+      <RecordPage
+        recordId={record.recordId}
+        characterId={record.characterId}
+        authUser={authUser}
+      />
+    )
+  }
   return <></>
 }
 
 Page.getInitialProps = async ({ query }) => {
-  const { id, lng, view } = query
+  const { lng, view } = query
+  const id = query.id as string
   const { default: lngDict = {} } = await import(`~/locales/${lng}.json`)
   if (view === 'camp') {
-    const camp = await getCamp(id as string)
-    return { camp, lng, lngDict, view: 'camp', id: id as string }
+    const camp = await getCamp(id)
+    return { camp, lng, lngDict, view, id }
   }
   if (view === 'character') {
-    const character = await getCharacter(id as string)
-    return { character, lng, lngDict, view: 'character', id: id as string }
+    const character = await getCharacter(id)
+    return { character, lng, lngDict, view, id }
+  }
+  if (view === 'record') {
+    const record = (await getCharactersRecord(id)) as Record
+    return { record, lng, lngDict, view, id }
   }
 }
 

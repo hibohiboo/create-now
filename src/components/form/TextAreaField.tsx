@@ -12,7 +12,7 @@ const TextAreaField: React.FC<{
   labelText: string
   changeHandler?: (value: string) => void
   readonly?: boolean
-}> = ({ model, prop, labelText, changeHandler }) => (
+}> = ({ model, prop, labelText, changeHandler, readonly }) => (
   <Box my={2}>
     <InputLabel>{labelText}</InputLabel>
     <FormControl fullWidth style={{ marginTop: '10px' }}>
@@ -21,6 +21,7 @@ const TextAreaField: React.FC<{
         rowsMin={3}
         value={model[prop]}
         onChange={(e) => changeHandler(e.target.value)}
+        readOnly={readonly}
       />
     </FormControl>
   </Box>
