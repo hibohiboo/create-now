@@ -1032,19 +1032,32 @@ const Page: NextPage = () => {
           ) : (
             <Box my={3}>
               <InputLabel>{t('lostrpg_records_common_recordsheet')}</InputLabel>
+              <Box my={2} display="flex">
+                <Link
+                  href={{
+                    pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
+                    query: {
+                      lng: i18n.activeLocale,
+                      characterId: character.campId,
+                    },
+                  }}
+                  as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit`}
+                >
+                  {t('common_create')}
+                </Link>
+                <Box style={{ maxWidth: '100px', marginLeft: '20px' }}>
+                  <InputField
+                    model={vm}
+                    type="number"
+                    prop="totalRecordExp"
+                    labelText={t(
+                      'lostrpg_character_common_totalExperiencePoint',
+                    )}
+                    readonly={true}
+                  />
+                </Box>
+              </Box>
 
-              <Link
-                href={{
-                  pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
-                  query: {
-                    lng: i18n.activeLocale,
-                    characterId: character.campId,
-                  },
-                }}
-                as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit`}
-              >
-                {t('common_create')}
-              </Link>
               {vm.records.length === 0 ? (
                 <></>
               ) : (

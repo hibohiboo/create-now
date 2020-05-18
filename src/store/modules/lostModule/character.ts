@@ -306,15 +306,21 @@ export const useCharacterEditViewModel = () =>
       backboneList,
       backboneColumns,
       recordsColumns,
+      trophyAbilityList,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     let mergedClassList = classList
     let mergedAbilities = abilityList
     let mergedItemList = items
     if (character.useStrangeField) {
-      mergedClassList = _.union(mergedClassList, strangeFieldsClassList)
-      mergedAbilities = _.union(mergedAbilities, strangeFieldsAbilityList)
       mergedItemList = _.union(mergedItemList, strangeFieldsItemList)
+      mergedClassList = _.union(mergedClassList, strangeFieldsClassList)
+      mergedAbilities = _.union(
+        mergedAbilities,
+        strangeFieldsAbilityList,
+        trophyAbilityList,
+      )
     }
+    const trophies = _.uniq(state.lost.records.map((i) => i.trophy))
     return {
       classList: mergedClassList.filter(
         (item) => !character.classes.includes(item),
@@ -324,7 +330,8 @@ export const useCharacterEditViewModel = () =>
         .filter(
           (item) =>
             item.id === 'general' ||
-            character.classes.findIndex((c) => c.id === item.id) !== -1,
+            character.classes.findIndex((c) => c.id === item.id) !== -1 ||
+            trophies.includes(item.name),
         )
         .map((item) => item.list)
         .flat()
@@ -359,6 +366,9 @@ export const useCharacterEditViewModel = () =>
       backboneColumns,
       records: state.lost.records,
       recordsColumns,
+      totalRecordExp: state.lost.records
+        .map((i) => i.exp)
+        .reduce((sum, i) => sum + i, 0),
     }
   })
 

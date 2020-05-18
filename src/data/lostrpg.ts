@@ -2824,3 +2824,316 @@ export const recordsColumns = [
   { title: '経験点', field: 'exp', type: 'numeric' as 'numeric' },
   { title: '称号', field: 'trophy' },
 ]
+export const trophyList = [
+  {
+    name: 'パッション',
+    id: 'passion',
+    description: '元気に熱くフィールドに向かっていったものに与えられる称号',
+  },
+  {
+    name: 'クール',
+    id: 'cool',
+    description: '冷静に物事を見つめていたものに与えられる称号',
+  },
+  {
+    name: 'ピンク',
+    id: 'pink',
+    description: '甘い雰囲気や恋をしていたものに与えられる称号',
+  },
+  {
+    name: '癒し',
+    id: 'healer',
+    description: 'のんびり皆を和ませていたものに与えられる称号',
+  },
+  {
+    name: 'スター',
+    id: 'star',
+    description: '大きな活躍をしたものに与えられる称号',
+  },
+  {
+    name: 'ハシラ',
+    id: 'pillar',
+    description: '堅実に皆を支えていたものに与えられる称号。',
+  },
+  {
+    name: 'サムライ',
+    id: 'samurai',
+    description: '戦闘で活躍したものに与えられる称号。',
+  },
+  {
+    name: 'シノビ',
+    id: 'sinobi',
+    description: '探索で活躍したものに与えられる称号。',
+  },
+  {
+    name: 'ボケ',
+    id: 'clown',
+    description: '笑いで盛り上げたものに与えられる称号。',
+  },
+  {
+    name: 'ツッコミ',
+    id: 'thrust',
+    description: 'ボケに流されず軌道修正をきちんとしたものに与えられる称号。',
+  },
+]
+
+export const trophyAbilityList = [
+  {
+    name: 'パッション',
+    id: 'passion',
+    list: [
+      {
+        name: '気合ため',
+        group: 'パッション',
+        type: '支援',
+        recoil: '2',
+        specialty: '《叫ぶ》',
+        target: '自身',
+        effect:
+          '指定特技の判定に成功すると、次に行う攻撃のダメージを2倍にする。',
+      },
+      {
+        name: '期待に応える',
+        group: 'パッション',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          'あなたが他者のアビリティやアイテムの効果で気力を獲得するときに余分に1点多く獲得できる。',
+      },
+    ],
+  },
+  {
+    name: 'クール',
+    id: 'cool',
+    list: [
+      {
+        name: '完璧な振る舞い',
+        group: 'クール',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          'ダイスを振る前に宣言することで判定を自動成功する。成功度は1として扱う。シナリオ１回。',
+      },
+      {
+        name: '手間をかけさせるな',
+        group: 'クール',
+        type: '割込み',
+        recoil: '5',
+        specialty: '《掴む》',
+        target: '単体',
+        effect:
+          '自身以外がファンブルを振った時に割込んで使用する。指定特技の判定に成功した場合、対象はファンブル表を振らなくてもよい。',
+      },
+    ],
+  },
+  {
+    name: 'ピンク',
+    id: 'pink',
+    list: [
+      {
+        name: '秘密のレッスン',
+        group: 'ピンク',
+        type: '割込み',
+        recoil: '3',
+        specialty: '《伝える》',
+        target: '単体',
+        effect:
+          '対象が判定を行う直前に割込んで使用できる。指定特技の判定に成功すると、対象が行う次の判定の間のみアビリティ使用者の所持している特技を習得させる。',
+      },
+      {
+        name: '真っ赤な誓い',
+        group: 'ピンク',
+        type: '割込み',
+        recoil: '3',
+        specialty: '《閃く》',
+        target: '単体',
+        effect:
+          '指定特技の判定に成功すると、対象にキャラクター1人のダメージを肩代わりさせる',
+      },
+    ],
+  },
+  {
+    name: '癒し',
+    id: 'healer',
+    list: [
+      {
+        name: '暖かい時間',
+        group: '癒し',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '単体',
+        effect:
+          '休憩表であなたが選んだ相手、もしくはあなたを選んだ相手は【気力】を1点増加させる。',
+      },
+      {
+        name: 'のんびりお散歩',
+        group: '癒し',
+        type: '割込み',
+        recoil: '2',
+        specialty: '《歩く》',
+        target: '自身',
+        effect:
+          '探索フェイズにいつでも割込んで使用できる。指定特技の判定に成功すると、あなたは休憩表を一回振る',
+      },
+    ],
+  },
+  {
+    name: 'スター',
+    id: 'star',
+    list: [
+      {
+        name: 'ピンチのときほど',
+        group: 'スター',
+        type: '割込み',
+        recoil: '3',
+        specialty: '《閃く》',
+        target: '自身',
+        effect:
+          'ファンブルを振った時に使用できる。指定特技の判定に成功すると、ファンブルをスペシャルに変更する。シナリオ1回。',
+      },
+      {
+        name: 'チャンスは逃さない',
+        group: 'スター',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          'あなたが命中判定でスペシャルをしたとき、与えるダメージにプラス1D6する',
+      },
+    ],
+  },
+  {
+    name: 'ハシラ',
+    id: 'pillar',
+    list: [
+      {
+        name: '支度',
+        group: 'ハシラ',
+        type: '割込み',
+        recoil: '6',
+        specialty: '《休まない》',
+        target: '単体',
+        effect:
+          '対象はキャンプフェイズで行える行動を、キャンプにいるものとして一度だけ行える。シナリオ1回。',
+      },
+      {
+        name: '一歩ずつ',
+        group: 'ハシラ',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          'ギャップを1列塗りつぶすことができる。塗りつぶされたギャップは代用判定の際数えない。',
+      },
+    ],
+  },
+  {
+    name: 'サムライ',
+    id: 'samurai',
+    list: [
+      {
+        name: '気炎万丈',
+        group: 'サムライ',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          '【気力】が【気力基準値】以上の場合、与えるダメージにプラス1点する',
+      },
+      {
+        name: '後の先',
+        group: 'サムライ',
+        type: '割込み',
+        recoil: '2',
+        specialty: '《待つ》',
+        target: '自身',
+        effect:
+          '先制判定に割込んで使用する。指定特技の判定に成功すると、先制判定を振らず、行動順が後攻となる。ラウンドの間、命中判定の達成値にプラス1点。与えるダメージにプラス2点する。',
+      },
+    ],
+  },
+  {
+    name: 'シノビ',
+    id: 'sinobi',
+    list: [
+      {
+        name: '身代わりの術',
+        group: 'シノビ',
+        type: '割込み',
+        recoil: '8',
+        specialty: '《隠れる》',
+        target: '単体',
+        effect:
+          '自身が【棍棒】を装備している場合、部位ダメージが発生したときに割込んで使用できる。指定特技の判定に成功した場合、自身が装備している【棍棒】を破壊して部位ダメージを打ち消す。',
+      },
+      {
+        name: '二重罠',
+        group: 'シノビ',
+        type: '割込み',
+        recoil: '2',
+        specialty: '《罠》',
+        target: '単体',
+        effect:
+          '対象の変調が解除されたときに割込んで使用する。指定特技の判定に成功すると、対象に1点のダメージを与える',
+      },
+    ],
+  },
+  {
+    name: 'ボケ',
+    id: 'clown',
+    list: [
+      {
+        name: 'ウェーイ！',
+        group: 'ボケ',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect: 'スペシャルを振った時、【気力】がさらに1D6増加する',
+      },
+      {
+        name: 'ひっさつわざ！',
+        group: 'ボケ',
+        type: '攻撃',
+        recoil: '1d6',
+        specialty: 'ランダム',
+        target: '単体',
+        effect:
+          '指定特技の判定に成功すると対象に[装備している武器1つの攻撃力+(反動で消費した気力×1d3)]点のダメージを与える。',
+      },
+    ],
+  },
+  {
+    name: 'ツッコミ',
+    id: 'thrust',
+    list: [
+      {
+        name: '鋭い視点',
+        group: 'ツッコミ',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect: '暴露の変調を受けている対象へ与えるダメージにプラス1点する。',
+      },
+      {
+        name: '待った！',
+        group: 'ツッコミ',
+        type: '割込み',
+        recoil: '6',
+        specialty: '《刺す》',
+        target: '単体',
+        effect:
+          'タイプが【割込み】のアビリティが使用されたときに割込んで使用する。指定特技の判定に成功するとそのアビリティの効果を打ち消す。シナリオ回数制限のあるアビリティは打ち消せない。',
+      },
+    ],
+  },
+]
