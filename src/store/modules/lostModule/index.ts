@@ -37,6 +37,7 @@ import {
 import { initBoss } from './boss'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
+import { useBossViewModel } from './boss'
 export type {
   Camp,
   Character,
@@ -61,7 +62,7 @@ type LostState = {
   record: Record
   records: Record[]
   boss: Boss
-  bosses: Boss[]
+  bosses: { id: string; name: string }[]
 }
 
 export const init: LostState = {
@@ -202,6 +203,40 @@ const lostModule = createSlice({
     setCharactersRecords: (state, action: PayloadAction<Record[]>) => {
       state.records = action.payload
     },
+    setBosess: (
+      state,
+      action: PayloadAction<{ id: string; name: string }[]>,
+    ) => {
+      state.bosses = action.payload
+    },
+    addBosses: (
+      state,
+      action: PayloadAction<{ id: string; name: string }[]>,
+    ) => {
+      state.bosses = state.bosses.concat(action.payload)
+    },
+    setBoss: (state, action: PayloadAction<Boss>) => {
+      state.boss = action.payload
+    },
+    toggleBossDamage: (state, action: PayloadAction<string>) => {
+      const name = action.payload
+      const { damagedSpecialties } = state.boss
+      damageParts(
+        name,
+        damagedSpecialties,
+        state.locale,
+        (name) =>
+          (state.boss.damagedSpecialties = damagedSpecialties.filter(
+            (item) => item !== name,
+          )),
+        (name) =>
+          (state.boss.damagedSpecialties = [
+            ...state.boss.damagedSpecialties,
+            name,
+          ]),
+        (target) => state.boss.damagedSpecialties.push(target),
+      )
+    },
   },
 })
 
@@ -235,10 +270,19 @@ export const {
   setRecord,
   setPartyMember,
   setCharactersRecords,
+  setBoss,
+  addBosses,
+  setBosess,
+  toggleBossDamage,
 } = lostModule.actions
 
 // ViewModel
-export { useCampViewModel, useCharacterEditViewModel, useRecordViewModel }
+export {
+  useCampViewModel,
+  useCharacterEditViewModel,
+  useRecordViewModel,
+  useBossViewModel,
+}
 
 // thunk
 export {

@@ -1,52 +1,22 @@
 /* eslint-disable react/display-name */
 import * as _ from 'lodash'
 import { NextPage } from 'next'
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import Router, { useRouter } from 'next/router'
+import React from 'react'
 import Head from 'next/head'
-import Dropzone from 'react-dropzone'
-import {
-  Box,
-  Button,
-  Chip,
-  Checkbox,
-  Tooltip,
-  FormControlLabel,
-  ClickAwayListener,
-} from '@material-ui/core'
+import { Box, Button, Checkbox } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import { DeleteOutline, Help, Save } from '@material-ui/icons'
+import { DeleteOutline, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import TextAreaField from '~/components/form/TextAreaField'
-import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
-import DamageTable from '~/components/organisms/lostrpg/DamageTable'
-
-import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
-import useI18n from '~/hooks/use-i18n'
 import { contentLanguageMap } from '~/lib/i18n'
-import {
-  setCharacter,
-  useRecord,
-  setLocale,
-  setRecord,
-  useRecordViewModel,
-  setPartyMember,
-} from '~/store/modules/lostModule'
-
+import { useRecordViewModel } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
-
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 
 const Page: NextPage = () => {
