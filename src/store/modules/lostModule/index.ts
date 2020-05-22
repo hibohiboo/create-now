@@ -13,6 +13,7 @@ import type {
   Item,
 } from './character'
 import type { Record, Member } from './record'
+import type { Boss } from './boss'
 import {
   initCamp,
   useCamps,
@@ -33,9 +34,19 @@ import {
   fetchCampsCharacters,
   fetchCharactersRecords,
 } from './character'
+import { initBoss } from './boss'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
-export type { Camp, Character, CharacterClass, Ability, Item, Bag, Record }
+export type {
+  Camp,
+  Character,
+  CharacterClass,
+  Ability,
+  Item,
+  Bag,
+  Record,
+  Boss,
+}
 export { initCamp, initCharacter, initBag }
 
 type LostState = {
@@ -49,6 +60,8 @@ type LostState = {
   campsCharacters: CampsCharacters[]
   record: Record
   records: Record[]
+  boss: Boss
+  bosses: Boss[]
 }
 
 export const init: LostState = {
@@ -62,6 +75,35 @@ export const init: LostState = {
   campsCharacters: [],
   record: initRecord,
   records: [],
+  boss: initBoss,
+  bosses: [],
+}
+
+const damageParts = (
+  name: string,
+  damagedSpecialties: string[],
+  locale: string,
+  deleteCallback: (name: string) => void,
+  damageCallback: (name: string) => void,
+  partsDamageCallBack: (target: string) => void,
+) => {
+  const { specialties, bodyParts } =
+    locale === defaultLanguage ? lostData : lostDataEn
+  if (damagedSpecialties.includes(name)) {
+    deleteCallback(name)
+    return
+  }
+  if (!isBodyParts(bodyParts, name)) {
+    damageCallback(name)
+    return
+  }
+  // 部位を負傷した場合、8近傍にチェック
+  const index = specialties.indexOf(name)
+  ;[-12, -11, -10, -1, 0, 1, 10, 11, 12].forEach((i) => {
+    const target = specialties[index + i]
+    if (!target || damagedSpecialties.includes(target)) return
+    partsDamageCallBack(target)
+  })
 }
 
 // actions と reducers の定義
@@ -108,28 +150,21 @@ const lostModule = createSlice({
     toggleCharacterDamage: (state, action: PayloadAction<string>) => {
       const name = action.payload
       const { damagedSpecialties } = state.character
-      const { specialties, bodyParts } =
-        state.locale === defaultLanguage ? lostData : lostDataEn
-      if (damagedSpecialties.includes(name)) {
-        state.character.damagedSpecialties = damagedSpecialties.filter(
-          (item) => item !== name,
-        )
-        return
-      }
-      if (!isBodyParts(bodyParts, name)) {
-        state.character.damagedSpecialties = [
-          ...state.character.damagedSpecialties,
-          name,
-        ]
-        return
-      }
-      // 部位を負傷した場合、8近傍にチェック
-      const index = specialties.indexOf(name)
-      ;[-12, -11, -10, -1, 0, 1, 10, 11, 12].forEach((i) => {
-        const target = specialties[index + i]
-        if (!target || damagedSpecialties.includes(target)) return
-        state.character.damagedSpecialties.push(target)
-      })
+      damageParts(
+        name,
+        damagedSpecialties,
+        state.locale,
+        (name) =>
+          (state.character.damagedSpecialties = damagedSpecialties.filter(
+            (item) => item !== name,
+          )),
+        (name) =>
+          (state.character.damagedSpecialties = [
+            ...state.character.damagedSpecialties,
+            name,
+          ]),
+        (target) => state.character.damagedSpecialties.push(target),
+      )
     },
     setCharacterBag: (state, action: PayloadAction<Bag>) => {
       const { bags } = state.character
