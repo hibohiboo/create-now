@@ -15,6 +15,7 @@ import { DeleteOutline, Help, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
+import ImageZone from '~/components/organisms/lostrpg/ImageZone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import TextAreaField from '~/components/form/TextAreaField'
@@ -95,6 +96,7 @@ const Page: NextPage = () => {
                   changeHandler={vm.willPowerHandler}
                 />
               </Box>
+              <ImageZone label={t('common_image')} />
 
               <Box my={2}>
                 <SpecialtiesTooltip
