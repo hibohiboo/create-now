@@ -150,6 +150,33 @@ const Page: NextPage = () => {
                 rowUpdateHandler={vm.rowUpdateHandler}
                 rowDeleteHandler={vm.rowDeleteHandler}
               />
+              <MaterialTable
+                title={t('lostrpg_character_common_statusAilments')}
+                options={tableConfig.viewTable}
+                columns={[
+                  {
+                    title: '',
+                    render: (rowData) => {
+                      return (
+                        <Checkbox
+                          checked={rowData['isChecked']}
+                          onChange={() => vm.statusAilmentsHandler(rowData)}
+                        />
+                      )
+                    },
+                  },
+                  {
+                    title: t('common_name'),
+                    field: 'name',
+                  },
+                  {
+                    title: t('common_effect'),
+                    field: 'effect',
+                  },
+                ]}
+                data={vm.statusAilments}
+              />
+
               <TextAreaField
                 model={vm.boss}
                 prop="summary"

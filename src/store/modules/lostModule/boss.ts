@@ -98,6 +98,7 @@ export const useBossViewModel = (bossId?: string) =>
       strangeFieldsAbilityList,
       trophyAbilityList,
       enemyAbilityList,
+      statusAilments,
       strangeFieldsEnemyAbilityList,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     const id = bossId || (router.query.id as string)
@@ -156,6 +157,11 @@ export const useBossViewModel = (bossId?: string) =>
         _.isEqual,
       ),
       abilityFilter,
+      statusAilments: statusAilments.map(({ name, effect }) => ({
+        name,
+        effect,
+        isChecked: boss.statusAilments.includes(name),
+      })),
       creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
       bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
       levelHandler: (e) => {
@@ -227,5 +233,14 @@ export const useBossViewModel = (bossId?: string) =>
           return d
         })
       },
+      statusAilmentsHandler: (rowData) =>
+        dispatch(
+          setBoss({
+            ...boss,
+            statusAilments: rowData['isChecked']
+              ? boss.statusAilments.filter((name) => name !== rowData['name'])
+              : [...boss.statusAilments, rowData['name']],
+          }),
+        ),
     }
   })
