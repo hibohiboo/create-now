@@ -19,13 +19,13 @@ import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { contentLanguageMap } from '~/lib/i18n'
-import { useBossViewModel } from '~/store/modules/lostModule'
+import { useBossEditViewModel } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 
 const Page: NextPage = () => {
-  const vm = useBossViewModel()
+  const vm = useBossEditViewModel()
   const t = vm.i18n.t
   return (
     <>

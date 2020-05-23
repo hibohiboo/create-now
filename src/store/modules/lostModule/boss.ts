@@ -111,7 +111,7 @@ const fetchBossesMore = (
 }
 
 // ViewModel
-export const useBossViewModel = (bossId?: string) =>
+export const useBossEditViewModel = (bossId?: string) =>
   useSelector((state: { lost: LostModule }) => {
     // Validation State
     const [isValidError, setIsValidError] = useState(false)
@@ -351,5 +351,41 @@ export const useBossesViewModel = (bossId?: string) =>
         dispatch(
           fetchBossesMore(pagination.lastLoaded, pagination.limit, search.name),
         ),
+    }
+  })
+export const useBossViewModel = (bossInit: Boss) =>
+  useSelector((state: { lost: LostModule }) => {
+    const i18n = useI18n()
+    const boss = state.lost.boss
+    const dispatch = useDispatch()
+    const beforePage = `/lostrpg/bosses/${i18n.activeLocale}/list`
+    const {
+      specialties,
+      bodyParts,
+      specialtiesTableColumns,
+      abilitiesColumns,
+      statusAilments,
+    } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
+
+    useEffect(() => {
+      dispatch(setBoss(bossInit))
+      dispatch(setLocale(i18n.activeLocale))
+    }, [])
+    return {
+      boss,
+      beforePage,
+      i18n,
+      specialtiesTableColumns: makeSpecialtiesTableColumns(
+        specialtiesTableColumns,
+        boss,
+      ),
+      specialtiesTableRows: specialtiesTableRows(bodyParts, specialties, boss),
+      abilitiesColumns,
+      statusAilments: statusAilments.map(({ name, effect }) => ({
+        name,
+        effect,
+        isChecked: boss.statusAilments.includes(name),
+      })),
+      damageHandler: (name) => dispatch(toggleBossDamage(name)),
     }
   })

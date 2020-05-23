@@ -221,3 +221,54 @@ export const getCharactersRecord = async (id: string) => {
   }
   return ret
 }
+
+export const getBoss = async (id: string) => {
+  if (!id) throw new Error('empty id')
+  const data = await fetchFromFirestore(`systems/lost/bosses/${id}`)
+
+  const {
+    name,
+    uid,
+    creatorName,
+    createdAt,
+    updatedAt,
+    freeWriting,
+    imageUrl,
+    level,
+    abilities,
+    statusAilments,
+    damagedSpecialties,
+    specialties,
+    gaps,
+    willPower,
+    stamina,
+    summary,
+  } = data.fields
+  const ret: lost.Boss = {
+    name: getStr(name),
+    uid: getStr(uid),
+    creatorName: getStr(creatorName),
+    level: getInt(level),
+    createdAt: getTimestamp(createdAt),
+    updatedAt: getTimestamp(updatedAt),
+    specialties: getArray(specialties, (item) => getStr(item)),
+    gaps: getArray(gaps, (item) => getStr(item)),
+    abilities: getArray(abilities, (item) => ({
+      name: getStr(item.name),
+      target: getStr(item.target),
+      specialty: getStr(item.specialty),
+      type: getStr(item.type),
+      recoil: getStr(item.recoil),
+      group: getStr(item.group),
+      effect: getStr(item.effect),
+    })),
+    statusAilments: getArray(statusAilments, (item) => getStr(item)),
+    damagedSpecialties: getArray(damagedSpecialties, (item) => getStr(item)),
+    freeWriting: getStr(freeWriting),
+    imageUrl: getStr(imageUrl),
+    willPower: getInt(willPower),
+    stamina: getInt(stamina),
+    summary: getStr(summary),
+  }
+  return ret
+}

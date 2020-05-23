@@ -37,7 +37,11 @@ import {
 import { initBoss } from './boss'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
-import { useBossViewModel, useBossesViewModel } from './boss'
+import {
+  useBossEditViewModel,
+  useBossesViewModel,
+  useBossViewModel,
+} from './boss'
 export type {
   Camp,
   Character,
@@ -282,6 +286,7 @@ export {
   useCampViewModel,
   useCharacterEditViewModel,
   useRecordViewModel,
+  useBossEditViewModel,
   useBossViewModel,
 }
 
