@@ -82,7 +82,7 @@ const Page: React.FC<{
       <Box my={2}>
         <SpecialtiesTable
           columns={vm.specialtiesTableColumns}
-          rows={vm.specialtiesTableRows}
+          rows={_.cloneDeep(vm.specialtiesTableRows)}
           gapHandler={() => {}}
           specialtyHandler={() => {}}
           damageHandler={vm.damageHandler}
@@ -102,7 +102,7 @@ const Page: React.FC<{
           title={t('lostrpg_character_common_ability')}
           options={tableConfig.viewTable}
           columns={vm.abilitiesColumns}
-          data={vm.boss.abilities}
+          data={_.cloneDeep(vm.boss.abilities)}
         />
       </Box>
 
@@ -148,7 +148,7 @@ const Page: React.FC<{
               field: 'effect',
             },
           ]}
-          data={vm.statusAilments}
+          data={_.cloneDeep(vm.statusAilments)}
         />
       </Box>
 
