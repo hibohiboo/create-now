@@ -6,15 +6,7 @@ import { useDispatch } from 'react-redux'
 import Router, { useRouter } from 'next/router'
 import Head from 'next/head'
 import Dropzone from 'react-dropzone'
-import {
-  Box,
-  Button,
-  Chip,
-  Checkbox,
-  Tooltip,
-  FormControlLabel,
-  ClickAwayListener,
-} from '@material-ui/core'
+import { Box, Button, Checkbox } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
@@ -22,6 +14,7 @@ import TextField from '@material-ui/core/TextField'
 import { DeleteOutline, Help, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
+import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import TextAreaField from '~/components/form/TextAreaField'
@@ -122,6 +115,17 @@ const Page: NextPage = () => {
                   specialtyHandler={vm.specialtyHandler}
                   damageHandler={vm.damageHandler}
                 />
+                <Box my={2}>
+                  <InputLabel>
+                    {t('lostrpg_character_common_bodyPartsTable')}
+                  </InputLabel>
+
+                  <DamageTable
+                    sevenLabel={t('lostrpg_character_common_attackersChoice')}
+                    rows={vm.damageBodyParts}
+                    damageHandler={vm.damageHandler}
+                  />
+                </Box>
               </Box>
               <Box my={2} display="flex">
                 <SelectField

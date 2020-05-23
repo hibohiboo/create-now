@@ -234,7 +234,10 @@ export const specialtiesTableRows = (
   }))
 }
 
-const damageBodyParts = (bodyParts: string[], character: Character) => {
+export const damageBodyParts = (
+  bodyParts: string[],
+  character: { damagedSpecialties: string[] },
+) => {
   const makeData = (name) => {
     const damaged = character.damagedSpecialties.includes(name)
     return { name, damaged }

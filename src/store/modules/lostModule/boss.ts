@@ -25,7 +25,7 @@ import {
   setLocale,
 } from './index'
 import {
-  isBodyParts,
+  damageBodyParts,
   specialtiesTableRows,
   makeSpecialtiesTableColumns,
 } from './character'
@@ -162,6 +162,7 @@ export const useBossViewModel = (bossId?: string) =>
         effect,
         isChecked: boss.statusAilments.includes(name),
       })),
+      damageBodyParts: damageBodyParts(bodyParts, boss),
       creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
       bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
       levelHandler: (e) => {
