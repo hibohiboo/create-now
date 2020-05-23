@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import { readCharacters, readCampsCharacters } from '~/firestore/character'
-import { readCharactersRecords } from '~/firestore/record'
+import { createBoss, updateBoss, deleteBoss } from '~/firestore/boss'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
@@ -79,6 +79,7 @@ export const useBossViewModel = (bossId?: string) =>
   useSelector((state: { lost: LostModule }) => {
     // Validation State
     const [isValidError, setIsValidError] = useState(false)
+    const [file, setFile] = useState<File>(null)
     const [isSubmit, setIsSubmit] = useState(false)
     const [abilityFilter, setAbilityFilter] = useState('')
     const authUser = useAuth()
@@ -144,7 +145,7 @@ export const useBossViewModel = (bossId?: string) =>
       i18n,
       authUser,
       boss,
-      isSubmit,
+      isValidError,
       specialtiesTableColumns: makeSpecialtiesTableColumns(
         specialtiesTableColumns,
         boss,
@@ -163,6 +164,8 @@ export const useBossViewModel = (bossId?: string) =>
         isChecked: boss.statusAilments.includes(name),
       })),
       damageBodyParts: damageBodyParts(bodyParts, boss),
+      beforePage,
+      id,
       creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
       bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
       levelHandler: (e) => {
@@ -243,5 +246,45 @@ export const useBossViewModel = (bossId?: string) =>
               : [...boss.statusAilments, rowData['name']],
           }),
         ),
+      setImageHandler: (file: File) => setFile(file),
+      editHandler: async () => {
+        if (!boss.name) {
+          setIsValidError(true)
+          window.scrollTo(0, 0)
+          return
+        }
+        if (isSubmit) return
+        setIsSubmit(true)
+
+        let retId = id
+        if (!retId) {
+          retId = await createBoss(
+            { ...boss, uid: authUser.uid },
+            authUser,
+            file,
+          )
+        } else {
+          await updateBoss(
+            id,
+            { ...boss, uid: authUser.uid },
+            authUser.uid,
+            file,
+          )
+        }
+
+        Router.push(
+          {
+            pathname: `/lostrpg/public/[lng]/[view]`,
+            query: { id: retId },
+          },
+          `/lostrpg/public/${i18n.activeLocale}/character?id=${retId}`,
+        )
+      },
+      deleteHandler: async () => {
+        if (confirm(t('message_are_you_sure_remove'))) {
+          await deleteBoss(id, authUser.uid)
+          Router.push(beforePage)
+        }
+      },
     }
   })

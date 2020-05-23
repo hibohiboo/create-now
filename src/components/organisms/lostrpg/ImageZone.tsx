@@ -3,13 +3,21 @@ import { Box, InputLabel } from '@material-ui/core'
 import Dropzone from 'react-dropzone'
 import { createSetImageFile } from '~/utils/formHelper'
 
-const ImageZone: React.FC<{ label: string }> = ({ label }) => {
+const ImageZone: React.FC<{
+  label: string
+  fileHandler: (file: File) => void
+}> = ({ label, fileHandler }) => {
   const [prevUrl, setPrevUrl] = useState('')
   const [file, setFile] = useState<File>(null)
   const setImageFile = createSetImageFile(setFile, setPrevUrl)
   const handleOnDrop = (files: File[]) => {
     setImageFile(files[0])
   }
+  useEffect(() => {
+    if (file) {
+      fileHandler(file)
+    }
+  }, [file])
   return (
     <Box my={2}>
       <InputLabel>{label}</InputLabel>

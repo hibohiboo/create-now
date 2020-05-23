@@ -65,9 +65,11 @@ const Page: NextPage = () => {
                   id="bossName"
                   required
                   label={t('lostrpg_boss_common_bossName')}
-                  error={!vm.boss.name && vm.isSubmit}
+                  error={!vm.boss.name && vm.isValidError}
                   helperText={
-                    vm.boss.name || !vm.isSubmit ? '' : t('message_required')
+                    vm.boss.name || !vm.isValidError
+                      ? ''
+                      : t('message_required')
                   }
                   value={vm.boss.name}
                   onChange={vm.bossNameHandler}
@@ -96,7 +98,10 @@ const Page: NextPage = () => {
                   changeHandler={vm.willPowerHandler}
                 />
               </Box>
-              <ImageZone label={t('common_image')} />
+              <ImageZone
+                label={t('common_image')}
+                fileHandler={vm.setImageHandler}
+              />
 
               <Box my={2}>
                 <SpecialtiesTooltip
@@ -197,6 +202,34 @@ const Page: NextPage = () => {
               />
             </Box>
           </Box>
+
+          <Box my={2}>
+            <Button
+              startIcon={<Save />}
+              onClick={vm.editHandler}
+              variant="contained"
+              color="primary"
+            >
+              {t('common_save')}
+            </Button>
+          </Box>
+          {!vm.id ? (
+            <></>
+          ) : (
+            <Box my={4}>
+              <Button
+                onClick={vm.deleteHandler}
+                variant="contained"
+                color="secondary"
+              >
+                {t('common_delete')}
+              </Button>
+            </Box>
+          )}
+
+          <Link href={`/lostrpg/bosses/[lng]/list`} as={vm.beforePage}>
+            {t('common_back')}
+          </Link>
         </Container>
       )}
     </>

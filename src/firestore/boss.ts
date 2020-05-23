@@ -80,7 +80,6 @@ export const updateBoss = async (
         createdAt: toTimestamp(boss.createdAt),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }),
-    updateCampsBosses(db, boss.campId, boss.campName, id, boss.name, uid),
   ])
 }
 export const canEdit = (authUser: { uid: string }, boss: Boss) =>
@@ -156,11 +155,4 @@ export const readBosses = async (
     next: `${next.createdAt.seconds}${splitter}${next.createdAt.nanoseconds}`,
     hasMore: true,
   }
-}
-
-export const readCampsBosses = async (id: string) => {
-  const querySnapshot = await getCampsBosses(db).where('campId', '==', id).get()
-  const ret = []
-  querySnapshot.forEach((doc) => ret.push(doc.data()))
-  return ret
 }
