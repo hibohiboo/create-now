@@ -113,14 +113,14 @@ const Page: React.FC<{
             type="number"
             prop="stamina"
             labelText={t('lostrpg_character_common_stamina')}
-            readonly={true}
+            changeHandler={vm.staminaHandler}
           />
           <InputField
             model={vm.boss}
             type="number"
             prop="willPower"
             labelText={t('lostrpg_character_common_willPower')}
-            readonly={true}
+            changeHandler={vm.willPowerHandler}
           />
         </Box>
       </Box>

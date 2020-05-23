@@ -9,6 +9,7 @@ import {
   updateBoss,
   deleteBoss,
   readBosses,
+  getBoss,
 } from '~/firestore/boss'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
@@ -110,6 +111,11 @@ const fetchBossesMore = (
   await fetchBossesCommon(next, limit, dispatch, addBosses, searchName)
 }
 
+const fetchBoss = (id: string): AppThunk => async (dispatch) => {
+  const data = await getBoss(id)
+  dispatch(setBoss(data))
+}
+
 // ViewModel
 export const useBossEditViewModel = (bossId?: string) =>
   useSelector((state: { lost: LostModule }) => {
@@ -155,10 +161,13 @@ export const useBossEditViewModel = (bossId?: string) =>
       dispatch(setLocale(i18n.activeLocale))
     }, [])
     useEffect(() => {
-      if (!bossId && authUser) {
+      if (!id && authUser) {
         dispatch(
           setBoss({ ...boss, creatorName: authUser.displayName, specialties }),
         )
+      }
+      if (id && authUser) {
+        dispatch(fetchBoss(id))
       }
     }, [authUser])
     const dispatchSetBoss = (e, prop: string) => {
@@ -366,7 +375,15 @@ export const useBossViewModel = (bossInit: Boss) =>
       abilitiesColumns,
       statusAilments,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
-
+    const dispatchSetBoss = (e, prop: string) => {
+      const r = { ...boss }
+      if (typeof r[prop] === 'number') {
+        r[prop] = Number(e.target.value)
+      } else {
+        r[prop] = e.target.value
+      }
+      dispatch(setBoss(r))
+    }
     useEffect(() => {
       dispatch(setBoss(bossInit))
       dispatch(setLocale(i18n.activeLocale))
@@ -397,5 +414,7 @@ export const useBossViewModel = (bossInit: Boss) =>
               : [...boss.statusAilments, rowData['name']],
           }),
         ),
+      staminaHandler: (e) => dispatchSetBoss(e, 'stamina'),
+      willPowerHandler: (e) => dispatchSetBoss(e, 'willPower'),
     }
   })
