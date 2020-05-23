@@ -37,7 +37,7 @@ import {
 import { initBoss } from './boss'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
-import { useBossViewModel } from './boss'
+import { useBossViewModel, useBossesViewModel } from './boss'
 export type {
   Camp,
   Character,
@@ -203,7 +203,7 @@ const lostModule = createSlice({
     setCharactersRecords: (state, action: PayloadAction<Record[]>) => {
       state.records = action.payload
     },
-    setBosess: (
+    setBosses: (
       state,
       action: PayloadAction<{ id: string; name: string }[]>,
     ) => {
@@ -251,6 +251,7 @@ export {
   useCharacters,
   useCampsCharacters,
   useRecord,
+  useBossesViewModel,
 }
 
 // actions
@@ -272,7 +273,7 @@ export const {
   setCharactersRecords,
   setBoss,
   addBosses,
-  setBosess,
+  setBosses,
   toggleBossDamage,
 } = lostModule.actions
 

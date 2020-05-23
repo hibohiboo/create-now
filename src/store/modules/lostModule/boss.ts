@@ -4,8 +4,12 @@ import Router, { useRouter } from 'next/router'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
-import { readCharacters, readCampsCharacters } from '~/firestore/character'
-import { createBoss, updateBoss, deleteBoss } from '~/firestore/boss'
+import {
+  createBoss,
+  updateBoss,
+  deleteBoss,
+  readBosses,
+} from '~/firestore/boss'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
@@ -16,13 +20,12 @@ import {
   setPagenationLoading,
   paginationLoaded,
   setError,
-  setCharacters,
-  addCharacters,
-  setCampsCharacters,
-  setCharactersRecords,
+  useListPagination,
   toggleBossDamage,
   setBoss,
   setLocale,
+  setBosses,
+  addBosses,
 } from './index'
 import {
   damageBodyParts,
@@ -70,10 +73,43 @@ export const initBoss: Boss = {
   id: null,
 }
 // state
-export const useBoss = () =>
+const useBoss = () =>
   useSelector((state: { lost: LostModule }) => state.lost.boss)
-export const useBosses = () =>
+const useBosses = () =>
   useSelector((state: { lost: LostModule }) => state.lost.bosses)
+
+// thunks
+interface BossesLoaded {
+  bosses: { name: string; id: string }[]
+  next: string
+  hasMore: boolean
+}
+
+const fetchBossesCommon = async (next, limit, dispatch, action, searchName) => {
+  dispatch(setPagenationLoading(true))
+  try {
+    const ret: BossesLoaded = await readBosses(next, limit, searchName)
+    dispatch(paginationLoaded(ret))
+    dispatch(action(ret.bosses))
+  } catch (err) {
+    dispatch(setError(err.toString()))
+    dispatch(setPagenationLoading(false))
+  }
+}
+const fetchBosses = (limit: number, searchName = ''): AppThunk => async (
+  dispatch,
+) => {
+  await fetchBossesCommon(null, limit, dispatch, setBosses, searchName)
+}
+
+const fetchBossesMore = (
+  next: string,
+  limit: number,
+  searchName: string,
+): AppThunk => async (dispatch) => {
+  await fetchBossesCommon(next, limit, dispatch, addBosses, searchName)
+}
+
 // ViewModel
 export const useBossViewModel = (bossId?: string) =>
   useSelector((state: { lost: LostModule }) => {
@@ -88,7 +124,7 @@ export const useBossViewModel = (bossId?: string) =>
     const router = useRouter()
     const dispatch = useDispatch()
     const boss = useBoss()
-    const beforePage = `/lostrpg`
+    const beforePage = `/lostrpg/bosses/${i18n.activeLocale}/list`
     const {
       specialties,
       bodyParts,
@@ -275,7 +311,7 @@ export const useBossViewModel = (bossId?: string) =>
             pathname: `/lostrpg/public/[lng]/[view]`,
             query: { id: retId },
           },
-          `/lostrpg/public/${i18n.activeLocale}/character?id=${retId}`,
+          `/lostrpg/public/${i18n.activeLocale}/boss?id=${retId}`,
         )
       },
       deleteHandler: async () => {
@@ -284,5 +320,36 @@ export const useBossViewModel = (bossId?: string) =>
           Router.push(beforePage)
         }
       },
+    }
+  })
+export const useBossesViewModel = (bossId?: string) =>
+  useSelector((state: { lost: LostModule }) => {
+    const authUser = useAuth()
+    const i18n = useI18n()
+    const t = i18n.t
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const bosses = useBosses()
+    const beforePage = `/lostrpg`
+    const pagination = useListPagination()
+    const [search, setSearch] = useState({ name: '' })
+    useEffect(() => {
+      dispatch(fetchBosses(pagination.limit))
+      dispatch(createAuthClientSide())
+      dispatch(setLocale(i18n.activeLocale))
+    }, [])
+    return {
+      i18n,
+      authUser,
+      search,
+      pagination,
+      bosses,
+      beforePage,
+      searchHandler: (e) => setSearch({ ...search, name: e.target.value }),
+      filterHandler: () => dispatch(fetchBosses(pagination.limit, search.name)),
+      loadMoreHandler: () =>
+        dispatch(
+          fetchBossesMore(pagination.lastLoaded, pagination.limit, search.name),
+        ),
     }
   })

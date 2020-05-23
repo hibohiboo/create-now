@@ -26,7 +26,7 @@ import {
   useListPagination,
 } from '~/store/modules/lostModule'
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 360,

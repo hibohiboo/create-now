@@ -50,6 +50,14 @@ const Page: NextPage = () => {
             {t('lostrpg_index_characters')}
           </Link>
         </li>
+        <li>
+          <Link
+            href="/lostrpg/bosses/[lng]/list"
+            as={`/lostrpg/bosses/${i18n.activeLocale}/list`}
+          >
+            {t('lostrpg_index_bosses')}
+          </Link>
+        </li>
       </ul>
       {authUser ? (
         <ul>
@@ -64,6 +72,14 @@ const Page: NextPage = () => {
               as={`/lostrpg/characters/${i18n.activeLocale}/edit`}
             >
               {`${t('lostrpg_common_character')}${t('common_create')}`}
+            </Link>
+          </li>
+          <li>
+            <Link
+              href={`/lostrpg/bosses/[lng]/edit`}
+              as={`/lostrpg/bosses/${i18n.activeLocale}/edit`}
+            >
+              {`${t('lostrpg_common_boss')}${t('common_create')}`}
             </Link>
           </li>
         </ul>
