@@ -46,7 +46,7 @@ const Page: NextPage = () => {
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
             <h2>
               {t('lostrpg_boss_edit_title')}
-              {vm.boss.id ? t('common_edit') : t('common_create')}
+              {vm.id ? t('common_edit') : t('common_create')}
             </h2>
             <Box my={2}>
               <InputField

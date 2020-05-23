@@ -58,6 +58,7 @@ export const updateBoss = async (
   file?: File,
 ) => {
   let url = boss.imageUrl
+
   if (file) {
     const path = `${uid}/${id}`
     url = await updateImage(path, file)
