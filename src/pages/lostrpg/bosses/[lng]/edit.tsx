@@ -150,6 +150,18 @@ const Page: NextPage = () => {
                 rowUpdateHandler={vm.rowUpdateHandler}
                 rowDeleteHandler={vm.rowDeleteHandler}
               />
+              <TextAreaField
+                model={vm.boss}
+                prop="summary"
+                labelText={t('common_summary')}
+                changeHandler={vm.summaryHandler}
+              />
+              <TextAreaField
+                model={vm.boss}
+                prop="freeWriting"
+                labelText={t('lostrpg_character_common_memo')}
+                changeHandler={vm.freeWritingHandler}
+              />
             </Box>
           </Box>
         </Container>

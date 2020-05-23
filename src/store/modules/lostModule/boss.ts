@@ -171,6 +171,9 @@ export const useBossViewModel = (bossId?: string) =>
       },
       staminaHandler: (e) => dispatchSetBoss(e, 'stamina'),
       willPowerHandler: (e) => dispatchSetBoss(e, 'willPower'),
+      summaryHandler: (v: string) => dispatch(setBoss({ ...boss, summary: v })),
+      freeWritingHandler: (v: string) =>
+        dispatch(setBoss({ ...boss, freeWriting: v })),
       damageHandler: (name) => dispatch(toggleBossDamage(name)),
       gapHandler: (name) => {
         const gaps = boss.gaps.includes(name)
