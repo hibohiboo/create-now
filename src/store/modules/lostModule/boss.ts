@@ -97,10 +97,8 @@ const fetchBossesCommon = async (
 ) => {
   dispatch(setPagenationLoading(true))
   try {
-    console.log('uuid', uid)
     const ret: BossesLoaded = await readBosses(next, limit, searchName)
     const privateData = uid ? await readPrivateBosses(uid) : []
-    console.log('pdata', privateData)
     dispatch(paginationLoaded(ret))
     dispatch(action([...privateData, ...ret.bosses]))
   } catch (err) {
@@ -113,7 +111,6 @@ const fetchBosses = (
   searchName = '',
   uid = null,
 ): AppThunk => async (dispatch) => {
-  console.log('fetchboss')
   await fetchBossesCommon(null, limit, dispatch, setBosses, searchName, uid)
 }
 
@@ -177,7 +174,11 @@ export const useBossEditViewModel = (bossId?: string) =>
     useEffect(() => {
       if (!id && authUser) {
         dispatch(
-          setBoss({ ...boss, creatorName: authUser.displayName, specialties }),
+          setBoss({
+            ...initBoss,
+            creatorName: authUser.displayName,
+            specialties,
+          }),
         )
       }
       if (id && authUser) {
@@ -369,7 +370,6 @@ export const useBossesViewModel = (bossId?: string) =>
     }, [])
     useEffect(() => {
       if (authUser) {
-        console.log('uid', authUser)
         dispatch(fetchBosses(pagination.limit, '', authUser.uid))
         return
       }
