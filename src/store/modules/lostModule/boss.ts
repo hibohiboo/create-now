@@ -93,7 +93,6 @@ export const useBossViewModel = (bossId?: string) =>
       specialties,
       bodyParts,
       specialtiesTableColumns,
-      expCheckPoints,
       abilitiesColumns,
       abilityList,
       strangeFieldsAbilityList,
@@ -114,7 +113,6 @@ export const useBossViewModel = (bossId?: string) =>
       .filter((item) => abilityFilter === '' || item.name === abilityFilter)
       .map((item) => item.list)
       .flat()
-      .filter((item) => true)
 
     useEffect(() => {
       dispatch(createAuthClientSide())
