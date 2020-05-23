@@ -12,6 +12,7 @@ import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { useBossViewModel, Boss } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
 import SocialMeta from '~/components/SocialMeta'
+import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 
 const Page: React.FC<{
   boss: Boss
@@ -36,7 +37,7 @@ const Page: React.FC<{
       <Box my={4}>
         <h1>{vm.boss.name}</h1>
 
-        {authUser.uid !== vm.boss.uid ? (
+        {authUser && authUser.uid !== vm.boss.uid ? (
           <></>
         ) : (
           <Box my={1}>
@@ -87,6 +88,15 @@ const Page: React.FC<{
           damageHandler={vm.damageHandler}
         />
       </Box>
+      <Box my={2}>
+        <InputLabel>{t('lostrpg_character_common_bodyPartsTable')}</InputLabel>
+
+        <DamageTable
+          sevenLabel={t('lostrpg_character_common_attackersChoice')}
+          rows={vm.damageBodyParts}
+          damageHandler={vm.damageHandler}
+        />
+      </Box>
       <Box my={4}>
         <MaterialTable
           title={t('lostrpg_character_common_ability')}
@@ -122,7 +132,12 @@ const Page: React.FC<{
             {
               title: '',
               // eslint-disable-next-line react/display-name
-              render: (rowData) => <Checkbox checked={rowData['isChecked']} />,
+              render: (rowData) => (
+                <Checkbox
+                  checked={rowData['isChecked']}
+                  onChange={() => vm.statusAilmentsHandler(rowData)}
+                />
+              ),
             },
             {
               title: t('common_name'),

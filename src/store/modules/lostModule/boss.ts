@@ -386,6 +386,16 @@ export const useBossViewModel = (bossInit: Boss) =>
         effect,
         isChecked: boss.statusAilments.includes(name),
       })),
+      damageBodyParts: damageBodyParts(bodyParts, boss),
       damageHandler: (name) => dispatch(toggleBossDamage(name)),
+      statusAilmentsHandler: (rowData) =>
+        dispatch(
+          setBoss({
+            ...boss,
+            statusAilments: rowData['isChecked']
+              ? boss.statusAilments.filter((name) => name !== rowData['name'])
+              : [...boss.statusAilments, rowData['name']],
+          }),
+        ),
     }
   })
