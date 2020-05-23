@@ -32,7 +32,7 @@ const Page: NextPage = () => {
       <div style={{ display: 'none' }}>
         <LanguageSelector i18n={vm.i18n} />
       </div>
-      <h2>{t('lostrpg_character_list_title')}</h2>
+      <h2>{t('lostrpg_boss_list_title')}</h2>
       <Box mt={2}>
         {vm.authUser ? (
           <Link
@@ -67,7 +67,7 @@ const Page: NextPage = () => {
             aria-labelledby="nested-list-subheader"
             subheader={
               <ListSubheader component="div" id="nested-list-subheader">
-                {t('lostrpg_character_common_characterList')}
+                {t('lostrpg_boss_list_title')}
               </ListSubheader>
             }
             className={classes.root}

@@ -10,6 +10,7 @@ import {
   deleteBoss,
   readBosses,
   getBoss,
+  readPrivateBosses,
 } from '~/firestore/boss'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
@@ -86,21 +87,34 @@ interface BossesLoaded {
   hasMore: boolean
 }
 
-const fetchBossesCommon = async (next, limit, dispatch, action, searchName) => {
+const fetchBossesCommon = async (
+  next,
+  limit,
+  dispatch,
+  action,
+  searchName,
+  uid = null,
+) => {
   dispatch(setPagenationLoading(true))
   try {
+    console.log('uuid', uid)
     const ret: BossesLoaded = await readBosses(next, limit, searchName)
+    const privateData = uid ? await readPrivateBosses(uid) : []
+    console.log('pdata', privateData)
     dispatch(paginationLoaded(ret))
-    dispatch(action(ret.bosses))
+    dispatch(action([...privateData, ...ret.bosses]))
   } catch (err) {
     dispatch(setError(err.toString()))
     dispatch(setPagenationLoading(false))
   }
 }
-const fetchBosses = (limit: number, searchName = ''): AppThunk => async (
-  dispatch,
-) => {
-  await fetchBossesCommon(null, limit, dispatch, setBosses, searchName)
+const fetchBosses = (
+  limit: number,
+  searchName = '',
+  uid = null,
+): AppThunk => async (dispatch) => {
+  console.log('fetchboss')
+  await fetchBossesCommon(null, limit, dispatch, setBosses, searchName, uid)
 }
 
 const fetchBossesMore = (
@@ -329,6 +343,13 @@ export const useBossEditViewModel = (bossId?: string) =>
           Router.push(beforePage)
         }
       },
+      publishHandler: (e) =>
+        dispatch(
+          setBoss({
+            ...boss,
+            isPublish: e.target.checked,
+          }),
+        ),
     }
   })
 export const useBossesViewModel = (bossId?: string) =>
@@ -343,10 +364,17 @@ export const useBossesViewModel = (bossId?: string) =>
     const pagination = useListPagination()
     const [search, setSearch] = useState({ name: '' })
     useEffect(() => {
-      dispatch(fetchBosses(pagination.limit))
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
+    useEffect(() => {
+      if (authUser) {
+        console.log('uid', authUser)
+        dispatch(fetchBosses(pagination.limit, '', authUser.uid))
+        return
+      }
+      dispatch(fetchBosses(pagination.limit))
+    }, [authUser])
     return {
       i18n,
       authUser,

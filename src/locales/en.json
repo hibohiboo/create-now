@@ -7,7 +7,7 @@
   "lostrpg_common_party": "Party",
   "lostrpg_common_boss": "Boss",
   "lostrpg_common_level": "レベル",
-
+  "lostrpg_common_publish": "公開",
   "lostrpg_common_member": "member",
   "lostrpg_index_title": "LOSTRPG Support Page",
   "lostrpg_index_campList": "Camp List",
@@ -75,6 +75,7 @@
   "lostrpg_boss_edit_title": "LOSTRPG ヌシ",
   "lostrpg_boss_common_bossName": "ヌシ名",
   "lostrpg_boss_edit_abilityFilter": "アビリティ絞り込み",
+  "lostrpg_boss_list_title": "ヌシ一覧",
   "common_exp": "経験点",
   "common_memo": "メモ",
   "common_trophy": "trophy",

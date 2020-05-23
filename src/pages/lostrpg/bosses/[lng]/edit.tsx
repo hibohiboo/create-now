@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Button, Checkbox } from '@material-ui/core'
+import { Box, Button, Checkbox, FormControlLabel } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
@@ -199,6 +199,20 @@ const Page: NextPage = () => {
             </Box>
           </Box>
 
+          <Box m={2}>
+            <InputLabel>{t('lostrpg_common_publish')}</InputLabel>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={vm.boss.isPublish}
+                  onChange={vm.publishHandler}
+                  color="primary"
+                />
+              }
+              label={t('lostrpg_common_publish')}
+            />
+          </Box>
+
           <Box my={2}>
             <Button
               startIcon={<Save />}
@@ -214,6 +228,7 @@ const Page: NextPage = () => {
           ) : (
             <Box my={4}>
               <Button
+                startIcon={<DeleteOutline />}
                 onClick={vm.deleteHandler}
                 variant="contained"
                 color="secondary"

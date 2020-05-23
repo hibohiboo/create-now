@@ -36,6 +36,7 @@ export const createBoss = async (
     }),
     bossNames.doc(id).set({
       name: boss.name,
+      isPublish: boss.isPublish,
       uid,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -78,6 +79,7 @@ export const updateBoss = async (
       .set({
         name: boss.name,
         uid,
+        isPublish: boss.isPublish,
         createdAt: toTimestamp(boss.createdAt),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       }),
@@ -121,8 +123,11 @@ export const readBosses = async (
   searchName = '',
 ) => {
   let query = !searchName
-    ? getBossNames(db).orderBy('createdAt', 'desc')
+    ? getBossNames(db)
+        .where('isPublish', '==', true)
+        .orderBy('createdAt', 'desc')
     : getBossNames(db)
+        .where('isPublish', '==', true)
         .orderBy('name')
         .startAt(searchName)
         .endAt(searchName + '\uf8ff')
@@ -156,4 +161,25 @@ export const readBosses = async (
     next: `${next.createdAt.seconds}${splitter}${next.createdAt.nanoseconds}`,
     hasMore: true,
   }
+}
+export const readPrivateBosses = async (uid: string) => {
+  const querySnapshot = await getBossNames(db)
+    .where('isPublish', '==', false)
+    .where('uid', '==', uid)
+    .orderBy('createdAt', 'desc')
+    .get()
+
+  const bosses: any[] = []
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data()
+    bosses.push({
+      ...data,
+      createdAt: toSerializeObject(data.createdAt),
+      updatedAt: toSerializeObject(data.updatedAt),
+      id: doc.id,
+    })
+  })
+
+  return bosses
 }
