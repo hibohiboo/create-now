@@ -21,6 +21,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import TextField from '@material-ui/core/TextField'
 import { DeleteOutline, Help, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
+import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import TextAreaField from '~/components/form/TextAreaField'
@@ -98,6 +99,33 @@ const Page: NextPage = () => {
                   damageHandler={vm.damageHandler}
                 />
               </Box>
+              <Box my={2} display="flex">
+                <SelectField
+                  id="ability-filter"
+                  items={vm.abilityClasses}
+                  value={vm.abilityFilter}
+                  unselectedText={t('common_unselected')}
+                  labelText={t('lostrpg_boss_edit_abilityFilter')}
+                  changeHandler={vm.abilityFilterHandler}
+                />
+                <SelectField
+                  id="ability-select"
+                  items={vm.abilityList}
+                  value={''}
+                  unselectedText={t('common_unselected')}
+                  labelText={t('lostrpg_character_edit_addAbility')}
+                  changeHandler={vm.selectAbilityHandler}
+                />
+              </Box>
+
+              <EditableMaterialTable
+                title={t('lostrpg_character_common_ability')}
+                columns={vm.abilitiesColumns}
+                data={_.cloneDeep(vm.boss.abilities)}
+                rowAddHandler={vm.rowAddHandler}
+                rowUpdateHandler={vm.rowUpdateHandler}
+                rowDeleteHandler={vm.rowDeleteHandler}
+              />
             </Box>
           </Box>
         </Container>

@@ -80,6 +80,7 @@ export const useBossViewModel = (bossId?: string) =>
     // Validation State
     const [isValidError, setIsValidError] = useState(false)
     const [isSubmit, setIsSubmit] = useState(false)
+    const [abilityFilter, setAbilityFilter] = useState('')
     const authUser = useAuth()
     const i18n = useI18n()
     const t = i18n.t
@@ -87,9 +88,22 @@ export const useBossViewModel = (bossId?: string) =>
     const dispatch = useDispatch()
     const boss = useBoss()
     const beforePage = `/lostrpg`
-    const { specialties, bodyParts, specialtiesTableColumns, expCheckPoints } =
-      i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
+    const {
+      specialties,
+      bodyParts,
+      specialtiesTableColumns,
+      expCheckPoints,
+      abilitiesColumns,
+      abilityList,
+      strangeFieldsAbilityList,
+    } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     const id = bossId || (router.query.id as string)
+    const mergedAbilities = _.union(abilityList, strangeFieldsAbilityList)
+    const filteredAbilities = mergedAbilities
+      .filter((item) => abilityFilter === '' || item.name === abilityFilter)
+      .map((item) => item.list)
+      .flat()
+      .filter((item) => true)
 
     useEffect(() => {
       dispatch(createAuthClientSide())
@@ -107,6 +121,11 @@ export const useBossViewModel = (bossId?: string) =>
       r[prop] = e.target.value
       dispatch(setBoss(r))
     }
+    const updateRowData = (prop: string, toNextState: (d: any[]) => any[]) => {
+      const newData = { ...boss }
+      newData[prop] = toNextState([...boss[prop]])
+      dispatch(setBoss(newData))
+    }
     return {
       i18n,
       authUser,
@@ -117,6 +136,13 @@ export const useBossViewModel = (bossId?: string) =>
         boss,
       ),
       specialtiesTableRows: specialtiesTableRows(bodyParts, specialties, boss),
+      abilityList: filteredAbilities,
+      abilitiesColumns,
+      abilityClasses: _.uniqWith(
+        mergedAbilities.map(({ id, name }) => ({ id, name })),
+        _.isEqual,
+      ),
+      abilityFilter,
       creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
       bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
       damageHandler: (name) => dispatch(toggleBossDamage(name)),
@@ -144,5 +170,33 @@ export const useBossViewModel = (bossId?: string) =>
       },
       resetDamageHandler: () =>
         dispatch(setBoss({ ...boss, damagedSpecialties: [] })),
+      selectAbilityHandler: (item: Ability | null) => {
+        item &&
+          dispatch(
+            setBoss({
+              ...boss,
+              abilities: [...boss.abilities, item],
+            }),
+          )
+      },
+      abilityFilterHandler: (item) => item && setAbilityFilter(item.name),
+      rowAddHandler: (newData) => {
+        updateRowData('abilities', (d) => [...d, newData])
+      },
+      rowUpdateHandler: (newData, oldData) => {
+        updateRowData('abilities', (d) => {
+          d[d.findIndex((i) => i.name === oldData.name)] = newData
+          return d
+        })
+      },
+      rowDeleteHandler: (oldData) => {
+        updateRowData('abilities', (d) => {
+          d.splice(
+            d.findIndex((i) => i.name === oldData.name),
+            1,
+          )
+          return d
+        })
+      },
     }
   })
