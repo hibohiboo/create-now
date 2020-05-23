@@ -57,8 +57,8 @@ export const initBoss: Boss = {
   abilities: [],
   gaps: [],
   statusAilments: [],
-  stamina: 10,
-  willPower: 10,
+  stamina: 15,
+  willPower: 13,
   damagedSpecialties: [],
   summary: '',
   freeWriting: '',
@@ -127,7 +127,11 @@ export const useBossViewModel = (bossId?: string) =>
     }, [authUser])
     const dispatchSetBoss = (e, prop: string) => {
       const r = { ...boss }
-      r[prop] = e.target.value
+      if (typeof r[prop] === 'number') {
+        r[prop] = Number(e.target.value)
+      } else {
+        r[prop] = e.target.value
+      }
       dispatch(setBoss(r))
     }
     const updateRowData = (prop: string, toNextState: (d: any[]) => any[]) => {
@@ -154,6 +158,7 @@ export const useBossViewModel = (bossId?: string) =>
       abilityFilter,
       creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
       bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
+      levelHandler: (e) => dispatchSetBoss(e, 'level'),
       damageHandler: (name) => dispatch(toggleBossDamage(name)),
       gapHandler: (name) => {
         const gaps = boss.gaps.includes(name)

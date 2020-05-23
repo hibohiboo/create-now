@@ -79,6 +79,13 @@ const Page: NextPage = () => {
                   onChange={vm.bossNameHandler}
                 />
               </FormControl>
+              <InputField
+                model={vm.boss}
+                type="number"
+                prop="level"
+                labelText={t('lostrpg_common_level')}
+                changeHandler={vm.levelHandler}
+              />
               <Box my={2}>
                 <SpecialtiesTooltip
                   label={t('lostrpg_character_common_specialty')}
