@@ -14,18 +14,18 @@ const useStyles = makeStyles((theme) => ({
 
 const InputField: React.FC<{
   model: any
-  type: string
   prop: string
   labelText: string
+  type?: string
   changeHandler?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => void
   readonly?: boolean
 }> = ({
   model,
-  type,
   prop,
   labelText,
+  type = 'text',
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   changeHandler = () => {},
   readonly = false,

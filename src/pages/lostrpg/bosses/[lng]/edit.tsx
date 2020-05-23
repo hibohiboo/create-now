@@ -29,10 +29,9 @@ import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { contentLanguageMap } from '~/lib/i18n'
 import { useBossViewModel } from '~/store/modules/lostModule'
-
 import * as tableConfig from '~/lib/constants'
-
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
+import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 
 const Page: NextPage = () => {
   const vm = useBossViewModel()
@@ -48,21 +47,57 @@ const Page: NextPage = () => {
               httpEquiv="content-language"
               content={contentLanguageMap[vm.i18n.activeLocale]}
             />
-            <title>{t('lostrpg_index_title')}</title>
+            <title>{t('lostrpg_boss_edit_title')}</title>
           </Head>
+          <div style={{ display: 'none' }}>
+            <LanguageSelector i18n={vm.i18n} />
+          </div>
           <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
             <h2>
-              {t('lostrpg_character_edit_title')}
+              {t('lostrpg_boss_edit_title')}
               {vm.boss.id ? t('common_edit') : t('common_create')}
             </h2>
             <Box my={2}>
               <InputField
                 model={vm.boss}
-                type="text"
-                prop="playerName"
-                labelText={t('common_playerName')}
-                changeHandler={(e) => vm.dispatchSetBoss(e, 'playerName')}
+                prop="creatorName"
+                labelText={t('lostrpg_boss_common_creatorName')}
+                changeHandler={vm.creatorNameHandler}
               />
+
+              <FormControl fullWidth style={{ marginTop: '10px' }}>
+                <TextField
+                  id="bossName"
+                  required
+                  label={t('lostrpg_boss_common_bossName')}
+                  error={!vm.boss.name && vm.isSubmit}
+                  helperText={
+                    vm.boss.name || !vm.isSubmit ? '' : t('message_required')
+                  }
+                  value={vm.boss.name}
+                  onChange={vm.bossNameHandler}
+                />
+              </FormControl>
+              <Box my={2}>
+                <SpecialtiesTooltip
+                  label={t('lostrpg_character_common_specialty')}
+                  help={t('lostrpg_character_edit_specialtiesHelp')}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={vm.resetDamageHandler}
+                >
+                  {t('lostrpg_character_edit_resetDamage')}
+                </Button>
+                <SpecialtiesTable
+                  columns={vm.specialtiesTableColumns}
+                  rows={vm.specialtiesTableRows}
+                  gapHandler={vm.gapHandler}
+                  specialtyHandler={vm.specialtyHandler}
+                  damageHandler={vm.damageHandler}
+                />
+              </Box>
             </Box>
           </Box>
         </Container>

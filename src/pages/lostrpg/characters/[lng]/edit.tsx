@@ -11,9 +11,7 @@ import {
   Button,
   Chip,
   Checkbox,
-  Tooltip,
   FormControlLabel,
-  ClickAwayListener,
 } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -22,7 +20,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import { DeleteOutline, Help, Save } from '@material-ui/icons'
+import { DeleteOutline, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
@@ -33,6 +31,7 @@ import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 import { useAuth } from '~/store/modules/authModule'
 import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
+import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import useI18n from '~/hooks/use-i18n'
 import { contentLanguageMap } from '~/lib/i18n'
 import { createSetImageFile } from '~/utils/formHelper'
@@ -135,15 +134,6 @@ const Page: NextPage = () => {
       await deleteCharacter(id, authUser.uid)
       Router.push(beforePage)
     }
-  }
-
-  // ToolTip State
-  const [open, setOpen] = React.useState(false)
-  const handleTooltipClose = () => {
-    setOpen(false)
-  }
-  const handleTooltipOpen = () => {
-    setOpen(true)
   }
 
   useEffect(() => {
@@ -346,33 +336,10 @@ const Page: NextPage = () => {
             </Box>
 
             <Box my={2}>
-              <ClickAwayListener onClickAway={handleTooltipClose}>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  onClick={handleTooltipOpen}
-                  onMouseEnter={handleTooltipOpen}
-                  onMouseLeave={handleTooltipClose}
-                >
-                  <InputLabel>
-                    {t('lostrpg_character_common_specialty')}
-                  </InputLabel>
-                  <Tooltip
-                    PopperProps={{
-                      disablePortal: true,
-                    }}
-                    onClose={handleTooltipClose}
-                    open={open}
-                    disableFocusListener
-                    disableHoverListener
-                    disableTouchListener
-                    title={t('lostrpg_character_edit_specialtiesHelp')}
-                    placement="bottom-end"
-                  >
-                    <Help />
-                  </Tooltip>
-                </Box>
-              </ClickAwayListener>
+              <SpecialtiesTooltip
+                label={t('lostrpg_character_common_specialty')}
+                help={t('lostrpg_character_edit_specialtiesHelp')}
+              />
 
               <Button
                 variant="contained"

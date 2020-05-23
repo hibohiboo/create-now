@@ -20,10 +20,15 @@ import {
   addCharacters,
   setCampsCharacters,
   setCharactersRecords,
+  toggleBossDamage,
   setBoss,
   setLocale,
 } from './index'
-import { isBodyParts } from './character'
+import {
+  isBodyParts,
+  specialtiesTableRows,
+  makeSpecialtiesTableColumns,
+} from './character'
 export interface Boss {
   name: string
   level: number
@@ -70,7 +75,7 @@ export const useBoss = () =>
 export const useBosses = () =>
   useSelector((state: { lost: LostModule }) => state.lost.bosses)
 // ViewModel
-export const useBossViewModel = (recordId?: string, cid?: string) =>
+export const useBossViewModel = (bossId?: string) =>
   useSelector((state: { lost: LostModule }) => {
     // Validation State
     const [isValidError, setIsValidError] = useState(false)
@@ -81,20 +86,63 @@ export const useBossViewModel = (recordId?: string, cid?: string) =>
     const router = useRouter()
     const dispatch = useDispatch()
     const boss = useBoss()
-    const characterId = cid || (router.query.characterId as string)
-    const beforePage = `/lostrpg/public/${i18n.activeLocale}/character?id=${characterId}`
-    const { character } = state.lost
+    const beforePage = `/lostrpg`
     const { specialties, bodyParts, specialtiesTableColumns, expCheckPoints } =
       i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
-    const id = recordId || (router.query.id as string)
+    const id = bossId || (router.query.id as string)
+
     useEffect(() => {
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
+    useEffect(() => {
+      if (!bossId && authUser) {
+        dispatch(
+          setBoss({ ...boss, creatorName: authUser.displayName, specialties }),
+        )
+      }
+    }, [authUser])
     const dispatchSetBoss = (e, prop: string) => {
       const r = { ...boss }
       r[prop] = e.target.value
       dispatch(setBoss(r))
     }
-    return { i18n, authUser, boss, dispatchSetBoss }
+    return {
+      i18n,
+      authUser,
+      boss,
+      isSubmit,
+      specialtiesTableColumns: makeSpecialtiesTableColumns(
+        specialtiesTableColumns,
+        boss,
+      ),
+      specialtiesTableRows: specialtiesTableRows(bodyParts, specialties, boss),
+      creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
+      bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
+      damageHandler: (name) => dispatch(toggleBossDamage(name)),
+      gapHandler: (name) => {
+        const gaps = boss.gaps.includes(name)
+          ? boss.gaps.filter((item) => item !== name)
+          : [...boss.gaps, name]
+        dispatch(
+          setBoss({
+            ...boss,
+            gaps,
+          }),
+        )
+      },
+      specialtyHandler: (name) => {
+        const specialties = boss.specialties.includes(name)
+          ? boss.specialties.filter((item) => item !== name)
+          : [...boss.specialties, name]
+        dispatch(
+          setBoss({
+            ...boss,
+            specialties,
+          }),
+        )
+      },
+      resetDamageHandler: () =>
+        dispatch(setBoss({ ...boss, damagedSpecialties: [] })),
+    }
   })

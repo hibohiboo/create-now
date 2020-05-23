@@ -187,7 +187,7 @@ export const isBodyParts = (bodyParts, name) => bodyParts.includes(name)
 
 export const makeSpecialtiesTableColumns = (
   specialtiesTableColumns: any[],
-  character: Character,
+  character: { gaps: string[] },
 ) => {
   const makeData = (name) => {
     const selected = character.gaps.includes(name)
@@ -199,7 +199,11 @@ export const makeSpecialtiesTableColumns = (
 export const specialtiesTableRows = (
   bodyParts: string[],
   specialties: any[],
-  character: Character,
+  character: {
+    damagedSpecialties: string[]
+    gaps: string[]
+    specialties: string[]
+  },
 ) => {
   const makeData = (name, gap?) => {
     const selected =
