@@ -79,13 +79,30 @@ const Page: NextPage = () => {
                   onChange={vm.bossNameHandler}
                 />
               </FormControl>
-              <InputField
-                model={vm.boss}
-                type="number"
-                prop="level"
-                labelText={t('lostrpg_common_level')}
-                changeHandler={vm.levelHandler}
-              />
+              <Box my={2} display="flex" flex="wrap">
+                <InputField
+                  model={vm.boss}
+                  type="number"
+                  prop="level"
+                  labelText={t('lostrpg_common_level')}
+                  changeHandler={vm.levelHandler}
+                />
+                <InputField
+                  model={vm.boss}
+                  type="number"
+                  prop="stamina"
+                  labelText={t('lostrpg_character_common_stamina')}
+                  changeHandler={vm.staminaHandler}
+                />
+                <InputField
+                  model={vm.boss}
+                  type="number"
+                  prop="willPower"
+                  labelText={t('lostrpg_character_common_willPower')}
+                  changeHandler={vm.willPowerHandler}
+                />
+              </Box>
+
               <Box my={2}>
                 <SpecialtiesTooltip
                   label={t('lostrpg_character_common_specialty')}

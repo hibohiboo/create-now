@@ -158,7 +158,19 @@ export const useBossViewModel = (bossId?: string) =>
       abilityFilter,
       creatorNameHandler: (e) => dispatchSetBoss(e, 'creatorName'),
       bossNameHandler: (e) => dispatchSetBoss(e, 'name'),
-      levelHandler: (e) => dispatchSetBoss(e, 'level'),
+      levelHandler: (e) => {
+        const value = Number(e.target.value)
+        dispatch(
+          setBoss({
+            ...boss,
+            level: value,
+            stamina: value * 5,
+            willPower: 10 + value,
+          }),
+        )
+      },
+      staminaHandler: (e) => dispatchSetBoss(e, 'stamina'),
+      willPowerHandler: (e) => dispatchSetBoss(e, 'willPower'),
       damageHandler: (name) => dispatch(toggleBossDamage(name)),
       gapHandler: (name) => {
         const gaps = boss.gaps.includes(name)
