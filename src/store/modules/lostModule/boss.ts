@@ -96,9 +96,18 @@ export const useBossViewModel = (bossId?: string) =>
       abilitiesColumns,
       abilityList,
       strangeFieldsAbilityList,
+      trophyAbilityList,
+      enemyAbilityList,
+      strangeFieldsEnemyAbilityList,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     const id = bossId || (router.query.id as string)
-    const mergedAbilities = _.union(abilityList, strangeFieldsAbilityList)
+    const mergedAbilities = _.union(
+      enemyAbilityList,
+      strangeFieldsEnemyAbilityList,
+      abilityList,
+      strangeFieldsAbilityList,
+      trophyAbilityList,
+    )
     const filteredAbilities = mergedAbilities
       .filter((item) => abilityFilter === '' || item.name === abilityFilter)
       .map((item) => item.list)
