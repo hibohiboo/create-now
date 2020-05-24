@@ -202,14 +202,11 @@ const Page: NextPage = () => {
           <Box m={2}>
             <InputLabel>{t('lostrpg_common_publish')}</InputLabel>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={vm.boss.isPublish}
-                  onChange={vm.publishHandler}
-                  color="primary"
-                />
-              }
+              control={<Checkbox color="primary" />}
+              onChange={vm.publishHandler}
+              checked={vm.boss.isPublish}
               label={t('lostrpg_common_publish')}
+              value={vm.boss.isPublish}
             />
           </Box>
 

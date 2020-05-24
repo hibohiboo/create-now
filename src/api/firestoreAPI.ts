@@ -243,6 +243,7 @@ export const getBoss = async (id: string) => {
     willPower,
     stamina,
     summary,
+    isPublish,
   } = data.fields
   const ret: lost.Boss = {
     name: getStr(name),
@@ -269,6 +270,7 @@ export const getBoss = async (id: string) => {
     willPower: getInt(willPower),
     stamina: getInt(stamina),
     summary: getStr(summary),
+    isPublish: getBool(isPublish),
   }
   return ret
 }
