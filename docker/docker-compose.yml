@@ -2,7 +2,7 @@ version: '3'
 services:
   zeit_now:
     # Dockerfileビルド
-    build: ./now
+    build: ./vercel
     # ディレクトリを共有する。
     volumes:
       - ../src:/app/src
@@ -10,10 +10,10 @@ services:
       - ../fonts:/app/fonts
       - ../posts:/app/posts
       - ../api:/app/api
-      - ../.now:/app/.now
-      - ../now.json:/app/now.json
+      - ../.vercel:/app/.vercel
+      - ../vercel.json:/app/vercel.json
       - ../next.config.js:/app/next.config.js
-      - ../.nowignore:/app/.nowignore
+      - ../.vercelignore:/app/.vercelignore
       - ../tsconfig.json:/app/tsconfig.json
       - ../.eslintrc.js:/app/.eslintrc.js
       - ../.gitignore:/app/.gitignore
@@ -30,4 +30,4 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true # デフォルトの設定の場合、vagrantだとファイルの変更を検知できない。pollingが必要。
     working_dir: /app
-    command: [now, dev]
+    command: [vercel, dev]

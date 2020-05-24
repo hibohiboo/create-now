@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:14.2.0
+FROM node:14.3.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -9,17 +9,7 @@ WORKDIR /app
 COPY .npmrc /app/.npmrc
 RUN npm init -y
 
-# TODO: vercel@19.0.0以上 にアップデート
-# https://github.com/zeit/now/releases
-RUN npm i -g now@latest
-
 RUN npm i next react react-dom
-
-# now loginで出来た認証トークンを保存.一度コンテナを作成した後に追加。
-COPY ./now /root/.local/share/now/
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"dev\": \"next dev\", /g" /app/package.json
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build\": \"next build\", /g" /app/package.json
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"start\": \"next start\", /g" /app/package.json
 
 # TypeScript追加
 RUN npm i -D typescript @types/react @types/react-dom @types/node
@@ -62,6 +52,17 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
   --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
+
+
+# TODO: vercel@19.0.0以上 にアップデート
+# https://github.com/zeit/now/releases
+RUN npm i -g vercel@latest
+
+# vercel loginで出来た認証トークンを保存.一度コンテナを作成した後に追加。
+COPY ./com.vercel.cli /root/.local/share/com.vercel.cli/
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"dev\": \"next dev\", /g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build\": \"next build\", /g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"start\": \"next start\", /g" /app/package.json
 
 ## canvas library
 RUN npm install react-konva konva --save

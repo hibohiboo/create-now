@@ -114,3 +114,11 @@
 ### firebase storage
 
 [firebase storage](https://firebase.google.com/docs/storage/web/start?hl=ja)
+
+## markdown
+
+[Remark で広げる Markdown の世界](https://vivliostyle.github.io/vivliostyle_doc/ja/vivliostyle-user-group-vol2/spring-raining/index.html)
+
+### アニメーション
+
+[ウェブのアニメーションを「いい感じ」に魅せるズルいテクニック](https://ics.media/entry/14346/)
