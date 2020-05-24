@@ -14,6 +14,7 @@ import type {
 } from './character'
 import type { Record, Member } from './record'
 import type { Boss } from './boss'
+import type { Scenario } from './scenario'
 import {
   initCamp,
   useCamps,
@@ -34,14 +35,15 @@ import {
   fetchCampsCharacters,
   fetchCharactersRecords,
 } from './character'
-import { initBoss } from './boss'
 import { initialState, useListPagination } from './pagination'
 import { useRecord, useRecordViewModel, initRecord } from './record'
 import {
+  initBoss,
   useBossEditViewModel,
   useBossesViewModel,
   useBossViewModel,
 } from './boss'
+import { initScenario, useScenarioEditViewModel } from './scenario'
 export type {
   Camp,
   Character,
@@ -67,6 +69,8 @@ type LostState = {
   records: Record[]
   boss: Boss
   bosses: { id: string; name: string }[]
+  scenario: Scenario
+  scenarios: Scenario[]
 }
 
 export const init: LostState = {
@@ -82,6 +86,8 @@ export const init: LostState = {
   records: [],
   boss: initBoss,
   bosses: [],
+  scenario: initScenario,
+  scenarios: [],
 }
 
 const damageParts = (
@@ -241,6 +247,21 @@ const lostModule = createSlice({
         (target) => state.boss.damagedSpecialties.push(target),
       )
     },
+    setScenarios: (
+      state,
+      action: PayloadAction<{ id: string; name: string }[]>,
+    ) => {
+      state.scenarios = action.payload
+    },
+    addScenarios: (
+      state,
+      action: PayloadAction<{ id: string; name: string }[]>,
+    ) => {
+      state.scenarios = state.scenarios.concat(action.payload)
+    },
+    setScenario: (state, action: PayloadAction<Scenario>) => {
+      state.scenario = action.payload
+    },
   },
 })
 
@@ -279,6 +300,9 @@ export const {
   addBosses,
   setBosses,
   toggleBossDamage,
+  setScenario,
+  setScenarios,
+  addScenarios,
 } = lostModule.actions
 
 // ViewModel
@@ -288,6 +312,7 @@ export {
   useRecordViewModel,
   useBossEditViewModel,
   useBossViewModel,
+  useScenarioEditViewModel,
 }
 
 // thunk

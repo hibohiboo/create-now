@@ -19,14 +19,43 @@ import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { contentLanguageMap } from '~/lib/i18n'
-import { useBossEditViewModel } from '~/store/modules/lostModule'
+import { useScenarioEditViewModel } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 
 const Page: NextPage = () => {
-  const vm = useBossEditViewModel()
+  const vm = useScenarioEditViewModel()
   const t = vm.i18n.t
-  return <>{!vm.authUser ? <></> : <Container></Container>}</>
+  return (
+    <>
+      {!vm.authUser ? (
+        <></>
+      ) : (
+        <Container>
+          <Head>
+            <meta
+              httpEquiv="content-language"
+              content={contentLanguageMap[vm.i18n.activeLocale]}
+            />
+            <title>{t('lostrpg_common_scenario')}</title>
+          </Head>
+          <div style={{ display: 'none' }}>
+            <LanguageSelector i18n={vm.i18n} />
+          </div>
+          <h2>{t('lostrpg_common_scenario')}</h2>
+          <TextAreaField
+            model={vm.scenario}
+            prop="scenario"
+            labelText={t('lostrpg_common_scenario')}
+            changeHandler={vm.scenarioHandler}
+          />
+          <article>
+            <h1>{vm.scenario.name}</h1>
+          </article>
+        </Container>
+      )}
+    </>
+  )
 }
 export default Page
