@@ -73,7 +73,7 @@ export const mdToScenario = (md: string): Scenario => {
   let scenario = initScenario
   const phases: Phase[] = []
   let phase = null
-  let scenes = null
+  let scenes = []
   let scene = null
   let lines: string[] = []
 
@@ -83,9 +83,16 @@ export const mdToScenario = (md: string): Scenario => {
       return
     }
     if (c.type === 'heading' && c.depth === 2) {
-      if (phase !== null) phases.push(phase)
+      if (phase !== null) {
+        if (scene !== null) {
+          scene.lines = lines
+          scenes.push(scene)
+        }
+        phases.push({ ...phase, scenes })
+      }
       phase = { name: _.get(c, 'children[0].value'), scenes: [] }
       scenes = []
+      scene = null
       return
     }
     if (c.type === 'heading' && c.depth === 3) {
@@ -94,6 +101,7 @@ export const mdToScenario = (md: string): Scenario => {
         scenes.push(scene)
       }
       scene = { name: _.get(c, 'children[0].value'), lines: [] }
+      lines = []
       return
     }
     if (c.type === 'paragraph') {
@@ -104,8 +112,8 @@ export const mdToScenario = (md: string): Scenario => {
     scene.lines = lines
     scenes.push(scene)
   }
-  if (scenes !== null) phase.scenes = scenes
-  if (phase !== null) phases.push(phase)
+
+  if (phase !== null) phases.push({ ...phase, scenes })
 
   console.log(phases)
   console.log(children)
