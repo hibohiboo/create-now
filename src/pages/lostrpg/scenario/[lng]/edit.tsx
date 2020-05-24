@@ -27,6 +27,9 @@ import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesToolti
 const createScene = (scene, pi) => (
   <section key={`scene-${pi}-${scene.name}`}>
     <h3>{scene.name}</h3>
+    {scene.lines.map((line) => (
+      <p key={line}>{line}</p>
+    ))}
   </section>
 )
 

@@ -97,7 +97,7 @@ export const mdToScenario = (md: string): Scenario => {
       return
     }
     if (c.type === 'paragraph') {
-      lines = [...lines, ...getValues(c.children, [])]
+      lines = [...lines, ...getValues(c.children, []).reverse()]
     }
   })
   if (scene !== null) {
