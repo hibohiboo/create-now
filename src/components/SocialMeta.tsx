@@ -23,7 +23,6 @@ const component: React.FC<{
       content={image ? 'summary_large_image' : 'summary'}
     />
     {title && <meta name="og:title" content={title} />}
-    {title && <meta name="twitter:title" content={title} />}
     {url && <meta name="og:url" content={`${SITE_DOMAIN}${url}`} />}
     {description && <meta name="description" content={description} />}
     {description && <meta name="og:description" content={description} />}

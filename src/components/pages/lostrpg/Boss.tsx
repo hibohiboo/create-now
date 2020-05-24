@@ -28,16 +28,17 @@ const Page: React.FC<{
       <Head>
         <title>{vm.boss.name}</title>
       </Head>
+      {/* SocialMetaの中ではvmを使うと空文字になることがあるので控える。TwitterCardにog:titleが認識されないなど。 */}
       <SocialMeta
-        title={vm.boss.name}
-        description={vm.boss.summary}
+        title={boss.name}
+        description={boss.summary}
         url={`/lostrpg/public/${vm.i18n.activeLocale}/boss?id=${id}`}
-        image={vm.boss.imageUrl}
+        image={boss.imageUrl}
       />
       <Box my={4}>
-        <h1>{vm.boss.name}</h1>
+        <h1>{boss.name}</h1>
 
-        {authUser && authUser.uid !== vm.boss.uid ? (
+        {authUser && authUser.uid !== boss.uid ? (
           <></>
         ) : (
           <Box my={1}>
@@ -55,25 +56,25 @@ const Page: React.FC<{
       </Box>
 
       <Box style={{ width: '100%' }} display="flex" flexWrap="wrap">
-        {vm.boss.imageUrl ? (
+        {boss.imageUrl ? (
           <Box
             border={1}
             style={{
               minWidth: '320px',
             }}
           >
-            <img alt={t('common_image')} src={vm.boss.imageUrl} />{' '}
+            <img alt={t('common_image')} src={boss.imageUrl} />{' '}
           </Box>
         ) : (
           <></>
         )}
-        {vm.boss.summary.trim() ? (
+        {boss.summary.trim() ? (
           <Box
             border={1}
             p={1}
             style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
           >
-            {vm.boss.summary}
+            {boss.summary}
           </Box>
         ) : (
           <></>
