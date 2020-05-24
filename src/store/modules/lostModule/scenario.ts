@@ -28,23 +28,90 @@ import {
   setScenario,
   setScenarios,
   addScenarios,
+  setMarkdownForScenario,
 } from './index'
 import remark from 'remark'
 import html from 'remark-html'
+
+interface Scene {
+  name: string
+  lines: string[]
+}
+interface Phase {
+  name: string
+  scenes: []
+}
 
 export interface Scenario {
   id?: string
   name?: string
   md?: string // markdown
+  phases?: Phase[]
 }
 interface AstNode {
   type: string
-  cheldren: AstNode[]
+  children: AstNode[]
   position: Position
   depth?: number
+  value?: string
 }
 
-export const initScenario: Scenario = { id: '', name: '', md: '' }
+export const initScenario: Scenario = { id: '', name: '', md: '', phases: [] }
+const getValues = (children: AstNode[], result: string[]) => {
+  if (children.length === 0) return result
+  const node = children.pop()
+  if (node.type === 'text') result.push(node.value)
+  if (node.children && node.children.length !== 0)
+    result = [...result, ...getValues(node.children, [])]
+
+  return getValues(children, result)
+}
+export const mdToScenario = (md: string): Scenario => {
+  const processor = remark().use(html)
+  const parsed = processor.parse(md)
+  const children = parsed.children as AstNode[]
+  let scenario = initScenario
+  const phases: Phase[] = []
+  let phase = null
+  let scenes = null
+  let scene = null
+  let lines: string[] = []
+
+  children.forEach((c) => {
+    if (c.type === 'heading' && c.depth === 1) {
+      scenario = { ...scenario, name: _.get(c, 'children[0].value') }
+      return
+    }
+    if (c.type === 'heading' && c.depth === 2) {
+      if (phase !== null) phases.push(phase)
+      phase = { name: _.get(c, 'children[0].value'), scenes: [] }
+      scenes = []
+      return
+    }
+    if (c.type === 'heading' && c.depth === 3) {
+      if (scene !== null) {
+        scene.lines = lines
+        scenes.push(scene)
+      }
+      scene = { name: _.get(c, 'children[0].value'), lines: [] }
+      return
+    }
+    if (c.type === 'paragraph') {
+      lines = [...lines, ...getValues(c.children, [])]
+    }
+  })
+  if (scene !== null) {
+    scene.lines = lines
+    scenes.push(scene)
+  }
+  if (scenes !== null) phase.scenes = scenes
+  if (phase !== null) phases.push(phase)
+
+  console.log(phases)
+  console.log(children)
+  return { ...scenario, md, phases }
+}
+
 //ViewModel
 export const useScenarioEditViewModel = () =>
   useSelector((state: { lost: LostModule }) => {
@@ -66,29 +133,11 @@ export const useScenarioEditViewModel = () =>
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
-    const processor = remark().use(html)
-    const parsed = processor.parse(scenario.md)
-    const children = parsed.children as AstNode[]
-    const tmps = []
-    let tmp = []
-    children.forEach((c) => {
-      if (c.type === 'heading') {
-        if (tmp.length !== 0) tmps.push(tmp)
-        tmp = [c]
-        return
-      }
-      tmp.push(c)
-    })
-    console.log('tmps', tmps)
-    tmps.forEach((item) => {
-      //const a = processor.stringify({ children: item })
-      // console.log(a)
-    })
 
     return {
       scenario,
       i18n,
       authUser,
-      scenarioHandler: (e) => dispatch(setScenario({ ...scenario, md: e })),
+      scenarioHandler: (e) => dispatch(setMarkdownForScenario(e)),
     }
   })

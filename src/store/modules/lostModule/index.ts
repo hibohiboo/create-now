@@ -43,7 +43,11 @@ import {
   useBossesViewModel,
   useBossViewModel,
 } from './boss'
-import { initScenario, useScenarioEditViewModel } from './scenario'
+import {
+  initScenario,
+  useScenarioEditViewModel,
+  mdToScenario,
+} from './scenario'
 export type {
   Camp,
   Character,
@@ -262,6 +266,9 @@ const lostModule = createSlice({
     setScenario: (state, action: PayloadAction<Scenario>) => {
       state.scenario = action.payload
     },
+    setMarkdownForScenario: (state, action: PayloadAction<string>) => {
+      state.scenario = mdToScenario(action.payload)
+    },
   },
 })
 
@@ -303,6 +310,7 @@ export const {
   setScenario,
   setScenarios,
   addScenarios,
+  setMarkdownForScenario,
 } = lostModule.actions
 
 // ViewModel

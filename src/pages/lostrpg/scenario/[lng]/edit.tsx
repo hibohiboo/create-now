@@ -24,6 +24,19 @@ import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 
+const createScene = (scene, pi) => (
+  <section key={`scene-${pi}-${scene.name}`}>
+    <h3>{scene.name}</h3>
+  </section>
+)
+
+const createPhase = (phase, pi) => (
+  <section key={`phase-${pi}-${phase.name}`}>
+    <h2>{phase.name}</h2>
+    {phase.scenes.map(createScene)}
+  </section>
+)
+
 const Page: NextPage = () => {
   const vm = useScenarioEditViewModel()
   const t = vm.i18n.t
@@ -52,6 +65,7 @@ const Page: NextPage = () => {
           />
           <article>
             <h1>{vm.scenario.name}</h1>
+            {vm.scenario.phases.map(createPhase)}
           </article>
         </Container>
       )}
