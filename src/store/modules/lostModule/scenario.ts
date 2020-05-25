@@ -34,16 +34,32 @@ import remark from 'remark'
 import html from 'remark-html'
 // import remark2rehype from 'remark-rehype'
 
-interface Scene {
+interface Event {
   name: string
   lines: string[]
   items: string[]
 }
+
+interface Scene {
+  name: string
+  lines: string[]
+  events: Event[]
+}
 interface Phase {
   name: string
-  scenes: []
+  scenes: Scene[]
 }
-
+interface ScenarioPayload {
+  phases: Phase[]
+  phase: Phase
+  scenes: Scene[]
+  scene: Scene
+  events: Event[]
+  event: Event
+  sceneLines: string[]
+  eventLines: string[]
+  items: string[]
+}
 export interface Scenario {
   id?: string
   name?: string
@@ -73,25 +89,39 @@ export const mdToScenario = (md: string): Scenario => {
   const parsed = processor.parse(md)
   const children = parsed.children as AstNode[]
   let scenario = initScenario
-  const phases: Phase[] = []
-  let phase = null
-  let scenes = []
-  let scene = null
-  let lines: string[] = []
-  let items: string[] = []
 
-  const pushScene = (scenes, scene, lines, items) => {
-    if (scene !== null) {
-      scene.lines = lines
-      scene.items = items
-      scenes.push(scene)
-    }
+  const payload: ScenarioPayload = {
+    phases: [],
+    phase: null,
+    scenes: [],
+    scene: null,
+    events: [],
+    event: null,
+    sceneLines: [],
+    eventLines: [],
+    items: [],
   }
-  const PushPhase = (phases, phase, scenes, scene, lines) => {
-    if (phase !== null) {
-      pushScene(scenes, scene, lines, items)
-      phases.push({ ...phase, scenes })
-    }
+
+  const pushEvent = (payload: ScenarioPayload) => {
+    if (payload.event === null) return
+    payload.events.push({
+      ...payload.event,
+      lines: payload.eventLines,
+      items: payload.items,
+    })
+  }
+
+  const pushScene = (payload: ScenarioPayload) => {
+    if (payload.scene === null) return
+    pushEvent(payload)
+    payload.scene.lines = payload.sceneLines
+    payload.scene.events = payload.events
+    payload.scenes.push(payload.scene)
+  }
+  const PushPhase = (payload: ScenarioPayload) => {
+    if (payload.phase === null) return
+    pushScene(payload)
+    payload.phases.push({ ...payload.phase, scenes: payload.scenes })
   }
   children.forEach((c) => {
     if (c.type === 'heading' && c.depth === 1) {
@@ -99,20 +129,37 @@ export const mdToScenario = (md: string): Scenario => {
       return
     }
     if (c.type === 'heading' && c.depth === 2) {
-      PushPhase(phases, phase, scenes, scene, lines)
-      phase = { name: _.get(c, 'children[0].value'), scenes: [] }
-      scenes = []
-      scene = null
+      PushPhase(payload)
+      payload.phase = { name: _.get(c, 'children[0].value'), scenes: [] }
+      payload.scenes = []
+      payload.scene = null
       return
     }
     if (c.type === 'heading' && c.depth === 3) {
-      pushScene(scenes, scene, lines, items)
-      scene = { name: _.get(c, 'children[0].value'), lines: [], items: [] }
-      lines = []
-      items = []
+      pushScene(payload)
+      payload.scene = {
+        name: _.get(c, 'children[0].value'),
+        lines: [],
+        events: [],
+      }
+      payload.sceneLines = []
+      payload.events = []
+      payload.event = null
       return
     }
     if (c.type === 'heading' && c.depth === 4) {
+      pushEvent(payload)
+      payload.event = {
+        name: _.get(c, 'children[0].value'),
+        lines: [],
+        items: [],
+      }
+
+      payload.eventLines = []
+      payload.items = []
+      return
+    }
+    if (c.type === 'heading' && c.depth === 5) {
       const [
         original,
         val,
@@ -121,20 +168,23 @@ export const mdToScenario = (md: string): Scenario => {
         _.get(c, 'children[0].value'),
       )
       if (key === 'item') {
-        items.push(val)
+        payload.items.push(val)
       }
       return
     }
     if (c.type === 'paragraph') {
-      lines = [...lines, ...getValues(c.children, []).reverse()]
+      if (payload.event === null) {
+        payload.sceneLines.push(getValues(c.children, []).reverse())
+        return
+      }
+      payload.eventLines.push(getValues(c.children, []).reverse())
     }
   })
-  pushScene(scenes, scene, lines, items)
-  PushPhase(phases, phase, scenes, scene, lines)
+  PushPhase(payload)
 
-  console.log(phases)
+  console.log(payload.phases)
   console.log(children)
-  return { ...scenario, md, phases }
+  return { ...scenario, md, phases: payload.phases }
 }
 
 //ViewModel

@@ -1,20 +1,29 @@
 import type { Scenario } from '~/store/modules/lostModule'
-
-const createScene = (scene, pi) => (
+const createEvent = (event, ei) => (
   <details
-    key={`scene-${pi}-${scene.name}`}
+    key={`event-${ei}-${event.name}`}
     open={true}
     style={{ paddingLeft: '20px' }}
   >
-    <summary>{scene.name}</summary>
+    <summary>{event.name}</summary>
     <ul>
-      {scene.items.map((item) => (
+      {event.items.map((item) => (
         <li key={item}>
           <i className="fas fa-shopping-bag"></i>
           {item}
         </li>
       ))}
     </ul>
+  </details>
+)
+const createScene = (scene, si) => (
+  <details
+    key={`scene-${si}-${scene.name}`}
+    open={true}
+    style={{ paddingLeft: '20px' }}
+  >
+    <summary>{scene.name}</summary>
+    {scene.events.map(createEvent)}
   </details>
 )
 
