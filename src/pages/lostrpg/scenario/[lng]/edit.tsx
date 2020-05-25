@@ -58,6 +58,12 @@ const Page: NextPage = () => {
               content={contentLanguageMap[vm.i18n.activeLocale]}
             />
             <title>{t('lostrpg_common_scenario')}</title>
+            <link
+              rel="stylesheet"
+              href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+              integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+              crossOrigin="anonymous"
+            />
           </Head>
           <div style={{ display: 'none' }}>
             <LanguageSelector i18n={vm.i18n} />

@@ -32,10 +32,12 @@ import {
 } from './index'
 import remark from 'remark'
 import html from 'remark-html'
+// import remark2rehype from 'remark-rehype'
 
 interface Scene {
   name: string
   lines: string[]
+  items: string[]
 }
 interface Phase {
   name: string
@@ -76,44 +78,59 @@ export const mdToScenario = (md: string): Scenario => {
   let scenes = []
   let scene = null
   let lines: string[] = []
+  let items: string[] = []
 
+  const pushScene = (scenes, scene, lines, items) => {
+    if (scene !== null) {
+      scene.lines = lines
+      scene.items = items
+      scenes.push(scene)
+    }
+  }
+  const PushPhase = (phases, phase, scenes, scene, lines) => {
+    if (phase !== null) {
+      pushScene(scenes, scene, lines, items)
+      phases.push({ ...phase, scenes })
+    }
+  }
   children.forEach((c) => {
     if (c.type === 'heading' && c.depth === 1) {
       scenario = { ...scenario, name: _.get(c, 'children[0].value') }
       return
     }
     if (c.type === 'heading' && c.depth === 2) {
-      if (phase !== null) {
-        if (scene !== null) {
-          scene.lines = lines
-          scenes.push(scene)
-        }
-        phases.push({ ...phase, scenes })
-      }
+      PushPhase(phases, phase, scenes, scene, lines)
       phase = { name: _.get(c, 'children[0].value'), scenes: [] }
       scenes = []
       scene = null
       return
     }
     if (c.type === 'heading' && c.depth === 3) {
-      if (scene !== null) {
-        scene.lines = lines
-        scenes.push(scene)
-      }
-      scene = { name: _.get(c, 'children[0].value'), lines: [] }
+      pushScene(scenes, scene, lines, items)
+      scene = { name: _.get(c, 'children[0].value'), lines: [], items: [] }
       lines = []
+      items = []
+      return
+    }
+    if (c.type === 'heading' && c.depth === 4) {
+      const [
+        original,
+        val,
+        key,
+      ] = /\s*([^\s]+)\s*\{\s*\.([^\s]+)\s*\}\s*/g.exec(
+        _.get(c, 'children[0].value'),
+      )
+      if (key === 'item') {
+        items.push(val)
+      }
       return
     }
     if (c.type === 'paragraph') {
       lines = [...lines, ...getValues(c.children, []).reverse()]
     }
   })
-  if (scene !== null) {
-    scene.lines = lines
-    scenes.push(scene)
-  }
-
-  if (phase !== null) phases.push({ ...phase, scenes })
+  pushScene(scenes, scene, lines, items)
+  PushPhase(phases, phase, scenes, scene, lines)
 
   console.log(phases)
   console.log(children)
