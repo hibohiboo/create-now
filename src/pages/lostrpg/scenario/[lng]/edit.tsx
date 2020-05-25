@@ -23,16 +23,16 @@ import { useScenarioEditViewModel } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
+import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 
 const createScene = (scene, pi) => (
   <section key={`scene-${pi}-${scene.name}`}>
     <h3>{scene.name}</h3>
-    <details>
-      {/* <summary>{scene.name}</summary> */}
-      {scene.lines.map((line) => (
-        <p key={line}>{line}</p>
-      ))}
-    </details>
+
+    {/* <summary>{scene.name}</summary> */}
+    {scene.lines.map((line) => (
+      <p key={line}>{line}</p>
+    ))}
   </section>
 )
 
@@ -70,8 +70,13 @@ const Page: NextPage = () => {
             changeHandler={vm.scenarioHandler}
           />
           <article>
-            <h1>{vm.scenario.name}</h1>
-            {vm.scenario.phases.map(createPhase)}
+            <Box display="flex">
+              <ScenarioTree scenario={vm.scenario} />
+              <Box mx={3}>
+                <h1>{vm.scenario.name}</h1>
+                {vm.scenario.phases.map(createPhase)}
+              </Box>
+            </Box>
           </article>
         </Container>
       )}

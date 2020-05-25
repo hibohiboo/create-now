@@ -57,6 +57,7 @@ export type {
   Bag,
   Record,
   Boss,
+  Scenario,
 }
 export { initCamp, initCharacter, initBag }
 
