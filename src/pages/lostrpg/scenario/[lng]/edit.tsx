@@ -38,6 +38,7 @@ import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 const createTable = (table) => {
   return (
     <Table>
+      <caption style={{ captionSide: 'top' }}>{table.title}</caption>
       <TableHead>
         <TableRow>
           {table.columns.map((cell, i) => (

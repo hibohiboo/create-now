@@ -39,6 +39,12 @@ const createEvent = (event, ei) => (
           {path}
         </li>
       ))}
+      {event.tables.map((table) => (
+        <li key={table.title}>
+          <i className="fas fa-list-ol"></i>
+          {table.title}
+        </li>
+      ))}
     </ul>
   </details>
 )

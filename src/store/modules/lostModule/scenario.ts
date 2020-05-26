@@ -75,6 +75,7 @@ interface ScenarioPayload {
   tables: Table[]
   rolls: string[]
   paths: string[]
+  tableTitle: string
 }
 export interface Scenario {
   id?: string
@@ -128,11 +129,13 @@ export const mdToScenario = (md: string): Scenario => {
     tables: [],
     rolls: [],
     paths: [],
+    tableTitle: '',
   }
-  const getTable = (node: AstNode) => {
+  const getTable = (node: AstNode, title: string) => {
     if (node.children.length < 2) return null
     const [columns, ...rows] = node.children
     return {
+      title,
       columns: columns.children.map((cell) => _.get(cell, 'children[0].value')),
       rows: rows.map((row) => ({
         cells: row.children.map((cell) => _.get(cell, 'children[0].value')),
@@ -225,6 +228,9 @@ export const mdToScenario = (md: string): Scenario => {
       if (key === 'path') {
         payload.paths.push(val)
       }
+      if (key === 'table') {
+        payload.tableTitle = val
+      }
       return
     }
     if (c.type === 'paragraph') {
@@ -235,8 +241,9 @@ export const mdToScenario = (md: string): Scenario => {
       payload.eventLines.push(getValues(c.children, []).reverse())
     }
     if (c.type === 'table') {
-      const table = getTable(c)
+      const table = getTable(c, payload.tableTitle)
       if (table) payload.tables.push(table)
+      payload.tableTitle = ''
     }
   })
   PushPhase(payload)
