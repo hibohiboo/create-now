@@ -25,6 +25,15 @@ import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 
+const createEvent = (event, pi) => (
+  <section key={`event-${pi}-${event.name}`}>
+    <h4>{event.name}</h4>
+    {event.lines.map((line) => (
+      <p key={line}>{line}</p>
+    ))}
+  </section>
+)
+
 const createScene = (scene, pi) => (
   <section key={`scene-${pi}-${scene.name}`}>
     <h3>{scene.name}</h3>
@@ -33,6 +42,7 @@ const createScene = (scene, pi) => (
     {scene.lines.map((line) => (
       <p key={line}>{line}</p>
     ))}
+    {scene.events.map(createEvent)}
   </section>
 )
 

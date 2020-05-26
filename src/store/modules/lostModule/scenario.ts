@@ -33,12 +33,18 @@ import {
 import remark from 'remark'
 import html from 'remark-html'
 // import remark2rehype from 'remark-rehype'
-
+interface TableRow {
+  cells: string[]
+}
+interface Table {
+  rows: TableRow[]
+}
 interface Event {
   name: string
   type: string
   lines: string[]
   items: string[]
+  tables: Table[]
 }
 
 interface Scene {
@@ -62,6 +68,7 @@ interface ScenarioPayload {
   sceneLines: string[]
   eventLines: string[]
   items: string[]
+  tables: Table[]
 }
 export interface Scenario {
   id?: string
@@ -114,7 +121,13 @@ export const mdToScenario = (md: string): Scenario => {
     sceneLines: [],
     eventLines: [],
     items: [],
+    tables: [],
   }
+  const getTable = (node: AstNode) => ({
+    rows: node.children.map((row) => ({
+      cells: row.children.map((cell) => _.get(cell, 'children[0].value')),
+    })),
+  })
 
   const pushEvent = (payload: ScenarioPayload) => {
     if (payload.event === null) return
@@ -122,6 +135,7 @@ export const mdToScenario = (md: string): Scenario => {
       ...payload.event,
       lines: payload.eventLines,
       items: payload.items,
+      tables: payload.tables,
     })
   }
 
@@ -175,10 +189,12 @@ export const mdToScenario = (md: string): Scenario => {
         type: key || 'view',
         lines: [],
         items: [],
+        tables: [],
       }
 
       payload.eventLines = []
       payload.items = []
+      payload.tables = []
       return
     }
     if (c.type === 'heading' && c.depth === 5) {
@@ -194,6 +210,9 @@ export const mdToScenario = (md: string): Scenario => {
         return
       }
       payload.eventLines.push(getValues(c.children, []).reverse())
+    }
+    if (c.type === 'table') {
+      payload.tables.push(getTable(c))
     }
   })
   PushPhase(payload)

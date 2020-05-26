@@ -6,7 +6,15 @@ const createEvent = (event, ei) => (
     style={{ paddingLeft: '20px' }}
   >
     <summary>
-      {event.type === 'view' ? <i className="far fa-image"></i> : <></>}
+      {event.type === 'view' ? (
+        <i className="far fa-image"></i>
+      ) : event.type === 'battle' ? (
+        <i className="fas fa-dragon"></i>
+      ) : event.type === 'roll' ? (
+        <i className="fas fa-dice"></i>
+      ) : (
+        <></>
+      )}{' '}
       {event.name}
     </summary>
     <ul>
@@ -31,7 +39,7 @@ const createScene = (scene, si) => (
       ) : (
         <></>
       )}
-      {scene.alias ? <span>{`${scene.alias}:`}</span> : <></>}
+      {/* {scene.alias ? <span>{`${scene.alias}:`}</span> : <></>} */}
       {scene.name}
     </summary>
     {scene.events.map(createEvent)}
