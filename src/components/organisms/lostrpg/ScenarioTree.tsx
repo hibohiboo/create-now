@@ -5,7 +5,10 @@ const createEvent = (event, ei) => (
     open={true}
     style={{ paddingLeft: '20px' }}
   >
-    <summary>{event.name}</summary>
+    <summary>
+      {event.type === 'view' ? <i className="far fa-image"></i> : <></>}
+      {event.name}
+    </summary>
     <ul>
       {event.items.map((item) => (
         <li key={item}>
@@ -22,7 +25,15 @@ const createScene = (scene, si) => (
     open={true}
     style={{ paddingLeft: '20px' }}
   >
-    <summary>{scene.name}</summary>
+    <summary>
+      {scene.type === 'checkpoint' ? (
+        <i className="far fa-check-circle"></i>
+      ) : (
+        <></>
+      )}
+      {scene.alias ? <span>{`${scene.alias}:`}</span> : <></>}
+      {scene.name}
+    </summary>
     {scene.events.map(createEvent)}
   </details>
 )

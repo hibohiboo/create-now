@@ -36,6 +36,7 @@ import html from 'remark-html'
 
 interface Event {
   name: string
+  type: string
   lines: string[]
   items: string[]
 }
@@ -44,6 +45,8 @@ interface Scene {
   name: string
   lines: string[]
   events: Event[]
+  type?: string
+  alias?: string
 }
 interface Phase {
   name: string
@@ -84,6 +87,17 @@ const getValues = (children: AstNode[], result: string[]) => {
 
   return getValues(children, result)
 }
+const getAttributes = (text: string) => {
+  if (!text) return [null, null]
+  const result = /\s*([^\s]+)\s*\{\s*\.([^}]*)\s*\}\s*/g.exec(text)
+  if (!result) return [null, null]
+  const [original, val, attr] = result
+  const attributes = attr.replace(/\s/, '').split('.')
+  console.log('or', original)
+  console.log('attr', attributes)
+  return [val, ...attributes.map((a) => a.trim().replace(/^\./, ''))]
+}
+
 export const mdToScenario = (md: string): Scenario => {
   const processor = remark().use(html)
   const parsed = processor.parse(md)
@@ -137,10 +151,15 @@ export const mdToScenario = (md: string): Scenario => {
     }
     if (c.type === 'heading' && c.depth === 3) {
       pushScene(payload)
+      const value = _.get(c, 'children[0].value')
+      const name = _.get(c, 'children[0].value')
+      const [val, type, alias] = getAttributes(value)
       payload.scene = {
-        name: _.get(c, 'children[0].value'),
+        name: val || name,
         lines: [],
         events: [],
+        type,
+        alias,
       }
       payload.sceneLines = []
       payload.events = []
@@ -149,8 +168,11 @@ export const mdToScenario = (md: string): Scenario => {
     }
     if (c.type === 'heading' && c.depth === 4) {
       pushEvent(payload)
+      const value = _.get(c, 'children[0].value')
+      const [val, key] = getAttributes(value)
       payload.event = {
-        name: _.get(c, 'children[0].value'),
+        name: val || value,
+        type: key || 'view',
         lines: [],
         items: [],
       }
@@ -160,13 +182,7 @@ export const mdToScenario = (md: string): Scenario => {
       return
     }
     if (c.type === 'heading' && c.depth === 5) {
-      const [
-        original,
-        val,
-        key,
-      ] = /\s*([^\s]+)\s*\{\s*\.([^\s]+)\s*\}\s*/g.exec(
-        _.get(c, 'children[0].value'),
-      )
+      const [val, key] = getAttributes(_.get(c, 'children[0].value'))
       if (key === 'item') {
         payload.items.push(val)
       }
