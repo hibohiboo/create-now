@@ -10,8 +10,8 @@ const createEvent = (event, ei) => (
         <i className="far fa-image"></i>
       ) : event.type === 'battle' ? (
         <i className="fas fa-dragon"></i>
-      ) : event.type === 'roll' ? (
-        <i className="fas fa-dice"></i>
+      ) : event.type === 'search' ? (
+        <i className="fas fa-search"></i>
       ) : (
         <></>
       )}{' '}
@@ -22,6 +22,12 @@ const createEvent = (event, ei) => (
         <li key={item}>
           <i className="fas fa-shopping-bag"></i>
           {item}
+        </li>
+      ))}
+      {event.rolls.map((roll) => (
+        <li key={roll}>
+          <i className="fas fa-dice"></i>
+          {roll}
         </li>
       ))}
     </ul>
@@ -59,7 +65,7 @@ const createPhase = (phase, pi) => (
 
 const ScenarioTree: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
   return (
-    <details open={true} style={{ minWidth: '200px' }}>
+    <details open={true} style={{ minWidth: '230px' }}>
       <summary>{scenario.name}</summary>
       {scenario.phases.map(createPhase)}
     </details>

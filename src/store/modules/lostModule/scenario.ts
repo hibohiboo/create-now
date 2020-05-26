@@ -37,6 +37,7 @@ interface TableRow {
   cells: string[]
 }
 interface Table {
+  title?: string
   columns: TableRow[]
   rows: TableRow[]
 }
@@ -46,6 +47,7 @@ interface Event {
   lines: string[]
   items: string[]
   tables: Table[]
+  rolls: string[]
 }
 
 interface Scene {
@@ -70,6 +72,7 @@ interface ScenarioPayload {
   eventLines: string[]
   items: string[]
   tables: Table[]
+  rolls: string[]
 }
 export interface Scenario {
   id?: string
@@ -101,8 +104,6 @@ const getAttributes = (text: string) => {
   if (!result) return [null, null]
   const [original, val, attr] = result
   const attributes = attr.replace(/\s/, '').split('.')
-  console.log('or', original)
-  console.log('attr', attributes)
   return [val, ...attributes.map((a) => a.trim().replace(/^\./, ''))]
 }
 
@@ -123,6 +124,7 @@ export const mdToScenario = (md: string): Scenario => {
     eventLines: [],
     items: [],
     tables: [],
+    rolls: [],
   }
   const getTable = (node: AstNode) => {
     if (node.children.length < 2) return null
@@ -142,6 +144,7 @@ export const mdToScenario = (md: string): Scenario => {
       lines: payload.eventLines,
       items: payload.items,
       tables: payload.tables,
+      rolls: payload.rolls,
     })
   }
 
@@ -196,17 +199,22 @@ export const mdToScenario = (md: string): Scenario => {
         lines: [],
         items: [],
         tables: [],
+        rolls: [],
       }
 
       payload.eventLines = []
       payload.items = []
       payload.tables = []
+      payload.rolls = []
       return
     }
     if (c.type === 'heading' && c.depth === 5) {
       const [val, key] = getAttributes(_.get(c, 'children[0].value'))
       if (key === 'item') {
         payload.items.push(val)
+      }
+      if (key === 'roll') {
+        payload.rolls.push(val)
       }
       return
     }
@@ -219,7 +227,6 @@ export const mdToScenario = (md: string): Scenario => {
     }
     if (c.type === 'table') {
       const table = getTable(c)
-      console.log('table', table)
       if (table) payload.tables.push(table)
     }
   })
