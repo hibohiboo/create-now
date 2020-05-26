@@ -9,6 +9,7 @@ services:
       - ../public:/app/public
       - ../fonts:/app/fonts
       - ../posts:/app/posts
+      - ../data:/app/data
       - ../api:/app/api
       - ../.vercel:/app/.vercel
       - ../vercel.json:/app/vercel.json
