@@ -3,7 +3,17 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Button, Checkbox, FormControlLabel } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
@@ -25,12 +35,36 @@ import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 
+const createTable = (table) => {
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          {table.columns.map((cell, i) => (
+            <TableCell key={`${cell}-${i}`}>{cell}</TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {table.rows.map((row, i) => (
+          <TableRow key={`row-${i}`}>
+            {row.cells.map((cell) => (
+              <TableCell key={`${cell}-${i}`}>{cell}</TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
+}
+
 const createEvent = (event, pi) => (
   <section key={`event-${pi}-${event.name}`}>
     <h4>{event.name}</h4>
     {event.lines.map((line) => (
       <p key={line}>{line}</p>
     ))}
+    {event.tables.map(createTable)}
   </section>
 )
 

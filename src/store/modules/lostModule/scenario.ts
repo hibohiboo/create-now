@@ -37,6 +37,7 @@ interface TableRow {
   cells: string[]
 }
 interface Table {
+  columns: TableRow[]
   rows: TableRow[]
 }
 interface Event {
@@ -123,11 +124,16 @@ export const mdToScenario = (md: string): Scenario => {
     items: [],
     tables: [],
   }
-  const getTable = (node: AstNode) => ({
-    rows: node.children.map((row) => ({
-      cells: row.children.map((cell) => _.get(cell, 'children[0].value')),
-    })),
-  })
+  const getTable = (node: AstNode) => {
+    if (node.children.length < 2) return null
+    const [columns, ...rows] = node.children
+    return {
+      columns: columns.children.map((cell) => _.get(cell, 'children[0].value')),
+      rows: rows.map((row) => ({
+        cells: row.children.map((cell) => _.get(cell, 'children[0].value')),
+      })),
+    }
+  }
 
   const pushEvent = (payload: ScenarioPayload) => {
     if (payload.event === null) return
@@ -212,7 +218,9 @@ export const mdToScenario = (md: string): Scenario => {
       payload.eventLines.push(getValues(c.children, []).reverse())
     }
     if (c.type === 'table') {
-      payload.tables.push(getTable(c))
+      const table = getTable(c)
+      console.log('table', table)
+      if (table) payload.tables.push(table)
     }
   })
   PushPhase(payload)
