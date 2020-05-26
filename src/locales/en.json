@@ -78,6 +78,10 @@
   "lostrpg_boss_common_bossName": "ヌシ名",
   "lostrpg_boss_edit_abilityFilter": "アビリティ絞り込み",
   "lostrpg_boss_list_title": "ヌシ一覧",
+  "lostrpg_scenario_sample_title": "LOSTRPG シナリオツールの使い方",
+  "lostrpg_scenario_sample_import": "インポート機能サンプル",
+  "lostrpg_scenario_sample_import_description": "以下の文章をコピーして「インポート」に貼り付けるとシナリオをインポートできます。",
+
   "common_exp": "経験点",
   "common_memo": "メモ",
   "common_trophy": "trophy",
