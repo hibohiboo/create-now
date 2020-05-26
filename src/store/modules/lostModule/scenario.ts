@@ -48,6 +48,7 @@ interface Event {
   items: string[]
   tables: Table[]
   rolls: string[]
+  paths: string[]
 }
 
 interface Scene {
@@ -73,6 +74,7 @@ interface ScenarioPayload {
   items: string[]
   tables: Table[]
   rolls: string[]
+  paths: string[]
 }
 export interface Scenario {
   id?: string
@@ -125,6 +127,7 @@ export const mdToScenario = (md: string): Scenario => {
     items: [],
     tables: [],
     rolls: [],
+    paths: [],
   }
   const getTable = (node: AstNode) => {
     if (node.children.length < 2) return null
@@ -145,6 +148,7 @@ export const mdToScenario = (md: string): Scenario => {
       items: payload.items,
       tables: payload.tables,
       rolls: payload.rolls,
+      paths: payload.paths,
     })
   }
 
@@ -200,12 +204,14 @@ export const mdToScenario = (md: string): Scenario => {
         items: [],
         tables: [],
         rolls: [],
+        paths: [],
       }
 
       payload.eventLines = []
       payload.items = []
       payload.tables = []
       payload.rolls = []
+      payload.paths = []
       return
     }
     if (c.type === 'heading' && c.depth === 5) {
@@ -215,6 +221,9 @@ export const mdToScenario = (md: string): Scenario => {
       }
       if (key === 'roll') {
         payload.rolls.push(val)
+      }
+      if (key === 'path') {
+        payload.paths.push(val)
       }
       return
     }

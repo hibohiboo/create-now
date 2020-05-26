@@ -9,9 +9,12 @@ const createEvent = (event, ei) => (
       {event.type === 'view' ? (
         <i className="far fa-image"></i>
       ) : event.type === 'battle' ? (
-        <i className="fas fa-dragon"></i>
-      ) : event.type === 'search' ? (
+        <i className="fas fa-ghost"></i>
+      ) : // <i className="fas fa-dragon"></i>
+      event.type === 'search' ? (
         <i className="fas fa-search"></i>
+      ) : event.type === 'lock' ? (
+        <i className="fas fa-lock"></i>
       ) : (
         <></>
       )}{' '}
@@ -28,6 +31,12 @@ const createEvent = (event, ei) => (
         <li key={roll}>
           <i className="fas fa-dice"></i>
           {roll}
+        </li>
+      ))}
+      {event.paths.map((path) => (
+        <li key={path}>
+          <i className="fas fa-shoe-prints"></i>
+          {path}
         </li>
       ))}
     </ul>
