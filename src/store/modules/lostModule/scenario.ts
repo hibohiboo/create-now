@@ -76,12 +76,16 @@ interface ScenarioPayload {
   rolls: string[]
   paths: string[]
   tableTitle: string
+  players: string
+  time: string
 }
 export interface Scenario {
   id?: string
   name?: string
   md?: string // markdown
   phases?: Phase[]
+  players: string
+  time: string
 }
 interface AstNode {
   type: string
@@ -91,7 +95,14 @@ interface AstNode {
   value?: string
 }
 
-export const initScenario: Scenario = { id: '', name: '', md: '', phases: [] }
+export const initScenario: Scenario = {
+  id: '',
+  name: '',
+  md: '',
+  phases: [],
+  players: '',
+  time: '',
+}
 const getValues = (children: AstNode[], result: string[]) => {
   if (children.length === 0) return result
   const node = children.pop()
@@ -130,6 +141,8 @@ export const mdToScenario = (md: string): Scenario => {
     rolls: [],
     paths: [],
     tableTitle: '',
+    players: '',
+    time: '',
   }
   const getTable = (node: AstNode, title: string) => {
     if (node.children.length < 2) return null
@@ -173,10 +186,22 @@ export const mdToScenario = (md: string): Scenario => {
       return
     }
     if (c.type === 'heading' && c.depth === 2) {
-      PushPhase(payload)
-      payload.phase = { name: _.get(c, 'children[0].value'), scenes: [] }
-      payload.scenes = []
-      payload.scene = null
+      const value = _.get(c, 'children[0].value')
+      const [val, key] = getAttributes(value)
+      if (!key) {
+        PushPhase(payload)
+        payload.phase = { name: value, scenes: [] }
+        payload.scenes = []
+        payload.scene = null
+        return
+      } else if (key === 'players') {
+        payload.players = val
+        return
+      } else if (key === 'time') {
+        payload.time = val
+        return
+      }
+
       return
     }
     if (c.type === 'heading' && c.depth === 3) {
@@ -250,7 +275,13 @@ export const mdToScenario = (md: string): Scenario => {
 
   console.log(payload.phases)
   console.log(children)
-  return { ...scenario, md, phases: payload.phases }
+  return {
+    ...scenario,
+    md,
+    phases: payload.phases,
+    players: payload.players,
+    time: payload.time,
+  }
 }
 
 //ViewModel

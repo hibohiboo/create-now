@@ -101,6 +101,8 @@
   "common_config": "Config",
   "common_playerName": "Player Name",
   "message_required": "required",
+  "common_players": "プレイヤー人数",
+  "common_play_time": "プレイ時間",
   "message_please_drop_image": "drop on image",
   "message_are_you_sure_remove": "Are you sure remove"
 }

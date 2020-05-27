@@ -121,10 +121,30 @@ const Page: NextPage = () => {
             changeHandler={vm.scenarioHandler}
           />
           <article>
-            <Box display="flex">
+            <Box display="flex" flexWrap="wrap">
               <ScenarioTree scenario={vm.scenario} />
               <Box mx={3} flex="1">
                 <h1>{vm.scenario.name}</h1>
+
+                {vm.scenario.players ? (
+                  <p>
+                    <strong>
+                      {t('common_players')}:{vm.scenario.players}
+                    </strong>
+                  </p>
+                ) : (
+                  <></>
+                )}
+                {vm.scenario.time ? (
+                  <p>
+                    <strong>
+                      {t('common_play_time')}:{vm.scenario.time}
+                    </strong>
+                  </p>
+                ) : (
+                  <></>
+                )}
+
                 {vm.scenario.phases.map(createPhase)}
               </Box>
             </Box>
