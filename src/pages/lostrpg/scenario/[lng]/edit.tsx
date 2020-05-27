@@ -3,17 +3,7 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
-} from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
@@ -34,74 +24,7 @@ import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
-import sanitize from 'sanitize-html'
-
-const createTable = (table) => {
-  return (
-    <Table>
-      <caption style={{ captionSide: 'top' }}>{table.title}</caption>
-      <TableHead>
-        <TableRow>
-          {table.columns.map((cell, i) => (
-            <TableCell key={`${cell}-${i}`}>{cell}</TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {table.rows.map((row, i) => (
-          <TableRow key={`row-${i}`}>
-            {row.cells.map((cell) => (
-              <TableCell key={`${cell}-${i}`}>{cell}</TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  )
-}
-
-const createEvent = (event, pi) => (
-  <section key={`event-${pi}-${event.name}`}>
-    <h4>{event.name}</h4>
-    {event.lines.map((line) => (
-      <p key={line}>{line}</p>
-    ))}
-    {event.tables.map(createTable)}
-    {event.links.map((link) => (
-      <p
-        key={link.value}
-        dangerouslySetInnerHTML={{
-          __html: sanitize(`<a href="${link.url}">${link.value}</a>`, {
-            allowedTags: ['a'],
-            allowedAttributes: {
-              a: ['href'],
-            },
-            allowedSchemes: ['http', 'https'],
-          }),
-        }}
-      />
-    ))}
-  </section>
-)
-
-const createScene = (scene, pi) => (
-  <section key={`scene-${pi}-${scene.name}`}>
-    <h3>{scene.name}</h3>
-
-    {/* <summary>{scene.name}</summary> */}
-    {scene.lines.map((line) => (
-      <p key={line}>{line}</p>
-    ))}
-    {scene.events.map(createEvent)}
-  </section>
-)
-
-const createPhase = (phase, pi) => (
-  <section key={`phase-${pi}-${phase.name}`}>
-    <h2>{phase.name}</h2>
-    {phase.scenes.map(createScene)}
-  </section>
-)
+import ScenarioView from '~/components/organisms/lostrpg/ScenarioView'
 
 const Page: NextPage = () => {
   const vm = useScenarioEditViewModel()
@@ -138,32 +61,7 @@ const Page: NextPage = () => {
           <article>
             <Box display="flex" flexWrap="wrap">
               <ScenarioTree scenario={vm.scenario} />
-              <Box mx={3} flex="1">
-                <h1>{vm.scenario.name}</h1>
-
-                {vm.scenario.players ? (
-                  <p>
-                    <strong>
-                      {t('common_players')}:{vm.scenario.players}
-                    </strong>
-                  </p>
-                ) : (
-                  <></>
-                )}
-                {vm.scenario.time ? (
-                  <p>
-                    <strong>
-                      {t('common_play_time')}:{vm.scenario.time}
-                    </strong>
-                  </p>
-                ) : (
-                  <></>
-                )}
-                {vm.scenario.lines.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
-                {vm.scenario.phases.map(createPhase)}
-              </Box>
+              <ScenarioView scenario={vm.scenario} t={t} />
             </Box>
           </article>
         </Container>

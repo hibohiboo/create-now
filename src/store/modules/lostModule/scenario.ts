@@ -305,8 +305,8 @@ export const mdToScenario = (md: string): Scenario => {
   })
   PushPhase(payload)
 
-  console.log(payload.phases)
-  console.log(children)
+  // console.log(payload.phases)
+  // console.log(children)
   return {
     ...scenario,
     md,
