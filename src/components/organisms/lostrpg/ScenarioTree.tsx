@@ -10,8 +10,7 @@ const createEvent = (event, ei) => (
         <i className="far fa-image"></i>
       ) : event.type === 'battle' ? (
         <i className="fas fa-ghost"></i>
-      ) : // <i className="fas fa-dragon"></i>
-      event.type === 'search' ? (
+      ) : event.type === 'search' ? (
         <i className="fas fa-search"></i>
       ) : event.type === 'lock' ? (
         <i className="fas fa-lock"></i>
@@ -19,6 +18,8 @@ const createEvent = (event, ei) => (
         <i className="fas fa-key"></i>
       ) : event.type === 'limitUp' ? (
         <i className="far fa-clock"></i>
+      ) : event.type === 'boss' ? (
+        <i className="fas fa-dragon"></i>
       ) : (
         <></>
       )}{' '}
