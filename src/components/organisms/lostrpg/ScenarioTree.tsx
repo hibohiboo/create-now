@@ -17,6 +17,8 @@ const createEvent = (event, ei) => (
         <i className="fas fa-lock"></i>
       ) : event.type === 'key' ? (
         <i className="fas fa-key"></i>
+      ) : event.type === 'limitUp' ? (
+        <i className="far fa-clock"></i>
       ) : (
         <></>
       )}{' '}
@@ -59,6 +61,8 @@ const createScene = (scene, si) => (
     <summary>
       {scene.type === 'checkpoint' ? (
         <i className="far fa-check-circle"></i>
+      ) : scene.type === 'path' ? (
+        <i className="fas fa-shoe-prints"></i>
       ) : (
         <></>
       )}
