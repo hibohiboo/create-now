@@ -34,6 +34,7 @@ import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
+import sanitize from 'sanitize-html'
 
 const createTable = (table) => {
   return (
@@ -66,6 +67,20 @@ const createEvent = (event, pi) => (
       <p key={line}>{line}</p>
     ))}
     {event.tables.map(createTable)}
+    {event.links.map((link) => (
+      <p
+        key={link.value}
+        dangerouslySetInnerHTML={{
+          __html: sanitize(`<a href="${link.url}">${link.value}</a>`, {
+            allowedTags: ['a'],
+            allowedAttributes: {
+              a: ['href'],
+            },
+            allowedSchemes: ['http', 'https'],
+          }),
+        }}
+      />
+    ))}
   </section>
 )
 
@@ -144,7 +159,9 @@ const Page: NextPage = () => {
                 ) : (
                   <></>
                 )}
-
+                {vm.scenario.lines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
                 {vm.scenario.phases.map(createPhase)}
               </Box>
             </Box>

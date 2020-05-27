@@ -41,6 +41,10 @@ interface Table {
   columns: TableRow[]
   rows: TableRow[]
 }
+interface Link {
+  url: string
+  value: string
+}
 interface Event {
   name: string
   type: string
@@ -49,6 +53,7 @@ interface Event {
   tables: Table[]
   rolls: string[]
   paths: string[]
+  links: Link[]
 }
 
 interface Scene {
@@ -78,14 +83,17 @@ interface ScenarioPayload {
   tableTitle: string
   players: string
   time: string
+  scenarioLines: string[]
+  links: Link[]
 }
 export interface Scenario {
   id?: string
   name?: string
   md?: string // markdown
   phases?: Phase[]
-  players: string
-  time: string
+  players?: string
+  time?: string
+  lines?: string[]
 }
 interface AstNode {
   type: string
@@ -102,6 +110,7 @@ export const initScenario: Scenario = {
   phases: [],
   players: '',
   time: '',
+  lines: [],
 }
 const getValues = (children: AstNode[], result: string[]) => {
   if (children.length === 0) return result
@@ -143,6 +152,8 @@ export const mdToScenario = (md: string): Scenario => {
     tableTitle: '',
     players: '',
     time: '',
+    scenarioLines: [],
+    links: [],
   }
   const getTable = (node: AstNode, title: string) => {
     if (node.children.length < 2) return null
@@ -165,6 +176,7 @@ export const mdToScenario = (md: string): Scenario => {
       tables: payload.tables,
       rolls: payload.rolls,
       paths: payload.paths,
+      links: payload.links,
     })
   }
 
@@ -233,6 +245,7 @@ export const mdToScenario = (md: string): Scenario => {
         tables: [],
         rolls: [],
         paths: [],
+        links: [],
       }
 
       payload.eventLines = []
@@ -240,6 +253,7 @@ export const mdToScenario = (md: string): Scenario => {
       payload.tables = []
       payload.rolls = []
       payload.paths = []
+      payload.links = []
       return
     }
     if (c.type === 'heading' && c.depth === 5) {
@@ -258,17 +272,35 @@ export const mdToScenario = (md: string): Scenario => {
       }
       return
     }
+    if (
+      c.type === 'paragraph' &&
+      c.children.length > 0 &&
+      c.children[0].type === 'link'
+    ) {
+      payload.links.push({
+        url: _.get(c.children[0], 'url'),
+        value: _.get(c.children[0], 'children[0].value'),
+      })
+      return
+    }
     if (c.type === 'paragraph') {
-      if (payload.event === null) {
-        payload.sceneLines.push(getValues(c.children, []).reverse())
+      const lines = getValues(c.children, []).reverse()
+      if (payload.phase === null) {
+        payload.scenarioLines.push(lines)
         return
       }
-      payload.eventLines.push(getValues(c.children, []).reverse())
+      if (payload.event === null) {
+        payload.sceneLines.push(lines)
+        return
+      }
+      payload.eventLines.push(lines)
+      return
     }
     if (c.type === 'table') {
       const table = getTable(c, payload.tableTitle)
       if (table) payload.tables.push(table)
       payload.tableTitle = ''
+      return
     }
   })
   PushPhase(payload)
@@ -281,6 +313,7 @@ export const mdToScenario = (md: string): Scenario => {
     phases: payload.phases,
     players: payload.players,
     time: payload.time,
+    lines: payload.scenarioLines,
   }
 }
 
