@@ -103,7 +103,7 @@ const getValues = (children: AstNode[], result: string[]) => {
 }
 const getAttributes = (text: string) => {
   if (!text) return [null, null]
-  const result = /\s*([^\s]+)\s*\{\s*\.([^}]*)\s*\}\s*/g.exec(text)
+  const result = /\s*([^{]+)\s*\{\s*\.([^}]*)\s*\}\s*/g.exec(text)
   if (!result) return [null, null]
   const [original, val, attr] = result
   const attributes = attr.replace(/\s/, '').split('.')

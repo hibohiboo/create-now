@@ -123,7 +123,7 @@ const Page: NextPage = () => {
           <article>
             <Box display="flex">
               <ScenarioTree scenario={vm.scenario} />
-              <Box mx={3}>
+              <Box mx={3} flex="1">
                 <h1>{vm.scenario.name}</h1>
                 {vm.scenario.phases.map(createPhase)}
               </Box>

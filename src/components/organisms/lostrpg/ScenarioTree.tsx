@@ -15,6 +15,8 @@ const createEvent = (event, ei) => (
         <i className="fas fa-search"></i>
       ) : event.type === 'lock' ? (
         <i className="fas fa-lock"></i>
+      ) : event.type === 'key' ? (
+        <i className="fas fa-key"></i>
       ) : (
         <></>
       )}{' '}
@@ -80,7 +82,7 @@ const createPhase = (phase, pi) => (
 
 const ScenarioTree: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
   return (
-    <details open={true} style={{ minWidth: '230px' }}>
+    <details open={true} style={{ minWidth: '200px' }}>
       <summary>{scenario.name}</summary>
       {scenario.phases.map(createPhase)}
     </details>
