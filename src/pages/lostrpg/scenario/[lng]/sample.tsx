@@ -9,8 +9,7 @@ import {
   ListSubheader,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-// import { SearchIcon } from '@material-ui/icons'
-import SearchIcon from '@material-ui/icons/Search'
+import { FileCopy } from '@material-ui/icons'
 import { languages, contentLanguageMap } from '~/lib/i18n'
 import useI18n from '~/hooks/use-i18n'
 import Link from '~/components/atoms/mui/Link'
@@ -49,6 +48,19 @@ const Page: React.FC<{
       <h2>{t['lostrpg_scenario_sample_title']}</h2>
       <h3>{t['lostrpg_scenario_sample_import']}</h3>
       <p>{t['lostrpg_scenario_sample_import_description']}</p>
+      <p>
+        <Button
+          startIcon={<FileCopy />}
+          onClick={() => {
+            // httpだとnavigator.clipboardにアクセスできない。httpsにする必要がある。
+            if (navigator.clipboard) navigator.clipboard.writeText(sample)
+          }}
+          variant="contained"
+          color="primary"
+        >
+          {t['common_copy']}
+        </Button>
+      </p>
       <Box mt={2} className={classes.preWrapper}>
         <pre>{sample}</pre>
       </Box>

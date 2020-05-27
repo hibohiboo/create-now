@@ -243,7 +243,7 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: '結果フェイズフェイズ',
+    name: '結果フェイズ',
     scenes: [
       {
         ...initScene,

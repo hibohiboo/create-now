@@ -106,6 +106,7 @@
   "common_import": "インポート",
   "common_preview": "プレビュー",
   "common_sample": "サンプル",
+  "common_copy": "コピー",
   "message_required": "必須項目です。入力してください",
   "message_please_drop_image": "クリックかドロップで画像を設定",
   "message_are_you_sure_remove": "削除してよいですか？"
