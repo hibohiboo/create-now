@@ -120,7 +120,6 @@ const Page: NextPage = () => {
           textColor="primary"
           onChange={(e, v) => {
             setValue(v)
-            console.log('test1')
           }}
           variant="scrollable"
           scrollButtons="on"

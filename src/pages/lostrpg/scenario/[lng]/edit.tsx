@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box } from '@material-ui/core'
+import { Box, Paper, Tabs, Tab } from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
@@ -52,18 +52,45 @@ const Page: NextPage = () => {
             <LanguageSelector i18n={vm.i18n} />
           </div>
           <h2>{t('lostrpg_common_scenario')}</h2>
-          <TextAreaField
-            model={vm.scenario}
-            prop="scenario"
-            labelText={t('lostrpg_common_scenario')}
-            changeHandler={vm.scenarioHandler}
-          />
-          <article>
-            <Box display="flex" flexWrap="wrap">
-              <ScenarioTree scenario={vm.scenario} />
-              <ScenarioView scenario={vm.scenario} t={t} />
-            </Box>
-          </article>
+          <p>
+            <Link
+              href="/lostrpg/scenario/[lng]/sample"
+              as={`/lostrpg/scenario/${vm.i18n.activeLocale}/sample`}
+            >
+              {t('common_sample')}
+            </Link>
+          </p>
+          <Paper>
+            <Tabs
+              value={vm.tabValue}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={vm.changeTabHandler}
+              variant="scrollable"
+              scrollButtons="on"
+            >
+              {_.map(vm.tabs, (value, key) => (
+                <Tab key={key} label={value} />
+              ))}
+            </Tabs>
+          </Paper>
+          <Paper>
+            {vm.tabValue === 0 ? (
+              <TextAreaField
+                model={vm.scenario}
+                prop="md"
+                labelText={t('lostrpg_common_scenario')}
+                changeHandler={vm.scenarioHandler}
+              />
+            ) : (
+              <article>
+                <Box display="flex" flexWrap="wrap" my={2}>
+                  <ScenarioTree scenario={vm.scenario} />
+                  <ScenarioView scenario={vm.scenario} t={t} />
+                </Box>
+              </article>
+            )}
+          </Paper>
         </Container>
       )}
     </>

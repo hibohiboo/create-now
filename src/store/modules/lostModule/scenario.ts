@@ -102,15 +102,171 @@ interface AstNode {
   depth?: number
   value?: string
 }
+const initScene = {
+  name: '',
+  lines: [],
+  events: [],
+  type: '',
+  alias: '',
+}
+const initEvent = {
+  name: '',
+  type: '',
+  lines: [],
+  items: [],
+  tables: [],
+  rolls: [],
+  paths: [],
+  links: [],
+}
+const md = `# シナリオタイトル
+## 〇人 {.players}
+## 〇時間 {.time}
 
+シナリオの概要です。
+
+## キャンプフェイズ
+
+### プロローグ
+
+#### 描写
+
+シナリオのモチベーションです。
+
+## 探索フェイズ
+
+### チェックポイント {.checkpoint .A}
+
+#### 描写
+チェックポイントの描写です
+##### 道 {.path}
+
+チェックポイントから延びる道について書きます
+
+### 道 {.path}
+
+#### 障害 {.lock}
+障害について説明します。
+
+#####  判定 {.roll}
+
+
+## 決戦フェイズ
+
+### 決戦の場
+
+ヌシの描写をします。
+
+#### ヌシ {.boss}
+
+[→ヌシシートへのリンク](https://create-now.now.sh/lostrpg/public/ja/boss?id=ktrzE0GfeZ0wpDLGjYPj)
+
+## 結果フェイズ
+### エピローグ
+
+セッションを終了して、経験点の計算を行なって下さい。`
+const phases: Phase[] = [
+  {
+    name: 'キャンプフェイズ',
+    scenes: [
+      {
+        ...initScene,
+        name: 'プロローグ',
+        events: [
+          {
+            ...initEvent,
+            name: '描写',
+            lines: ['シナリオのモチベーションです'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '探索フェイズ',
+    scenes: [
+      {
+        ...initScene,
+        name: 'チェックポイント',
+        alias: 'A',
+        type: 'checkpoint',
+        events: [
+          {
+            ...initEvent,
+            name: '描写',
+            lines: [
+              'チェックポイントの描写です',
+              'チェックポイントから延びる道について書きます',
+            ],
+            paths: ['道'],
+          },
+        ],
+      },
+      {
+        ...initScene,
+        name: '道',
+        type: 'path',
+        events: [
+          {
+            ...initEvent,
+            name: '障害',
+            type: 'lock',
+            lines: ['障害について説明します'],
+            rolls: ['判定'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '決戦フェイズ',
+    scenes: [
+      {
+        ...initScene,
+        name: '決戦の場',
+        lines: ['ヌシの描写をします'],
+        events: [
+          {
+            ...initEvent,
+            type: 'boss',
+            name: 'ヌシ',
+            links: [
+              {
+                url:
+                  'https://create-now.now.sh/lostrpg/public/ja/boss?id=ktrzE0GfeZ0wpDLGjYPj',
+                value: '→ヌシシートへのリンク',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '結果フェイズフェイズ',
+    scenes: [
+      {
+        ...initScene,
+        name: 'エピローグ',
+        events: [
+          {
+            ...initEvent,
+            name: '描写',
+            lines: ['セッションを終了して、経験点の計算を行なって下さい。'],
+          },
+        ],
+      },
+    ],
+  },
+]
 export const initScenario: Scenario = {
   id: '',
-  name: '',
-  md: '',
-  phases: [],
-  players: '',
-  time: '',
-  lines: [],
+  name: 'シナリオタイトル',
+  md,
+  phases,
+  players: '〇人',
+  time: '〇時間',
+  lines: ['シナリオの概要です。'],
 }
 const getValues = (children: AstNode[], result: string[]) => {
   if (children.length === 0) return result
@@ -338,11 +494,14 @@ export const useScenarioEditViewModel = () =>
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
-
+    const [tabValue, setTabValue] = useState(0)
     return {
       scenario,
       i18n,
       authUser,
+      tabValue,
+      tabs: { import: t('common_import'), preview: t('common_preview') },
       scenarioHandler: (e) => dispatch(setMarkdownForScenario(e)),
+      changeTabHandler: (e, v) => setTabValue(v),
     }
   })

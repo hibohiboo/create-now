@@ -103,6 +103,9 @@
   "message_required": "required",
   "common_players": "プレイヤー人数",
   "common_play_time": "プレイ時間",
+  "common_import": "インポート",
+  "common_preview": "プレビュー",
+  "common_sample": "サンプル",
   "message_please_drop_image": "drop on image",
   "message_are_you_sure_remove": "Are you sure remove"
 }
