@@ -17,6 +17,7 @@ import ListItemLink from '~/components/atoms/mui/ListItemLink'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import InputField from '~/components/form/InputField'
 import { readFile } from '~/lib/fileReader'
+import Table from '~/components/organisms/mui/Table'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,84 @@ export const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const table = {
+  title: '記法一覧',
+  columns: ['やりたいこと', '記法', 'アイコン'],
+  rows: [
+    { cells: ['シナリオタイトル', '#', ''] },
+    { cells: ['推奨するプレイヤー人数', '## 〇人 {.players}', ''] },
+    { cells: ['シナリオの所要時間目安', '## 〇時間 {.time}', ''] },
+    { cells: ['フェイズ', '## 〇フェイズ', ''] },
+    { cells: ['シーン', '### シーン', ''] },
+    {
+      cells: [
+        'チェックポイント',
+        '### チェックポイント {.checkpoint}',
+        '<i class="far fa-check-circle"></i>チェックポイント',
+      ],
+    },
+    {
+      cells: ['道', '### 道 {.path}', '<i class="fas fa-shoe-prints"></i>道'],
+    },
+    { cells: ['描写', '#### 描写', '<i class="far fa-image"></i>描写'] },
+    {
+      cells: [
+        '戦闘',
+        '#### 戦闘 {.battle}',
+        '<i class="fas fa-ghost"></i>戦闘',
+      ],
+    },
+
+    {
+      cells: [
+        '探索',
+        '#### 探索 {.search}',
+        '<i class="fas fa-search"></i>探索',
+      ],
+    },
+    {
+      cells: ['障害', '#### 障害 {.lock}', '<i class="fas fa-lock"></i>障害'],
+    },
+    {
+      cells: [
+        'リミット増加オブジェクト',
+        '#### オブジェクト {.limitUp}',
+        '<i class="far fa-clock"></i>オブジェクト',
+      ],
+    },
+    {
+      cells: ['ヌシ', '#### ヌシ {.boss}', '<i class="fas fa-dragon"></i>ヌシ'],
+    },
+    // {
+    //   cells: [
+    //     'キーイベント',
+    //     '#### キーイベント {.key}',
+    //     '<i class="fas fa-key"></i>キーイベント',
+    //   ],
+    // },
+    {
+      cells: [
+        '判定',
+        '##### 《判定/分野 x》 {.roll}',
+        '<i class="fas fa-dice"></i>《判定/分野 x》',
+      ],
+    },
+    {
+      cells: [
+        'アイテム',
+        '##### アイテム {.item}',
+        '<i class="fas fa-shopping-bag"></i>アイテム',
+      ],
+    },
+    {
+      cells: ['道', '##### 道 {.path}', '<i class="fas fa-shoe-prints"></i>道'],
+    },
+    {
+      cells: ['表', '##### 表 {.table}', '<i class="fas fa-list-ol"></i>表'],
+    },
+  ],
+}
+
 const Page: React.FC<{
   lng: string
   lngDict: { [key: string]: string }
@@ -44,8 +123,16 @@ const Page: React.FC<{
     <Container>
       <Head>
         <meta httpEquiv="content-language" content={contentLanguageMap[lng]} />
+        <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+          crossOrigin="anonymous"
+        />
       </Head>
       <h2>{t['lostrpg_scenario_sample_title']}</h2>
+      <h3></h3>
+      <Table table={table} />
       <h3>{t['lostrpg_scenario_sample_import']}</h3>
       <p>{t['lostrpg_scenario_sample_import_description']}</p>
       <p>
