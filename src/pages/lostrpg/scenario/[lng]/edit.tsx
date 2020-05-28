@@ -76,12 +76,22 @@ const Page: NextPage = () => {
           </Paper>
           <Paper>
             {vm.tabValue === 0 ? (
-              <TextAreaField
-                model={vm.scenario}
-                prop="md"
-                labelText={t('lostrpg_common_scenario')}
-                changeHandler={vm.scenarioHandler}
-              />
+              <Box display="flex" flexWrap="wrap">
+                <Box flex={1} mx={2} style={{ maxWidth: '400px' }}>
+                  <TextAreaField
+                    model={vm.scenario}
+                    prop="md"
+                    labelText={t('lostrpg_common_scenario')}
+                    changeHandler={vm.scenarioHandler}
+                  />
+                </Box>
+                <article style={{ maxWidth: '650px', overflow: 'auto' }}>
+                  <Box display="flex" flexWrap="wrap" my={2}>
+                    <ScenarioTree scenario={vm.scenario} />
+                    <ScenarioView scenario={vm.scenario} t={t} />
+                  </Box>
+                </article>
+              </Box>
             ) : (
               <article>
                 <Box display="flex" flexWrap="wrap" my={2}>
