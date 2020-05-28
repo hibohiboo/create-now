@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
 import * as d3 from 'd3'
 import type { Scenario } from '~/store/modules/lostModule'
+const css = `
+line {
+  stroke: #777;
+  stroke-width: 1px;
+}
+`
 const nodes = [
   { name: 'aset', links: ['a', 'b'], x: 200, y: 300 },
   { name: 'bset', links: ['b', 'c'], x: 300, y: 200 },
@@ -13,6 +19,7 @@ var edges = [
     links: ['a', 'b'],
   },
 ]
+
 const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
   useEffect(() => {
     const target = d3.select('.target')
@@ -39,7 +46,9 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
   })
   return (
     <>
-      <div className="target"></div>
+      <div className="scenario-chart">
+        <div className="target"></div>
+      </div>
     </>
   )
 }
