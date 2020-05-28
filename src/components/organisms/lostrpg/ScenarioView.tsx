@@ -86,6 +86,7 @@ const ScenarioView: React.FC<{
       {scenario.players ? (
         <p>
           <strong>
+            <i className="fas fa-user-friends"></i>
             {t('common_players')}:{scenario.players}
           </strong>
         </p>
@@ -95,7 +96,28 @@ const ScenarioView: React.FC<{
       {scenario.time ? (
         <p>
           <strong>
+            <i className="far fa-clock"></i>
             {t('common_play_time')}:{scenario.time}
+          </strong>
+        </p>
+      ) : (
+        <></>
+      )}
+      {scenario.limit ? (
+        <p>
+          <strong>
+            <i className="fas fa-hourglass-half"></i>
+            {t('lostrpg_common_limit')}:{scenario.limit}
+          </strong>
+        </p>
+      ) : (
+        <></>
+      )}
+      {scenario.caution ? (
+        <p>
+          <strong>
+            <i className="fas fa-exclamation-triangle"></i>
+            {scenario.caution}
           </strong>
         </p>
       ) : (

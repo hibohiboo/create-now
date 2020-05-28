@@ -39,8 +39,35 @@ const table = {
   columns: ['やりたいこと', '記法', 'アイコン'],
   rows: [
     { cells: ['シナリオタイトル', '#', ''] },
-    { cells: ['推奨するプレイヤー人数', '## 〇人 {.players}', ''] },
-    { cells: ['シナリオの所要時間目安', '## 〇時間 {.time}', ''] },
+    {
+      cells: [
+        '推奨するプレイヤー人数',
+        '## 〇人 {.players}',
+        '<i class="fas fa-user-friends"></i>推奨人数：〇人',
+      ],
+    },
+    {
+      cells: [
+        'シナリオの所要時間目安',
+        '## 〇時間 {.time}',
+        '<i class="far fa-clock"></i>プレイ時間：〇時間',
+      ],
+    },
+    {
+      cells: [
+        'リミット',
+        '## 〇 {.limit}',
+        '<i class="fas fa-hourglass-half"></i>リミット：〇',
+      ],
+    },
+    {
+      cells: [
+        '注意書き',
+        '## 注意 {.caution}',
+        '<i class="fas fa-exclamation-triangle"></i>注意',
+      ],
+    },
+
     { cells: ['フェイズ', '## 〇フェイズ', ''] },
     { cells: ['シーン', '### シーン', ''] },
     {
@@ -61,22 +88,22 @@ const table = {
         '<i class="fas fa-ghost"></i>戦闘',
       ],
     },
-
-    {
-      cells: [
-        '探索',
-        '#### 探索 {.search}',
-        '<i class="fas fa-search"></i>探索',
-      ],
-    },
     {
       cells: ['障害', '#### 障害 {.lock}', '<i class="fas fa-lock"></i>障害'],
     },
     {
       cells: [
+        '探索オブジェクト',
+        '#### 探索 {.search}',
+        '<i class="fas fa-search"></i>探索',
+      ],
+    },
+
+    {
+      cells: [
         'リミット増加オブジェクト',
         '#### オブジェクト {.limitUp}',
-        '<i class="far fa-clock"></i>オブジェクト',
+        '<i class="fas fa-hourglass-start"></i>オブジェクト',
       ],
     },
     {
@@ -89,6 +116,14 @@ const table = {
     //     '<i class="fas fa-key"></i>キーイベント',
     //   ],
     // },
+    // {
+    //   cells: [
+    //     'ロックイベント',
+    //     '#### ロックイベント {.keyLock}',
+    //     '<i class="fab fa-expeditedssl"></i>ロックイベント',
+    //   ],
+    // },
+
     {
       cells: [
         '判定',

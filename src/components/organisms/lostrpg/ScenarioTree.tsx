@@ -17,7 +17,7 @@ const createEvent = (event, ei) => (
       ) : event.type === 'key' ? (
         <i className="fas fa-key"></i>
       ) : event.type === 'limitUp' ? (
-        <i className="far fa-clock"></i>
+        <i className="fas fa-hourglass-start"></i>
       ) : event.type === 'boss' ? (
         <i className="fas fa-dragon"></i>
       ) : (

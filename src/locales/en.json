@@ -10,6 +10,7 @@
   "lostrpg_common_publish": "公開",
   "lostrpg_common_scenario": "シナリオ",
   "lostrpg_common_member": "member",
+  "lostrpg_common_limit": "リミット",
   "lostrpg_index_title": "LOSTRPG Support Page",
   "lostrpg_index_campList": "Camp List",
   "lostrpg_index_characters": "Character List",
@@ -107,6 +108,7 @@
   "common_preview": "プレビュー",
   "common_sample": "サンプル",
   "common_copy": "コピー",
+  "common_caution": "注意",
   "message_please_drop_image": "drop on image",
   "message_are_you_sure_remove": "Are you sure remove"
 }

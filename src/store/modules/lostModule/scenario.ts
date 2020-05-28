@@ -85,6 +85,8 @@ interface ScenarioPayload {
   time: string
   scenarioLines: string[]
   links: Link[]
+  limit: string
+  caution: string
 }
 export interface Scenario {
   id?: string
@@ -94,6 +96,8 @@ export interface Scenario {
   players?: string
   time?: string
   lines?: string[]
+  limit?: string
+  caution?: string
 }
 interface AstNode {
   type: string
@@ -266,7 +270,9 @@ export const initScenario: Scenario = {
   phases,
   players: '〇人',
   time: '〇時間',
+  limit: '〇',
   lines: ['シナリオの概要です。'],
+  caution: '',
 }
 const getValues = (children: AstNode[], result: string[]) => {
   if (children.length === 0) return result
@@ -310,6 +316,8 @@ export const mdToScenario = (md: string): Scenario => {
     time: '',
     scenarioLines: [],
     links: [],
+    limit: '',
+    caution: '',
   }
   const getTable = (node: AstNode, title: string) => {
     if (node.children.length < 2) return null
@@ -367,6 +375,12 @@ export const mdToScenario = (md: string): Scenario => {
         return
       } else if (key === 'time') {
         payload.time = val
+        return
+      } else if (key === 'limit') {
+        payload.limit = val
+        return
+      } else if (key === 'caution') {
+        payload.caution = val
         return
       }
 
@@ -470,6 +484,8 @@ export const mdToScenario = (md: string): Scenario => {
     players: payload.players,
     time: payload.time,
     lines: payload.scenarioLines,
+    limit: payload.limit,
+    caution: payload.caution,
   }
 }
 
