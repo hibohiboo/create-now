@@ -3838,5 +3838,8 @@ export const sampleTable = {
     {
       cells: ['表', '##### 表 {.table}', '<i class="fas fa-list-ol"></i>表'],
     },
+    {
+      cells: ['リンク', '[文字](URL)', '<a>文字</a>'],
+    },
   ],
 }

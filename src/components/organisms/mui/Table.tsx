@@ -28,7 +28,7 @@ const createTable = (table) => {
                 key={`${cell}-${i}`}
                 dangerouslySetInnerHTML={{
                   __html: sanitize(cell, {
-                    allowedTags: ['span', 'i'],
+                    allowedTags: ['span', 'i', 'a'],
                     allowedAttributes: {
                       i: ['class'],
                     },
