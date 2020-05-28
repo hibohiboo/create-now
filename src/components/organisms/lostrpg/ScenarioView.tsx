@@ -7,8 +7,14 @@ import {
   TableRow,
   TableCell,
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import sanitize from 'sanitize-html'
 import type { Scenario } from '~/store/modules/lostModule'
+export const useStyles = makeStyles((theme) => ({
+  p: {
+    whiteSpace: 'pre-line',
+  },
+}))
 
 const createTable = (table) => {
   return (
@@ -34,11 +40,13 @@ const createTable = (table) => {
   )
 }
 
-const createEvent = (event, pi) => (
+const createEvent = (event, pi, classes) => (
   <section key={`event-${pi}-${event.name}`}>
     <h4>{event.name}</h4>
     {event.lines.map((line) => (
-      <p key={line}>{line}</p>
+      <p className={classes.p} key={line}>
+        {line}
+      </p>
     ))}
     {event.tables.map(createTable)}
     {event.links.map((link) => (
@@ -58,20 +66,22 @@ const createEvent = (event, pi) => (
   </section>
 )
 
-const createScene = (scene, pi) => (
+const createScene = (scene, pi, classes) => (
   <section key={`scene-${pi}-${scene.name}`}>
     <h3>{scene.name}</h3>
     {scene.lines.map((line) => (
-      <p key={line}>{line}</p>
+      <p className={classes.p} key={line}>
+        {line}
+      </p>
     ))}
-    {scene.events.map(createEvent)}
+    {scene.events.map((e, i) => createEvent(e, i, classes))}
   </section>
 )
 
-const createPhase = (phase, pi) => (
+const createPhase = (phase, pi, classes) => (
   <section key={`phase-${pi}-${phase.name}`}>
     <h2>{phase.name}</h2>
-    {phase.scenes.map(createScene)}
+    {phase.scenes.map((s, i) => createScene(s, i, classes))}
   </section>
 )
 
@@ -79,6 +89,7 @@ const ScenarioView: React.FC<{
   scenario: Scenario
   t: any
 }> = ({ scenario, t }) => {
+  const classes = useStyles()
   return (
     <Box mx={3} flex="1">
       <h1>{scenario.name}</h1>
@@ -124,9 +135,11 @@ const ScenarioView: React.FC<{
         <></>
       )}
       {scenario.lines.map((line) => (
-        <p key={line}>{line}</p>
+        <p className={classes.p} key={line}>
+          {line}
+        </p>
       ))}
-      {scenario.phases.map(createPhase)}
+      {scenario.phases.map((p, i) => createPhase(p, i, classes))}
     </Box>
   )
 }
