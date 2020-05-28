@@ -25,6 +25,7 @@ import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 import ScenarioView from '~/components/organisms/lostrpg/ScenarioView'
+import ScenarioChart from '~/components/organisms/lostrpg/ScenarioChart'
 
 const Page: NextPage = () => {
   const vm = useScenarioEditViewModel()
@@ -92,13 +93,15 @@ const Page: NextPage = () => {
                   </Box>
                 </article>
               </Box>
-            ) : (
+            ) : vm.tabValue === 1 ? (
               <article>
                 <Box display="flex" flexWrap="wrap" my={2}>
                   <ScenarioTree scenario={vm.scenario} />
                   <ScenarioView scenario={vm.scenario} t={t} />
                 </Box>
               </article>
+            ) : (
+              <ScenarioChart scenario={vm.scenario} />
             )}
           </Paper>
         </Container>

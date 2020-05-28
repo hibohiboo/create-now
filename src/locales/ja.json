@@ -110,6 +110,7 @@
   "common_sample": "サンプル",
   "common_copy": "コピー",
   "common_caution": "注意",
+  "common_chart": "チャート",
   "message_required": "必須項目です。入力してください",
   "message_please_drop_image": "クリックかドロップで画像を設定",
   "message_are_you_sure_remove": "削除してよいですか？"

@@ -516,7 +516,11 @@ export const useScenarioEditViewModel = () =>
       i18n,
       authUser,
       tabValue,
-      tabs: { import: t('common_import'), preview: t('common_preview') },
+      tabs: {
+        import: t('common_import'),
+        preview: t('common_preview'),
+        chart: t('common_chart'),
+      },
       scenarioHandler: (e) => dispatch(setMarkdownForScenario(e)),
       changeTabHandler: (e, v) => setTabValue(v),
     }
