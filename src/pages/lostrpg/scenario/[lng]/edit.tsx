@@ -57,7 +57,7 @@ const Page: NextPage = () => {
               href="/lostrpg/scenario/[lng]/sample"
               as={`/lostrpg/scenario/${vm.i18n.activeLocale}/sample`}
             >
-              {t('common_sample')}
+              {t('lostrpg_scenario_sample_title')}
             </Link>
           </p>
           <Paper>

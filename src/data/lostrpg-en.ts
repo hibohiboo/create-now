@@ -3303,3 +3303,116 @@ export const strangeFieldsEnemyAbilityList = [
     ],
   },
 ]
+
+export const sampleTable = {
+  title: '記法一覧',
+  columns: ['やりたいこと', '記法', 'アイコン'],
+  rows: [
+    { cells: ['シナリオタイトル', '#', ''] },
+    {
+      cells: [
+        '推奨するプレイヤー人数',
+        '## 〇人 {.players}',
+        '<i class="fas fa-user-friends"></i>推奨人数：〇人',
+      ],
+    },
+    {
+      cells: [
+        'シナリオの所要時間目安',
+        '## 〇時間 {.time}',
+        '<i class="far fa-clock"></i>プレイ時間：〇時間',
+      ],
+    },
+    {
+      cells: [
+        'リミット',
+        '## 〇 {.limit}',
+        '<i class="fas fa-hourglass-half"></i>リミット：〇',
+      ],
+    },
+    {
+      cells: [
+        '注意書き',
+        '## 注意 {.caution}',
+        '<i class="fas fa-exclamation-triangle"></i>注意',
+      ],
+    },
+
+    { cells: ['フェイズ', '## 〇フェイズ', ''] },
+    { cells: ['シーン', '### シーン', ''] },
+    {
+      cells: [
+        'チェックポイント',
+        '### チェックポイント {.checkpoint}',
+        '<i class="far fa-check-circle"></i>チェックポイント',
+      ],
+    },
+    {
+      cells: ['道', '### 道 {.path}', '<i class="fas fa-shoe-prints"></i>道'],
+    },
+    { cells: ['描写', '#### 描写', '<i class="far fa-image"></i>描写'] },
+    {
+      cells: [
+        '戦闘',
+        '#### 戦闘 {.battle}',
+        '<i class="fas fa-ghost"></i>戦闘',
+      ],
+    },
+    {
+      cells: ['障害', '#### 障害 {.lock}', '<i class="fas fa-lock"></i>障害'],
+    },
+    {
+      cells: [
+        '探索オブジェクト',
+        '#### 探索 {.search}',
+        '<i class="fas fa-search"></i>探索',
+      ],
+    },
+
+    {
+      cells: [
+        'リミット増加オブジェクト',
+        '#### オブジェクト {.limitUp}',
+        '<i class="fas fa-hourglass-start"></i>オブジェクト',
+      ],
+    },
+    {
+      cells: ['ヌシ', '#### ヌシ {.boss}', '<i class="fas fa-dragon"></i>ヌシ'],
+    },
+    // {
+    //   cells: [
+    //     'キーイベント',
+    //     '#### キーイベント {.key}',
+    //     '<i class="fas fa-key"></i>キーイベント',
+    //   ],
+    // },
+    // {
+    //   cells: [
+    //     'ロックイベント',
+    //     '#### ロックイベント {.keyLock}',
+    //     '<i class="fab fa-expeditedssl"></i>ロックイベント',
+    //   ],
+    // },
+
+    {
+      cells: [
+        '判定',
+        '##### 《判定/分野 x》 {.roll}',
+        '<i class="fas fa-dice"></i>《判定/分野 x》',
+      ],
+    },
+    {
+      cells: [
+        'アイテム',
+        '##### アイテム {.item}',
+        '<i class="fas fa-shopping-bag"></i>アイテム',
+      ],
+    },
+    {
+      cells: ['道', '##### 道 {.path}', '<i class="fas fa-shoe-prints"></i>道'],
+    },
+    {
+      cells: ['表', '##### 表 {.table}', '<i class="fas fa-list-ol"></i>表'],
+    },
+  ],
+}
