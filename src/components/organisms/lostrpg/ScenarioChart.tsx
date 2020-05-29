@@ -2,11 +2,24 @@ import React, { useEffect } from 'react'
 import * as dagreD3 from 'dagre-d3'
 import * as d3 from 'd3'
 import type { Scenario } from '~/store/modules/lostModule'
+// Font Awesome のfont-weightのルール
+const faWeight = { solid: '900', regular: '400', brands: '400', light: '300' }
 const setScenes = (phase, pi, g, befores) => {
   phase.scenes.forEach((scene, si) => {
     const nodeName = `phase-${pi}-scene-${si}` //`${scene.name}${i}`
-    console.log(nodeName)
-    g.setNode(nodeName, { label: scene.name })
+    let label = scene.name
+    let labelStyle = `font-family:"Font Awesome 5 Free", "Font Awesome 5 Brands";`
+    if (scene.type === 'checkpoint') {
+      label = `\uf058 ${label}`
+      labelStyle = `${labelStyle}font-weight: ${faWeight.regular};`
+    } else if (scene.type === 'path') {
+      label = `\uf54b ${label}`
+      labelStyle = `${labelStyle}font-weight: ${faWeight.solid};`
+    }
+    // scene.events.forEach((event) => {
+    //   label = `${label}\n  ${event.name}`
+    // })
+    g.setNode(nodeName, { label, labelStyle, class: scene.type })
     g.setParent(nodeName, phase.name)
     if (befores.scene) g.setEdge(befores.scene, nodeName)
     befores.scene = nodeName
