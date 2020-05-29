@@ -2,10 +2,14 @@ import React, { useEffect } from 'react'
 import * as dagreD3 from 'dagre-d3'
 import * as d3 from 'd3'
 import type { Scenario } from '~/store/modules/lostModule'
-const setScenes = (phase, g) => {
-  phase.scenes.forEach((scene) => {
-    g.setNode(scene.name, { label: scene.name })
-    g.setParent(scene.name, phase.name)
+const setScenes = (phase, pi, g, befores) => {
+  phase.scenes.forEach((scene, si) => {
+    const nodeName = `phase-${pi}-scene-${si}` //`${scene.name}${i}`
+    console.log(nodeName)
+    g.setNode(nodeName, { label: scene.name })
+    g.setParent(nodeName, phase.name)
+    if (befores.scene) g.setEdge(befores.scene, nodeName)
+    befores.scene = nodeName
   })
 }
 const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
@@ -20,9 +24,9 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
       clusterLabelPos: 'top',
       style: 'fill: #fff',
     })
-    let beforePhase = null
-    let beforeScene = null
+    const befores = { phase: null, scene: null }
     scenario.phases.forEach((phase, pi) => {
+      setScenes(phase, pi, g, befores)
       g.setNode(phase.name, {
         label: phase.name,
         clusterLabelPos: 'top',
@@ -31,16 +35,7 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
       })
       g.setParent(phase.name, 'group')
       // if (beforePhase) g.setEdge(beforePhase, phase.name)
-      beforePhase = phase.name
-
-      phase.scenes.forEach((scene, si) => {
-        const nodeName = `phase-${pi}-scene-${si}` //`${scene.name}${i}`
-        console.log(nodeName)
-        g.setNode(nodeName, { label: scene.name })
-        g.setParent(nodeName, phase.name)
-        if (beforeScene) g.setEdge(beforeScene, nodeName)
-        beforeScene = nodeName
-      })
+      befores.phase = phase.name
     })
 
     g.nodes().forEach((v) => {
