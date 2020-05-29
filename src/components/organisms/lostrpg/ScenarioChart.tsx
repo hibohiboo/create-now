@@ -2,25 +2,12 @@ import React, { useEffect } from 'react'
 import * as dagreD3 from 'dagre-d3'
 import * as d3 from 'd3'
 import type { Scenario } from '~/store/modules/lostModule'
-const css = `
-line {
-  stroke: #777;
-  stroke-width: 1px;
+const setScenes = (phase, g) => {
+  phase.scenes.forEach((scene) => {
+    g.setNode(scene.name, { label: scene.name })
+    g.setParent(scene.name, phase.name)
+  })
 }
-`
-const nodes = [
-  { name: 'aset', links: ['a', 'b'], x: 200, y: 300 },
-  { name: 'bset', links: ['b', 'c'], x: 300, y: 200 },
-  { name: 'cset', links: ['d'], x: 400, y: 200 },
-]
-var edges = [
-  {
-    source: 0,
-    target: 1,
-    links: ['a', 'b'],
-  },
-]
-
 const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
   useEffect(() => {
     const g = new dagreD3.graphlib.Graph({ compound: true })
@@ -28,41 +15,33 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
       .setDefaultEdgeLabel(() => ({}))
 
     // Here we're setting the nodes
-    g.setNode('a', { label: 'A' })
-    g.setNode('b', { label: 'B' })
-    g.setNode('c', { label: 'C' })
-    g.setNode('d', { label: 'D' })
-    g.setNode('e', { label: 'E' })
-    g.setNode('f', { label: 'F' })
-    g.setNode('g', { label: 'G' })
     g.setNode('group', {
-      label: 'Group',
+      label: '',
       clusterLabelPos: 'top',
-      style: 'fill: #d3d7e8',
+      style: 'fill: #fff',
     })
-    g.setNode('top_group', {
-      label: 'Top Group',
-      clusterLabelPos: 'bottom',
-      style: 'fill: #ffd47f',
+    let beforePhase = null
+    let beforeScene = null
+    scenario.phases.forEach((phase, pi) => {
+      g.setNode(phase.name, {
+        label: phase.name,
+        clusterLabelPos: 'top',
+        style: 'fill: #fff;',
+        labelStyle: 'font-size:1.2rem',
+      })
+      g.setParent(phase.name, 'group')
+      // if (beforePhase) g.setEdge(beforePhase, phase.name)
+      beforePhase = phase.name
+
+      phase.scenes.forEach((scene, si) => {
+        const nodeName = `phase-${pi}-scene-${si}` //`${scene.name}${i}`
+        console.log(nodeName)
+        g.setNode(nodeName, { label: scene.name })
+        g.setParent(nodeName, phase.name)
+        if (beforeScene) g.setEdge(beforeScene, nodeName)
+        beforeScene = nodeName
+      })
     })
-    g.setNode('bottom_group', { label: 'Bottom Group', style: 'fill: #5f9488' })
-
-    // Set the parents to define which nodes belong to which cluster
-    g.setParent('top_group', 'group')
-    g.setParent('bottom_group', 'group')
-    g.setParent('b', 'top_group')
-    g.setParent('c', 'bottom_group')
-    g.setParent('d', 'bottom_group')
-    g.setParent('e', 'bottom_group')
-    g.setParent('f', 'bottom_group')
-
-    // Set up edges, no special attributes.
-    g.setEdge('a', 'b')
-    g.setEdge('b', 'c')
-    g.setEdge('b', 'd')
-    g.setEdge('b', 'e')
-    g.setEdge('b', 'f')
-    g.setEdge('b', 'g')
 
     g.nodes().forEach((v) => {
       const node = g.node(v)
@@ -86,7 +65,6 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
     const xCenterOffset = (svg.attr('width') - g.graph().width) / 2
     svgGroup.attr('transform', 'translate(' + xCenterOffset + ', 20)')
     svg.attr('height', g.graph().height + 40)
-    console.log(svg)
   })
   return (
     <>
