@@ -126,3 +126,9 @@
 ## グラフ
 
 [D3 を React+TypeScript と一緒に使ってみる](https://qrunch.net/@syakoo/entries/fo5rNqgK7i3vzbB8)
+[ 細かすぎて伝わらない D3 ver.4 の話 ](https://www.slideshare.net/xxshimizuxx/d3-ver4)
+[これから D3.js を始める人のためのメモ](https://qiita.com/corestate55/items/e70d5981c33a89f63367)
+
+## dagre-d3
+
+[dagre-d3](https://github.com/dagrejs/dagre-d3/wiki#demos)

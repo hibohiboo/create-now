@@ -123,5 +123,4 @@ RUN npm install classnames
 RUN npm install sanitize-html
 
 # visualization
-RUN npm install d3
-RUN npm install @types/d3 --save-dev
+RUN npm install dagre-d3 d3
