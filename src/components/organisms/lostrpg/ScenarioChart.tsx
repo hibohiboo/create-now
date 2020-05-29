@@ -4,6 +4,94 @@ import * as d3 from 'd3'
 import type { Scenario } from '~/store/modules/lostModule'
 // Font Awesome のfont-weightのルール
 const faWeight = { solid: '900', regular: '400', brands: '400', light: '300' }
+const tspan = (text) => {
+  // const dom = document.createElement('tspan')
+  const dom = document.createElement('div')
+  dom.appendChild(document.createTextNode(text))
+  dom.style.fontFamily
+  // dom.setAttribute('xml:space', 'preserve')
+  // dom.setAttribute('dy', '1.5em')
+  // dom.setAttribute('x', '1')
+  return dom
+}
+const createLabel = (name, type) => {
+  if (type === 'checkpoint') {
+    const dom = tspan(`\uf058 ${name}`)
+    dom.style.fontWeight = faWeight.regular
+    return dom
+  } else if (type === 'path') {
+    const dom = tspan(`\uf54b ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'view') {
+    const dom = tspan(`\uf03e ${name}`)
+    dom.style.fontWeight = faWeight.regular
+    return dom
+  } else if (type === 'battle') {
+    const dom = tspan(`\uf6e2 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'search') {
+    const dom = tspan(`\uf002 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'lock') {
+    const dom = tspan(`\uf023 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'key') {
+    const dom = tspan(`\uf084 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'limitUp') {
+    const dom = tspan(`\uf251 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'boss') {
+    const dom = tspan(`\uf6d5 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'item') {
+    const dom = tspan(`\uf290 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'roll') {
+    const dom = tspan(`\uf522 ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'table') {
+    const dom = tspan(`\uf0cb ${name}`)
+    dom.style.fontWeight = faWeight.solid
+    return dom
+  }
+
+  return tspan(name)
+}
+const createLabels = (scene) => {
+  const fragment = document.createDocumentFragment()
+  fragment.appendChild(createLabel(scene.name, scene.type))
+  scene.events.forEach((event) => {
+    const eventLabel = createLabel(event.name, event.type)
+    eventLabel.classList.add('event')
+    fragment.appendChild(eventLabel)
+    event.items.map((item) => {
+      const itemLabel = createLabel(item, 'item')
+      itemLabel.classList.add('event-item')
+      fragment.appendChild(itemLabel)
+    })
+    event.rolls.map((item) => {
+      const itemLabel = createLabel(item, 'roll')
+      itemLabel.classList.add('event-item')
+      fragment.appendChild(itemLabel)
+    })
+    event.tables.map((item) => {
+      const itemLabel = createLabel(item.title, 'table')
+      itemLabel.classList.add('event-item')
+      fragment.appendChild(itemLabel)
+    })
+  })
+  return fragment
+}
 const setScenes = (phase, pi, g, befores) => {
   phase.scenes.forEach((scene, si) => {
     const nodeName = `phase-${pi}-scene-${si}` //`${scene.name}${i}`
@@ -11,15 +99,19 @@ const setScenes = (phase, pi, g, befores) => {
     let labelStyle = `font-family:"Font Awesome 5 Free", "Font Awesome 5 Brands";`
     if (scene.type === 'checkpoint') {
       label = `\uf058 ${label}`
-      labelStyle = `${labelStyle}font-weight: ${faWeight.regular};`
+      // labelStyle = `${labelStyle}font-weight: ${faWeight.regular};`
     } else if (scene.type === 'path') {
       label = `\uf54b ${label}`
-      labelStyle = `${labelStyle}font-weight: ${faWeight.solid};`
+      // labelStyle = `${labelStyle}font-weight: ${faWeight.solid};`
     }
     // scene.events.forEach((event) => {
     //   label = `${label}\n  ${event.name}`
     // })
-    g.setNode(nodeName, { label, labelStyle, class: scene.type })
+    g.setNode(nodeName, {
+      label: () => createLabels(scene),
+      labelStyle,
+      class: scene.type,
+    })
     g.setParent(nodeName, phase.name)
     if (befores.scene) g.setEdge(befores.scene, nodeName)
     befores.scene = nodeName
