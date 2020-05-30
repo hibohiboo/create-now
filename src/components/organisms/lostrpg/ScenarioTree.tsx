@@ -26,24 +26,24 @@ const createEvent = (event, ei) => (
       {event.name}
     </summary>
     <ul>
-      {event.items.map((item) => (
-        <li key={item}>
-          <i className="fas fa-shopping-bag"></i>
-          {item}
+      {event.items.map((item, i) => (
+        <li key={`${item.name}-${i}`}>
+          {item.type === 'item' ? (
+            <i className="fas fa-shopping-bag"></i>
+          ) : item.type === 'roll' ? (
+            <i className="fas fa-dice"></i>
+          ) : item.type === 'path' ? (
+            <i className="fas fa-shoe-prints"></i>
+          ) : item.type === 'prize' ? (
+            <i class="far fa-gem"></i>
+          ) : (
+            <></>
+          )}
+
+          {item.name}
         </li>
       ))}
-      {event.rolls.map((roll) => (
-        <li key={roll}>
-          <i className="fas fa-dice"></i>
-          {roll}
-        </li>
-      ))}
-      {event.paths.map((path) => (
-        <li key={path}>
-          <i className="fas fa-shoe-prints"></i>
-          {path}
-        </li>
-      ))}
+
       {event.tables.map((table) => (
         <li key={table.title}>
           <i className="fas fa-list-ol"></i>

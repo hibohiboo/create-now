@@ -40,7 +40,8 @@ const Page: React.FC<{
   lng: string
   lngDict: { [key: string]: string }
   sample: string
-}> = ({ lng, lngDict, sample }) => {
+  sample2: string
+}> = ({ lng, lngDict, sample, sample2 }) => {
   const classes = useStyles()
   const t = lngDict
   const { sampleTable } = lng === defaultLanguage ? lostData : lostDataEn
@@ -76,6 +77,22 @@ const Page: React.FC<{
       <Box mt={2} className={classes.preWrapper}>
         <pre>{sample}</pre>
       </Box>
+      <Box my={2}>
+        <Button
+          startIcon={<FileCopy />}
+          onClick={() => {
+            if (navigator.clipboard) navigator.clipboard.writeText(sample2)
+          }}
+          variant="contained"
+          color="primary"
+        >
+          {t['common_copy']}
+        </Button>
+
+        <Box mt={2} className={classes.preWrapper}>
+          <pre>{sample2}</pre>
+        </Box>
+      </Box>
 
       <Link href="/lostrpg">{t['common_back']}</Link>
     </Container>
@@ -85,8 +102,9 @@ const Page: React.FC<{
 export async function getStaticProps({ params }) {
   const { default: lngDict = {} } = await import(`~/locales/${params.lng}.json`)
   const sample = readFile('data/samples', 'scenario.md')
+  const sample2 = readFile('data/samples', 'scenario2.md')
   return {
-    props: { lng: params.lng, lngDict, sample },
+    props: { lng: params.lng, lngDict, sample, sample2 },
   }
 }
 

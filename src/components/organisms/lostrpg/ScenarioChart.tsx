@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 import type { Scenario } from '~/store/modules/lostModule'
 // Font Awesome のfont-weightのルール
 const faWeight = { solid: '900', regular: '400', brands: '400', light: '300' }
-const tspan = (text) => {
+const textDom = (text) => {
   // const dom = document.createElement('tspan')
   const dom = document.createElement('div')
   dom.appendChild(document.createTextNode(text))
@@ -15,57 +15,63 @@ const tspan = (text) => {
   return dom
 }
 const createLabel = (name, type) => {
-  if (type === 'checkpoint') {
-    const dom = tspan(`\uf058 ${name}`)
+  if (!type) {
+    return textDom(name)
+  } else if (type === 'checkpoint') {
+    const dom = textDom(`\uf058 ${name}`)
     dom.style.fontWeight = faWeight.regular
     return dom
   } else if (type === 'path') {
-    const dom = tspan(`\uf54b ${name}`)
+    const dom = textDom(`\uf54b ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'view') {
-    const dom = tspan(`\uf03e ${name}`)
+    const dom = textDom(`\uf03e ${name}`)
     dom.style.fontWeight = faWeight.regular
     return dom
   } else if (type === 'battle') {
-    const dom = tspan(`\uf6e2 ${name}`)
+    const dom = textDom(`\uf6e2 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'search') {
-    const dom = tspan(`\uf002 ${name}`)
+    const dom = textDom(`\uf002 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'lock') {
-    const dom = tspan(`\uf023 ${name}`)
+    const dom = textDom(`\uf023 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'key') {
-    const dom = tspan(`\uf084 ${name}`)
+    const dom = textDom(`\uf084 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'limitUp') {
-    const dom = tspan(`\uf251 ${name}`)
+    const dom = textDom(`\uf251 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'boss') {
-    const dom = tspan(`\uf6d5 ${name}`)
+    const dom = textDom(`\uf6d5 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'item') {
-    const dom = tspan(`\uf290 ${name}`)
+    const dom = textDom(`\uf290 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'roll') {
-    const dom = tspan(`\uf522 ${name}`)
+    const dom = textDom(`\uf522 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'table') {
-    const dom = tspan(`\uf0cb ${name}`)
+    const dom = textDom(`\uf0cb ${name}`)
     dom.style.fontWeight = faWeight.solid
+    return dom
+  } else if (type === 'prize') {
+    const dom = textDom(`\uf3a5 ${name}`)
+    dom.style.fontWeight = faWeight.regular
     return dom
   }
 
-  return tspan(name)
+  return textDom(name)
 }
 const createLabels = (scene) => {
   const fragment = document.createDocumentFragment()
@@ -75,12 +81,7 @@ const createLabels = (scene) => {
     eventLabel.classList.add('event')
     fragment.appendChild(eventLabel)
     event.items.map((item) => {
-      const itemLabel = createLabel(item, 'item')
-      itemLabel.classList.add('event-item')
-      fragment.appendChild(itemLabel)
-    })
-    event.rolls.map((item) => {
-      const itemLabel = createLabel(item, 'roll')
+      const itemLabel = createLabel(item.name, item.type)
       itemLabel.classList.add('event-item')
       fragment.appendChild(itemLabel)
     })
@@ -108,6 +109,7 @@ const setScenes = (phase, pi, g, befores) => {
     ) {
       g.setEdge(befores.scene, nodeName)
     } else if (scene.next && scene.next.length > 0) {
+      if (scene.next.includes('none')) return
       scene.next.forEach((n) => {
         g.setEdge(nodeName, n)
       })

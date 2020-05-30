@@ -45,14 +45,16 @@ interface Link {
   url: string
   value: string
 }
+interface EventItem {
+  name: string
+  type: string
+}
 interface Event {
   name: string
   type: string
   lines: string[]
-  items: string[]
+  items: EventItem[]
   tables: Table[]
-  rolls: string[]
-  paths: string[]
   links: Link[]
 }
 
@@ -77,10 +79,8 @@ interface ScenarioPayload {
   event: Event
   sceneLines: string[]
   eventLines: string[]
-  items: string[]
+  items: EventItem[]
   tables: Table[]
-  rolls: string[]
-  paths: string[]
   tableTitle: string
   players: string
   time: string
@@ -121,8 +121,6 @@ const initEvent = {
   lines: [],
   items: [],
   tables: [],
-  rolls: [],
-  paths: [],
   links: [],
 }
 const md = `# シナリオタイトル
@@ -206,7 +204,7 @@ const phases: Phase[] = [
               'チェックポイントの描写です',
               'チェックポイントから延びる道について書きます',
             ],
-            paths: ['道'],
+            items: [{ name: '道', type: 'path' }],
           },
         ],
         next: [],
@@ -221,7 +219,7 @@ const phases: Phase[] = [
             name: '障害',
             type: 'lock',
             lines: ['障害について説明します'],
-            rolls: ['判定'],
+            items: [{ name: '判定', type: 'roll' }],
           },
         ],
         next: [],
@@ -318,8 +316,6 @@ export const mdToScenario = (md: string): Scenario => {
     eventLines: [],
     items: [],
     tables: [],
-    rolls: [],
-    paths: [],
     tableTitle: '',
     players: '',
     time: '',
@@ -347,8 +343,6 @@ export const mdToScenario = (md: string): Scenario => {
       lines: payload.eventLines,
       items: payload.items,
       tables: payload.tables,
-      rolls: payload.rolls,
-      paths: payload.paths,
       links: payload.links,
     })
   }
@@ -427,34 +421,30 @@ export const mdToScenario = (md: string): Scenario => {
         lines: [],
         items: [],
         tables: [],
-        rolls: [],
-        paths: [],
         links: [],
       }
 
       payload.eventLines = []
       payload.items = []
       payload.tables = []
-      payload.rolls = []
-      payload.paths = []
       payload.links = []
       return
     }
     if (c.type === 'heading' && c.depth === 5) {
       const [val, key] = getAttributes(_.get(c, 'children[0].value'))
-      if (key === 'item') {
-        payload.items.push(val)
-      }
-      if (key === 'roll') {
-        payload.rolls.push(val)
-      }
-      if (key === 'path') {
-        payload.paths.push(val)
-      }
       if (key === 'table') {
         payload.tableTitle = val
       }
-      return
+      switch (key) {
+        case 'item':
+        case 'roll':
+        case 'path':
+        case 'prize':
+          payload.items.push({ type: key, name: val })
+          return
+        default:
+          return
+      }
     }
     if (
       c.type === 'paragraph' &&
