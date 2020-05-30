@@ -3837,6 +3837,9 @@ export const sampleTable = {
       ],
     },
     {
+      cells: ['報酬', '##### 報酬 {.prize}', '<i class="far fa-gem"></i>報酬'],
+    },
+    {
       cells: ['道', '##### 道 {.path}', '<i class="fas fa-shoe-prints"></i>道'],
     },
     {
@@ -3844,6 +3847,30 @@ export const sampleTable = {
     },
     {
       cells: ['リンク', '[文字](URL)', '<a>文字</a>'],
+    },
+    {
+      cells: [
+        'シーンID:X',
+        '.alias-X',
+        'Xは-以外の文字ならなんでもOK。チャート用。',
+      ],
+    },
+    {
+      cells: [
+        '次のシーン',
+        '.next-X',
+        'Xは-以外の文字ならなんでもOK。チャート用。',
+      ],
+    },
+    {
+      cells: [
+        '次のシーン(分岐あり）',
+        '.next-X1-X2',
+        'X1,X2は-以外の文字ならなんでもOK。チャート用。',
+      ],
+    },
+    {
+      cells: ['次のシーンなし', '.next-none', '行き止まり。チャート用。'],
     },
   ],
 }
