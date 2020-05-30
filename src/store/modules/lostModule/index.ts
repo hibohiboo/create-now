@@ -272,6 +272,7 @@ const lostModule = createSlice({
         ...state.scenario,
         ...mdToScenario(action.payload),
         isPublish: state.scenario.isPublish,
+        creatorName: state.scenario.creatorName,
       }
     },
   },

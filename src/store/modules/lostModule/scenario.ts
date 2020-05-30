@@ -286,6 +286,7 @@ export const initScenario: Scenario = {
   lines: ['シナリオの概要です。'],
   caution: '',
   isPublish: false,
+  creatorName: '',
 }
 
 // Methods

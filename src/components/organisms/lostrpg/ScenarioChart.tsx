@@ -117,60 +117,69 @@ const setScenes = (phase, pi, g, befores) => {
     befores.scene = nodeName
   })
 }
+
+const makeChart = (scenario: Scenario) => {
+  const g = new dagreD3.graphlib.Graph({ compound: true })
+    .setGraph({})
+    .setDefaultEdgeLabel(() => ({}))
+
+  // Here we're setting the nodes
+  g.setNode('group', {
+    label: '',
+    clusterLabelPos: 'top',
+    style: 'fill: #fff',
+  })
+  const befores = { phase: null, scene: null }
+  scenario.phases.forEach((phase, pi) => {
+    setScenes(phase, pi, g, befores)
+    g.setNode(phase.name, {
+      label: phase.name,
+      clusterLabelPos: 'top',
+      style: 'fill: #fff;',
+      labelStyle: 'font-size:1.2rem',
+    })
+    g.setParent(phase.name, 'group')
+
+    befores.phase = phase.name
+  })
+
+  g.nodes().forEach((v) => {
+    const node = g.node(v)
+    // Round the corners of the nodes
+    node.rx = node.ry = 5
+  })
+  console.log('g', g)
+  // Create the renderer
+  const render = new dagreD3.render()
+
+  // Set up an SVG group so that we can translate the final graph.
+  const target = d3.select('.target')
+  const svg = target.append('svg').attr('height', 800).attr('width', 600)
+
+  const svgGroup = svg.append('g')
+
+  // Run the renderer. This is what draws the final graph.
+  render(d3.select('svg g'), g)
+
+  // Center the graph
+  const xCenterOffset = (svg.attr('width') - g.graph().width) / 2
+  svgGroup.attr('transform', 'translate(' + xCenterOffset + ', 20)')
+  svg.attr('height', g.graph().height + 40)
+
+  // Set up zoom and Drag support
+  var zoom = d3.zoom().on('zoom', function () {
+    svgGroup.attr('transform', d3.event.transform)
+  })
+  svg.call(zoom)
+}
+
 const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
   useEffect(() => {
-    const g = new dagreD3.graphlib.Graph({ compound: true })
-      .setGraph({})
-      .setDefaultEdgeLabel(() => ({}))
-
-    // Here we're setting the nodes
-    g.setNode('group', {
-      label: '',
-      clusterLabelPos: 'top',
-      style: 'fill: #fff',
-    })
-    const befores = { phase: null, scene: null }
-    scenario.phases.forEach((phase, pi) => {
-      setScenes(phase, pi, g, befores)
-      g.setNode(phase.name, {
-        label: phase.name,
-        clusterLabelPos: 'top',
-        style: 'fill: #fff;',
-        labelStyle: 'font-size:1.2rem',
-      })
-      g.setParent(phase.name, 'group')
-
-      befores.phase = phase.name
-    })
-
-    g.nodes().forEach((v) => {
-      const node = g.node(v)
-      // Round the corners of the nodes
-      node.rx = node.ry = 5
-    })
-    console.log('g', g)
-    // Create the renderer
-    const render = new dagreD3.render()
-
-    // Set up an SVG group so that we can translate the final graph.
-    const target = d3.select('.target')
-    const svg = target.append('svg').attr('height', 800).attr('width', 600)
-
-    const svgGroup = svg.append('g')
-
-    // Run the renderer. This is what draws the final graph.
-    render(d3.select('svg g'), g)
-
-    // Center the graph
-    const xCenterOffset = (svg.attr('width') - g.graph().width) / 2
-    svgGroup.attr('transform', 'translate(' + xCenterOffset + ', 20)')
-    svg.attr('height', g.graph().height + 40)
-
-    // Set up zoom and Drag support
-    var zoom = d3.zoom().on('zoom', function () {
-      svgGroup.attr('transform', d3.event.transform)
-    })
-    svg.call(zoom)
+    try {
+      makeChart(scenario)
+    } catch (e) {
+      console.log(e)
+    }
   })
   return (
     <>
