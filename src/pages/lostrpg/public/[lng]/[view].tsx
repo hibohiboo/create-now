@@ -6,13 +6,21 @@ import {
   getCharacter,
   getCharactersRecord,
   getBoss,
+  getScenario,
 } from '~/api/firestoreAPI'
-import { Camp, Character, Record, Boss } from '~/store/modules/lostModule'
+import {
+  Camp,
+  Character,
+  Record,
+  Boss,
+  Scenario,
+} from '~/store/modules/lostModule'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import CampPage from '~/components/pages/lostrpg/camp'
 import CharacterPage from '~/components/pages/lostrpg/CharacterPage'
 import RecordPage from '~/components/pages/lostrpg/Record'
 import BossPage from '~/components/pages/lostrpg/Boss'
+import ScenarioPage from '~/components/pages/lostrpg/Scenario'
 
 const Page: NextPage<{
   view: string
@@ -21,10 +29,13 @@ const Page: NextPage<{
   character?: Character
   record?: Record
   boss?: Boss
+  scenario?: Scenario
+  lng?: string
+  lngDict?: any
 }> = function (ctx) {
   const dispatch = useDispatch()
   const authUser = useAuth()
-  const { view, id } = ctx
+  const { view, id, lng, lngDict } = ctx
 
   useEffect(() => {
     dispatch(createAuthClientSide())
@@ -51,11 +62,24 @@ const Page: NextPage<{
     const { boss } = ctx
     return <BossPage boss={boss} id={id} authUser={authUser} />
   }
+  if (view === 'scenario') {
+    const { scenario } = ctx
+    return (
+      <ScenarioPage
+        scenario={scenario}
+        lng={lng}
+        lngDict={lngDict}
+        id={id}
+        authUser={authUser}
+      />
+    )
+  }
   return <></>
 }
 
 Page.getInitialProps = async ({ query }) => {
-  const { lng, view } = query
+  const lng = query.lng as string
+  const view = query.view as string
   const id = query.id as string
   const { default: lngDict = {} } = await import(`~/locales/${lng}.json`)
   if (view === 'camp') {
@@ -73,6 +97,10 @@ Page.getInitialProps = async ({ query }) => {
   if (view === 'boss') {
     const boss = await getBoss(id)
     return { boss, lng, lngDict, view, id }
+  }
+  if (view === 'scenario') {
+    const scenario = await getScenario(id)
+    return { scenario, lng, lngDict, view, id }
   }
 }
 

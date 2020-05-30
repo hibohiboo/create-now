@@ -277,7 +277,7 @@ export const getBoss = async (id: string) => {
 
 export const getScenario = async (id: string) => {
   if (!id) throw new Error('empty id')
-  const data = await fetchFromFirestore(`systems/lost/bosses/${id}`)
+  const data = await fetchFromFirestore(`systems/lost/scenarios/${id}`)
 
   const {
     name,
@@ -294,6 +294,8 @@ export const getScenario = async (id: string) => {
     updatedAt,
     isPublish,
   } = data.fields
+  console.log('fields', data.fields)
+
   const ret: lost.Scenario = {
     name: getStr(name),
     uid: getStr(uid),
