@@ -23,7 +23,7 @@ export const createScenario = async (
   const { uid } = authUser
   let url = ''
   if (file) {
-    const path = `${uid}/scenarios/${id}`
+    const path = `${uid}/${id}`
     url = await updateImage(path, file)
   }
   await Promise.all([
@@ -61,7 +61,7 @@ export const updateScenario = async (
   let url = scenario.imageUrl
 
   if (file) {
-    const path = `${uid}/scenarios/${id}`
+    const path = `${uid}/${id}`
     url = await updateImage(path, file)
   }
   await Promise.all([

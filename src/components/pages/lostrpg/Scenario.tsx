@@ -76,21 +76,6 @@ ${
         )}
       </Box>
 
-      <Box style={{ width: '100%' }} display="flex" flexWrap="wrap">
-        {scenario.imageUrl ? (
-          <Box
-            border={1}
-            style={{
-              minWidth: '320px',
-            }}
-          >
-            <img alt={t['common_image']} src={scenario.imageUrl} />{' '}
-          </Box>
-        ) : (
-          <></>
-        )}
-      </Box>
-
       <Paper>
         <Tabs
           value={tabValue}

@@ -145,6 +145,13 @@ const ScenarioView: React.FC<{
       ) : (
         <></>
       )}
+      {scenario.imageUrl ? (
+        <Box style={{}}>
+          <img alt={t('common_image')} src={scenario.imageUrl} />{' '}
+        </Box>
+      ) : (
+        <></>
+      )}
       {scenario.lines.map((line) => (
         <p className={classes.p} key={line}>
           {line}

@@ -17,6 +17,7 @@ import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { defaultLanguage } from '~/lib/i18n'
 import type { Ability } from './character'
+import { createSetImageFile } from '~/utils/formHelper'
 import type { LostModule } from './index'
 import {
   setPagenationLoading,
@@ -593,7 +594,11 @@ export const useScenarioEditViewModel = () =>
         dispatch(fetchScenario(id))
       }
     }, [authUser])
+
     const [file, setFile] = useState<File>(null)
+    const setImageFile = createSetImageFile(setFile, (url) => {
+      dispatch(setScenario({ ...scenario, imageUrl: url }))
+    })
     const [tabValue, setTabValue] = useState(0)
     return {
       id,
@@ -610,7 +615,7 @@ export const useScenarioEditViewModel = () =>
       scenarioHandler: (e) => dispatch(setMarkdownForScenario(e)),
       creatorNameHandler: (e) => dispatchSetScenario(e, 'creatorName'),
       changeTabHandler: (e, v) => setTabValue(v),
-      setImageHandler: (file: File) => setFile(file),
+      setImageHandler: (file: File) => setImageFile(file),
       editHandler: async () => {
         if (!scenario.name) {
           alert(`${t('common_name')}:${t('message_required')}`)

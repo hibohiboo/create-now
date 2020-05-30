@@ -114,7 +114,7 @@ const ImageArea: React.FC = () => {
             />
             <Text
               x={230}
-              y={550}
+              y={500}
               width={canvasWidth}
               align="left"
               text={`${scenario.pcNumber}`}
@@ -124,7 +124,7 @@ const ImageArea: React.FC = () => {
             />
             <Text
               x={380}
-              y={550}
+              y={500}
               width={canvasWidth}
               align="left"
               text={`${scenario.limit}`}
@@ -134,7 +134,7 @@ const ImageArea: React.FC = () => {
             />
             <Text
               x={530}
-              y={550}
+              y={500}
               width={canvasWidth}
               align="left"
               text={`${scenario.type}`}

@@ -117,6 +117,12 @@ const Page: NextPage = () => {
           </Paper>
           <Paper>
             <Box my={2}>
+              <ImageZone
+                label={t('common_image')}
+                fileHandler={vm.setImageHandler}
+              />
+            </Box>
+            <Box my={2}>
               <InputField
                 model={vm.scenario}
                 prop="creatorName"
