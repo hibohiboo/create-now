@@ -47,6 +47,7 @@ import {
   initScenario,
   useScenarioEditViewModel,
   mdToScenario,
+  useScenariosViewModel,
 } from './scenario'
 export type {
   Camp,
@@ -327,6 +328,7 @@ export {
   useBossEditViewModel,
   useBossViewModel,
   useScenarioEditViewModel,
+  useScenariosViewModel,
 }
 
 // thunk

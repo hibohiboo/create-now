@@ -84,7 +84,8 @@
   "lostrpg_scenario_sample_title": "LOSTRPG シナリオツールの使い方",
   "lostrpg_scenario_sample_import": "インポート機能サンプル",
   "lostrpg_scenario_sample_import_description": "以下の文章をコピーして「インポート」に貼り付けるとシナリオをインポートできます。",
-
+  "lostrpg_scenario_sample_edit": "シナリオ編集",
+  "lostrpg_scenario_list_title": "シナリオ一覧",
   "common_exp": "経験点",
   "common_memo": "メモ",
   "common_trophy": "称号",

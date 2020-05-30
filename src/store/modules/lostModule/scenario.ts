@@ -602,7 +602,7 @@ export const useScenarioEditViewModel = () =>
       authUser,
       tabValue,
       tabs: {
-        import: t('common_import'),
+        import: t('lostrpg_scenario_sample_edit'),
         preview: t('common_preview'),
         chart: t('common_chart'),
       },
@@ -655,6 +655,48 @@ export const useScenarioEditViewModel = () =>
             ...scenario,
             isPublish: e.target.checked,
           }),
+        ),
+    }
+  })
+export const useScenariosViewModel = () =>
+  useSelector((state: { lost: LostModule }) => {
+    const authUser = useAuth()
+    const i18n = useI18n()
+    const t = i18n.t
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const scenarios = state.lost.scenarios
+    const beforePage = `/lostrpg`
+    const pagination = useListPagination()
+    const [search, setSearch] = useState({ name: '' })
+    useEffect(() => {
+      dispatch(createAuthClientSide())
+      dispatch(setLocale(i18n.activeLocale))
+    }, [])
+    useEffect(() => {
+      if (authUser) {
+        dispatch(fetchScenarios(pagination.limit, '', authUser.uid))
+        return
+      }
+      dispatch(fetchScenarios(pagination.limit))
+    }, [authUser])
+    return {
+      i18n,
+      authUser,
+      search,
+      pagination,
+      scenarios,
+      beforePage,
+      searchHandler: (e) => setSearch({ ...search, name: e.target.value }),
+      filterHandler: () =>
+        dispatch(fetchScenarios(pagination.limit, search.name)),
+      loadMoreHandler: () =>
+        dispatch(
+          fetchScenariosMore(
+            pagination.lastLoaded,
+            pagination.limit,
+            search.name,
+          ),
         ),
     }
   })
