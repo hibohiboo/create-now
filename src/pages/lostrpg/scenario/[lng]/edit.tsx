@@ -3,7 +3,15 @@ import * as _ from 'lodash'
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Paper, Tabs, Tab } from '@material-ui/core'
+import {
+  Box,
+  Paper,
+  Tabs,
+  Tab,
+  Button,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
@@ -103,6 +111,47 @@ const Page: NextPage = () => {
             ) : (
               <ScenarioChart scenario={vm.scenario} />
             )}
+          </Paper>
+          <Paper>
+            <Box m={2}>
+              <InputLabel>{t('lostrpg_common_publish')}</InputLabel>
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                onChange={vm.publishHandler}
+                checked={vm.scenario.isPublish}
+                label={t('lostrpg_common_publish')}
+                value={vm.scenario.isPublish}
+              />
+            </Box>
+
+            <Box my={2}>
+              <Button
+                startIcon={<Save />}
+                onClick={vm.editHandler}
+                variant="contained"
+                color="primary"
+              >
+                {t('common_save')}
+              </Button>
+            </Box>
+            {!vm.id ? (
+              <></>
+            ) : (
+              <Box my={4}>
+                <Button
+                  startIcon={<DeleteOutline />}
+                  onClick={vm.deleteHandler}
+                  variant="contained"
+                  color="secondary"
+                >
+                  {t('common_delete')}
+                </Button>
+              </Box>
+            )}
+
+            <Link href={`/lostrpg/scenario/[lng]/list`} as={vm.beforePage}>
+              {t('common_back')}
+            </Link>
           </Paper>
         </Container>
       )}

@@ -5,13 +5,13 @@ import Router, { useRouter } from 'next/router'
 import { AppThunk } from '~/store/rootState'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import {
-  createBoss,
-  updateBoss,
-  deleteBoss,
-  readBosses,
-  getBoss,
-  readPrivateBosses,
-} from '~/firestore/boss'
+  createScenario,
+  updateScenario,
+  deleteScenario,
+  readScenarios,
+  getScenario,
+  readPrivateScenarios,
+} from '~/firestore/scenario'
 import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
@@ -23,7 +23,6 @@ import {
   paginationLoaded,
   setError,
   useListPagination,
-  toggleBossDamage,
   setLocale,
   setScenario,
   setScenarios,
@@ -70,6 +69,23 @@ interface Phase {
   name: string
   scenes: Scene[]
 }
+
+export interface Scenario {
+  id?: string
+  name?: string
+  md?: string // markdown
+  phases?: Phase[]
+  players?: string
+  time?: string
+  lines?: string[]
+  limit?: string
+  caution?: string
+  isPublish: boolean
+  imageUrl: string
+  createdAt?: any
+  updatedAt?: any
+  uid?: string
+}
 interface ScenarioPayload {
   phases: Phase[]
   phase: Phase
@@ -88,17 +104,6 @@ interface ScenarioPayload {
   links: Link[]
   limit: string
   caution: string
-}
-export interface Scenario {
-  id?: string
-  name?: string
-  md?: string // markdown
-  phases?: Phase[]
-  players?: string
-  time?: string
-  lines?: string[]
-  limit?: string
-  caution?: string
 }
 interface AstNode {
   type: string
@@ -161,9 +166,9 @@ const md = `# シナリオタイトル
 
 ヌシの描写をします。
 
-#### ヌシ {.boss}
+#### ヌシ {.scenario}
 
-[→ヌシシートへのリンク](https://create-now.now.sh/lostrpg/public/ja/boss?id=ktrzE0GfeZ0wpDLGjYPj)
+[→ヌシシートへのリンク](https://create-now.now.sh/lostrpg/public/ja/scenario?id=ktrzE0GfeZ0wpDLGjYPj)
 
 ## 結果フェイズ
 ### エピローグ
@@ -236,12 +241,12 @@ const phases: Phase[] = [
         events: [
           {
             ...initEvent,
-            type: 'boss',
+            type: 'scenario',
             name: 'ヌシ',
             links: [
               {
                 url:
-                  'https://create-now.now.sh/lostrpg/public/ja/boss?id=ktrzE0GfeZ0wpDLGjYPj',
+                  'https://create-now.now.sh/lostrpg/public/ja/scenario?id=ktrzE0GfeZ0wpDLGjYPj',
                 value: '→ヌシシートへのリンク',
               },
             ],
@@ -280,7 +285,11 @@ export const initScenario: Scenario = {
   limit: '〇',
   lines: ['シナリオの概要です。'],
   caution: '',
+  isPublish: false,
+  imageUrl: '',
 }
+
+// Methods
 const getValues = (children: AstNode[], result: string[]) => {
   if (children.length === 0) return result
   const node = children.pop()
@@ -493,6 +502,60 @@ export const mdToScenario = (md: string): Scenario => {
   }
 }
 
+// thunks
+interface ScenariosLoaded {
+  scenarios: { name: string; id: string }[]
+  next: string
+  hasMore: boolean
+}
+
+const fetchScenariosCommon = async (
+  next,
+  limit,
+  dispatch,
+  action,
+  searchName,
+  uid = null,
+) => {
+  dispatch(setPagenationLoading(true))
+  try {
+    const ret: ScenariosLoaded = await readScenarios(next, limit, searchName)
+    const privateData = uid ? await readPrivateScenarios(uid) : []
+    dispatch(paginationLoaded(ret))
+    dispatch(action([...privateData, ...ret.scenarios]))
+  } catch (err) {
+    dispatch(setError(err.toString()))
+    dispatch(setPagenationLoading(false))
+  }
+}
+const fetchScenarios = (
+  limit: number,
+  searchName = '',
+  uid = null,
+): AppThunk => async (dispatch) => {
+  await fetchScenariosCommon(
+    null,
+    limit,
+    dispatch,
+    setScenarios,
+    searchName,
+    uid,
+  )
+}
+
+const fetchScenariosMore = (
+  next: string,
+  limit: number,
+  searchName: string,
+): AppThunk => async (dispatch) => {
+  await fetchScenariosCommon(next, limit, dispatch, addScenarios, searchName)
+}
+
+const fetchScenario = (id: string): AppThunk => async (dispatch) => {
+  const data = await getScenario(id)
+  dispatch(setScenario(data))
+}
+
 //ViewModel
 export const useScenarioEditViewModel = () =>
   useSelector((state: { lost: LostModule }) => {
@@ -500,7 +563,10 @@ export const useScenarioEditViewModel = () =>
     const i18n = useI18n()
     const t = i18n.t
     const dispatch = useDispatch()
+    const router = useRouter()
     const scenario = state.lost.scenario
+    const id = router.query.id as string
+    const beforePage = `/lostrpg/scenario/${i18n.activeLocale}/list`
     const dispatchSetScenario = (e, prop: string) => {
       const r = { ...scenario }
       if (typeof r[prop] === 'number') {
@@ -514,8 +580,10 @@ export const useScenarioEditViewModel = () =>
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
+    const [file, setFile] = useState<File>(null)
     const [tabValue, setTabValue] = useState(0)
     return {
+      id,
       scenario,
       i18n,
       authUser,
@@ -525,7 +593,54 @@ export const useScenarioEditViewModel = () =>
         preview: t('common_preview'),
         chart: t('common_chart'),
       },
+      beforePage,
       scenarioHandler: (e) => dispatch(setMarkdownForScenario(e)),
       changeTabHandler: (e, v) => setTabValue(v),
+      setImageHandler: (file: File) => setFile(file),
+      editHandler: async () => {
+        if (!scenario.name) {
+          alert(`${t('common_name')}:${t('message_required')}`)
+          window.scrollTo(0, 0)
+          return
+        }
+
+        let retId = id
+        if (!retId) {
+          retId = await createScenario(
+            { ...scenario, uid: authUser.uid },
+            authUser,
+            file,
+          )
+        } else {
+          await updateScenario(
+            id,
+            { ...scenario, uid: authUser.uid },
+            authUser.uid,
+            file,
+          )
+        }
+
+        Router.push(
+          {
+            pathname: `/lostrpg/public/[lng]/[view]`,
+            query: { id: retId },
+          },
+          `/lostrpg/public/${i18n.activeLocale}/scenario?id=${retId}`,
+        )
+      },
+
+      deleteHandler: async () => {
+        if (confirm(t('message_are_you_sure_remove'))) {
+          await deleteScenario(id, authUser.uid)
+          Router.push(beforePage)
+        }
+      },
+      publishHandler: (e) =>
+        dispatch(
+          setScenario({
+            ...scenario,
+            isPublish: e.target.checked,
+          }),
+        ),
     }
   })

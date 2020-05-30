@@ -274,3 +274,71 @@ export const getBoss = async (id: string) => {
   }
   return ret
 }
+
+export const getScenario = async (id: string) => {
+  if (!id) throw new Error('empty id')
+  const data = await fetchFromFirestore(`systems/lost/bosses/${id}`)
+
+  const {
+    name,
+    uid,
+    md,
+    phases,
+    players,
+    time,
+    lines,
+    limit,
+    caution,
+    imageUrl,
+    createdAt,
+    updatedAt,
+    isPublish,
+  } = data.fields
+  const ret: lost.Scenario = {
+    name: getStr(name),
+    uid: getStr(uid),
+    md: getStr(md),
+    players: getStr(players),
+    time: getStr(time),
+    limit: getStr(limit),
+    caution: getStr(caution),
+    createdAt: getTimestamp(createdAt),
+    updatedAt: getTimestamp(updatedAt),
+    lines: getArray(lines, (item) => getStr(item)),
+    phases: getArray(phases, (phase) => ({
+      name: getStr(phase.name),
+      scenes: getArray(phase.scenes, (scene) => ({
+        name: getStr(scene.name),
+        type: getStr(scene.type),
+        alias: getStr(scene.alias),
+        lines: getArray(scene.lines, (item) => getStr(item)),
+        next: getArray(scene.next, (item) => getStr(item)),
+        events: getArray(scene.events, (event) => ({
+          name: getStr(event.name),
+          type: getStr(event.type),
+          lines: getArray(event.lines, (item) => getStr(item)),
+          items: getArray(event.items, (item) => ({
+            name: getStr(item.name),
+            type: getStr(item.type),
+          })),
+          links: getArray(event.links, (item) => ({
+            url: getStr(item.url),
+            value: getStr(item.value),
+          })),
+          tables: getArray(event.tables, (table) => ({
+            title: getStr(table.title),
+            columns: getArray(table.columns, (row) => ({
+              cells: getArray(row.cells, (item) => getStr(item)),
+            })),
+            rows: getArray(table.rows, (row) => ({
+              cells: getArray(row.cells, (item) => getStr(item)),
+            })),
+          })),
+        })),
+      })),
+    })),
+    imageUrl: getStr(imageUrl),
+    isPublish: getBool(isPublish),
+  }
+  return ret
+}
