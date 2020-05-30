@@ -35,7 +35,7 @@ const createEvent = (event, ei) => (
           ) : item.type === 'path' ? (
             <i className="fas fa-shoe-prints"></i>
           ) : item.type === 'prize' ? (
-            <i class="far fa-gem"></i>
+            <i className="far fa-gem"></i>
           ) : (
             <></>
           )}

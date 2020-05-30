@@ -68,7 +68,17 @@ const createEvent = (event, pi, classes) => (
 
 const createScene = (scene, pi, classes) => (
   <section key={`scene-${pi}-${scene.name}`}>
-    <h3>{scene.name}</h3>
+    {scene.type === 'checkpoint' ? <hr /> : <></>}
+    <h3>
+      {scene.type === 'checkpoint' ? (
+        <i className="far fa-check-circle"></i>
+      ) : scene.type === 'path' ? (
+        <i className="fas fa-shoe-prints"></i>
+      ) : (
+        <></>
+      )}
+      {scene.name}
+    </h3>
     {scene.lines.map((line, li) => (
       <p className={classes.p} key={`line-${li}-${line}`}>
         {line}
@@ -80,6 +90,7 @@ const createScene = (scene, pi, classes) => (
 
 const createPhase = (phase, pi, classes) => (
   <section key={`phase-${pi}-${phase.name}`}>
+    <hr />
     <h2>{phase.name}</h2>
     {phase.scenes.map((s, i) => createScene(s, i, classes))}
   </section>
