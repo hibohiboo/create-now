@@ -16,9 +16,9 @@ export const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const createTable = (table) => {
+const createTable = (table, ti) => {
   return (
-    <Table>
+    <Table key={`${table.title}-${ti}`}>
       <caption style={{ captionSide: 'top' }}>{table.title}</caption>
       <TableHead>
         <TableRow>
@@ -29,9 +29,9 @@ const createTable = (table) => {
       </TableHead>
       <TableBody>
         {table.rows.map((row, i) => (
-          <TableRow key={`row-${i}`}>
-            {row.cells.map((cell) => (
-              <TableCell key={`${cell}-${i}`}>{cell}</TableCell>
+          <TableRow key={`${table.title}-row-${i}`}>
+            {row.cells.map((cell, ci) => (
+              <TableCell key={`${cell}-${i}-${ci}`}>{cell}</TableCell>
             ))}
           </TableRow>
         ))}
@@ -43,15 +43,15 @@ const createTable = (table) => {
 const createEvent = (event, pi, classes) => (
   <section key={`event-${pi}-${event.name}`}>
     <h4>{event.name}</h4>
-    {event.lines.map((line) => (
-      <p className={classes.p} key={line}>
+    {event.lines.map((line, li) => (
+      <p className={classes.p} key={`${li}-${line}`}>
         {line}
       </p>
     ))}
     {event.tables.map(createTable)}
-    {event.links.map((link) => (
+    {event.links.map((link, li) => (
       <p
-        key={link.value}
+        key={`${li}-${link.value}`}
         dangerouslySetInnerHTML={{
           __html: sanitize(`<a href="${link.url}">${link.value}</a>`, {
             allowedTags: ['a'],
@@ -69,8 +69,8 @@ const createEvent = (event, pi, classes) => (
 const createScene = (scene, pi, classes) => (
   <section key={`scene-${pi}-${scene.name}`}>
     <h3>{scene.name}</h3>
-    {scene.lines.map((line) => (
-      <p className={classes.p} key={line}>
+    {scene.lines.map((line, li) => (
+      <p className={classes.p} key={`line-${li}-${line}`}>
         {line}
       </p>
     ))}

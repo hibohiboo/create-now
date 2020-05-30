@@ -3767,12 +3767,16 @@ export const sampleTable = {
     {
       cells: [
         'チェックポイント',
-        '### チェックポイント {.checkpoint}',
+        '### チェックポイント {.type-checkpoint}',
         '<i class="far fa-check-circle"></i>チェックポイント',
       ],
     },
     {
-      cells: ['道', '### 道 {.path}', '<i class="fas fa-shoe-prints"></i>道'],
+      cells: [
+        '道',
+        '### 道 {.type-path}',
+        '<i class="fas fa-shoe-prints"></i>道',
+      ],
     },
     { cells: ['描写', '#### 描写', '<i class="far fa-image"></i>描写'] },
     {

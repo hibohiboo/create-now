@@ -94,26 +94,24 @@ const createLabels = (scene) => {
 }
 const setScenes = (phase, pi, g, befores) => {
   phase.scenes.forEach((scene, si) => {
-    const nodeName = `phase-${pi}-scene-${si}` //`${scene.name}${i}`
-    let label = scene.name
+    const nodeName = scene.alias || `phase-${pi}-scene-${si}`
     let labelStyle = `font-family:"Font Awesome 5 Free", "Font Awesome 5 Brands";`
-    if (scene.type === 'checkpoint') {
-      label = `\uf058 ${label}`
-      // labelStyle = `${labelStyle}font-weight: ${faWeight.regular};`
-    } else if (scene.type === 'path') {
-      label = `\uf54b ${label}`
-      // labelStyle = `${labelStyle}font-weight: ${faWeight.solid};`
-    }
-    // scene.events.forEach((event) => {
-    //   label = `${label}\n  ${event.name}`
-    // })
     g.setNode(nodeName, {
       label: () => createLabels(scene),
       labelStyle,
       class: scene.type,
     })
     g.setParent(nodeName, phase.name)
-    if (befores.scene) g.setEdge(befores.scene, nodeName)
+    if (
+      (befores.scene && !scene.next) ||
+      (befores.scene && !scene.alias && scene.next.length === 0)
+    ) {
+      g.setEdge(befores.scene, nodeName)
+    } else if (scene.next && scene.next.length > 0) {
+      scene.next.forEach((n) => {
+        g.setEdge(n, nodeName)
+      })
+    }
     befores.scene = nodeName
   })
 }
@@ -139,7 +137,7 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
         labelStyle: 'font-size:1.2rem',
       })
       g.setParent(phase.name, 'group')
-      // if (beforePhase) g.setEdge(beforePhase, phase.name)
+
       befores.phase = phase.name
     })
 
@@ -165,6 +163,12 @@ const ScnearioChart: React.FC<{ scenario: Scenario }> = ({ scenario }) => {
     const xCenterOffset = (svg.attr('width') - g.graph().width) / 2
     svgGroup.attr('transform', 'translate(' + xCenterOffset + ', 20)')
     svg.attr('height', g.graph().height + 40)
+
+    // Set up zoom and Drag support
+    var zoom = d3.zoom().on('zoom', function () {
+      svgGroup.attr('transform', d3.event.transform)
+    })
+    svg.call(zoom)
   })
   return (
     <>

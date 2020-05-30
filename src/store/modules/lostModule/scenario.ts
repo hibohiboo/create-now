@@ -62,6 +62,7 @@ interface Scene {
   events: Event[]
   type?: string
   alias?: string
+  next?: string[]
 }
 interface Phase {
   name: string
@@ -112,6 +113,7 @@ const initScene = {
   events: [],
   type: '',
   alias: '',
+  next: [],
 }
 const initEvent = {
   name: '',
@@ -139,7 +141,7 @@ const md = `# シナリオタイトル
 
 ## 探索フェイズ
 
-### チェックポイント {.checkpoint .A}
+### チェックポイント {.type-checkpoint}
 
 #### 描写
 チェックポイントの描写です
@@ -147,7 +149,7 @@ const md = `# シナリオタイトル
 
 チェックポイントから延びる道について書きます
 
-### 道 {.path}
+### 道 {.type-path}
 
 #### 障害 {.lock}
 障害について説明します。
@@ -180,9 +182,11 @@ const phases: Phase[] = [
           {
             ...initEvent,
             name: '描写',
+            type: 'view',
             lines: ['シナリオのモチベーションです'],
           },
         ],
+        next: [],
       },
     ],
   },
@@ -192,12 +196,12 @@ const phases: Phase[] = [
       {
         ...initScene,
         name: 'チェックポイント',
-        alias: 'A',
         type: 'checkpoint',
         events: [
           {
             ...initEvent,
             name: '描写',
+            type: 'view',
             lines: [
               'チェックポイントの描写です',
               'チェックポイントから延びる道について書きます',
@@ -205,6 +209,7 @@ const phases: Phase[] = [
             paths: ['道'],
           },
         ],
+        next: [],
       },
       {
         ...initScene,
@@ -219,6 +224,7 @@ const phases: Phase[] = [
             rolls: ['判定'],
           },
         ],
+        next: [],
       },
     ],
   },
@@ -243,6 +249,7 @@ const phases: Phase[] = [
             ],
           },
         ],
+        next: [],
       },
     ],
   },
@@ -256,9 +263,11 @@ const phases: Phase[] = [
           {
             ...initEvent,
             name: '描写',
+            type: 'view',
             lines: ['セッションを終了して、経験点の計算を行なって下さい。'],
           },
         ],
+        next: [],
       },
     ],
   },
@@ -390,13 +399,18 @@ export const mdToScenario = (md: string): Scenario => {
       pushScene(payload)
       const value = _.get(c, 'children[0].value')
       const name = _.get(c, 'children[0].value')
-      const [val, type, alias] = getAttributes(value)
+      const [val, ...maybeAttr] = getAttributes(value)
+      const attr = (maybeAttr && maybeAttr.filter((m) => m)) || []
+      const type = attr.find((a) => a.indexOf('type-') !== -1)
+      const alias = attr.find((a) => a.indexOf('alias-') !== -1)
+      const next = attr.find((a) => a.indexOf('next-') !== -1)
       payload.scene = {
         name: val || name,
         lines: [],
         events: [],
-        type,
-        alias,
+        type: type && type.replace('type-', ''),
+        alias: alias && alias.replace('alias-', ''),
+        next: next && next.replace('next-', '').split('-'),
       }
       payload.sceneLines = []
       payload.events = []
