@@ -45,7 +45,14 @@ const Page: React.FC<{
       </Head>
       <SocialMeta
         title={scenario.name}
-        description={``}
+        description={`${scenario.name}
+👥${t['common_players']}:${scenario.players}  🕒${t['common_play_time']}:${
+          scenario.time
+        }  ⏳${t['lostrpg_common_limit']}:${scenario.limit}
+${
+  (scenario.caution ? '⚠' + scenario.caution + '\n' : '') +
+  scenario.lines.join('\n')
+}`}
         url={`/lostrpg/public/${lng}/scenario?id=${id}`}
         image={scenario.imageUrl}
       />
