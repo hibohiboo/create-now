@@ -607,6 +607,7 @@ export const useScenarioEditViewModel = () =>
       },
       beforePage,
       scenarioHandler: (e) => dispatch(setMarkdownForScenario(e)),
+      creatorNameHandler: (e) => dispatchSetScenario(e, 'creatorName'),
       changeTabHandler: (e, v) => setTabValue(v),
       setImageHandler: (file: File) => setFile(file),
       editHandler: async () => {

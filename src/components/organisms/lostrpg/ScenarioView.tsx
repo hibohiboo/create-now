@@ -151,6 +151,11 @@ const ScenarioView: React.FC<{
         </p>
       ))}
       {scenario.phases.map((p, i) => createPhase(p, i, classes))}
+      <Box my={2} style={{ border: 'solid 1px #000', padding: '10px' }}>
+        <div>
+          {t('common_creator')}:{scenario.creatorName}
+        </div>
+      </Box>
     </Box>
   )
 }

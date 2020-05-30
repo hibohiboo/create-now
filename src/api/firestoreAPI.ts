@@ -295,7 +295,6 @@ export const getScenario = async (id: string) => {
     isPublish,
     creatorName,
   } = data.fields
-  console.log('fields', data.fields)
 
   const ret: lost.Scenario = {
     name: getStr(name),

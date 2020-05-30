@@ -116,6 +116,14 @@ const Page: NextPage = () => {
             )}
           </Paper>
           <Paper>
+            <Box my={2}>
+              <InputField
+                model={vm.scenario}
+                prop="creatorName"
+                labelText={t('lostrpg_boss_common_creatorName')}
+                changeHandler={vm.creatorNameHandler}
+              />
+            </Box>
             <Box m={2}>
               <InputLabel>{t('lostrpg_common_publish')}</InputLabel>
               <FormControlLabel
