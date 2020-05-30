@@ -109,7 +109,7 @@ const setScenes = (phase, pi, g, befores) => {
       g.setEdge(befores.scene, nodeName)
     } else if (scene.next && scene.next.length > 0) {
       scene.next.forEach((n) => {
-        g.setEdge(n, nodeName)
+        g.setEdge(nodeName, n)
       })
     }
     befores.scene = nodeName
