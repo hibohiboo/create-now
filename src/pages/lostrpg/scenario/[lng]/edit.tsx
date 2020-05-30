@@ -60,7 +60,10 @@ const Page: NextPage = () => {
           <div style={{ display: 'none' }}>
             <LanguageSelector i18n={vm.i18n} />
           </div>
-          <h2>{t('lostrpg_common_scenario')}</h2>
+          <h2>
+            {t('lostrpg_common_scenario')}
+            {vm.id ? t('common_edit') : t('common_create')}
+          </h2>
           <p>
             <Link
               href="/lostrpg/scenario/[lng]/sample"

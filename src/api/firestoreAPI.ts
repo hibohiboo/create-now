@@ -293,6 +293,7 @@ export const getScenario = async (id: string) => {
     createdAt,
     updatedAt,
     isPublish,
+    creatorName,
   } = data.fields
   console.log('fields', data.fields)
 
@@ -306,6 +307,7 @@ export const getScenario = async (id: string) => {
     caution: getStr(caution),
     createdAt: getTimestamp(createdAt),
     updatedAt: getTimestamp(updatedAt),
+    creatorName: getStr(creatorName),
     lines: getArray(lines, (item) => getStr(item)),
     phases: getArray(phases, (phase) => ({
       name: getStr(phase.name),
@@ -329,9 +331,7 @@ export const getScenario = async (id: string) => {
           })),
           tables: getArray(event.tables, (table) => ({
             title: getStr(table.title),
-            columns: getArray(table.columns, (row) => ({
-              cells: getArray(row.cells, (item) => getStr(item)),
-            })),
+            columns: getArray(table.columns, (item) => getStr(item)),
             rows: getArray(table.rows, (row) => ({
               cells: getArray(row.cells, (item) => getStr(item)),
             })),

@@ -75,7 +75,7 @@ type LostState = {
   boss: Boss
   bosses: { id: string; name: string }[]
   scenario: Scenario
-  scenarios: Scenario[]
+  scenarios: { id: string; name: string }[]
 }
 
 export const init: LostState = {
@@ -268,7 +268,11 @@ const lostModule = createSlice({
       state.scenario = action.payload
     },
     setMarkdownForScenario: (state, action: PayloadAction<string>) => {
-      state.scenario = mdToScenario(action.payload)
+      state.scenario = {
+        ...state.scenario,
+        ...mdToScenario(action.payload),
+        isPublish: state.scenario.isPublish,
+      }
     },
   },
 })

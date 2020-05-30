@@ -37,7 +37,7 @@ interface TableRow {
 }
 interface Table {
   title?: string
-  columns: TableRow[]
+  columns: string[]
   rows: TableRow[]
 }
 interface Link {
@@ -80,11 +80,12 @@ export interface Scenario {
   lines?: string[]
   limit?: string
   caution?: string
-  isPublish: boolean
-  imageUrl: string
+  isPublish?: boolean
+  imageUrl?: string
   createdAt?: any
   updatedAt?: any
   uid?: string
+  creatorName?: string
 }
 interface ScenarioPayload {
   phases: Phase[]
@@ -276,7 +277,6 @@ const phases: Phase[] = [
   },
 ]
 export const initScenario: Scenario = {
-  id: '',
   name: 'シナリオタイトル',
   md,
   phases,
@@ -286,7 +286,6 @@ export const initScenario: Scenario = {
   lines: ['シナリオの概要です。'],
   caution: '',
   isPublish: false,
-  imageUrl: '',
 }
 
 // Methods
@@ -411,9 +410,9 @@ export const mdToScenario = (md: string): Scenario => {
         name: val || name,
         lines: [],
         events: [],
-        type: type && type.replace('type-', ''),
-        alias: alias && alias.replace('alias-', ''),
-        next: next && next.replace('next-', '').split('-'),
+        type: (type && type.replace('type-', '')) || null,
+        alias: (alias && alias.replace('alias-', '')) || null,
+        next: (next && next.replace('next-', '').split('-')) || null,
       }
       payload.sceneLines = []
       payload.events = []
@@ -469,14 +468,14 @@ export const mdToScenario = (md: string): Scenario => {
     if (c.type === 'paragraph') {
       const lines = getValues(c.children, []).reverse()
       if (payload.phase === null) {
-        payload.scenarioLines.push(lines)
+        payload.scenarioLines = [...payload.scenarioLines, ...lines]
         return
       }
       if (payload.event === null) {
-        payload.sceneLines.push(lines)
+        payload.sceneLines = [...payload.sceneLines, ...lines]
         return
       }
-      payload.eventLines.push(lines)
+      payload.eventLines = [...payload.eventLines, ...lines]
       return
     }
     if (c.type === 'table') {
@@ -580,6 +579,19 @@ export const useScenarioEditViewModel = () =>
       dispatch(createAuthClientSide())
       dispatch(setLocale(i18n.activeLocale))
     }, [])
+    useEffect(() => {
+      if (!id && authUser) {
+        dispatch(
+          setScenario({
+            ...initScenario,
+            creatorName: authUser.displayName,
+          }),
+        )
+      }
+      if (id && authUser) {
+        dispatch(fetchScenario(id))
+      }
+    }, [authUser])
     const [file, setFile] = useState<File>(null)
     const [tabValue, setTabValue] = useState(0)
     return {
