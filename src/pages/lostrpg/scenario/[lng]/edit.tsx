@@ -11,33 +11,35 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
+  Hidden,
 } from '@material-ui/core'
-import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import TextField from '@material-ui/core/TextField'
+import { makeStyles } from '@material-ui/core/styles'
 import { DeleteOutline, Save } from '@material-ui/icons'
-import MaterialTable from 'material-table'
-import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
-import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 import ImageZone from '~/components/organisms/lostrpg/ImageZone'
 import Link from '~/components/atoms/mui/Link'
 import InputField from '~/components/form/InputField'
 import TextAreaField from '~/components/form/TextAreaField'
-import SelectField from '~/components/form/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
-import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { contentLanguageMap } from '~/lib/i18n'
 import { useScenarioEditViewModel } from '~/store/modules/lostModule'
-import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
-import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 import ScenarioView from '~/components/organisms/lostrpg/ScenarioView'
 import ScenarioChart from '~/components/organisms/lostrpg/ScenarioChart'
 
+const useStyles = makeStyles((theme) => ({
+  tree: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
+  },
+}))
+
 const Page: NextPage = () => {
   const vm = useScenarioEditViewModel()
   const t = vm.i18n.t
+  const classes = useStyles()
   return (
     <>
       {!vm.authUser ? (
@@ -99,7 +101,9 @@ const Page: NextPage = () => {
                 </Box>
                 <article style={{ maxWidth: '650px', overflow: 'auto' }}>
                   <Box display="flex" flexWrap="wrap" my={2}>
-                    <ScenarioTree scenario={vm.scenario} />
+                    <Box className={classes.tree}>
+                      <ScenarioTree scenario={vm.scenario} />
+                    </Box>
                     <ScenarioView scenario={vm.scenario} t={t} />
                   </Box>
                 </article>
@@ -107,7 +111,10 @@ const Page: NextPage = () => {
             ) : vm.tabValue === 1 ? (
               <article>
                 <Box display="flex" flexWrap="wrap" my={2}>
-                  <ScenarioTree scenario={vm.scenario} />
+                  <Hidden xsDown implementation="css">
+                    <ScenarioTree scenario={vm.scenario} />
+                  </Hidden>
+
                   <ScenarioView scenario={vm.scenario} t={t} />
                 </Box>
               </article>

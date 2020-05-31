@@ -1,18 +1,12 @@
 import * as _ from 'lodash'
 import React, { useState } from 'react'
 import Head from 'next/head'
-import { Box, Checkbox, Paper, Tabs, Tab } from '@material-ui/core'
-import MaterialTable from 'material-table'
-import InputLabel from '@material-ui/core/InputLabel'
+import { Box, Hidden, Paper, Tabs, Tab } from '@material-ui/core'
 import Link from '~/components/atoms/mui/Link'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import { AuthUser } from '~/store/modules/authModule'
-import InputField from '~/components/form/InputField'
-import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
-import { useBossViewModel, Scenario } from '~/store/modules/lostModule'
-import * as tableConfig from '~/lib/constants'
+import { Scenario } from '~/store/modules/lostModule'
 import SocialMeta from '~/components/SocialMeta'
-import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 import ScenarioTree from '~/components/organisms/lostrpg/ScenarioTree'
 import ScenarioView from '~/components/organisms/lostrpg/ScenarioView'
 import ScenarioChart from '~/components/organisms/lostrpg/ScenarioChart'
@@ -46,7 +40,7 @@ const Page: React.FC<{
       <SocialMeta
         title={scenario.name}
         description={`${scenario.name}
-👥${t['common_players']}:${scenario.players}  🕒${t['common_play_time']}:${
+👥${t['common_players']}:${scenario.players} 🕒${t['common_play_time']}:${
           scenario.time
         }  ⏳${t['lostrpg_common_limit']}:${scenario.limit}
 ${
@@ -94,7 +88,9 @@ ${
         {tabValue === 0 ? (
           <article>
             <Box display="flex" flexWrap="wrap" my={2}>
-              <ScenarioTree scenario={scenario} />
+              <Hidden xsDown implementation="css">
+                <ScenarioTree scenario={scenario} />
+              </Hidden>
               <ScenarioView scenario={scenario} t={(key) => t[key]} />
             </Box>
           </article>
