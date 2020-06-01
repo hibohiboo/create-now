@@ -30,3 +30,9 @@ export class FileArchiver {
       .then((blob) => saveAs(blob, zipName + '.zip'))
   }
 }
+
+export const converDocToXML = (doc: Document) => {
+  const oSerializer = new XMLSerializer()
+  const sXML = oSerializer.serializeToString(doc)
+  return sXML
+}
