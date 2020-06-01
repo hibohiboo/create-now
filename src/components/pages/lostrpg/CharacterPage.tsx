@@ -373,8 +373,8 @@ const Page: React.FC<{
         </Box>
       )}
       <Box my={2}>
-        <Button component="label" color="primary" onClick={vm.exportXml}>
-          Udonarium用エクスポート
+        <Button variant="contained" color="primary" onClick={vm.exportXml}>
+          {t('lostrpg_common_export_udonarium')}
         </Button>
       </Box>
       <Box my={2}>

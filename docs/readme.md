@@ -138,3 +138,4 @@
 [zip - pako](https://github.com/nodeca/pako)
 [file-saver](https://webty.jp/staffblog/production/post-1482/)
 [json - to - xml](https://goessner.net/download/prj/jsonxml/)
+[jszip](https://knooto.info/jszip-snippets/)
