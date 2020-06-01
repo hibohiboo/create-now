@@ -7,6 +7,7 @@ import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { defaultLanguage } from '~/lib/i18n'
+import { FileArchiver } from '~/lib/fileArchiver'
 import type { LostModule } from './index'
 import {
   setPagenationLoading,
@@ -376,6 +377,13 @@ export const useCharacterEditViewModel = () =>
       totalRecordExp: state.lost.records
         .map((i) => i.exp)
         .reduce((sum, i) => sum + i, 0),
+      exportXml: () => {
+        const files: File[] = []
+        files.push(
+          new File(['<test></test>'], 'data.xml', { type: 'text/plain' }),
+        )
+        FileArchiver.instance.save(files, character.name)
+      },
     }
   })
 

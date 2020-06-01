@@ -124,3 +124,7 @@ RUN npm install sanitize-html
 
 # visualization
 RUN npm install dagre-d3 d3
+
+# file save
+RUN npm install file-saver
+RUN npm install jszip

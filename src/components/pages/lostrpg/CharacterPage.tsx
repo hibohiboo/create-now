@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Head from 'next/head'
-import { Box, Chip, Checkbox } from '@material-ui/core'
+import { Box, Chip, Checkbox, Button } from '@material-ui/core'
 import MaterialTable from 'material-table'
 import InputLabel from '@material-ui/core/InputLabel'
 import Link from '~/components/atoms/mui/Link'
@@ -372,6 +372,11 @@ const Page: React.FC<{
           />
         </Box>
       )}
+      <Box my={2}>
+        <Button component="label" color="primary" onClick={vm.exportXml}>
+          Udonarium用エクスポート
+        </Button>
+      </Box>
       <Box my={2}>
         {t('lostrpg_records_common_recordsheet')}
 
