@@ -7,7 +7,12 @@ import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { defaultLanguage } from '~/lib/i18n'
-import { FileArchiver, converDocToXML } from '~/lib/fileArchiver'
+import {
+  FileArchiver,
+  convertDocToXML,
+  createDoc,
+  createElement,
+} from '~/lib/fileArchiver'
 import type { LostModule } from './index'
 import {
   setPagenationLoading,
@@ -234,23 +239,117 @@ export const specialtiesTableRows = (
     survival: makeData(specialties[55 + y]),
   }))
 }
-const $e = (
-  doc: Document,
-  elm: string,
-  attributes: [string, string][] = [],
+
+const characterToDoc = (
+  character: Character,
+  parts: {
+    name: string
+    damaged: boolean
+  }[],
+  t: any,
 ) => {
-  const e = doc.createElement(elm)
-  setAttributes(e, attributes)
-  return e
-}
-const setAttributes = (e: Element, attributes: [string, string][]) => {
-  attributes.forEach(([attr, val]) => {
-    e.setAttribute(attr, val)
+  const doc = createDoc()
+  const characterElm = createElement(doc, 'character', [
+    ['location.name', 'table'],
+    ['location.x', '0'],
+    ['location.y', '0'],
+    ['posZ', '0'],
+    ['rotate', '0'],
+    ['roll', '0'],
+  ])
+  // #char
+  const char = createElement(doc, 'data', [['name', 'character']])
+
+  // char image
+  const image = createElement(doc, 'data', [['name', 'image']])
+  const imageIdentifier = createElement(
+    doc,
+    'data',
+    [
+      ['name', 'imageIdentifier'],
+      ['type', 'image'],
+    ],
+    'test',
+  )
+  image.appendChild(imageIdentifier)
+  char.appendChild(image)
+
+  // char common
+  const common = createElement(doc, 'data', [['name', 'common']])
+  const name = createElement(doc, 'data', [['name', 'name']], character.name)
+  const size = createElement(doc, 'data', [['size', '1']])
+  common.appendChild(name)
+  common.appendChild(size)
+  char.appendChild(common)
+
+  // char detail
+  const detail = createElement(doc, 'data', [['name', 'detail']])
+
+  // char detail resource
+  const resource = createElement(doc, 'data', [['name', t('common_resource')]])
+  const stamina = createElement(
+    doc,
+    'data',
+    [
+      ['name', t('lostrpg_character_common_stamina')],
+      ['type', 'numberResource'],
+      ['currentValue', character.stamina],
+    ],
+    String(character.stamina * 2),
+  )
+  const willPower = createElement(
+    doc,
+    'data',
+    [
+      ['name', t('lostrpg_character_common_willPower')],
+      ['type', 'numberResource'],
+      ['currentValue', character.willPower],
+    ],
+    String(character.willPower * 2),
+  )
+  resource.appendChild(stamina)
+  resource.appendChild(willPower)
+  detail.appendChild(resource)
+  // lostrpg_character_common_area
+  const area = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_area')],
+  ])
+  parts.forEach((p) => {
+    area.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', p.name],
+          ['type', 'numberResource'],
+          ['currentValue', p.damaged ? '0' : '1'],
+        ],
+        '1',
+      ),
+    )
   })
-}
-const characterToDoc = (character: Character) => {
-  const doc = document.implementation.createDocument('', '', null)
-  const characterElm = $e(doc, 'character', [['location.name', 'table']])
+  detail.appendChild(area)
+  // char detail 特技
+  const specialty = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_specialty')],
+  ])
+  character.specialties.forEach((s, i) => {
+    specialty.appendChild(
+      createElement(
+        doc,
+        'data',
+        [['name', `${t('lostrpg_character_common_specialty')}${i + 1}`]],
+        s,
+      ),
+    )
+  })
+  detail.appendChild(specialty)
+
+  char.appendChild(detail)
+
+  // add char
+  characterElm.appendChild(char)
+
   doc.appendChild(characterElm)
   return doc
 }
@@ -398,8 +497,12 @@ export const useCharacterEditViewModel = () =>
         .map((i) => i.exp)
         .reduce((sum, i) => sum + i, 0),
       exportXml: () => {
-        const doc = characterToDoc(character)
-        const sXML = converDocToXML(doc)
+        const doc = characterToDoc(
+          character,
+          damageBodyParts(bodyParts, character),
+          i18n.t,
+        )
+        const sXML = convertDocToXML(doc)
         const files: File[] = []
         files.push(new File([sXML], 'data.xml', { type: 'text/plain' }))
         FileArchiver.instance.save(files, character.name)

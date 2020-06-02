@@ -30,8 +30,28 @@ export class FileArchiver {
       .then((blob) => saveAs(blob, zipName + '.zip'))
   }
 }
+export const createDoc = () =>
+  document.implementation.createDocument('', '', null)
+const setAttributes = (e: Element, attributes: [string, string][]) => {
+  attributes.forEach(([attr, val]) => {
+    e.setAttribute(attr, val)
+  })
+}
+export const createElement = (
+  doc: Document,
+  elm: string,
+  attributes: [string, string][] = [],
+  text: string | null = null,
+) => {
+  const e = doc.createElement(elm)
+  setAttributes(e, attributes)
+  if (text) {
+    e.appendChild(document.createTextNode(text))
+  }
+  return e
+}
 
-export const converDocToXML = (doc: Document) => {
+export const convertDocToXML = (doc: Document) => {
   const oSerializer = new XMLSerializer()
   const sXML = oSerializer.serializeToString(doc)
   return sXML
