@@ -419,8 +419,23 @@ const characterToDoc = (
 
   // char detail アイテム
   const items = createElement(doc, 'data', [
-    ['name', t('lostrpg_character_common_items_column')],
+    ['name', t('lostrpg_character_common_item')],
   ])
+  // character.items.forEach((a) => {
+  //   items.appendChild(
+  //     createElement(
+  //       doc,
+  //       'data',
+  //       [
+  //         ['name', a.name],
+  //         ['type', 'note'],
+  //       ],
+  //       `${a.j}/${a.weight}/${a.type}/${a.area || '-'}/${a.specialty}/${
+  //         a.target
+  //       }/${a.trait}/${a.effect}`,
+  //     ),
+  //   )
+  // })
   character.items.forEach((a) => {
     items.appendChild(
       createElement(
@@ -428,11 +443,10 @@ const characterToDoc = (
         'data',
         [
           ['name', a.name],
-          ['type', 'note'],
+          ['type', 'numberResource'],
+          ['currentValue', `${a.number}`],
         ],
-        `${a.j}/${a.weight}/${a.type}/${a.area || '-'}/${a.specialty}/${
-          a.target
-        }/${a.trait}/${a.effect}`,
+        `${a.number}`,
       ),
     )
   })
@@ -446,11 +460,10 @@ const characterToDoc = (
           'data',
           [
             ['name', a.name],
-            ['type', 'note'],
+            ['type', 'numberResource'],
+            ['currentValue', `${a.number}`],
           ],
-          `${a.j}/${a.weight}/${a.type}/${a.area || '-'}/${a.specialty}/${
-            a.target
-          }/${a.trait}/${a.effect}`,
+          `${a.number}`,
         ),
       )
     })
