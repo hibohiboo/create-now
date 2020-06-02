@@ -7,6 +7,8 @@ import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { defaultLanguage } from '~/lib/i18n'
+import { MimeType } from '~/lib/udonarium/mimeType'
+import { UUID } from '~/lib/udonarium/uuid'
 import {
   FileArchiver,
   convertDocToXML,
@@ -252,6 +254,7 @@ const characterToDoc = (
     isChecked: boolean
   }[],
   i18n: any,
+  identifier: string,
 ) => {
   const t = i18n.t
   const doc = createDoc()
@@ -267,18 +270,20 @@ const characterToDoc = (
   const char = createElement(doc, 'data', [['name', 'character']])
 
   // char image
-  const image = createElement(doc, 'data', [['name', 'image']])
-  const imageIdentifier = createElement(
-    doc,
-    'data',
-    [
-      ['name', 'imageIdentifier'],
-      ['type', 'image'],
-    ],
-    'test',
-  )
-  image.appendChild(imageIdentifier)
-  char.appendChild(image)
+  if (identifier) {
+    const image = createElement(doc, 'data', [['name', 'image']])
+    const imageIdentifier = createElement(
+      doc,
+      'data',
+      [
+        ['name', 'imageIdentifier'],
+        ['type', 'image'],
+      ],
+      identifier,
+    )
+    image.appendChild(imageIdentifier)
+    char.appendChild(image)
+  }
 
   // char common
   const common = createElement(doc, 'data', [['name', 'common']])
@@ -651,15 +656,30 @@ export const useCharacterEditViewModel = () =>
       totalRecordExp: state.lost.records
         .map((i) => i.exp)
         .reduce((sum, i) => sum + i, 0),
-      exportXml: () => {
+      exportXml: async () => {
+        let identifier = ''
+        const files: File[] = []
+        if (character.imageUrl) {
+          identifier = UUID.generateUuid()
+          const response = await fetch(character.imageUrl, { method: 'GET' })
+          //const blob = await response.blob()
+          console.log('rest', response)
+          // console.log('blob', blob)
+          // files.push(
+          //   new File([blob], identifier + '.' + MimeType.extension(blob.type), {
+          //     type: blob.type,
+          //   }),
+          // )
+        }
         const doc = characterToDoc(
           character,
           damagedParts,
           makedStatusAilments,
           i18n,
+          identifier,
         )
         const sXML = convertDocToXML(doc)
-        const files: File[] = []
+
         files.push(new File([sXML], 'data.xml', { type: 'text/plain' }))
         FileArchiver.instance.save(files, character.name)
       },
