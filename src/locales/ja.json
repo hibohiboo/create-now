@@ -64,6 +64,7 @@
   "lostrpg_character_common_use_supplement": "使用サプリメント",
   "lostrpg_character_common_strange_field": "終末列島百景",
   "lostrpg_character_common_backbone": "背景",
+  "lostrpg_character_common_abilities_column": "アビリティ グループ/タイプ/特技/対象/反動/効果",
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",
@@ -114,6 +115,7 @@
   "common_copy": "コピー",
   "common_caution": "注意",
   "common_chart": "チャート",
+  "common_info": "情報",
   "message_required": "必須項目です。入力してください",
   "message_please_drop_image": "クリックかドロップで画像を設定",
   "message_are_you_sure_remove": "削除してよいですか？"

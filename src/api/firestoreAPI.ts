@@ -120,6 +120,7 @@ export const getCharacter = async (id: string) => {
     backbones,
   } = data.fields
   const ret: lost.Character = {
+    id,
     name: getStr(name),
     uid: getStr(uid),
     playerName: getStr(playerName),

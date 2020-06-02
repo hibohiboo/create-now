@@ -246,8 +246,9 @@ const characterToDoc = (
     name: string
     damaged: boolean
   }[],
-  t: any,
+  i18n: any,
 ) => {
+  const t = i18n.t
   const doc = createDoc()
   const characterElm = createElement(doc, 'character', [
     ['location.name', 'table'],
@@ -277,14 +278,42 @@ const characterToDoc = (
   // char common
   const common = createElement(doc, 'data', [['name', 'common']])
   const name = createElement(doc, 'data', [['name', 'name']], character.name)
-  const size = createElement(doc, 'data', [['size', '1']])
+  const size = createElement(doc, 'data', [['name', 'size']], '1')
   common.appendChild(name)
   common.appendChild(size)
   char.appendChild(common)
 
   // char detail
   const detail = createElement(doc, 'data', [['name', 'detail']])
+  // char detail info
+  const info = createElement(doc, 'data', [['name', t('common_info')]])
+  info.appendChild(
+    createElement(doc, 'data', [['name', 'PL']], character.playerName),
+  )
 
+  info.appendChild(
+    createElement(
+      doc,
+      'data',
+      [
+        ['name', t('common_summary')],
+        ['type', 'note'],
+      ],
+      character.summary,
+    ),
+  )
+  info.appendChild(
+    createElement(
+      doc,
+      'data',
+      [
+        ['name', 'URL'],
+        ['type', 'note'],
+      ],
+      `https://create-now.now.sh/lostrpg/public/${i18n.activeLocale}/character?id=${character.id}`,
+    ),
+  )
+  detail.appendChild(info)
   // char detail resource
   const resource = createElement(doc, 'data', [['name', t('common_resource')]])
   const stamina = createElement(
@@ -310,7 +339,7 @@ const characterToDoc = (
   resource.appendChild(stamina)
   resource.appendChild(willPower)
   detail.appendChild(resource)
-  // lostrpg_character_common_area
+  // char detail 部位
   const area = createElement(doc, 'data', [
     ['name', t('lostrpg_character_common_area')],
   ])
@@ -344,12 +373,41 @@ const characterToDoc = (
     )
   })
   detail.appendChild(specialty)
+  // char detail アビリティ
+  const abilities = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_abilities_column')],
+  ])
+  character.abilities.forEach((a) => {
+    abilities.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', a.name],
+          ['type', 'note'],
+        ],
+        `${a.group}/${a.type}/${a.specialty}/${a.target}/${a.recoil}/${a.effect}`,
+      ),
+    )
+  })
+  detail.appendChild(abilities)
 
+  // char detail
   char.appendChild(detail)
 
   // add char
   characterElm.appendChild(char)
 
+  // add palette
+  const palette = createElement(
+    doc,
+    'chat-palette',
+    [],
+    `//------${t('lostrpg_character_common_ability')}\n` +
+      character.abilities.map((a) => `[${a.name}] {${a.name}}`).join('\n'),
+  )
+  characterElm.appendChild(palette)
+  // add character to doc
   doc.appendChild(characterElm)
   return doc
 }
@@ -500,7 +558,7 @@ export const useCharacterEditViewModel = () =>
         const doc = characterToDoc(
           character,
           damageBodyParts(bodyParts, character),
-          i18n.t,
+          i18n,
         )
         const sXML = convertDocToXML(doc)
         const files: File[] = []
