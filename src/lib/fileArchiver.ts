@@ -56,3 +56,19 @@ export const convertDocToXML = (doc: Document) => {
   const sXML = oSerializer.serializeToString(doc)
   return sXML
 }
+
+/**
+ * cors汚染されていないimgのみで使用可能
+ * @param img img要素
+ */
+export const createImgBlob = async (img: HTMLImageElement) => {
+  const canvas = document.createElement('canvas')
+  canvas.width = img.width
+  canvas.height = img.height
+  const context = canvas.getContext('2d')
+  context.drawImage(img, 0, 0)
+  const blob = await new Promise<Blob>((resolve, reject) =>
+    canvas.toBlob((blob) => resolve(blob)),
+  )
+  return blob
+}

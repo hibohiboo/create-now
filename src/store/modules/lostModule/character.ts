@@ -608,6 +608,7 @@ export const useCharacterEditViewModel = () =>
     const trophies = _.uniq(state.lost.records.map((i) => i.trophy))
     const damagedParts = damageBodyParts(bodyParts, character)
     const makedStatusAilments = makeStatusAilments(character, statusAilments)
+    const imgId = 'character-image'
     return {
       classList: mergedClassList.filter(
         (item) => !character.classes.includes(item),
@@ -656,20 +657,27 @@ export const useCharacterEditViewModel = () =>
       totalRecordExp: state.lost.records
         .map((i) => i.exp)
         .reduce((sum, i) => sum + i, 0),
+      imgId,
       exportXml: async () => {
         let identifier = ''
         const files: File[] = []
         if (character.imageUrl) {
           identifier = UUID.generateUuid()
-          const response = await fetch(character.imageUrl, { method: 'GET' })
-          //const blob = await response.blob()
-          console.log('rest', response)
-          // console.log('blob', blob)
-          // files.push(
-          //   new File([blob], identifier + '.' + MimeType.extension(blob.type), {
-          //     type: blob.type,
-          //   }),
-          // )
+          const img = document.getElementById(imgId) as HTMLImageElement
+          const canvas = document.createElement('canvas')
+          canvas.width = img.width
+          canvas.height = img.height
+          const context = canvas.getContext('2d')
+          context.drawImage(img, 0, 0)
+          const blob = await new Promise<Blob>((resolve, reject) =>
+            canvas.toBlob((blob) => resolve(blob)),
+          )
+
+          files.push(
+            new File([blob], identifier + '.' + MimeType.extension(blob.type), {
+              type: blob.type,
+            }),
+          )
         }
         const doc = characterToDoc(
           character,

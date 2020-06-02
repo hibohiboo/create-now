@@ -107,7 +107,11 @@ const Page: React.FC<{
               minWidth: '320px',
             }}
           >
-            <img alt={t('common_image')} src={character.imageUrl} />{' '}
+            <img
+              alt={t('common_image')}
+              src={character.imageUrl}
+              id={vm.imgId}
+            />
           </Box>
         ) : (
           <></>

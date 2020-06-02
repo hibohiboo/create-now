@@ -139,3 +139,9 @@
 [file-saver](https://webty.jp/staffblog/production/post-1482/)
 [json - to - xml](https://goessner.net/download/prj/jsonxml/)
 [jszip](https://knooto.info/jszip-snippets/)
+
+# image
+
+[この方法は cors 汚染された image だと無理](https://ja.javascript.info/blob)
+[canvas cors](http://var.blog.jp/archives/52327394.html)
+`SecurityError: Failed to execute 'toBlob' on 'HTMLCanvasElement': Tainted canvases may not be exported.`
