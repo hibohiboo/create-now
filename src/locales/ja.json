@@ -65,6 +65,8 @@
   "lostrpg_character_common_strange_field": "終末列島百景",
   "lostrpg_character_common_backbone": "背景",
   "lostrpg_character_common_abilities_column": "アビリティ グループ/タイプ/特技/対象/反動/効果",
+  "lostrpg_character_common_items_column": "アイテム 価格/重量/タイプ/部位/特技/対象/特性/効果",
+  "lostrpg_character_common_equipments_column": "装備 部位/タイプ/特技/対象/特性/効果",
   "lostrpg_character_list_title": "LOSTRPG キャラクター一覧",
   "lostrpg_character_edit_title": "LOSTRPG キャラクター",
   "lostrpg_character_edit_addAbility": "アビリティ追加",

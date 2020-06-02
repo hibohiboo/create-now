@@ -417,6 +417,63 @@ const characterToDoc = (
   })
   detail.appendChild(abilities)
 
+  // char detail アイテム
+  const items = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_items_column')],
+  ])
+  character.items.forEach((a) => {
+    items.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', a.name],
+          ['type', 'note'],
+        ],
+        `${a.j}/${a.weight}/${a.type}/${a.area || '-'}/${a.specialty}/${
+          a.target
+        }/${a.trait}/${a.effect}`,
+      ),
+    )
+  })
+  detail.appendChild(items)
+  character.bags.forEach((b) => {
+    const bag = createElement(doc, 'data', [['name', b.name]])
+    b.items.forEach((a) => {
+      bag.appendChild(
+        createElement(
+          doc,
+          'data',
+          [
+            ['name', a.name],
+            ['type', 'note'],
+          ],
+          `${a.j}/${a.weight}/${a.type}/${a.area || '-'}/${a.specialty}/${
+            a.target
+          }/${a.trait}/${a.effect}`,
+        ),
+      )
+    })
+    detail.appendChild(bag)
+  })
+  // char detail 装備
+  const equipments = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_equipments_column')],
+  ])
+  character.equipments.forEach((e) => {
+    equipments.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', e.name],
+          ['type', 'note'],
+        ],
+        `${e.equipedArea}/${e.type}/${e.specialty}/${e.target}/${e.trait}/${e.effect}`,
+      ),
+    )
+  })
+  detail.appendChild(equipments)
   // char detail
   char.appendChild(detail)
 
