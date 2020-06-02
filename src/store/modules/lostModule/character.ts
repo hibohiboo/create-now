@@ -246,6 +246,11 @@ const characterToDoc = (
     name: string
     damaged: boolean
   }[],
+  status: {
+    name: string
+    effect: string
+    isChecked: boolean
+  }[],
   i18n: any,
 ) => {
   const t = i18n.t
@@ -285,6 +290,32 @@ const characterToDoc = (
 
   // char detail
   const detail = createElement(doc, 'data', [['name', 'detail']])
+
+  // char detail resource
+  const resource = createElement(doc, 'data', [['name', t('common_resource')]])
+  const stamina = createElement(
+    doc,
+    'data',
+    [
+      ['name', t('lostrpg_character_common_stamina')],
+      ['type', 'numberResource'],
+      ['currentValue', character.stamina],
+    ],
+    String(character.stamina * 2),
+  )
+  const willPower = createElement(
+    doc,
+    'data',
+    [
+      ['name', t('lostrpg_character_common_willPower')],
+      ['type', 'numberResource'],
+      ['currentValue', character.willPower],
+    ],
+    String(character.willPower * 2),
+  )
+  resource.appendChild(stamina)
+  resource.appendChild(willPower)
+  detail.appendChild(resource)
   // char detail info
   const info = createElement(doc, 'data', [['name', t('common_info')]])
   info.appendChild(
@@ -314,31 +345,6 @@ const characterToDoc = (
     ),
   )
   detail.appendChild(info)
-  // char detail resource
-  const resource = createElement(doc, 'data', [['name', t('common_resource')]])
-  const stamina = createElement(
-    doc,
-    'data',
-    [
-      ['name', t('lostrpg_character_common_stamina')],
-      ['type', 'numberResource'],
-      ['currentValue', character.stamina],
-    ],
-    String(character.stamina * 2),
-  )
-  const willPower = createElement(
-    doc,
-    'data',
-    [
-      ['name', t('lostrpg_character_common_willPower')],
-      ['type', 'numberResource'],
-      ['currentValue', character.willPower],
-    ],
-    String(character.willPower * 2),
-  )
-  resource.appendChild(stamina)
-  resource.appendChild(willPower)
-  detail.appendChild(resource)
   // char detail 部位
   const area = createElement(doc, 'data', [
     ['name', t('lostrpg_character_common_area')],
@@ -358,6 +364,25 @@ const characterToDoc = (
     )
   })
   detail.appendChild(area)
+  // char detail 変調
+  const statusAilments = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_statusAilments')],
+  ])
+  status.forEach((s) => {
+    statusAilments.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', s.name],
+          ['type', 'numberResource'],
+          ['currentValue', s.isChecked ? '1' : '0'],
+        ],
+        '1',
+      ),
+    )
+  })
+  detail.appendChild(statusAilments)
   // char detail 特技
   const specialty = createElement(doc, 'data', [
     ['name', t('lostrpg_character_common_specialty')],
@@ -506,6 +531,8 @@ export const useCharacterEditViewModel = () =>
       )
     }
     const trophies = _.uniq(state.lost.records.map((i) => i.trophy))
+    const damagedParts = damageBodyParts(bodyParts, character)
+    const makedStatusAilments = makeStatusAilments(character, statusAilments)
     return {
       classList: mergedClassList.filter(
         (item) => !character.classes.includes(item),
@@ -530,12 +557,12 @@ export const useCharacterEditViewModel = () =>
         specialties,
         character,
       ),
-      damageBodyParts: damageBodyParts(bodyParts, character),
+      damageBodyParts: damagedParts,
       itemsColumns,
       items: mergedItemList,
       equipmentColumns,
       equipments: equipments(character, i18n),
-      statusAilments: makeStatusAilments(character, statusAilments),
+      statusAilments: makedStatusAilments,
       totalWeight: character.items.reduce(
         (sum, { weight, number }) => sum + weight * number,
         0,
@@ -557,7 +584,8 @@ export const useCharacterEditViewModel = () =>
       exportXml: () => {
         const doc = characterToDoc(
           character,
-          damageBodyParts(bodyParts, character),
+          damagedParts,
+          makedStatusAilments,
           i18n,
         )
         const sXML = convertDocToXML(doc)
