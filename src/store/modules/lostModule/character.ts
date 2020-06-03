@@ -8,7 +8,7 @@ import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { defaultLanguage } from '~/lib/i18n'
 import { MimeType } from '~/lib/udonarium/mimeType'
-import { UUID } from '~/lib/udonarium/uuid'
+import { calcSHA256Async } from '~/lib/udonarium/FileReaderUtil'
 import {
   FileArchiver,
   convertDocToXML,
@@ -658,20 +658,14 @@ export const useCharacterEditViewModel = () =>
         .map((i) => i.exp)
         .reduce((sum, i) => sum + i, 0),
       imgId,
+      // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       exportXml: async () => {
         let identifier = ''
         const files: File[] = []
         if (character.imageUrl) {
-          identifier = UUID.generateUuid()
-          const img = document.getElementById(imgId) as HTMLImageElement
-          const canvas = document.createElement('canvas')
-          canvas.width = img.width
-          canvas.height = img.height
-          const context = canvas.getContext('2d')
-          context.drawImage(img, 0, 0)
-          const blob = await new Promise<Blob>((resolve, reject) =>
-            canvas.toBlob((blob) => resolve(blob)),
-          )
+          const response = await fetch(character.imageUrl, { method: 'GET' })
+          const blob = await response.blob()
+          identifier = await calcSHA256Async(blob)
 
           files.push(
             new File([blob], identifier + '.' + MimeType.extension(blob.type), {

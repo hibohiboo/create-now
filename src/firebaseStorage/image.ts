@@ -18,3 +18,12 @@ export const deleteImage = async (path: string) => {
   const imageRef = ref.child(`lostrpg/images/${path}`)
   return await imageRef.delete()
 }
+
+export const readImage = async (path: string, data: File): Promise<string> => {
+  if (!path) throw new Error('required path')
+
+  const ref = storage.ref()
+  const imageRef = ref.child(`lostrpg/images/${path}`)
+
+  return await imageRef.getDownloadURL()
+}

@@ -10,3 +10,7 @@ services:
       - ../config/storage.rules:/app/storage.rules
     ports:
       - 9005:9005
+  gcloud:
+    build: ./gcloud
+    volumes:
+      - ../config/cors.json:/app/cors.json

@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["https://create-now.now.sh"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]

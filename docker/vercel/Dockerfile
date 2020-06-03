@@ -128,3 +128,4 @@ RUN npm install dagre-d3 d3
 # file save
 RUN npm install file-saver
 RUN npm install jszip
+RUN npm install crypto-js
