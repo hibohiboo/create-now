@@ -413,7 +413,7 @@ const Page: React.FC<{
                     render: (rowData) => (
                       <Link
                         href={{
-                          pathname: `/lostrpg/public/[lng]/record`,
+                          pathname: `/lostrpg/public/[lng]/[view]`,
                           query: {
                             lng: i18n.activeLocale,
                             id: rowData['recordId'],
