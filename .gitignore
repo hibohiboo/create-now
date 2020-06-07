@@ -109,3 +109,6 @@ package-lock.json
 .env.build
 .env.local
 .vercel
+
+# tyranoscript
+public/tyrano
