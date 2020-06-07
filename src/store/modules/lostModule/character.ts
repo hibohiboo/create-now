@@ -512,6 +512,61 @@ const characterToDoc = (
   return doc
 }
 
+const characterToTRPGStudioDoc = (
+  character: Character,
+  parts: {
+    name: string
+    damaged: boolean
+  }[],
+  status: {
+    name: string
+    effect: string
+    isChecked: boolean
+  }[],
+  i18n: any,
+  specialtiesTableColumns: string[],
+  specialties: string[],
+) => {
+  const heads = specialtiesTableColumns.filter((c, i) => i % 2 === 1)
+  const makeData = (t) => ({
+    t,
+    c: character.specialties.includes(t),
+    k: 1,
+  })
+  const specialityList =
+    //  _.chunk(
+    //   specialties.map((t) => ({
+    //     t,
+    //     c: character.specialties.includes(t),
+    //     k: 1,
+    //   })),
+    //   11,
+    // )
+
+    _.range(11).map((y) =>
+      _.range(6).map((x) => makeData(specialties[y + 11 * x])),
+    )
+
+  return JSON.stringify({
+    info: {
+      chara_name: character.name,
+      age: '',
+      sex: '',
+      job: `${character.classes.map((c) => c.name).join('/')}`,
+      commands: '',
+      remarks: character.summary,
+    },
+    array_forms: [
+      {
+        type: 'charaSheetInputCloneCheckTable',
+        title: i18n.t('lostrpg_character_common_specialty'),
+        array_th: heads.map((t) => ({ t, c: false, k: 1 })),
+        array_tr: specialityList,
+      },
+    ],
+  })
+}
+
 export const damageBodyParts = (
   bodyParts: string[],
   character: { damagedSpecialties: string[] },
@@ -609,6 +664,11 @@ export const useCharacterEditViewModel = () =>
     const damagedParts = damageBodyParts(bodyParts, character)
     const makedStatusAilments = makeStatusAilments(character, statusAilments)
     const imgId = 'character-image'
+    const makedSpecialtiesRows = specialtiesTableRows(
+      bodyParts,
+      specialties,
+      character,
+    )
     return {
       classList: mergedClassList.filter(
         (item) => !character.classes.includes(item),
@@ -628,11 +688,7 @@ export const useCharacterEditViewModel = () =>
         specialtiesTableColumns,
         character,
       ),
-      specialtiesTableRows: specialtiesTableRows(
-        bodyParts,
-        specialties,
-        character,
-      ),
+      specialtiesTableRows: makedSpecialtiesRows,
       damageBodyParts: damagedParts,
       itemsColumns,
       items: mergedItemList,
@@ -658,7 +714,6 @@ export const useCharacterEditViewModel = () =>
         .map((i) => i.exp)
         .reduce((sum, i) => sum + i, 0),
       imgId,
-      // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       exportXml: async () => {
         let identifier = ''
         const files: File[] = []
@@ -684,6 +739,24 @@ export const useCharacterEditViewModel = () =>
 
         files.push(new File([sXML], 'data.xml', { type: 'text/plain' }))
         FileArchiver.instance.save(files, character.name)
+      },
+      exportJson: async () => {
+        const identifier = ''
+
+        const json = characterToTRPGStudioDoc(
+          character,
+          damagedParts,
+          makedStatusAilments,
+          i18n,
+          specialtiesTableColumns,
+          specialties,
+        )
+
+        const file = new File([json], `${character.name}.txt`, {
+          type: 'text/plain',
+        })
+
+        FileArchiver.instance.saveText(file)
       },
     }
   })

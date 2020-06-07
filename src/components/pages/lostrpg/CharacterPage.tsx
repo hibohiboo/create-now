@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import * as _ from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -379,6 +380,9 @@ const Page: React.FC<{
       <Box my={2}>
         <Button variant="contained" color="primary" onClick={vm.exportXml}>
           {t('lostrpg_common_export_udonarium')}
+        </Button>
+        <Button variant="contained" color="primary" onClick={vm.exportJson}>
+          TRPGスタジオ用にテキスト出力
         </Button>
       </Box>
       <Box my={2}>

@@ -12,10 +12,10 @@ export class FileArchiver {
   save(files: any, zipName: string) {
     if (!files) return
 
-    let zip = new JSZip()
-    let length = files.length
+    const zip = new JSZip()
+    const length = files.length
     for (let i = 0; i < length; i++) {
-      let file = files[i]
+      const file = files[i]
       zip.file(file.name, file)
     }
 
@@ -28,6 +28,9 @@ export class FileArchiver {
         },
       })
       .then((blob) => saveAs(blob, zipName + '.zip'))
+  }
+  saveText(file: File) {
+    saveAs(file)
   }
 }
 export const createDoc = () =>
@@ -67,7 +70,7 @@ export const createImgBlob = async (img: HTMLImageElement) => {
   canvas.height = img.height
   const context = canvas.getContext('2d')
   context.drawImage(img, 0, 0)
-  const blob = await new Promise<Blob>((resolve, reject) =>
+  const blob = await new Promise<Blob>((resolve) =>
     canvas.toBlob((blob) => resolve(blob)),
   )
   return blob
