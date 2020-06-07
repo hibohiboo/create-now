@@ -526,6 +526,9 @@ const characterToTRPGStudioDoc = (
   i18n: any,
   specialtiesTableColumns: string[],
   specialties: string[],
+  abilitiesColumns: string[],
+  equipmentColumns: string[],
+  itemsColumns: string[],
 ) => {
   const heads = specialtiesTableColumns.filter((c, i) => i % 2 === 1)
   const makeData = (t) => ({
@@ -533,21 +536,10 @@ const characterToTRPGStudioDoc = (
     c: character.specialties.includes(t),
     k: 1,
   })
-  const specialityList =
-    //  _.chunk(
-    //   specialties.map((t) => ({
-    //     t,
-    //     c: character.specialties.includes(t),
-    //     k: 1,
-    //   })),
-    //   11,
-    // )
-
-    _.range(11).map((y) =>
-      _.range(6).map((x) => makeData(specialties[y + 11 * x])),
-    )
-
-  return JSON.stringify({
+  const specialityList = _.range(11).map((y) =>
+    _.range(6).map((x) => makeData(specialties[y + 11 * x])),
+  )
+  const result = {
     info: {
       chara_name: character.name,
       age: '',
@@ -558,13 +550,126 @@ const characterToTRPGStudioDoc = (
     },
     array_forms: [
       {
+        type: 'charaSheetInputCloneNumber',
+        title: i18n.t('common_status'),
+        forms: [
+          {
+            text: i18n.t('lostrpg_character_common_staminaBase'),
+            panel: false,
+            number: character.staminaBase,
+          },
+          {
+            text: i18n.t('lostrpg_character_common_stamina'),
+            panel: false,
+            number: character.stamina,
+          },
+          {
+            text: i18n.t('lostrpg_character_common_willPowerBase'),
+            panel: false,
+            number: character.willPowerBase,
+          },
+          {
+            text: i18n.t('lostrpg_character_common_willPower'),
+            panel: false,
+            number: character.willPower,
+          },
+          {
+            text: i18n.t('lostrpg_character_common_carryingCapacity'),
+            panel: false,
+            number: character.carryingCapacity,
+          },
+        ],
+      },
+      {
+        type: 'charaSheetInputCloneNote',
+        title: i18n.t('lostrpg_character_common_appearance'),
+        forms: [
+          {
+            textarea: character.appearance,
+          },
+        ],
+      },
+      {
         type: 'charaSheetInputCloneCheckTable',
         title: i18n.t('lostrpg_character_common_specialty'),
         array_th: heads.map((t) => ({ t, c: false, k: 1 })),
         array_tr: specialityList,
       },
+      {
+        type: 'charaSheetInputCloneTextTable',
+        title: i18n.t('lostrpg_character_common_ability'),
+        array_th: abilitiesColumns,
+        array_tr: character.abilities.map((a) => [
+          a.name,
+          a.group,
+          a.type,
+          a.specialty,
+          a.target || '',
+          a.recoil,
+          a.effect,
+        ]),
+      },
+      {
+        type: 'charaSheetInputCloneTextTable',
+        title: i18n.t('lostrpg_character_common_equipment'),
+        array_th: [i18n.t('common_name'), ...equipmentColumns],
+        array_tr: character.equipments.map((a) => [
+          a.name,
+          a.type,
+          a.specialty,
+          a.target || '',
+          a.trait,
+          a.effect,
+        ]),
+      },
+      {
+        type: 'charaSheetInputCloneTextTable',
+        title: i18n.t('lostrpg_character_common_item'),
+        array_th: itemsColumns,
+        array_tr: character.items.map((a) => [
+          a.name,
+          a.number,
+          a.j,
+          a.weight,
+          a.type,
+          a.area,
+          a.specialty,
+          a.target,
+          a.trait,
+          a.effect,
+        ]),
+      },
+    ],
+  }
+  character.bags.forEach((bag) => {
+    result.array_forms.push({
+      type: 'charaSheetInputCloneTextTable',
+      title: bag.name,
+      array_th: itemsColumns,
+      array_tr: bag.items.map((a) => [
+        a.name,
+        a.number,
+        a.weight,
+        a.type,
+        a.area,
+        a.specialty,
+        a.target,
+        a.trait,
+        a.effect,
+      ]),
+    })
+  })
+  result.array_forms.push({
+    type: 'charaSheetInputCloneNote',
+    title: i18n.t('common_detail'),
+    forms: [
+      {
+        textarea: character.freeWriting,
+      },
     ],
   })
+
+  return JSON.stringify(result)
 }
 
 export const damageBodyParts = (
@@ -750,6 +855,9 @@ export const useCharacterEditViewModel = () =>
           i18n,
           specialtiesTableColumns,
           specialties,
+          abilitiesColumns.map((a) => a.title),
+          equipmentColumns.map((e) => e.title),
+          itemsColumns.map((i) => i.title),
         )
 
         const file = new File([json], `${character.name}.txt`, {

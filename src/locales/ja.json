@@ -118,7 +118,9 @@
   "common_caution": "注意",
   "common_chart": "チャート",
   "common_info": "情報",
+  "common_status": "ステータス",
   "message_required": "必須項目です。入力してください",
   "message_please_drop_image": "クリックかドロップで画像を設定",
-  "message_are_you_sure_remove": "削除してよいですか？"
+  "message_are_you_sure_remove": "削除してよいですか？",
+  "export_for_trpg_studio": "TRPGスタジオ用テキスト出力"
 }

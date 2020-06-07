@@ -381,8 +381,13 @@ const Page: React.FC<{
         <Button variant="contained" color="primary" onClick={vm.exportXml}>
           {t('lostrpg_common_export_udonarium')}
         </Button>
-        <Button variant="contained" color="primary" onClick={vm.exportJson}>
-          TRPGスタジオ用にテキスト出力
+        <Button
+          style={{ marginLeft: '1rem' }}
+          variant="contained"
+          color="primary"
+          onClick={vm.exportJson}
+        >
+          {t('export_for_trpg_studio')}
         </Button>
       </Box>
       <Box my={2}>

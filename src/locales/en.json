@@ -118,6 +118,8 @@
   "common_caution": "注意",
   "common_chart": "チャート",
   "common_info": "情報",
+  "common_status": "ステータス",
   "message_please_drop_image": "drop on image",
-  "message_are_you_sure_remove": "Are you sure remove"
+  "message_are_you_sure_remove": "Are you sure remove",
+  "export_for_trpg_studio": "TRPGスタジオ用テキスト出力"
 }
