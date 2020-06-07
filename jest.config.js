@@ -3,17 +3,17 @@ module.exports = {
   roots: ['<rootDir>/src'],
   moduleNameMapper: {
     '^~/(.+)': '<rootDir>/src/$1',
-    '\\.css$': '<rootDir>/node_modules/jest-css-modules'
+    '\\.css$': '<rootDir>/node_modules/jest-css-modules',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   globals: {
     'ts-jest': {
       tsConfig: {
-        jsx: 'react'
-      }
-    }
+        jsx: 'react',
+      },
+    },
   },
   transform: {
-    '^.+\\.stories\\.tsx$': '@storybook/addon-storyshots/injectFileName'
-  }
+    '^.+\\.stories\\.tsx$': '@storybook/addon-storyshots/injectFileName',
+  },
 }

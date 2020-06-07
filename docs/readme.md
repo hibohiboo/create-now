@@ -145,3 +145,7 @@
 [この方法は cors 汚染された image だと無理](https://ja.javascript.info/blob)
 [canvas cors](http://var.blog.jp/archives/52327394.html)
 `SecurityError: Failed to execute 'toBlob' on 'HTMLCanvasElement': Tainted canvases may not be exported.`
+
+## tyrano
+
+[まとめ](https://note.com/skt_pnt/n/nd295491ead84)

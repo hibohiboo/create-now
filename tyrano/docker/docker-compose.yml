@@ -1,0 +1,12 @@
+version: '3'
+services:
+  # デプロイツール
+  php:
+    build: ./php
+    env_file: .env
+    volumes:
+      - ../vendor/tyranoscript/release:/app/release
+      - ../vendor/tyranoscript/data:/app/data
+      - ../vendor/tyranoscript/tyrano:/app/tyrano
+      - ../vendor/tyranoscript/index.html:/app/index.html
+      - ../vendor/tyranoscript/readme.txt:/app/readme.txt
