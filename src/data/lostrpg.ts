@@ -154,7 +154,7 @@ export const facilitiesColumns = [
   {
     title: 'レベル',
     field: 'level',
-    type: 'numeric' as 'numeric',
+    type: 'numeric' as const,
   },
   { title: '効果', field: 'effect' },
 ]
@@ -1422,9 +1422,9 @@ export const abilityList = [
 
 export const itemsColumns = [
   { title: '名前', field: 'name' },
-  { title: '個数', field: 'number', type: 'numeric' as 'numeric' },
-  { title: '価格', field: 'j', type: 'numeric' as 'numeric' },
-  { title: '重量', field: 'weight', type: 'numeric' as 'numeric' },
+  { title: '個数', field: 'number', type: 'numeric' as const },
+  { title: '価格', field: 'j', type: 'numeric' as const },
+  { title: '重量', field: 'weight', type: 'numeric' as const },
   { title: 'タイプ', field: 'type' },
   { title: '部位', field: 'area' },
   { title: '特技', field: 'specialty' },
@@ -2821,7 +2821,7 @@ export const expCheckPoints = [
 ]
 
 export const recordsColumns = [
-  { title: '経験点', field: 'exp', type: 'numeric' as 'numeric' },
+  { title: '経験点', field: 'exp', type: 'numeric' as const },
   { title: '称号', field: 'trophy' },
 ]
 export const trophyList = [
@@ -2902,6 +2902,16 @@ export const trophyAbilityList = [
         effect:
           'あなたが他者のアビリティやアイテムの効果で気力を獲得するときに余分に1点多く獲得できる。',
       },
+      {
+        name: 'まだまだっ',
+        group: 'パッション',
+        type: '割込み',
+        recoil: '3',
+        specialty: '《跳ぶ》',
+        target: '自身',
+        effect:
+          'エネミーを倒したときに使用できる。指定特技の判定に成功すると、追加行動を得る。',
+      },
     ],
   },
   {
@@ -2927,6 +2937,16 @@ export const trophyAbilityList = [
         target: '単体',
         effect:
           '自身以外がファンブルを振った時に割込んで使用する。指定特技の判定に成功した場合、対象はファンブル表を振らなくてもよい。',
+      },
+      {
+        name: '計算通り',
+        group: 'クール',
+        type: '割込み',
+        recoil: '5',
+        specialty: '《見つける》',
+        target: '自身',
+        effect:
+          '自身がファンブルを振った時に割込んで使用する。指定特技の判定に成功した場合、判定は成功となる',
       },
     ],
   },
@@ -2954,6 +2974,16 @@ export const trophyAbilityList = [
         effect:
           '指定特技の判定に成功すると、対象にキャラクター1人のダメージを肩代わりさせる',
       },
+      {
+        name: '手と手を取って',
+        group: 'ピンク',
+        type: '常駐',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          'このアビリティを習得したときにキャラクターを1人選ぶ。そのキャラクターと連携攻撃行うとき、補助アビリティを2つまで選択して組み合わせることができるようになる。',
+      },
     ],
   },
   {
@@ -2979,6 +3009,15 @@ export const trophyAbilityList = [
         target: '自身',
         effect:
           '探索フェイズにいつでも割込んで使用できる。指定特技の判定に成功すると、あなたは休憩表を一回振る',
+      },
+      {
+        name: '陽だまりの庭',
+        group: '癒し',
+        type: '常駐',
+        recoil: '2',
+        specialty: '-',
+        target: '自身',
+        effect: 'キャンプフェイズでの判定の達成値にプラス1の修正を得る',
       },
     ],
   },
@@ -3006,6 +3045,16 @@ export const trophyAbilityList = [
         effect:
           'あなたが命中判定でスペシャルをしたとき、与えるダメージにプラス1D6する',
       },
+      {
+        name: 'とどめの一撃',
+        group: 'スター',
+        type: '補助',
+        recoil: '5',
+        specialty: '-',
+        target: '自身',
+        effect:
+          '【体力】が0となっているヌシへの命中判定に組み合わせて使用する。この攻撃で与える部位ダメージの個数は【組み合わせた攻撃のダメージ/(ヌシのレベル×2)】個となる。',
+      },
     ],
   },
   {
@@ -3031,6 +3080,16 @@ export const trophyAbilityList = [
         target: '自身',
         effect:
           'ギャップを1列塗りつぶすことができる。塗りつぶされたギャップは代用判定の際数えない。',
+      },
+      {
+        name: 'こんなこともあろうかと',
+        group: 'ハシラ',
+        type: '補助',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          '任意の特技を１つ習得しているものとして判定できる。シナリオ1回。',
       },
     ],
   },
@@ -3058,6 +3117,26 @@ export const trophyAbilityList = [
         effect:
           '先制判定に割込んで使用する。指定特技の判定に成功すると、先制判定を振らず、行動順が後攻となる。ラウンドの間、命中判定の達成値にプラス1点。与えるダメージにプラス2点する。',
       },
+      {
+        name: '全集中',
+        group: 'サムライ',
+        type: '補助',
+        recoil: '4',
+        specialty: '-',
+        target: '自身',
+        effect:
+          '命中判定に組み合わせて使用する。組み合わせた攻撃への回避判定に、[成功度]点のマイナス修正を加える。',
+      },
+      {
+        name: '奥義',
+        group: 'サムライ',
+        type: '攻撃',
+        recoil: '10',
+        specialty: '自由',
+        target: '自身',
+        effect:
+          '指定特技の判定に成功すると、装備中の《指定特技》が一致している武器1つの[攻撃力+成功度]点のダメージを与える。',
+      },
     ],
   },
   {
@@ -3084,6 +3163,26 @@ export const trophyAbilityList = [
         effect:
           '対象の変調が解除されたときに割込んで使用する。指定特技の判定に成功すると、対象に1点のダメージを与える',
       },
+      {
+        name: '縄結界',
+        group: 'シノビ',
+        type: '支援',
+        recoil: '3',
+        specialty: '《追い込む》',
+        target: '単体',
+        effect:
+          '使用時にロープを消費する。戦闘が終了するまで、目標が行う回避判定にマイナス1の修正がつく（最大マイナス3まで)',
+      },
+      {
+        name: '威力偵察',
+        group: 'シノビ',
+        type: '割込み',
+        recoil: '6',
+        specialty: '《現れる》',
+        target: '単体',
+        effect:
+          'その戦闘で最初の先制判定に割込んで使用できる。自分は2D6点のダメージを受ける。指定特技の判定に成功すると、対象は支援タイプのアビリティを１つ、割込みタイプとして即座に使用することができる。',
+      },
     ],
   },
   {
@@ -3109,6 +3208,16 @@ export const trophyAbilityList = [
         effect:
           '指定特技の判定に成功すると対象に[装備している武器1つの攻撃力+(反動で消費した気力×1d3)]点のダメージを与える。',
       },
+      {
+        name: 'ころげまわる',
+        group: 'ボケ',
+        type: '支援',
+        recoil: '-',
+        specialty: '-',
+        target: '自身',
+        effect:
+          '体力を3点消費する。自分の受けている変調を全て回復する。消費できない場合このアビリティは使用できない。',
+      },
     ],
   },
   {
@@ -3133,6 +3242,16 @@ export const trophyAbilityList = [
         target: '単体',
         effect:
           'タイプが【割込み】のアビリティが使用されたときに割込んで使用する。指定特技の判定に成功するとそのアビリティの効果を打ち消す。シナリオ回数制限のあるアビリティは打ち消せない。',
+      },
+      {
+        name: 'アドバイス',
+        group: 'ツッコミ',
+        type: '割込み',
+        recoil: '3',
+        specialty: '《伝える》',
+        target: '単体',
+        effect:
+          '自分以外の判定の直前に使用する。指定特技の判定に成功すると対象の達成値にプラス1の修正がつく',
       },
     ],
   },
