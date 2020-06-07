@@ -16,6 +16,14 @@ import useI18n from '~/hooks/use-i18n'
 import * as lostData from '~/data/lostrpg'
 import * as lostDataEn from '~/data/lostrpg-en'
 import { defaultLanguage } from '~/lib/i18n'
+import { MimeType } from '~/lib/udonarium/mimeType'
+import { calcSHA256Async } from '~/lib/udonarium/FileReaderUtil'
+import {
+  FileArchiver,
+  convertDocToXML,
+  createDoc,
+  createElement,
+} from '~/lib/fileArchiver'
 import type { Ability } from './character'
 import type { LostModule } from './index'
 import {
@@ -390,6 +398,206 @@ export const useBossesViewModel = (bossId?: string) =>
         ),
     }
   })
+const bossToDoc = (
+  boss: Boss,
+  parts: {
+    name: string
+    damaged: boolean
+  }[],
+  status: {
+    name: string
+    effect: string
+    isChecked: boolean
+  }[],
+  i18n: any,
+  identifier: string,
+) => {
+  const t = i18n.t
+  const doc = createDoc()
+  const characterElm = createElement(doc, 'character', [
+    ['location.name', 'table'],
+    ['location.x', '0'],
+    ['location.y', '0'],
+    ['posZ', '0'],
+    ['rotate', '0'],
+    ['roll', '0'],
+  ])
+  // #char
+  const char = createElement(doc, 'data', [['name', 'character']])
+
+  // char image
+  if (identifier) {
+    const image = createElement(doc, 'data', [['name', 'image']])
+    const imageIdentifier = createElement(
+      doc,
+      'data',
+      [
+        ['name', 'imageIdentifier'],
+        ['type', 'image'],
+      ],
+      identifier,
+    )
+    image.appendChild(imageIdentifier)
+    char.appendChild(image)
+  }
+
+  // char common
+  const common = createElement(doc, 'data', [['name', 'common']])
+  const name = createElement(doc, 'data', [['name', 'name']], boss.name)
+  const size = createElement(doc, 'data', [['name', 'size']], '1')
+  common.appendChild(name)
+  common.appendChild(size)
+  char.appendChild(common)
+
+  // char detail
+  const detail = createElement(doc, 'data', [['name', 'detail']])
+
+  // char detail resource
+  const resource = createElement(doc, 'data', [['name', t('common_resource')]])
+  const stamina = createElement(
+    doc,
+    'data',
+    [
+      ['name', t('lostrpg_character_common_stamina')],
+      ['type', 'numberResource'],
+      ['currentValue', boss.stamina],
+    ],
+    String(boss.stamina * 2),
+  )
+  const willPower = createElement(
+    doc,
+    'data',
+    [
+      ['name', t('lostrpg_character_common_willPower')],
+      ['type', 'numberResource'],
+      ['currentValue', boss.willPower],
+    ],
+    String(boss.willPower * 2),
+  )
+  resource.appendChild(stamina)
+  resource.appendChild(willPower)
+  detail.appendChild(resource)
+  // char detail info
+  const info = createElement(doc, 'data', [['name', t('common_info')]])
+  info.appendChild(
+    createElement(doc, 'data', [['name', 'PL']], boss.creatorName),
+  )
+
+  info.appendChild(
+    createElement(
+      doc,
+      'data',
+      [
+        ['name', t('common_summary')],
+        ['type', 'note'],
+      ],
+      boss.summary,
+    ),
+  )
+  info.appendChild(
+    createElement(
+      doc,
+      'data',
+      [
+        ['name', 'URL'],
+        ['type', 'note'],
+      ],
+      `https://create-now.now.sh/lostrpg/public/${i18n.activeLocale}/boss?id=${boss.id}`,
+    ),
+  )
+  detail.appendChild(info)
+  // char detail 部位
+  const area = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_area')],
+  ])
+  parts.forEach((p) => {
+    area.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', p.name],
+          ['type', 'numberResource'],
+          ['currentValue', p.damaged ? '0' : '1'],
+        ],
+        '1',
+      ),
+    )
+  })
+  detail.appendChild(area)
+  // char detail 変調
+  const statusAilments = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_statusAilments')],
+  ])
+  status.forEach((s) => {
+    statusAilments.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', s.name],
+          ['type', 'numberResource'],
+          ['currentValue', s.isChecked ? '1' : '0'],
+        ],
+        '1',
+      ),
+    )
+  })
+  detail.appendChild(statusAilments)
+  // char detail 特技
+  const specialty = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_specialty')],
+  ])
+  boss.specialties.forEach((s, i) => {
+    specialty.appendChild(
+      createElement(
+        doc,
+        'data',
+        [['name', `${t('lostrpg_character_common_specialty')}${i + 1}`]],
+        s,
+      ),
+    )
+  })
+  detail.appendChild(specialty)
+  // char detail アビリティ
+  const abilities = createElement(doc, 'data', [
+    ['name', t('lostrpg_character_common_abilities_column')],
+  ])
+  boss.abilities.forEach((a) => {
+    abilities.appendChild(
+      createElement(
+        doc,
+        'data',
+        [
+          ['name', a.name],
+          ['type', 'note'],
+        ],
+        `${a.group}/${a.type}/${a.specialty}/${a.target}/${a.recoil}/${a.effect}`,
+      ),
+    )
+  })
+  detail.appendChild(abilities)
+
+  // char detail
+  char.appendChild(detail)
+
+  // add char
+  characterElm.appendChild(char)
+
+  // add palette
+  const palette = createElement(
+    doc,
+    'chat-palette',
+    [],
+    `//------${t('lostrpg_character_common_ability')}\n` +
+      boss.abilities.map((a) => `[${a.name}] {${a.name}}`).join('\n'),
+  )
+  characterElm.appendChild(palette)
+  // add character to doc
+  doc.appendChild(characterElm)
+  return doc
+}
+
 export const useBossViewModel = (bossInit: Boss) =>
   useSelector((state: { lost: LostModule }) => {
     const i18n = useI18n()
@@ -416,6 +624,12 @@ export const useBossViewModel = (bossInit: Boss) =>
       dispatch(setBoss(bossInit))
       dispatch(setLocale(i18n.activeLocale))
     }, [])
+    const damagedParts = damageBodyParts(bodyParts, boss)
+    const makedStatusAilments = statusAilments.map(({ name, effect }) => ({
+      name,
+      effect,
+      isChecked: boss.statusAilments.includes(name),
+    }))
     return {
       boss,
       beforePage,
@@ -426,12 +640,8 @@ export const useBossViewModel = (bossInit: Boss) =>
       ),
       specialtiesTableRows: specialtiesTableRows(bodyParts, specialties, boss),
       abilitiesColumns,
-      statusAilments: statusAilments.map(({ name, effect }) => ({
-        name,
-        effect,
-        isChecked: boss.statusAilments.includes(name),
-      })),
-      damageBodyParts: damageBodyParts(bodyParts, boss),
+      statusAilments: makedStatusAilments,
+      damageBodyParts: damagedParts,
       damageHandler: (name) => dispatch(toggleBossDamage(name)),
       statusAilmentsHandler: (rowData) =>
         dispatch(
@@ -444,5 +654,31 @@ export const useBossViewModel = (bossInit: Boss) =>
         ),
       staminaHandler: (e) => dispatchSetBoss(e, 'stamina'),
       willPowerHandler: (e) => dispatchSetBoss(e, 'willPower'),
+      exportXml: async () => {
+        let identifier = ''
+        const files: File[] = []
+        if (boss.imageUrl) {
+          const response = await fetch(boss.imageUrl, { method: 'GET' })
+          const blob = await response.blob()
+          identifier = await calcSHA256Async(blob)
+
+          files.push(
+            new File([blob], identifier + '.' + MimeType.extension(blob.type), {
+              type: blob.type,
+            }),
+          )
+        }
+        const doc = bossToDoc(
+          boss,
+          damagedParts,
+          makedStatusAilments,
+          i18n,
+          identifier,
+        )
+        const sXML = convertDocToXML(doc)
+
+        files.push(new File([sXML], 'data.xml', { type: 'text/plain' }))
+        FileArchiver.instance.save(files, boss.name)
+      },
     }
   })

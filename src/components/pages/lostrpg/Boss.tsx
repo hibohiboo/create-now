@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import React from 'react'
 import Head from 'next/head'
-import { Box, Checkbox } from '@material-ui/core'
+import { Box, Checkbox, Button } from '@material-ui/core'
 import MaterialTable from 'material-table'
 import InputLabel from '@material-ui/core/InputLabel'
 import Link from '~/components/atoms/mui/Link'
@@ -167,7 +167,11 @@ const Page: React.FC<{
       ) : (
         <></>
       )}
-
+      <Box my={2}>
+        <Button variant="contained" color="primary" onClick={vm.exportXml}>
+          {t('lostrpg_common_export_udonarium')}
+        </Button>
+      </Box>
       <Link href={`/lostrpg/bosses/[lng]/list`} as={vm.beforePage}>
         {t('common_back')}
       </Link>
