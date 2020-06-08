@@ -67,8 +67,6 @@ export default function Home({ base_path }: Prop) {
 
 export const getStaticProps: GetStaticProps = async () => {
   return {
-    props: {
-      base_path: '/',
-    },
+    props: { base_path: '/mygame/' },
   }
 }

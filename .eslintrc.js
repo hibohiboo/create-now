@@ -4,7 +4,7 @@ module.exports = {
     '!.eslintrc.js',
     '!.babelrc.js',
     '!.storybook/**/*.(js|ts)',
-    'vendor',
+    'public',
   ],
   extends: [
     'eslint:recommended',
