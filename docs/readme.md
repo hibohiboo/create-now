@@ -149,3 +149,16 @@
 ## tyrano
 
 [まとめ](https://note.com/skt_pnt/n/nd295491ead84)
+[PWA 対応](https://qiita.com/violet2525/items/8a0ee82bda4d64cb4c02)
+[目パチプラグイン](https://github.com/violet2525/tyranoscript-css-animaton-plugins)
+[非公式 wiki](http://tyrano.wiki.fc2.com/wiki/%E3%83%9C%E3%82%BF%E3%83%B3%E8%A1%A8%E7%A4%BA)
+
+## tkmr
+
+[wiki](https://imas.gamedbs.jp/cgss/chara/detail/235)
+[一覧](http://mobamastkool.blog.fc2.com/blog-entry-22.html)
+[ゆでだこＰ 立ち絵](https://ch.nicovideo.jp/yudedako_p/blomaga/ar1131807)
+[晴嵐改 立ち絵](https://blog.goo.ne.jp/seiran-kai/e/6bf45aeab0dc28ed732d6e3df533fd08)
+[Mr.ちゅん](https://ch.nicovideo.jp/sekigahara/blomaga/ar469991)
+[シロ P](http://siropimas.blog35.fc2.com/blog-entry-551.html?sp)
+[imas.gamedbs](https://imas.gamedbs.jp/cg/idol/detail/133?h=imcgss-c826)
