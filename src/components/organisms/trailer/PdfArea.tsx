@@ -35,7 +35,7 @@ const docDefinition = (scenario: Scenario) => ({
 
 const makePdf = async (scenario, dispatch) => {
   const pdf = await (
-    await fetch('/api/pdf', {
+    await fetch('/api/v1/pdf', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       body: JSON.stringify(docDefinition(scenario)),

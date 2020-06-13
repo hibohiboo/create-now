@@ -1,5 +1,5 @@
-import commonMiddleware from '../src/utils/middleware/commonMiddleware'
-import { verifyIdToken } from '../src/utils/auth/firebaseAdmin'
+import commonMiddleware from '../../src/utils/middleware/commonMiddleware'
+import { verifyIdToken } from '../../src/utils/auth/firebaseAdmin'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 // req type: CookieSession?

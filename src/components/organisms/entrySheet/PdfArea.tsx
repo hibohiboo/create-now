@@ -305,7 +305,7 @@ const createDocDefinition = (sheet: EntrySheet) => {
 
 const makePdf = async (sheet, dispatch) => {
   const pdf = await (
-    await fetch('/api/pdf', {
+    await fetch('/api/v1/pdf', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       body: JSON.stringify(createDocDefinition(sheet)),

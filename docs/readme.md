@@ -162,3 +162,9 @@
 [Mr.ちゅん](https://ch.nicovideo.jp/sekigahara/blomaga/ar469991)
 [シロ P](http://siropimas.blog35.fc2.com/blog-entry-551.html?sp)
 [imas.gamedbs](https://imas.gamedbs.jp/cg/idol/detail/133?h=imcgss-c826)
+
+## open api
+
+[OpenAPI3.0 のチュートリアルをやってみた](https://qiita.com/koko_ko/items/3491200171a6cc6111be)
+[github - open api](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md)
+[swagger - response](https://swagger.io/docs/specification/describing-responses/)

@@ -1,0 +1,376 @@
+POST http://192.168.50.10:3000/api/v1/pdf HTTP/1.1
+content-type: application/json
+
+{
+  "content": [
+    {
+      "text": "GMエントリーシートVer2.00    TRPGサークル  とらいあど    ",
+      "margin": [0,0,0,5],
+      "fontSize": 12,
+      "alignment": "right"
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [140, "*"],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ①システム名"
+            },
+            "LOSTRPG ～廃墟の森の子供たち～"
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [140,"*"],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ②シナリオ名"
+            },
+            "サバイバルデイズ"
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          280,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "style": "tables",
+              "table": {
+                "heights": 20,
+                "widths": [
+                  140,
+                  "*"
+                ],
+                "body": [
+                  [
+                    {
+                      "fillColor": "#000",
+                      "color": "#fff",
+                      "fontSize": 18,
+                      "lineHeight": 1.1,
+                      "bold": true,
+                      "text": " ③GM名"
+                    },
+                    ""
+                  ],
+                  [
+                    {
+                      "fillColor": "#000",
+                      "color": "#fff",
+                      "fontSize": 18,
+                      "lineHeight": 1.1,
+                      "bold": true,
+                      "text": " ④延長"
+                    },
+                    "□あり ■なし"
+                  ],
+                  [
+                    {
+                      "fillColor": "#000",
+                      "color": "#fff",
+                      "fontSize": 18,
+                      "lineHeight": 1.1,
+                      "bold": true,
+                      "text": " ⑤PL人数"
+                    },
+                    {
+                      "stack": [
+                        {
+                          "text": "最少  ～最適～ 最大",
+                          "fontSize": 10
+                        },
+                        {
+                          "text": "4人～    4人～     4人",
+                          "fontSize": 10
+                        }
+                      ]
+                    }
+                  ]
+                ]
+              }
+            },
+            {
+              "table": {
+                "heights": 20,
+                "widths": [
+                  80,
+                  "*"
+                ],
+                "body": [
+                  [
+                    {
+                      "fillColor": "#000",
+                      "color": "#fff",
+                      "fontSize": 18,
+                      "lineHeight": 1.1,
+                      "bold": true,
+                      "text": " ⑥テーマ",
+                      "rowSpan": 3
+                    },
+                    "無人島"
+                  ],
+                  [
+                    "",
+                    "現代"
+                  ],
+                  [
+                    "",
+                    "サバイバル"
+                  ]
+                ]
+              }
+            }
+          ]
+        ]
+      },
+      "layout": "noBorders"
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          140,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑦シリアス度※"
+            },
+            {
+              "text": "□必須 □必須ではないが重視 □あると嬉しい ■不要",
+              "fontSize": 14
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          140,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 16,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑧演技の重要度※"
+            },
+            {
+              "text": "□必須 □必須ではないが重視 ■あると嬉しい □不要",
+              "fontSize": 14
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          140,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑨必要なもの※"
+            },
+            {
+              "stack": [
+                {
+                  "text": "6面ダイス2個 | ルールブック 不要",
+                  "fontSize": 14
+                },
+                {
+                  "text": "他(スマホでルルブが見れます)",
+                  "fontSize": 14
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          140,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑩キャラ作成※"
+            },
+            {
+              "text": "□サンプルキャラあり ■持込・作成可 (備考特殊ルール)",
+              "fontSize": 14
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          140,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑪初心者対応※"
+            },
+            {
+              "text": "TRPG初心者4人まで | システム初心者4人まで",
+              "fontSize": 14
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "widths": [
+          140,
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑫準備※"
+            },
+            {
+              "stack": [
+                {
+                  "text": "ルールブック4冊 | サマリー等4冊",
+                  "fontSize": 14
+                },
+                {
+                  "text": "他(特になし)",
+                  "fontSize": 14
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "style": "tables",
+      "table": {
+        "heights": [
+          "auto",
+          400
+        ],
+        "widths": [
+          "*"
+        ],
+        "body": [
+          [
+            {
+              "fillColor": "#000",
+              "color": "#fff",
+              "fontSize": 18,
+              "lineHeight": 1.1,
+              "bold": true,
+              "text": " ⑬自由記入欄",
+              "alignment": "center"
+            }
+          ],
+          [
+            {
+              "stack": [
+                {
+                  "text": "・現代が舞台。日本はまだ終わっていない……はず\n・漂流した経緯を各自考えておくこと。\n  漂流表を振ってもよい。\n・キャラ作成時に買い物なし。\n・キャンプ・施設なし。\n・25歳以上のPCも作成可能。\n・島から脱出したいキャラクターであること。\n  残してきたもの表をふってもよい。\n・ニューエイジをサイキックと読み替え。\n  【突然変異】のアビリティは取得不可。\n\n",
+                  "fontSize": 14
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "styles": {
+    "tables": {
+      "margin": [
+        0,
+        0,
+        0,
+        2
+      ]
+    }
+  },
+  "defaultStyle": {
+    "font": "IPAGothic",
+    "fontSize": 16,
+    "alignment": "left",
+    "pageSize": "A4",
+    "pageOrientation": "landscape",
+    "pageMargins": [
+      5,
+      5,
+      5,
+      5
+    ]
+  }
+}

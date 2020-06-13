@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Create Now API
+  description: 作成したapi
+
+servers:
+  - url: http://192.168.50.10:3000/v1
+
+paths:
+  /pdf:
+    post:
+      description: PDFを作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        "200":
+          description: 成功した場合、PDFファイルを返す
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/400Error"
+
+components:
+  responses:
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

@@ -6,7 +6,9 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "biscrat.kagex-vscode",
-    "biscrat.tjs-vscode"
+    "biscrat.tjs-vscode",
+    "arjun.swagger-viewer",
+    "humao.rest-client"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
   "unwantedRecommendations": []

@@ -11,7 +11,7 @@
     }
   ],
   "functions": {
-    "api/pdf.ts": {
+    "api/v1/pdf.ts": {
       "includeFiles": "fonts/**"
     }
   },
