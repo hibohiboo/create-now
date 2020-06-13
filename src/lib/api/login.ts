@@ -1,9 +1,14 @@
-import commonMiddleware from '../../src/utils/middleware/commonMiddleware'
-import { verifyIdToken } from '../../src/utils/auth/firebaseAdmin'
+import commonMiddleware from '../../utils/middleware/commonMiddleware'
+import { verifyIdToken } from '../../utils/auth/firebaseAdmin'
 import { NextApiRequest, NextApiResponse } from 'next'
+import * as admin from 'firebase-admin'
+
+export type SessionRequest = NextApiRequest & {
+  session: { decodedToken: admin.auth.DecodedIdToken; token: string } | null
+}
 
 // req type: CookieSession?
-const handler = async (req: any, res: NextApiResponse) => {
+const handler = async (req: SessionRequest, res: NextApiResponse) => {
   if (!req.body) {
     return res.status(400)
   }

@@ -60,6 +60,7 @@
 ### prettier
 
 [trailing-comma](https://prettier.io/docs/en/options.html#trailing-commas)
+[無効化](https://qiita.com/the_red/items/e121cbb659c52a60bca6)
 
 ## google tag manager
 

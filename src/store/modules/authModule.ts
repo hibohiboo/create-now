@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
 import { get, has } from 'lodash'
 import { auth } from '~/lib/firebase/initFirebase'
-import { setSession } from '~/utils/auth/firebaseSessionHandler'
+// import { setSession } from '~/utils/auth/firebaseSessionHandler'
 import { AppThunk } from '~/store/rootState'
 
 export interface AuthUser {
@@ -84,12 +84,12 @@ export const createAuthClientSide = (): AppThunk => async (dispatch) => {
   auth.onAuthStateChanged((user) => {
     if (user) {
       dispatch(setAuth())
-      setSession(user)
+      // setSession(user)
     }
   })
 }
 export const logout = (): AppThunk => async (dispatch) => {
-  setSession(null)
   auth.signOut()
   dispatch(clearAuth())
+  // setSession(null)
 }
