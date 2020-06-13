@@ -168,3 +168,17 @@
 [OpenAPI3.0 のチュートリアルをやってみた](https://qiita.com/koko_ko/items/3491200171a6cc6111be)
 [github - open api](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md)
 [swagger - response](https://swagger.io/docs/specification/describing-responses/)
+
+### arjun.swagger-viewer
+
+キー|コマンド
+--|--
+`shift`+`alt`+`p`|Swagger プレビュー
+
+### humao.rest-client
+
+キー|コマンド
+--|--
+`ctrl`+`alt`+`r`|リクエスト送信
+`ctrl`+`alt`+`c`|コード自動生成
+
