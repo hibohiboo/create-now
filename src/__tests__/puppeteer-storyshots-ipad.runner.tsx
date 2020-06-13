@@ -8,5 +8,5 @@ const customizePage: any = (page) => {
 
 initStoryshots({
   suite: 'Image storyshots: iPad',
-  test: imageSnapshot({ customizePage })
+  test: imageSnapshot({ customizePage }),
 })

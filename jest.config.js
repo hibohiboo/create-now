@@ -16,4 +16,5 @@ module.exports = {
   transform: {
     '^.+\\.stories\\.tsx$': '@storybook/addon-storyshots/injectFileName',
   },
+  setupFiles: ['dotenv/config'],
 }

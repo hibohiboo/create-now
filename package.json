@@ -10,7 +10,7 @@
     "puppeteer-storyshots": "jest src/__tests__/puppeteer-storyshots*.runner.ts",
     "tests": "jest src/__tests__/.*/*.spec.tsx?$",
     "lint": "eslint --ext .ts,.tsx --ignore-path .gitignore .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

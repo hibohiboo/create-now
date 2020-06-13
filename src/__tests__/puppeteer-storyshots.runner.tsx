@@ -3,5 +3,5 @@ import { imageSnapshot } from '@storybook/addon-storyshots-puppeteer'
 
 initStoryshots({
   suite: 'Image storyshots: PC',
-  test: imageSnapshot()
+  test: imageSnapshot(),
 })
