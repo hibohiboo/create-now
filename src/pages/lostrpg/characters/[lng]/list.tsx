@@ -11,7 +11,11 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 // import { SearchIcon } from '@material-ui/icons'
 import SearchIcon from '@material-ui/icons/Search'
-import { languages, contentLanguageMap } from '~/lib/i18n'
+import {
+  contentLanguageMap,
+  getLocalePropsOnly,
+  getLocalePaths,
+} from '~/lib/i18n'
 import useI18n from '~/hooks/use-i18n'
 import Link from '~/components/atoms/mui/Link'
 import ListItemLink from '~/components/atoms/mui/ListItemLink'
@@ -129,19 +133,7 @@ const HomePage = () => {
   )
 }
 
-export async function getStaticProps({ params }) {
-  const { default: lngDict = {} } = await import(`~/locales/${params.lng}.json`)
-
-  return {
-    props: { lng: params.lng, lngDict },
-  }
-}
-
-export async function getStaticPaths() {
-  return {
-    paths: languages.map((l) => ({ params: { lng: l } })),
-    fallback: false,
-  }
-}
-
 export default HomePage
+
+export const getStaticProps = getLocalePropsOnly
+export const getStaticPaths = getLocalePaths

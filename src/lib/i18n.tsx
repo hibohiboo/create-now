@@ -74,3 +74,34 @@ const I18n: React.FC<{
   )
 }
 export default I18n
+
+// utils
+
+import { GetStaticPaths, GetStaticProps } from 'next'
+
+const getLocaleJson = async (lng: Language) => {
+  return await import(`~/locales/${lng}.json`)
+}
+
+const getLocaleProps = async ({ params }) => {
+  const { default: lngDict = {} } = await getLocaleJson(params.lng)
+  return {
+    lng: params.lng,
+    lngDict,
+  }
+}
+
+export const getLocalePropsOnly: GetStaticProps = async ({ params }) => {
+  return {
+    props: await getLocaleProps({ params }),
+  }
+}
+
+export const getLocalePaths: GetStaticPaths = async () => {
+  return {
+    paths: languages.map((l) => ({ params: { lng: l } })),
+    // We'll pre-render only these paths at build time.
+    // { fallback: false } means other routes should 404.
+    fallback: false,
+  }
+}

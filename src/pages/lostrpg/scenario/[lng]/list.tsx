@@ -9,7 +9,11 @@ import {
 } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 import { useScenariosViewModel } from '~/store/modules/lostModule'
-import { contentLanguageMap } from '~/lib/i18n'
+import {
+  contentLanguageMap,
+  getLocalePropsOnly,
+  getLocalePaths,
+} from '~/lib/i18n'
 import Link from '~/components/atoms/mui/Link'
 import ListItemLink from '~/components/atoms/mui/ListItemLink'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
@@ -96,3 +100,6 @@ const Page: NextPage = () => {
   )
 }
 export default Page
+
+export const getStaticProps = getLocalePropsOnly
+export const getStaticPaths = getLocalePaths
