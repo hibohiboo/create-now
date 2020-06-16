@@ -15,6 +15,7 @@ import {
   Boss,
   Scenario,
 } from '~/store/modules/lostModule'
+import { getLocaleProps, getLocalePaths } from '~/lib/i18n'
 import { useAuth, createAuthClientSide } from '~/store/modules/authModule'
 import CampPage from '~/components/pages/lostrpg/camp'
 import CharacterPage from '~/components/pages/lostrpg/CharacterPage'
@@ -81,7 +82,7 @@ Page.getInitialProps = async ({ query }) => {
   const lng = query.lng as string
   const view = query.view as string
   const id = query.id as string
-  const { default: lngDict = {} } = await import(`~/locales/${lng}.json`)
+  const { lngDict } = await getLocaleProps({ params: { lng } })
   if (view === 'camp') {
     const camp = await getCamp(id)
     return { camp, lng, lngDict, view, id }
@@ -103,5 +104,6 @@ Page.getInitialProps = async ({ query }) => {
     return { scenario, lng, lngDict, view, id }
   }
 }
+// Page.getStaticPaths = getLocalePaths
 
 export default Page

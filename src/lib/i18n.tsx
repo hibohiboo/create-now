@@ -83,7 +83,7 @@ const getLocaleJson = async (lng: Language) => {
   return await import(`~/locales/${lng}.json`)
 }
 
-const getLocaleProps = async ({ params }) => {
+export const getLocaleProps = async ({ params }) => {
   const { default: lngDict = {} } = await getLocaleJson(params.lng)
   return {
     lng: params.lng,
