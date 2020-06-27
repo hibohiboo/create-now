@@ -22,6 +22,7 @@ import {
 import { canEdit } from '~/firestore/character'
 import * as tableConfig from '~/lib/constants'
 import SocialMeta from '~/components/SocialMeta'
+import styles from './common.module.css'
 
 const Page: React.FC<{
   character: Character
@@ -119,6 +120,7 @@ const Page: React.FC<{
         )}
         {character.summary.trim() ? (
           <Box
+            className={styles.textArea}
             border={1}
             p={1}
             style={{ whiteSpace: 'pre-wrap', minWidth: '320px' }}
@@ -351,7 +353,7 @@ const Page: React.FC<{
         <></>
       )}
       {character.freeWriting ? (
-        <Box my={2} style={{ width: '100%' }}>
+        <Box my={2} style={{ width: '100%' }} className={styles.textArea}>
           <InputLabel>{t('common_detail')}</InputLabel>
           <Box
             border={1}
@@ -364,29 +366,41 @@ const Page: React.FC<{
       ) : (
         <></>
       )}
-      {!character.useStrangeField ? (
+      {!(character.useStrangeField || character.useDragonPlain) ? (
         <></>
       ) : (
         <Box my={2}>
           <InputLabel>
             {t('lostrpg_character_common_use_supplement')}
           </InputLabel>
-          <Chip
-            style={{ margin: '0.5rem' }}
-            label={t('lostrpg_character_common_strange_field')}
-          />
+          {!character.useStrangeField ? (
+            <></>
+          ) : (
+            <Chip
+              style={{ margin: '0.5rem' }}
+              label={t('lostrpg_character_common_strange_field')}
+            />
+          )}
+          {!character.useDragonPlain ? (
+            <></>
+          ) : (
+            <Chip
+              style={{ margin: '0.5rem' }}
+              label={t('lostrpg_character_common_dragon_plain')}
+            />
+          )}
         </Box>
       )}
       <Box my={2}>
-        <Button variant="contained" color="primary" onClick={vm.exportXml}>
-          {t('lostrpg_common_export_udonarium')}
-        </Button>
         <Button
-          style={{ marginLeft: '1rem' }}
           variant="contained"
           color="primary"
-          onClick={vm.exportJson}
+          onClick={vm.exportXml}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
         >
+          {t('lostrpg_common_export_udonarium')}
+        </Button>
+        <Button variant="contained" color="primary" onClick={vm.exportJson}>
           {t('export_for_trpg_studio')}
         </Button>
       </Box>

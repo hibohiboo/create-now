@@ -2187,7 +2187,7 @@ export const strangeFieldsAbilityList = [
 export const strangeFieldsItemList = [
   {
     name: '行商人の背負い袋',
-    j: '40',
+    j: 40,
     weight: '6',
     type: '道具',
     area: '-',
@@ -2199,7 +2199,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '猟銃',
-    j: '30',
+    j: 30,
     weight: '6',
     type: '装備',
     area: '両手',
@@ -2211,7 +2211,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '弾',
-    j: '5',
+    j: 5,
     weight: '0',
     type: '道具',
     area: '-',
@@ -2223,7 +2223,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '弓',
-    j: '5',
+    j: 5,
     weight: '3',
     type: '装備',
     area: '両手',
@@ -2235,7 +2235,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: 'ダーツ',
-    j: '12',
+    j: 12,
     weight: '1',
     type: '装備',
     area: '片手',
@@ -2247,7 +2247,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '手斧',
-    j: '6',
+    j: 6,
     weight: '2',
     type: '装備',
     area: '片手',
@@ -2259,7 +2259,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: 'ダガーナイフ',
-    j: '6',
+    j: 6,
     weight: '1',
     type: '装備',
     area: '片手',
@@ -2271,7 +2271,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '農具',
-    j: '15',
+    j: 15,
     weight: '6',
     type: '装備',
     area: '両手',
@@ -2282,7 +2282,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '大盾',
-    j: '10',
+    j: 10,
     weight: '6',
     type: '装備',
     area: '両手',
@@ -2294,7 +2294,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: 'おしゃれな服',
-    j: '1',
+    j: 1,
     weight: '2',
     type: '装備',
     area: '胴部',
@@ -2305,7 +2305,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: 'アクセサリ',
-    j: '2',
+    j: 2,
     weight: '1',
     type: '装備',
     area: '任意',
@@ -2316,7 +2316,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '魚肉',
-    j: '1',
+    j: 1,
     weight: '1',
     type: '道具',
     area: '-',
@@ -2327,7 +2327,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '硬い鱗',
-    j: '1',
+    j: 1,
     weight: '1',
     type: '道具',
     area: '-',
@@ -2338,7 +2338,7 @@ export const strangeFieldsItemList = [
   },
   {
     name: '虹色の鱗',
-    j: '1',
+    j: 1,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3542,7 +3542,7 @@ export const sampleTable = {
 export const dragonPlainItemList = [
   {
     name: '抗生物質',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '割込み',
     area: '-',
@@ -3553,7 +3553,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '森の恵み',
-    j: '15',
+    j: 15,
     weight: '2',
     type: '支援',
     area: '-',
@@ -3564,7 +3564,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '奇跡の雫',
-    j: '20',
+    j: 20,
     weight: '2',
     type: '支援',
     area: '-',
@@ -3575,7 +3575,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '銀の矢',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3587,7 +3587,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '毒の矢',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3599,7 +3599,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'ダウジングツール',
-    j: '2',
+    j: 2,
     weight: '1',
     type: '支援',
     area: '-',
@@ -3611,7 +3611,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '爆竹玉',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3623,7 +3623,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '臭い玉',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3635,7 +3635,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'けむりだま',
-    j: '3',
+    j: 3,
     weight: '1',
     type: '割込み',
     area: '-',
@@ -3647,7 +3647,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'しもふりにく',
-    j: '4',
+    j: 4,
     weight: '1',
     type: '割込み',
     area: '-',
@@ -3659,7 +3659,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'わらにんぎょう',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '割込み',
     area: '-',
@@ -3671,7 +3671,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '結界符',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '割込み',
     area: '-',
@@ -3683,7 +3683,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'いくさ化粧',
-    j: '5',
+    j: 5,
     weight: '2',
     type: '支援',
     area: '-',
@@ -3696,7 +3696,7 @@ export const dragonPlainItemList = [
 
   {
     name: 'ツルハシ',
-    j: '9',
+    j: 9,
     weight: '4',
     type: '装備',
     area: '両手',
@@ -3707,7 +3707,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '斧',
-    j: '7',
+    j: 7,
     weight: '4',
     type: '装備',
     area: '片手',
@@ -3718,7 +3718,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'シャベル',
-    j: '12',
+    j: 12,
     weight: '4',
     type: '装備',
     area: '両手',
@@ -3729,7 +3729,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '盾',
-    j: '20',
+    j: 20,
     weight: '2',
     type: '装備',
     area: '片手',
@@ -3740,7 +3740,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '銀の首飾り',
-    j: '5',
+    j: 5,
     weight: '1',
     type: '装備',
     area: '頭部',
@@ -3751,7 +3751,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'ゴーグル',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '装備',
     area: '頭部',
@@ -3763,7 +3763,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'モノクル',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '装備',
     area: '頭部',
@@ -3774,7 +3774,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '浄化の聖印',
-    j: '15',
+    j: 15,
     weight: '1',
     type: '装備',
     area: '頭部',
@@ -3785,7 +3785,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'リボン',
-    j: '100',
+    j: 100,
     weight: '1',
     type: '装備',
     area: '頭部',
@@ -3797,7 +3797,7 @@ export const dragonPlainItemList = [
 
   {
     name: '風見鶏のスカーフ',
-    j: '20',
+    j: 20,
     weight: '1',
     type: '装備',
     area: '胴部',
@@ -3808,7 +3808,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '赤い服',
-    j: '2',
+    j: 2,
     weight: '2',
     type: '装備',
     area: '胴部',
@@ -3820,7 +3820,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'サバイバルベスト',
-    j: '15',
+    j: 15,
     weight: '2',
     type: '装備',
     area: '胴部',
@@ -3831,7 +3831,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '快適な下着',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '装備',
     area: '胴部',
@@ -3842,7 +3842,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'もふもふコート',
-    j: '10',
+    j: 10,
     weight: '4',
     type: '装備',
     area: '胴部',
@@ -3853,7 +3853,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'トラップツール',
-    j: '15',
+    j: 15,
     weight: '4',
     type: '装備',
     area: '胴部',
@@ -3865,7 +3865,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'アイドル衣装',
-    j: '15',
+    j: 15,
     weight: '2',
     type: '装備',
     area: '胴部',
@@ -3878,7 +3878,7 @@ export const dragonPlainItemList = [
 
   {
     name: 'パワーグラブ',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '装備',
     area: '腕部',
@@ -3889,7 +3889,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '投手の手袋',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '装備',
     area: '腕部',
@@ -3900,7 +3900,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'ロンググローブ',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '装備',
     area: '腕部',
@@ -3912,7 +3912,7 @@ export const dragonPlainItemList = [
 
   {
     name: '水かき',
-    j: '5',
+    j: 5,
     weight: '2',
     type: '装備',
     area: '脚部',
@@ -3923,7 +3923,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '俊足スニーカー',
-    j: '15',
+    j: 15,
     weight: '2',
     type: '装備',
     area: '脚部',
@@ -3935,7 +3935,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'フィットシューズ',
-    j: '20',
+    j: 20,
     weight: '2',
     type: '装備',
     area: '脚部',
@@ -3947,7 +3947,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '忍者の足袋',
-    j: '20',
+    j: 20,
     weight: '2',
     type: '装備',
     area: '脚部',
@@ -3958,7 +3958,7 @@ export const dragonPlainItemList = [
   },
   {
     name: 'ペガサスの靴',
-    j: '30',
+    j: 30,
     weight: '2',
     type: '装備',
     area: '脚部',
@@ -3970,7 +3970,7 @@ export const dragonPlainItemList = [
 
   {
     name: '星の欠片:赤',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3982,7 +3982,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '星の欠片:緑',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '道具',
     area: '-',
@@ -3993,7 +3993,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '星の欠片:青',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '道具',
     area: '-',
@@ -4005,7 +4005,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '星の欠片:黄',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '道具',
     area: '-',
@@ -4017,7 +4017,7 @@ export const dragonPlainItemList = [
   },
   {
     name: '星の欠片:白',
-    j: '10',
+    j: 10,
     weight: '1',
     type: '道具',
     area: '-',
@@ -4059,5 +4059,215 @@ export const dragonPlainAbilityList = [
         effect: '指定特技の判定に成功すると、装備の強化を行うことができる。',
       },
     ],
+  },
+]
+
+export const dragonPlainGreaterItemList = [
+  {
+    name: '☾銀の首飾り',
+    j: 5,
+    weight: '1',
+    type: '装備',
+    area: '頭部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect: '＜フィールド＞に入った時に【体力】と【気力』が6点増加する。',
+  },
+  {
+    name: '☾ゴーグル',
+    j: 10,
+    weight: '1',
+    type: '装備',
+    area: '頭部',
+    specialty: '-',
+    target: '自身',
+    trait: 'アビリティ強化',
+    effect:
+      'ハンターの【アビリティ】を使用する直前に、追加で1点の気力を払うことができる。そうした場合、達成値にプラス3の修正がつく。',
+  },
+  {
+    name: '☾モノクル',
+    j: 10,
+    weight: '1',
+    type: '装備',
+    area: '頭部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '《見つける》が指定特技の判定にプラス3の修正がつく。',
+  },
+  {
+    name: '☾浄化の聖印',
+    j: 15,
+    weight: '1',
+    type: '装備',
+    area: '頭部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect:
+      'アビリティ【腐敗】【悪臭】を無効化する。さらに、それらのアビリティを持つ相手に与えるダメージをプラス5する。',
+  },
+
+  {
+    name: '☾ポケットジャケット',
+    j: 12,
+    weight: '2',
+    type: '装備',
+    area: '胴部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect: 'ポケットのたくさんついたジャケット。所持限界プラス9',
+  },
+  {
+    name: '☾風見鶏のスカーフ',
+    j: 20,
+    weight: '1',
+    type: '装備',
+    area: '胴部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '先制判定の達成値にプラス2の修正がつく。',
+  },
+  {
+    name: '☾サバイバルベスト',
+    j: 15,
+    weight: '2',
+    type: '装備',
+    area: '胴部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect: '【体力基準値】をプラス3する。',
+  },
+  {
+    name: '☾快適な下着',
+    j: 10,
+    weight: '1',
+    type: '装備',
+    area: '胴部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect: '【気力基準値】をプラス5する。',
+  },
+  {
+    name: '☾もふもふコート',
+    j: 10,
+    weight: '4',
+    type: '装備',
+    area: '胴部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect:
+      '環境効果『極寒』の影響を受けない。炎や氷のダメージを2点軽減する。『炎上』無効化。',
+  },
+  {
+    name: '☾トラップツール',
+    j: 15,
+    weight: '4',
+    type: '装備',
+    area: '胴部',
+    specialty: '-',
+    target: '自身',
+    trait: 'アビリティ強化、判定強化',
+    effect:
+      'ハンターの【影牢】のダメージ量を[対象が受けている変調×3]点に変更する。《罠》が指定特技の判定にプラス2の修正がつく。',
+  },
+
+  {
+    name: '☾パワーグラブ',
+    j: 10,
+    weight: '1',
+    type: '装備',
+    area: '腕部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '《掴む》が指定特技の判定にプラス3の修正がつく。',
+  },
+  {
+    name: '☾投手の手袋',
+    j: 10,
+    weight: '1',
+    type: '装備',
+    area: '腕部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '《投げる》が指定特技の判定にプラス3の修正がつく。',
+  },
+  {
+    name: '☾ロンググローブ',
+    j: 10,
+    weight: '1',
+    type: '装備',
+    area: '腕部',
+    specialty: '-',
+    target: '自身',
+    trait: '',
+    effect: 'アビリティ【冷気】の影響を受けない。ダメージを1点軽減する。',
+  },
+
+  {
+    name: '☾水かき',
+    j: 5,
+    weight: '2',
+    type: '装備',
+    area: '脚部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '水中で行う《泳ぐ》が指定特技の判定にプラス4の修正がつく。',
+  },
+  {
+    name: '☾俊足スニーカー',
+    j: 15,
+    weight: '2',
+    type: '装備',
+    area: '脚部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect:
+      '《走る》が指定特技の判定にプラス3の修正がつく。探索フェイズ時、障害の突破判定でスペシャルを出すと、行動済にならず続けて行動できる。突破判定にプラス1の修正がつく。',
+  },
+  {
+    name: '☾フィットシューズ',
+    j: 20,
+    weight: '2',
+    type: '装備',
+    area: '脚部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect:
+      '《バランス》が指定特技の判定にプラス3の修正がつく。『瓦礫』などの足場ペナルティ無効。アビリティ【地震】無効。',
+  },
+  {
+    name: '☾忍者の足袋',
+    j: 20,
+    weight: '2',
+    type: '装備',
+    area: '脚部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '《歩く》《隠れる》が指定特技の判定にプラス3の修正がつく。',
+  },
+  {
+    name: '☾ペガサスの靴',
+    j: 30,
+    weight: '2',
+    type: '装備',
+    area: '脚部',
+    specialty: '-',
+    target: '自身',
+    trait: '判定強化',
+    effect: '《走る》《跳ぶ》《踏む》が指定特技の判定にプラス3の修正がつく。',
   },
 ]

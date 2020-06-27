@@ -869,10 +869,14 @@ export const useCharacterEditViewModel = () =>
       backboneColumns,
       recordsColumns,
       trophyAbilityList,
+      dragonPlainItemList,
+      dragonPlainAbilityList,
+      dragonPlainGreaterItemList,
     } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
     let mergedClassList = classList
     let mergedAbilities = abilityList
     let mergedItemList = items
+    // サプリメント： 終末列島百景
     if (character.useStrangeField) {
       mergedItemList = _.union(mergedItemList, strangeFieldsItemList)
       mergedClassList = _.union(mergedClassList, strangeFieldsClassList)
@@ -881,6 +885,15 @@ export const useCharacterEditViewModel = () =>
         strangeFieldsAbilityList,
         trophyAbilityList,
       )
+    }
+    // サプリメント： 関ヶ原暴竜平原
+    if (character.useDragonPlain) {
+      mergedItemList = _.union(
+        mergedItemList,
+        dragonPlainItemList,
+        dragonPlainGreaterItemList,
+      )
+      mergedAbilities = _.union(mergedAbilities, dragonPlainAbilityList)
     }
     const trophies = _.uniq(state.lost.records.map((i) => i.trophy))
     const damagedParts = damageBodyParts(bodyParts, character)

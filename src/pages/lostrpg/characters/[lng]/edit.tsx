@@ -79,7 +79,7 @@ const Page: NextPage = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={vm.character.useDragonPlain}
+                      checked={vm.character.useDragonPlain || false}
                       onChange={vm.useDragonPlainHandler}
                       color="primary"
                     />
