@@ -402,7 +402,7 @@ const Page: React.FC<{
                 pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
                 query: {
                   lng: i18n.activeLocale,
-                  characterId: character.campId,
+                  characterId: id,
                 },
               }}
               as={`/lostrpg/records/${i18n.activeLocale}/${id}/edit`}

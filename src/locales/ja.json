@@ -24,7 +24,6 @@
   "lostrpg_camps_list_campList": "キャンプ一覧",
   "lostrpg_camps_list_please_login": "作成するにはログインが必要です。",
   "lostrpg_camps_edit_title": "LOSTRPG キャンプ",
-
   "lostrpg_character_common_class": "クラス",
   "lostrpg_character_common_ability": "アビリティ",
   "lostrpg_character_common_memo": "設定",
@@ -63,6 +62,7 @@
   "lostrpg_character_common_totalValue": "合計価格",
   "lostrpg_character_common_use_supplement": "使用サプリメント",
   "lostrpg_character_common_strange_field": "終末列島百景",
+  "lostrpg_character_common_dragon_plain": "関ヶ原暴竜平原",
   "lostrpg_character_common_backbone": "背景",
   "lostrpg_character_common_abilities_column": "アビリティ グループ/タイプ/特技/対象/反動/効果",
   "lostrpg_character_common_items_column": "アイテム 価格/重量/タイプ/部位/特技/対象/特性/効果",

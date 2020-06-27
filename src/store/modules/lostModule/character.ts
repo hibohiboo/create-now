@@ -1,4 +1,6 @@
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import Router, { useRouter } from 'next/router'
 import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import { readCharacters, readCampsCharacters } from '~/firestore/character'
@@ -25,6 +27,24 @@ import {
   setCampsCharacters,
   setCharactersRecords,
 } from './index'
+import { getIdFromQuery } from '~/utils/urlHelper'
+import {
+  setCharacter,
+  toggleCharacterDamage,
+  setCharacterBag,
+  setLocale,
+  fetchCamps,
+  useCamps,
+} from '~/store/modules/lostModule'
+import { useAuth } from '~/store/modules/authModule'
+import { createSetImageFile } from '~/utils/formHelper'
+import {
+  createCharacter,
+  getCharacter,
+  updateCharacter,
+  deleteCharacter,
+  canEdit,
+} from '~/firestore/character'
 
 export interface CharacterClass {
   id: string
@@ -100,6 +120,7 @@ export interface Character {
   updatedAt?: any
   useStrangeField?: boolean
   backbones: Backbone[]
+  useDragonPlain?: boolean
 }
 export const initBag = {
   id: 'bag',
@@ -174,6 +195,7 @@ export const initCharacter: Character = {
   uid: '',
   useStrangeField: false,
   backbones: [],
+  useDragonPlain: false,
 }
 export interface CampsCharacters {
   characterId: string
@@ -732,8 +754,103 @@ const makeStatusAilments = (
 
 export const useCharacterEditViewModel = () =>
   useSelector((state: { lost: LostModule }) => {
+    const campLimit = 100
     const i18n = useI18n()
-    const { character } = state.lost
+    const authUser = useAuth()
+    const t = i18n.t
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const character = useCharacter()
+    const camps = useCamps()
+    const id = getIdFromQuery(router)
+    const beforePage = `/lostrpg/characters/${i18n.activeLocale}/list`
+    const updateRowData = (prop: string, toNextState: (d: any[]) => any[]) => {
+      const newData = { ...character }
+      newData[prop] = toNextState([...character[prop]])
+      dispatch(setCharacter(newData))
+    }
+    const updateRowDataBags = (bag: Bag, toNextState: (d: any[]) => any[]) => {
+      dispatch(setCharacterBag({ ...bag, items: toNextState([...bag.items]) }))
+    }
+    // Validation State
+    const [isValidError, setIsValidError] = useState(false)
+    const [isSubmit, setIsSubmit] = useState(false)
+    // Image State
+    const [prevUrl, setPrevUrl] = useState('')
+    const [file, setFile] = useState<File>(null)
+    const setImageFile = createSetImageFile(setFile, setPrevUrl)
+    const handleOnDrop = (files: File[]) => {
+      setImageFile(files[0])
+    }
+
+    const editHandler = async () => {
+      if (!character.name) {
+        setIsValidError(true)
+        window.scrollTo(0, 0)
+        return
+      }
+      if (isSubmit) return
+      setIsSubmit(true)
+
+      let retId = id
+      if (!retId) {
+        retId = await createCharacter(
+          { ...character, uid: authUser.uid },
+          authUser,
+          file,
+        )
+      } else {
+        await updateCharacter(
+          id,
+          { ...character, uid: authUser.uid },
+          authUser.uid,
+          file,
+        )
+      }
+
+      Router.push(
+        {
+          pathname: `/lostrpg/public/[lng]/[view]`,
+          query: { id: retId },
+        },
+        `/lostrpg/public/${i18n.activeLocale}/character?id=${retId}`,
+      )
+    }
+
+    const deleteHandler = async () => {
+      if (confirm(t('message_are_you_sure_remove'))) {
+        await deleteCharacter(id, authUser.uid)
+        Router.push(beforePage)
+      }
+    }
+
+    useEffect(() => {
+      // /lostrpg/public/[lng]/[view] では編集機能がない
+
+      if (router.pathname.includes('view')) return
+      if (!authUser || (id && !canEdit(authUser, character))) {
+        Router.push(beforePage)
+      }
+      dispatch(setLocale(i18n.activeLocale))
+      dispatch(fetchCamps(campLimit))
+
+      if (!id) {
+        dispatch(
+          setCharacter({ ...initCharacter, playerName: authUser.displayName }),
+        )
+        return
+      }
+      dispatch(fetchCharactersRecords(id))
+      ;(async () => {
+        const data = await getCharacter(id)
+
+        if (data) {
+          dispatch(setCharacter(data))
+          if (data.imageUrl) setPrevUrl(data.imageUrl)
+        }
+      })()
+    }, [])
+
     const {
       abilitiesColumns,
       itemsColumns,
@@ -774,6 +891,7 @@ export const useCharacterEditViewModel = () =>
       specialties,
       character,
     )
+
     return {
       classList: mergedClassList.filter(
         (item) => !character.classes.includes(item),
@@ -846,7 +964,7 @@ export const useCharacterEditViewModel = () =>
         FileArchiver.instance.save(files, character.name)
       },
       exportJson: async () => {
-        const identifier = ''
+        // const identifier = ''
 
         const json = characterToTRPGStudioDoc(
           character,
@@ -866,6 +984,346 @@ export const useCharacterEditViewModel = () =>
 
         FileArchiver.instance.saveText(file)
       },
+      authUser,
+      i18n,
+      id,
+      character,
+      camps,
+      isValidError,
+      characterNameHelperText:
+        character.name || !isValidError ? '' : t('message_required'),
+      prevUrl,
+      beforePage,
+      playerNameHandler: (e) =>
+        dispatch(setCharacter({ ...character, playerName: e.target.value })),
+      useStrangeFieldHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            useStrangeField: e.target.checked,
+          }),
+        ),
+      useDragonPlainHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            useDragonPlain: e.target.checked,
+          }),
+        ),
+      campHandler: (item: { id: string; name: string } | null) => {
+        if (item) {
+          dispatch(
+            setCharacter({
+              ...character,
+              campName: item.name,
+              campId: item.id,
+            }),
+          )
+          return
+        }
+        dispatch(
+          setCharacter({
+            ...character,
+            campName: '',
+            campId: '',
+          }),
+        )
+      },
+      characterNameHandler: (e) =>
+        dispatch(setCharacter({ ...character, name: e.target.value })),
+      handleOnDrop,
+      classHandler: (item: CharacterClass | null) => {
+        item &&
+          dispatch(
+            setCharacter({
+              ...character,
+              classes: [...character.classes, item],
+            }),
+          )
+      },
+      classItemHandler: (item) => {
+        dispatch(
+          setCharacter({
+            ...character,
+            classes: character.classes.filter((i) => i.name !== item.name),
+          }),
+        )
+      },
+      specialtiesHandler: () =>
+        dispatch(setCharacter({ ...character, damagedSpecialties: [] })),
+      gapHandler: (name) => {
+        const gaps = character.gaps.includes(name)
+          ? character.gaps.filter((item) => item !== name)
+          : [...character.gaps, name]
+        dispatch(
+          setCharacter({
+            ...character,
+            gaps,
+          }),
+        )
+      },
+      specialtyHandler: (name) => {
+        const specialties = character.specialties.includes(name)
+          ? character.specialties.filter((item) => item !== name)
+          : [...character.specialties, name]
+        dispatch(
+          setCharacter({
+            ...character,
+            specialties,
+          }),
+        )
+      },
+      damageHandler: (name) => dispatch(toggleCharacterDamage(name)),
+      abilitySelectHandler: (item: Ability | null) => {
+        item &&
+          dispatch(
+            setCharacter({
+              ...character,
+              abilities: [...character.abilities, item],
+            }),
+          )
+      },
+      abilityAddhandler: (newData) => {
+        updateRowData('abilities', (d) => [...d, newData])
+      },
+      abilityUpdateHandler: (newData, oldData) => {
+        updateRowData('abilities', (d) => {
+          d[d.findIndex((i) => i.name === oldData.name)] = newData
+          return d
+        })
+      },
+      abilityDeleteHandler: (oldData) => {
+        updateRowData('abilities', (d) => {
+          d.splice(
+            d.findIndex((i) => i.name === oldData.name),
+            1,
+          )
+          return d
+        })
+      },
+      staminaBaseHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            staminaBase: Number(e.target.value),
+          }),
+        ),
+      staminaHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            stamina: Number(e.target.value),
+          }),
+        ),
+      willPowerBaseHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            willPowerBase: Number(e.target.value),
+          }),
+        ),
+      willPowerHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            willPower: Number(e.target.value),
+          }),
+        ),
+      carryingCapacityHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            carryingCapacity: Number(e.target.value),
+          }),
+        ),
+      itemSelectHandler: (item: Item | null) => {
+        item &&
+          dispatch(
+            setCharacter({
+              ...character,
+              items: [
+                ...character.items,
+                { ...item, id: _.uniqueId(item.name), number: 1 },
+              ],
+            }),
+          )
+      },
+      addItemHandler: (newData) => {
+        updateRowData('items', (d) => [
+          ...d,
+          { ...newData, id: _.uniqueId(newData.name) },
+        ])
+      },
+      updateItemHandler: (newData, oldData) => {
+        updateRowData('items', (d) => {
+          d[d.findIndex((i) => i.id === oldData.id)] = newData
+          return d
+        })
+      },
+      deleteItemHandler: (oldData) => {
+        updateRowData('items', (d) => {
+          d.splice(
+            d.findIndex((i) => i.id === oldData.id),
+            1,
+          )
+          return d
+        })
+      },
+      addBagHandler: () =>
+        dispatch(
+          setCharacter({
+            ...character,
+            bags: [
+              ...character.bags,
+              { ...initBag, id: _.uniqueId(initBag.id) },
+            ],
+          }),
+        ),
+      bagChangeHandler: (e, bag) =>
+        dispatch(
+          setCharacterBag({
+            ...bag,
+            name: e.target.value,
+          }),
+        ),
+      bagRemoveHandler: (bag) => {
+        if (!confirm(t('message_are_you_sure_remove'))) return
+        dispatch(
+          setCharacter({
+            ...character,
+            bags: character.bags.filter((b) => b.id !== bag.id),
+          }),
+        )
+      },
+      bagCapacityHandler: (e, bag) =>
+        dispatch(
+          setCharacterBag({
+            ...bag,
+            capacity: Number(e.target.value),
+          }),
+        ),
+      bagItemSelectHandler: (item: Item | null, bag) => {
+        item &&
+          dispatch(
+            setCharacterBag({
+              ...bag,
+              items: [
+                ...bag.items,
+                {
+                  ...item,
+                  id: _.uniqueId(item.name),
+                  number: 1,
+                },
+              ],
+            }),
+          )
+      },
+      addBagItemHandler: (newData, bag) => {
+        updateRowDataBags(bag, (d) => [
+          ...d,
+          { ...newData, id: _.uniqueId(newData.name) },
+        ])
+      },
+      updateBagItemHandler: (newData, oldData, bag) => {
+        updateRowDataBags(bag, (d) => {
+          d[d.findIndex((i) => i.id === oldData.id)] = newData
+          return d
+        })
+      },
+      deleteBagItemHandler: (oldData, bag) => {
+        updateRowDataBags(bag, (d) => {
+          d.splice(
+            d.findIndex((i) => i.id === oldData.id),
+            1,
+          )
+          return d
+        })
+      },
+      equipmentChangeHandler: (item: Item | null, rowData) => {
+        let data = {
+          ...character,
+          equipments: character.equipments.filter(
+            (i) => i.equipedArea !== rowData['equipedArea'],
+          ),
+        }
+        if (item) {
+          data = {
+            ...character,
+            equipments: [
+              ...data.equipments,
+              {
+                ...item,
+                id: _.uniqueId(item.name),
+                equipedArea: rowData['equipedArea'],
+              },
+            ],
+          }
+        }
+
+        dispatch(setCharacter(data))
+      },
+      statusAilmentsHandler: (rowData) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            statusAilments: rowData['isChecked']
+              ? character.statusAilments.filter(
+                  (name) => name !== rowData['name'],
+                )
+              : [...character.statusAilments, rowData['name']],
+          }),
+        ),
+      backboneHandler: (item: any) => {
+        item &&
+          dispatch(
+            setCharacter({
+              ...character,
+              backbones: [...character.backbones, item],
+            }),
+          )
+      },
+      addBackBoneHandler: (newData) => {
+        updateRowData('backbones', (d) => [...d, newData])
+      },
+      updateBackboneHandler: (newData, oldData) => {
+        updateRowData('backbones', (d) => {
+          d[d.findIndex((i) => i.name === oldData.name)] = newData
+          return d
+        })
+      },
+      deleteBackboneHandler: (oldData) => {
+        updateRowData('backbones', (d) => {
+          d.splice(
+            d.findIndex((i) => i.name === oldData.name),
+            1,
+          )
+          return d
+        })
+      },
+      unUsedExperienceHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            unusedExperience: Number(e.target.value),
+          }),
+        ),
+      totalExperienceHandler: (e) =>
+        dispatch(
+          setCharacter({
+            ...character,
+            totalExperience: Number(e.target.value),
+          }),
+        ),
+      summaryHandler: (v) =>
+        dispatch(setCharacter({ ...character, summary: v })),
+      appearanceHandler: (v) =>
+        dispatch(setCharacter({ ...character, appearance: v })),
+      freeWritingHandler: (v) =>
+        dispatch(setCharacter({ ...character, freeWriting: v })),
+      quoteHandler: (e) =>
+        dispatch(setCharacter({ ...character, quote: e.target.value })),
+      editHandler,
+      deleteHandler,
     }
   })
 

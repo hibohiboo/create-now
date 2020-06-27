@@ -6,8 +6,10 @@ import NextLink from 'next/link'
 import MuiLink from '@material-ui/core/Link'
 
 type NextComposedProp = { children?: React.ReactNode } & {
-  as: string | object
-  href: string | object
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  as: string | Object
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  href: string | Object
   prefetch: boolean
 }
 

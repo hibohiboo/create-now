@@ -114,10 +114,12 @@ const HomePage = () => {
         )}
         {items.map((item) => (
           <ListItemLink
-            href={{
-              pathname: '/lostrpg/public/[lng]/[view]',
-              query: { id: item.id },
-            }}
+            // オブジェクトだとListItemLinkでエラー
+            // href={{
+            //   pathname: '/lostrpg/public/[lng]/[view]',
+            //   query: { id: item.id },
+            // }}
+            href={`/lostrpg/public/[lng]/[view]?id=${item.id}`}
             key={item.id}
             as={`/lostrpg/public/${i18n.activeLocale}/character?id=${item.id}`}
           >
