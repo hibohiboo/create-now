@@ -400,7 +400,12 @@ const Page: React.FC<{
         >
           {t('lostrpg_common_export_udonarium')}
         </Button>
-        <Button variant="contained" color="primary" onClick={vm.exportJson}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.exportJson}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+        >
           {t('export_for_trpg_studio')}
         </Button>
       </Box>
