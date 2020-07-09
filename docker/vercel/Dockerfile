@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:14.5
+FROM node:14.5.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -129,3 +129,7 @@ RUN npm install dagre-d3 d3
 RUN npm install file-saver
 RUN npm install jszip
 RUN npm install crypto-js
+# window is not defined の問題が 1.64.0 で起きているので、一旦64.2にする
+# https://github.com/mbrn/material-table/issues/2112
+RUN npm update material-table lodash sass
+RUN npm install material-table@1.62.0

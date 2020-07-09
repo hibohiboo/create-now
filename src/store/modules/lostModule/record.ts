@@ -15,8 +15,6 @@ import {
   getRecord,
   updateRecord,
   deleteRecord,
-  canEdit,
-  readCharactersRecords,
 } from '~/firestore/record'
 import {
   setCharacter,

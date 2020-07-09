@@ -3023,7 +3023,7 @@ export const trophyAbilityList = [
         name: '陽だまりの庭',
         group: '癒し',
         type: '常駐',
-        recoil: '2',
+        recoil: '-',
         specialty: '-',
         target: '自身',
         effect: 'キャンプフェイズでの判定の達成値にプラス1の修正を得る',

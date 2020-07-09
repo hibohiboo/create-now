@@ -167,7 +167,11 @@ const Page: React.FC<{
       </Box>
 
       <Link
-        href={`/lostrpg/public/[lng]/character?id=${vm.record.characterId}`}
+        href={{
+          pathname: '/lostrpg/public/[lng]/[view]',
+          query: { id: vm.record.characterId, lng: vm.i18n.activeLocale },
+        }}
+        // href={`/lostrpg/public/[lng]/character?id=${vm.record.characterId}`}
         as={vm.beforePage}
       >
         {t('common_back')}
