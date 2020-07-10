@@ -165,11 +165,18 @@ const Page: NextPage = () => {
             <SpecialtiesTable
               columns={vm.specialtiesTableColumns}
               rows={vm.specialtiesTableRows}
-              gapHandler={() => {}}
-              specialtyHandler={() => {}}
+              gapHandler={vm.gapHandler}
+              specialtyHandler={vm.checkHandler}
               damageHandler={vm.damageHandler}
             />
-
+            <Box my={2}>
+              <MaterialTable
+                title={`判定特技:${vm.checkSpecialty}`}
+                options={tableConfig.viewTable}
+                columns={vm.checkColumns}
+                data={vm.checkSpecialties}
+              />
+            </Box>
             <Box my={2}>
               <MaterialTable
                 title={t('common_exp')}
@@ -237,7 +244,13 @@ const Page: NextPage = () => {
             )}
           </Box>
 
-          <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>
+          <Link
+            href={{
+              pathname: '/lostrpg/public/[lng]/[view]',
+              query: { id: vm.record.characterId, lng: vm.i18n.activeLocale },
+            }}
+            as={vm.beforePage}
+          >
             {t('common_back')}
           </Link>
         </Container>

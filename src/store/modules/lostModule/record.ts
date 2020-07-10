@@ -109,6 +109,7 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
     // Validation State
     const [isValidError, setIsValidError] = useState(false)
     const [isSubmit, setIsSubmit] = useState(false)
+    const [checkSpecialty, setCheckSpecialty] = useState('')
     const authUser = useAuth()
     const i18n = useI18n()
     const t = i18n.t
@@ -162,6 +163,43 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
         character,
       ),
       canEdit: authUser && authUser.uid === record.uid,
+      checkSpecialty,
+      checkColumns: [
+        {
+          title: '習得特技',
+          field: 'name',
+        },
+        {
+          title: '判定値',
+          field: 'point',
+        },
+      ],
+      checkSpecialties: character.specialties.map((s) => {
+        if (!checkSpecialty) return { name: s, point: '' }
+        const rowNumber = 11
+        const target = specialties.indexOf(checkSpecialty)
+        const t_x = _.floor(target / rowNumber)
+        const t_y = target % rowNumber
+        const sp = specialties.indexOf(s)
+        const s_x = _.floor(sp / rowNumber)
+        const s_y = sp % rowNumber
+        let point = Math.abs(t_x - s_x) * 2 + Math.abs(t_y - s_y)
+        const gaps = ['A', 'B', 'C', 'D', 'E'] as const
+        gaps.forEach((x, i) => {
+          const position = i + 1
+          if (
+            ((t_x < position && position <= s_x) ||
+              (s_x < position && position <= t_x)) &&
+            character.gaps.includes(x)
+          )
+            point -= 1
+        })
+
+        return {
+          name: s,
+          point: `2d6>=${point + 5}（判定：${s}）`,
+        }
+      }),
       scenarioTitleHandler: (e) => dispatchSetRecord(e, 'scenarioTitle'),
       gmNameHanler: (e) => dispatchSetRecord(e, 'gmName'),
       trophyHanler: (e) => dispatchSetRecord(e, 'trophy'),
@@ -197,6 +235,8 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
         )
       },
       damageHandler: (name) => dispatch(toggleCharacterDamage(name)),
+      checkHandler: (name) => setCheckSpecialty(name),
+      gapHandler: (name) => name,
       expHelperHandler: (rowData) =>
         dispatch(
           setRecord({
