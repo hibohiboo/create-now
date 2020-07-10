@@ -18,6 +18,7 @@ import { contentLanguageMap } from '~/lib/i18n'
 import { useRecordViewModel } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
 import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
+import SpecialtiesTooltip from '~/components/organisms/lostrpg/SpecialtiesTooltip'
 
 const Page: NextPage = () => {
   const vm = useRecordViewModel()
@@ -162,6 +163,10 @@ const Page: NextPage = () => {
               labelText={t('common_memo')}
               changeHandler={(v) => vm.memoHanler(v)}
             />
+            <SpecialtiesTooltip
+              label={t('lostrpg_character_common_specialty')}
+              help={t('lostrpg_record_common_specialtyHelp')}
+            />
             <SpecialtiesTable
               columns={vm.specialtiesTableColumns}
               rows={vm.specialtiesTableRows}
@@ -173,7 +178,7 @@ const Page: NextPage = () => {
             <Box my={2}>
               <MaterialTable
                 title={`${t('lostrpg_common_check_speciality')}:${
-                  vm.checkSpecialty
+                  vm.checkSpecialty || ''
                 }`}
                 options={tableConfig.viewTable}
                 columns={vm.checkColumns}

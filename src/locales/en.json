@@ -83,6 +83,7 @@
   "lostrpg_record_common_gm": "ゲームマスター",
   "lostrpg_record_common_scenarioTitle": "シナリオ名",
   "lostrpg_record_common_gmName": "GM名",
+  "lostrpg_record_common_specialtyHelp": "テキスト部分クリックで判定特技選択。チェックでダメージ",
   "lostrpg_boss_common_creatorName": "作成者名",
   "lostrpg_boss_edit_title": "LOSTRPG ヌシ",
   "lostrpg_boss_common_bossName": "ヌシ名",

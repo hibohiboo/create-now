@@ -109,7 +109,7 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
     // Validation State
     const [isValidError, setIsValidError] = useState(false)
     const [isSubmit, setIsSubmit] = useState(false)
-    const [checkSpecialty, setCheckSpecialty] = useState('')
+    const [checkSpecialty, setCheckSpecialty] = useState(null as null | string)
     const authUser = useAuth()
     const i18n = useI18n()
     const t = i18n.t
