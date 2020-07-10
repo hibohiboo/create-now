@@ -55,6 +55,23 @@ const Page: React.FC<{
         <LanguageSelector i18n={vm.i18n} />
       </div>
       <h1>{t('lostrpg_records_common_title')}</h1>
+      {vm.canEdit ? (
+        <Link
+          href={{
+            pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
+            query: {
+              lng: vm.i18n.activeLocale,
+              characterId: ctx.characterId,
+              id: ctx.recordId,
+            },
+          }}
+          as={`/lostrpg/records/${vm.i18n.activeLocale}/${ctx.characterId}/edit?id=${ctx.recordId}`}
+        >
+          {t('common_edit')}
+        </Link>
+      ) : (
+        <></>
+      )}
       <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
         <ReadOnlyTextField
           model={vm.character}
@@ -102,10 +119,11 @@ const Page: React.FC<{
                     prop="name"
                     label={t('common_name')}
                   />
-                  <ReadOnlyTextField
+                  <TextAreaField
                     model={member}
                     prop="memo"
-                    label={t('common_memo')}
+                    labelText={t('common_memo')}
+                    readonly={true}
                   />
                   <ReadOnlyTextField
                     model={member}

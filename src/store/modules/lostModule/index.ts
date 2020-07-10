@@ -106,17 +106,43 @@ const damageParts = (
 ) => {
   const { specialties, bodyParts } =
     locale === defaultLanguage ? lostData : lostDataEn
-  if (damagedSpecialties.includes(name)) {
+  // 8近傍
+  const neighborhoods = [-12, -11, -10, -1, 0, 1, 10, 11, 12]
+
+  // 8近傍以内に負傷部位があるか
+  const isDamanged = (i: number, damagedParts: number[]) =>
+    neighborhoods.some((n) => damagedParts.includes(n + i))
+
+  // 特技回復
+  if (damagedSpecialties.includes(name) && !isBodyParts(bodyParts, name)) {
     deleteCallback(name)
     return
   }
+
+  // 部位回復
+  if (damagedSpecialties.includes(name) && isBodyParts(bodyParts, name)) {
+    const index = specialties.indexOf(name)
+    const otherParts = damagedSpecialties
+      .filter((n) => n !== name && isBodyParts(bodyParts, n))
+      .map((n) => specialties.indexOf(n))
+
+    // 8近傍削除
+    neighborhoods.forEach((i) => {
+      const target = specialties[index + i]
+      if (isDamanged(index + i, otherParts)) return
+      deleteCallback(target)
+    })
+    console.log(damagedSpecialties)
+    return
+  }
+  // 特技損傷
   if (!isBodyParts(bodyParts, name)) {
     damageCallback(name)
     return
   }
   // 部位を負傷した場合、8近傍にチェック
   const index = specialties.indexOf(name)
-  ;[-12, -11, -10, -1, 0, 1, 10, 11, 12].forEach((i) => {
+  neighborhoods.forEach((i) => {
     const target = specialties[index + i]
     if (!target || damagedSpecialties.includes(target)) return
     partsDamageCallBack(target)
@@ -172,7 +198,7 @@ const lostModule = createSlice({
         damagedSpecialties,
         state.locale,
         (name) =>
-          (state.character.damagedSpecialties = damagedSpecialties.filter(
+          (state.character.damagedSpecialties = state.character.damagedSpecialties.filter(
             (item) => item !== name,
           )),
         (name) =>

@@ -161,6 +161,7 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
         specialties,
         character,
       ),
+      canEdit: authUser && authUser.uid === record.uid,
       scenarioTitleHandler: (e) => dispatchSetRecord(e, 'scenarioTitle'),
       gmNameHanler: (e) => dispatchSetRecord(e, 'gmName'),
       trophyHanler: (e) => dispatchSetRecord(e, 'trophy'),
