@@ -168,10 +168,13 @@ const Page: NextPage = () => {
               gapHandler={vm.gapHandler}
               specialtyHandler={vm.checkHandler}
               damageHandler={vm.damageHandler}
+              check={vm.checkSpecialty}
             />
             <Box my={2}>
               <MaterialTable
-                title={`判定特技:${vm.checkSpecialty}`}
+                title={`${t('lostrpg_common_check_speciality')}:${
+                  vm.checkSpecialty
+                }`}
                 options={tableConfig.viewTable}
                 columns={vm.checkColumns}
                 data={vm.checkSpecialties}

@@ -48,10 +48,18 @@ const makeCol = (col, gapHandler) => {
 const SpecialtiesTable: React.FC<{
   rows: any[]
   columns: any[]
-  gapHandler: Function
-  specialtyHandler: Function
-  damageHandler: Function
-}> = ({ rows, columns, gapHandler, specialtyHandler, damageHandler }) => {
+  check?: string | null
+  gapHandler: (name: string) => void
+  specialtyHandler: (name: string) => void
+  damageHandler: (name: string) => void
+}> = ({
+  rows,
+  columns,
+  gapHandler,
+  specialtyHandler,
+  damageHandler,
+  check = null,
+}) => {
   const classes = useStyles()
   return (
     <TableContainer component={Paper}>
@@ -92,6 +100,7 @@ const SpecialtiesTable: React.FC<{
                   className={cn({
                     ['selected']: row[col].selected,
                     ['body-parts']: row[col].isBodyParts,
+                    ['check-specialty']: row[col].name === check,
                   })}
                 >
                   <span onClick={() => specialtyHandler(row[col].name)}>

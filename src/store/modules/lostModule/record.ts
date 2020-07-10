@@ -166,11 +166,11 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
       checkSpecialty,
       checkColumns: [
         {
-          title: '習得特技',
+          title: t('lostrpg_common_got_specialities'),
           field: 'name',
         },
         {
-          title: '判定値',
+          title: t('lostrpg_common_check_number'),
           field: 'point',
         },
       ],
@@ -197,7 +197,7 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
 
         return {
           name: s,
-          point: `2d6>=${point + 5}（判定：${s}）`,
+          point: `2d6>=${point + 5}（${t('lostrpg_common_check')}：${s}）`,
         }
       }),
       scenarioTitleHandler: (e) => dispatchSetRecord(e, 'scenarioTitle'),
