@@ -1,10 +1,20 @@
 ;一番最初に呼び出されるファイル
 
-[title name="ティラノストーリー"]
+[title name="LOSTRPG リプレイ"]
 
 [stop_keyconfig]
 
 ;ゲームで必ず必要な初期化処理はこのファイルに記述するのがオススメ
+;コメント表示
+[plugin name="comment_screen" ]
+[plugin name="chara_sheet_screen" ]
+[plugin name="dice"]
+[plugin name="depth_mod"]
+
+;ティラノスクリプトが標準で用意している便利なライブラリ群
+;コンフィグ、CG、回想モードを使う場合は必須
+@call storage="tyrano.ks"
+[call storage="system/chara_define.ks"]
 
 ;メッセージボックスは非表示
 @layopt layer="message" visible=false

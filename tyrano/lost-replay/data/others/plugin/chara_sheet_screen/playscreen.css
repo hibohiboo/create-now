@@ -1,0 +1,2867 @@
+@charset "utf-8";
+@font-face {
+  font-family: 'RobotoCondensed-Bold';
+  src: url('../fonts/RobotoCondensed-Bold.eot');
+  src: url('../fonts/RobotoCondensed-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/RobotoCondensed-Bold.woff') format('woff'), url('../fonts/RobotoCondensed-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'LogoTypeGothic';
+  src: url('../font/LogoTypeGothic.woff') format('woff'), url('../font/LogoTypeGothic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'LigatureSymbols';
+  src: url('../font/LigatureSymbols-2.11.eot');
+  src: url('../font/LigatureSymbols-2.11.eot?#iefix') format('embedded-opentype'), url('../font/LigatureSymbols-2.11.woff') format('woff'), url('../font/LigatureSymbols-2.11.ttf') format('truetype'), url('../font/LigatureSymbols-2.11.svg#LigatureSymbols') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.flexMixin {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.flexCenterMixin {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.symbolMixin {
+  font-family: 'LigatureSymbols';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-font-feature-settings: "liga" 1, "dlig" 1;
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -ms-font-feature-settings: "liga" 1, "dlig" 1;
+  -o-font-feature-settings: "liga" 1, "dlig" 1;
+  font-feature-settings: "liga" 1, "dlig" 1;
+}
+.widthMixin {
+  max-width: 1540px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.widthSPMixin {
+  max-width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.borderBtn {
+  border: 2px solid #fed23d;
+  box-shadow: 0 2px 0 0 #bd9613;
+  background-color: #fff;
+  border-radius: 4px;
+  color: #333333;
+  padding: 8px 13px;
+  display: inline-block;
+  font-size: 1.1em;
+  transition: 0.3s;
+  position: relative;
+}
+.primaryBtn {
+  box-shadow: 0 2px 0 0 #bd9613;
+  background-color: #fed23d;
+  border-radius: 4px;
+  color: #333333;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 1.1em;
+  transition: 0.3s;
+  position: relative;
+}
+.importantBtn {
+  box-shadow: 0 2px 0 0 #af4a23;
+  background-color: #fc6023;
+  border-radius: 4px;
+  color: #fff;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 1.1em;
+  transition: 0.3s;
+  position: relative;
+}
+.disableBtn {
+  background-color: #9e9e9f;
+  border-radius: 4px;
+  color: #fff;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 1.1em;
+  transition: 0.3s;
+  top: 0;
+  position: relative;
+}
+.largeBtn {
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+.largeBtn small {
+  font-size: 0.9rem;
+}
+.removeBtnMixin {
+  position: absolute;
+  padding: 5px 8px;
+  top: 0px;
+  right: 0px;
+  background-color: #fed23d;
+  font-size: 1.1rem;
+  color: #333333;
+  border-radius: 0 8px;
+}
+.removeBtnMixin:hover {
+  opacity: 0.4;
+}
+.popComment {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  margin-left: -6em;
+  width: 12em;
+  max-width: 12em;
+  min-width: 12em;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #333;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: 0.3s;
+  color: #fff;
+  z-index: 5;
+}
+.popComment:before,
+.popComment:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  margin-left: -8px;
+  display: block;
+  border-top: 8px solid #333;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+.popComment:before {
+  bottom: -6px;
+}
+.popComment:after {
+  bottom: -8px;
+  opacity: 0.3;
+}
+.fuchi {
+  text-shadow: white 2px 0px, white -2px 0px, white 0px -2px, white 0px 2px, white 2px 2px, white -2px 2px, white 2px -2px, white -2px -2px, white 1px 2px, white -1px 2px, white 1px -2px, white -1px -2px, white 2px 1px, white -2px 1px, white 2px -1px, white -2px -1px;
+}
+.batchIcon {
+  position: absolute;
+  display: block;
+  padding: 0px 5px 0px 5px;
+  border-radius: 10px;
+  background-color: #ff0000;
+  top: -2px;
+  right: 0px;
+  text-shadow: none;
+  color: #fff;
+  font-family: "Verdana";
+  line-height: 18px;
+  font-size: 0.9em;
+  font-style: normal;
+  -webkit-animation: batchAnime 1s ease -2s infinite alternate;
+  -ms-animation: batchAnime 1s ease -2s infinite alternate;
+  animation: batchAnime 1s ease -2s infinite alternate;
+  font-weight: bold;
+}
+.userCharaThumbnail {
+  display: block;
+  width: 64px;
+  min-width: 64px;
+  max-width: 64px;
+  padding-left: 6px;
+  text-align: center;
+  position: relative;
+}
+.userCharaThumbnail img {
+  width: 50px;
+  border-radius: 25px;
+}
+.tabInputWrap {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+.tabInputWrap input[type="text"] {
+  width: 100%;
+  width: calc(100% - 4em - 8px);
+}
+.tabInputWrap input[type="submit"],
+.tabInputWrap input[type="button"] {
+  margin-left: 10px;
+}
+.tadContetnsSelectList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: -4px;
+  margin-bottom: -4px;
+  margin-bottom: 5px;
+}
+.tadContetnsSelectList li {
+  padding-left: 1px;
+  padding-right: 1px;
+  width: 25%;
+  max-width: 70px;
+  margin-bottom: 4px;
+}
+.tadContetnsSelectList li label,
+.tadContetnsSelectList div label {
+  position: relative;
+  display: block;
+  vertical-align: middle;
+}
+.tadContetnsSelectList li label input,
+.tadContetnsSelectList div label input {
+  position: absolute;
+  opacity: 0;
+}
+.tadContetnsSelectList li label input + img,
+.tadContetnsSelectList div label input + img {
+  border: 4px solid #fff;
+  transition: 0.3s;
+}
+.tadContetnsSelectList li label input + span,
+.tadContetnsSelectList div label input + span {
+  height: 66px;
+  overflow: hidden;
+  border-radius: 35px;
+  border: 4px solid #fff;
+  width: 66px;
+  position: relative;
+  display: block;
+  transition: 0.3s;
+}
+.tadContetnsSelectList li label input + span img,
+.tadContetnsSelectList div label input + span img {
+  overflow: hidden;
+  min-width: 100px;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  margin-left: 8px;
+  position: absolute;
+  left: -50%;
+}
+.tadContetnsSelectList li label input:hover + img,
+.tadContetnsSelectList div label input:hover + img,
+.tadContetnsSelectList li label input:checked + img,
+.tadContetnsSelectList div label input:checked + img {
+  box-shadow: 0 0 0 2px #fed23d;
+}
+.tadContetnsSelectList li label input:hover + span,
+.tadContetnsSelectList div label input:hover + span,
+.tadContetnsSelectList li label input:checked + span,
+.tadContetnsSelectList div label input:checked + span {
+  box-shadow: 0 0 0 2px #fed23d;
+}
+.checkStyle {
+  position: relative;
+}
+.checkStyle input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.checkStyle span.checkBox:after {
+  position: absolute;
+  display: block;
+  content: "";
+  color: #333333;
+  font: normal normal normal 14px/1 FontAwesome;
+  z-index: 1;
+  left: 0px;
+  top: 0px;
+  background-color: #fff;
+  border: 2px solid #d4d4d4;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+.checkStyle input:checked + span:after {
+  content: "\f00c";
+  background-color: #fed23d;
+  border-color: #fed23d;
+}
+.checkStyle label {
+  display: block;
+}
+.checkBoxMixin span.checkBox:after {
+  top: 50%;
+  left: 10px;
+  margin-top: -10px;
+}
+.checkBoxMixin input[type="checkbox"] {
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+.checkBoxMixin .checkState {
+  padding: 2px 6px 2px 5px;
+  display: inline-block;
+  border-radius: 12px;
+  margin-left: 5px;
+  font-weight: bold;
+  min-width: 2.5em;
+  text-align: center;
+  font-style: normal;
+}
+.checkBoxMixin .checkState.checkStateOff {
+  background-color: #d4d4d4;
+  display: inline-block;
+}
+.checkBoxMixin .checkState.checkStateOn {
+  background-color: #fed23d;
+  display: none;
+}
+.checkBoxMixin input[type="checkbox"]:checked + span:after {
+  background-color: #fed23d;
+  border-color: #fed23d;
+}
+.checkBoxMixin input[type="checkbox"]:checked + span .checkState.checkStateOff {
+  display: none;
+}
+.checkBoxMixin input[type="checkbox"]:checked + span .checkState + .checkState.checkStateOn {
+  display: inline-block;
+}
+.hiddenText {
+  text-indent: 200%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.countColorMixin {
+  background-color: #30c0d8;
+  color: #fff;
+  font-weight: bold;
+}
+.borderStyle {
+  min-width: 4em;
+  padding: 0.4em 0.8em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 1.9em;
+  color: #d4d4d4;
+  border: 2px solid #d4d4d4;
+  transition: 0.3s;
+  font-weight: bold;
+  font-family: "M PLUS 1p";
+  background-color: #fff;
+}
+.borderStyleHover {
+  border: 2px solid #fed23d;
+  color: #fed23d;
+}
+.scrollShadow {
+  background-image: url(../image/bg_boxshadow.png);
+  background-position: top left;
+  background-repeat: repeat-x;
+  background-size: 2px auto;
+  overflow-y: auto;
+  /*box-shadow: 0 5px 9px -7px inset rgba(0, 0, 0, 0.2);*/
+  /*&::-webkit-scrollbar-track-piece:start{
+		background: @borderColor;
+	}
+	&::-webkit-scrollbar-track-piece:end{
+		background: @borderColor;
+	}*/
+}
+.scrollShadow::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollShadow::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+}
+/*.dragIcon{
+	padding-left: 30px;
+	position: relative;
+		&:before{
+		content:"\f0b2";
+		font-family: FontAwesome;
+		position: absolute;
+		top: 50%;
+		left: 9px;
+		margin-top: -12px;
+		transform: rotate(45deg);
+		font-size: 0.75rem;
+		}
+}*/
+.dragIconStatusMixin {
+  padding: 4px;
+  list-style: none;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  background-color: #efefef;
+}
+.userEvaluationSimpleMixin .user {
+  font-size: 0.85rem;
+  padding-right: 10px;
+  color: #968c8a;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.userEvaluationSimpleMixin .user img {
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.userEvaluationSimpleMixin .Evaluation {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  margin-left: auto;
+}
+.userEvaluationSimpleMixin .Evaluation .star {
+  text-indent: 3.3rem;
+  color: rgba(0, 0, 0, 0);
+  display: block;
+  width: 3.3rem;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  font-size: 0.85rem;
+  margin-top: 0.2em;
+}
+.userEvaluationSimpleMixin .Evaluation .star:before,
+.userEvaluationSimpleMixin .Evaluation .star:after {
+  margin-left: -3.3rem;
+  font-family: 'LigatureSymbols';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-font-feature-settings: "liga" 1, "dlig" 1;
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -ms-font-feature-settings: "liga" 1, "dlig" 1;
+  -o-font-feature-settings: "liga" 1, "dlig" 1;
+  font-feature-settings: "liga" 1, "dlig" 1;
+  content: "starstarstarstarstar";
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  left: 0;
+  top: 0;
+}
+.userEvaluationSimpleMixin .Evaluation .star:before {
+  color: #968c8a;
+}
+.userEvaluationSimpleMixin .Evaluation .star:after {
+  color: #30c0d8;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star0:after {
+  width: 0rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star0-5:after {
+  width: 3.65rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star1:after {
+  width: 4rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star1-5:after {
+  width: 4.3rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star2:after {
+  width: 4.55rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star2-5:after {
+  width: 4.95rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star3:after {
+  width: 5.2rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star3-5:after {
+  width: 5.6rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star4:after {
+  width: 5.9rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star4-5:after {
+  width: 6.25rem;
+}
+.userEvaluationSimpleMixin .Evaluation .star.star5:after {
+  width: 6.7rem;
+}
+.userEvaluationSimpleMixin .Evaluation .count {
+  background-color: #30c0d8;
+  color: #fff;
+  font-weight: bold;
+  line-height: 14px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
+  margin-left: auto;
+  font-size: 0.7rem;
+  margin-left: 8px;
+}
+.userEvaluationTabSimpleMixin .user {
+  margin-left: auto;
+  text-indent: 200%;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 0;
+}
+.userEvaluationTabSimpleMixin .user img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.userEvaluationTabSimpleMixin .Evaluation {
+  margin-right: 10px;
+  position: absolute;
+  right: 0px;
+  bottom: 31px;
+}
+.commentWrapMixin {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: -webkit-column;
+  flex-flow: -ms-column;
+  flex-flow: column;
+  min-width: 0;
+}
+.commentWrapMixin .comment {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  display: block;
+  overflow: hidden;
+}
+.commentWrapMixin .commentInner {
+  display: block;
+  height: 5.4rem;
+  position: relative;
+  word-break: break-all;
+}
+.commentWrapMixin .commentInner:before {
+  background-color: #fff;
+  position: absolute;
+  content: "…";
+  top: 4.1rem;
+  right: 0;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+.commentWrapMixin .commentInner:after {
+  background-color: #fff;
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+}
+.favoriteIconMixin {
+  transition: 0.3s;
+  color: #333333;
+}
+.favoriteIconMixin i {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin-right: 0;
+  margin-left: 0;
+  font-size: 2.15rem;
+  transition: 0.3s;
+  padding: 10px;
+}
+.favoriteIconMixin:before {
+  position: absolute;
+  right: 11px;
+  bottom: 10px;
+  content: "heart";
+  display: inline-block;
+  color: #fff;
+  font-family: 'LigatureSymbols';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-font-feature-settings: "liga" 1, "dlig" 1;
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -ms-font-feature-settings: "liga" 1, "dlig" 1;
+  -o-font-feature-settings: "liga" 1, "dlig" 1;
+  font-feature-settings: "liga" 1, "dlig" 1;
+  font-size: 2rem;
+  vertical-align: middle;
+  transition: 0.3s;
+}
+.favoriteIconMixin:hover {
+  color: #fed23d;
+}
+.favoriteIconMixin.active {
+  color: #fed23d;
+}
+.favoriteIconMixin.active:before {
+  color: #fed23d;
+}
+.adult .favoriteIconMixin:hover {
+  color: #ea004c;
+}
+.adult .favoriteIconMixin.active {
+  color: #ea004c;
+}
+.adult .favoriteIconMixin.active:before {
+  color: #ea004c;
+}
+.ellipsisMixin {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.batchMixin a,
+.batchMixin span {
+  display: block;
+  background-color: #fff;
+  box-shadow: 0px 1px 2px 1px rgba(15, 5, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+.batchMixin a img,
+.batchMixin span img {
+  vertical-align: middle;
+}
+.batchMixin a:hover {
+  box-shadow: 0px 1px 2px 1px #fed23d;
+}
+.adult .batchMixin a:hover {
+  box-shadow: 0px 1px 2px 1px #ea004c;
+}
+.batchMixin .batchGet:before {
+  content: "GET";
+  position: absolute;
+  top: -5px;
+  left: -36px;
+  display: block;
+  transform: rotate(-45deg);
+  color: #000;
+  background-color: #fc6023;
+  padding: 14px 6px 3px 6px;
+  width: 80px;
+  text-align: center;
+  font-size: 0.9rem;
+  z-index: 10;
+  font-weight: bold;
+  font-family: 'Arial Black', "ヒラギノ角ゴ Pro W3", 'sans-serif';
+}
+.starMixin {
+  text-indent: 3.3rem;
+  color: rgba(0, 0, 0, 0);
+  display: block;
+  width: 3.3rem;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  font-size: 0.85rem;
+  margin-top: 0.2em;
+}
+.starMixin:before,
+.starMixin:after {
+  margin-left: -3.3rem;
+  font-family: 'LigatureSymbols';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-font-feature-settings: "liga" 1, "dlig" 1;
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -ms-font-feature-settings: "liga" 1, "dlig" 1;
+  -o-font-feature-settings: "liga" 1, "dlig" 1;
+  font-feature-settings: "liga" 1, "dlig" 1;
+  content: "starstarstarstarstar";
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  left: 0;
+  top: 0;
+}
+.starMixin:before {
+  color: #968c8a;
+}
+.starMixin:after {
+  color: #30c0d8;
+}
+.starMixin.star0:after {
+  width: 0rem;
+}
+.starMixin.star0-5:after {
+  width: 3.65rem;
+}
+.starMixin.star1:after {
+  width: 4rem;
+}
+.starMixin.star1-5:after {
+  width: 4.3rem;
+}
+.starMixin.star2:after {
+  width: 4.55rem;
+}
+.starMixin.star2-5:after {
+  width: 4.95rem;
+}
+.starMixin.star3:after {
+  width: 5.2rem;
+}
+.starMixin.star3-5:after {
+  width: 5.6rem;
+}
+.starMixin.star4:after {
+  width: 5.9rem;
+}
+.starMixin.star4-5:after {
+  width: 6.25rem;
+}
+.starMixin.star5:after {
+  width: 6.7rem;
+}
+.spLinkList li {
+  border-bottom: 1px solid #efefef;
+}
+.spLinkList li:last-child {
+  border-bottom: none;
+}
+.spLinkList li a {
+  display: block;
+  padding: 12px 15px 12px 38px;
+  position: relative;
+  color: #333333;
+  border-left: 0px solid #fed23d;
+}
+.spLinkList li a img {
+  width: 14px;
+}
+.spLinkList li a img,
+.spLinkList li a i {
+  position: absolute;
+  top: 50%;
+  margin-top: -7px;
+  left: 15px;
+}
+.spLinkList li a:hover {
+  border-left-width: 5px;
+}
+.spLinkList li.active a {
+  background-color: #fed23d;
+}
+.borderBtnListMixin {
+  margin-top: 10px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  margin-right: 5px;
+}
+.borderBtnListMixin + .borderBtnList {
+  margin-top: 0;
+  margin-right: 0;
+}
+.borderBtnListMixin li {
+  width: auto;
+  max-width: 100%;
+  margin-right: 5px;
+}
+.borderBtnListMixin li:last-child {
+  margin-right: 0;
+}
+.borderBtnListMixin li .borderLabel input + span {
+  height: auto;
+  width: auto;
+  border: 2px solid #fed23d;
+  box-shadow: none;
+  min-width: 4em;
+  padding: 0.4em 0.8em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 1.9em;
+  color: #d4d4d4;
+  border: 2px solid #d4d4d4;
+  transition: 0.3s;
+  font-weight: bold;
+  font-family: "M PLUS 1p";
+  background-color: #fff;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+.borderBtnListMixin li .borderLabel input:checked + span {
+  border: 2px solid #fed23d;
+  color: #fed23d;
+}
+.borderBtnListMixin li .borderLabel.charaReflectOff input + span,
+.borderBtnListMixin li .borderLabel.charaReflectOn input + span,
+.borderBtnListMixin li .borderLabel.itemReflectOff input + span,
+.borderBtnListMixin li .borderLabel.itemReflectOn input + span,
+.borderBtnListMixin li .borderLabel.charaBack input + span,
+.borderBtnListMixin li .borderLabel.charaFront input + span {
+  font-size: 0.65rem;
+  letter-spacing: -1px;
+}
+.borderBtnListMixin li .borderLabel.charaReflectOff input + span:before,
+.borderBtnListMixin li .borderLabel.charaReflectOn input + span:before,
+.borderBtnListMixin li .borderLabel.itemReflectOff input + span:before,
+.borderBtnListMixin li .borderLabel.itemReflectOn input + span:before,
+.borderBtnListMixin li .borderLabel.charaBack input + span:before,
+.borderBtnListMixin li .borderLabel.charaFront input + span:before {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 32px;
+  background: url(../image/icon_btn_cyara_reflect_on.png) 50% 50% no-repeat;
+  background-size: 32px;
+}
+.borderBtnListMixin li .borderLabel.charaReflectOff input + span:before {
+  background-image: url(../image/icon_btn_cyara.png);
+}
+.borderBtnListMixin li .borderLabel.charaReflectOff input:checked + span:before {
+  background-image: url(../image/icon_btn_cyara_on.png);
+}
+.borderBtnListMixin li .borderLabel.charaReflectOn input + span:before {
+  background-image: url(../image/icon_btn_cyara_reflect.png);
+}
+.borderBtnListMixin li .borderLabel.charaReflectOn input:checked + span:before {
+  background-image: url(../image/icon_btn_cyara_reflect_on.png);
+}
+.borderBtnListMixin li .borderLabel.itemReflectOff input + span:before {
+  background-image: url(../image/icon_btn_item.png);
+}
+.borderBtnListMixin li .borderLabel.itemReflectOff input:checked + span:before {
+  background-image: url(../image/icon_btn_item_on.png);
+}
+.borderBtnListMixin li .borderLabel.itemReflectOn input + span:before {
+  background-image: url(../image/icon_btn_item_reflect.png);
+}
+.borderBtnListMixin li .borderLabel.itemReflectOn input:checked + span:before {
+  background-image: url(../image/icon_btn_item_reflect_on.png);
+}
+.borderBtnListMixin li .borderLabel.charaBack input + span:before {
+  background-image: url(../image/icon_btn_back.png);
+}
+.borderBtnListMixin li .borderLabel.charaBack input:checked + span:before {
+  background-image: url(../image/icon_btn_back_on.png);
+}
+.borderBtnListMixin li .borderLabel.charaFront input + span:before {
+  background-image: url(../image/icon_btn_front.png);
+}
+.borderBtnListMixin li .borderLabel.charaFront input:checked + span:before {
+  background-image: url(../image/icon_btn_front_on.png);
+}
+.textLabelMixin {
+  font-size: 0.85em;
+  margin-bottom: 3px;
+  color: #777777;
+  display: block;
+  line-height: 1.3;
+}
+.memoOpenWrapPCMixin .memoOpenWrap {
+  padding-bottom: 7px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -ms-align-items: flex-start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -ms-flex-flow: column;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  /* &.fromAnotherUser{
+      
+      .memoOpenUserList{
+		li{
+			width: 39px;
+			max-width: 39px;
+			min-width: 39px;
+      padding-left: 0;
+			label{
+        cursor: default;
+					span{
+            i.charaBigThumbnail{
+							width: 32px;
+							height: 32px;
+							border-radius: 16px;
+              img{
+                min-width: 49px;
+                margin-left: -12px;
+              }
+            }
+						img{
+							width: 32px;
+							height: 32px;
+							border-radius: 16px;
+						}
+						strong{
+              display: none;
+						}
+					}
+				 	input:disabled + span img{
+						filter: grayscale(0%);
+					}
+				}
+			}
+		}
+    }*/
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenTitle {
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  color: #9e9e9f;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  padding-bottom: 4px;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  flex-wrap: -webkit-wrap;
+  flex-wrap: -ms-wrap;
+  flex-wrap: wrap;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li {
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 3px;
+  width: 46px;
+  max-width: 46px;
+  min-width: 46px;
+  margin-bottom: 0px;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label {
+  color: #333333;
+  font-size: 0.8em;
+  line-height: 1.2;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label input {
+  position: absolute;
+  opacity: 0;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label span {
+  display: block;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label span i.charaBigThumbnail {
+  overflow: hidden;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0px 3px rgba(255, 255, 255, 0);
+  transition: 0.3s;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label span i.charaBigThumbnail img {
+  min-width: 68px;
+  height: auto;
+  margin-left: -17px;
+  box-shadow: none;
+  border: none;
+  background-color: #efefef;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label span img {
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  transition: 0.3s;
+  vertical-align: middle;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0px 3px rgba(255, 255, 255, 0);
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label span strong {
+  margin-top: 4px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  letter-spacing: -1px;
+  font-size: 0.64rem;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label input:disabled + span img {
+  filter: grayscale(100%);
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label input:checked + span img {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label input:checked + span i.charaBigThumbnail {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.memoOpenWrapPCMixin .memoOpenWrap .memoOpenUserList li label input:checked + span i.charaBigThumbnail img {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.memoOpenWrapSPMixin .memoOpenWrap .memoOpenTitle br {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin {
+  border-radius: 4px;
+  padding: 15px 15px 25px 15px;
+  margin-bottom: 25px;
+  position: relative;
+}
+.charaSheetInputCategoryPCMixin .removeBtn {
+  position: absolute;
+  padding: 5px 8px;
+  top: 0px;
+  right: 0px;
+  background-color: #fed23d;
+  font-size: 1.1rem;
+  color: #333333;
+  border-radius: 0 8px;
+}
+.charaSheetInputCategoryPCMixin .removeBtn:hover {
+  opacity: 0.4;
+}
+.charaSheetInputCategoryPCMixin .moveInputCategory {
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.charaSheetInputCategoryPCMixin .moveInputCategory li {
+  margin-bottom: 0;
+}
+.charaSheetInputCategoryPCMixin .moveInputCategory li a {
+  padding: 5px 8px;
+  color: #333333;
+}
+.charaSheetInputCategoryPCMixin .moveInputCategory li a:hover {
+  opacity: 0.4;
+}
+.charaSheetInputCategoryPCMixin .moveBtn {
+  cursor: move;
+}
+.charaSheetInputCategoryPCMixin .moveBtn,
+.charaSheetInputCategoryPCMixin .deleteBtn,
+.charaSheetInputCategoryPCMixin .diceCopyBtn,
+.charaSheetInputCategoryPCMixin .screenCheckLabel {
+  width: 11%;
+  padding: 3px 0px;
+  text-align: center;
+  color: #333333;
+  box-shadow: none;
+}
+.charaSheetInputCategoryPCMixin .moveBtn:hover,
+.charaSheetInputCategoryPCMixin .deleteBtn:hover,
+.charaSheetInputCategoryPCMixin .diceCopyBtn:hover,
+.charaSheetInputCategoryPCMixin .screenCheckLabel:hover {
+  opacity: 0.4;
+  transform: none;
+}
+.charaSheetInputCategoryPCMixin .diceCopyBtn,
+.charaSheetInputCategoryPCMixin .screenCheckLabel {
+  width: 30px;
+  min-width: 30px;
+  max-width: 30px;
+}
+.charaSheetInputCategoryPCMixin .diceCopyBtn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.charaSheetInputCategoryPCMixin .screenCheckLabel:hover {
+  opacity: 1;
+}
+.viewerMode .charaSheetInputCategoryPCMixin .screenCheckLabel {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap {
+  padding-bottom: 7px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -ms-align-items: flex-start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -ms-flex-flow: column;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  /* &.fromAnotherUser{
+      
+      .memoOpenUserList{
+		li{
+			width: 39px;
+			max-width: 39px;
+			min-width: 39px;
+      padding-left: 0;
+			label{
+        cursor: default;
+					span{
+            i.charaBigThumbnail{
+							width: 32px;
+							height: 32px;
+							border-radius: 16px;
+              img{
+                min-width: 49px;
+                margin-left: -12px;
+              }
+            }
+						img{
+							width: 32px;
+							height: 32px;
+							border-radius: 16px;
+						}
+						strong{
+              display: none;
+						}
+					}
+				 	input:disabled + span img{
+						filter: grayscale(0%);
+					}
+				}
+			}
+		}
+    }*/
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenTitle {
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  color: #9e9e9f;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  padding-bottom: 4px;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  flex-wrap: -webkit-wrap;
+  flex-wrap: -ms-wrap;
+  flex-wrap: wrap;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li {
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 3px;
+  width: 46px;
+  max-width: 46px;
+  min-width: 46px;
+  margin-bottom: 0px;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label {
+  color: #333333;
+  font-size: 0.8em;
+  line-height: 1.2;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label input {
+  position: absolute;
+  opacity: 0;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label span {
+  display: block;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label span i.charaBigThumbnail {
+  overflow: hidden;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0px 3px rgba(255, 255, 255, 0);
+  transition: 0.3s;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label span i.charaBigThumbnail img {
+  min-width: 68px;
+  height: auto;
+  margin-left: -17px;
+  box-shadow: none;
+  border: none;
+  background-color: #efefef;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label span img {
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  transition: 0.3s;
+  vertical-align: middle;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0px 3px rgba(255, 255, 255, 0);
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label span strong {
+  margin-top: 4px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  letter-spacing: -1px;
+  font-size: 0.64rem;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label input:disabled + span img {
+  filter: grayscale(100%);
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label input:checked + span img {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label input:checked + span i.charaBigThumbnail {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.charaSheetInputCategoryPCMixin .memoOpenWrap .memoOpenUserList li label input:checked + span i.charaBigThumbnail img {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: -ms-wrap;
+  flex-flow: -wbekit-wrap;
+  flex-flow: wrap;
+  margin-bottom: 15px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  width: 33.333%;
+  padding: 8px;
+  margin-bottom: 0;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li:first-child:last-child .moveBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li:first-child:last-child .deleteBtn {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li input {
+  margin-left: 2%;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li input[type="text"] {
+  width: 46%;
+  font-size: 0.75rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li input[disabled="disabled"] {
+  border: none;
+  padding-left: 0;
+  background-color: inherit;
+  opacity: 1;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList li .deleteBtn {
+  margin-left: 2%;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li {
+  width: 25%;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="number"] {
+  width: 32.5%;
+  font-size: 0.75rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="text"] {
+  /*width: 65.5%;*/
+  font-size: 0.75rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="button"] {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin ul li {
+  margin-bottom: 15px;
+}
+.charaSheetInputCategoryPCMixin ul li input[type="number"] {
+  width: 6rem;
+  min-width: 3rem;
+}
+.charaSheetInputCategoryPCMixin ul li input[type="text"] {
+  width: 12rem;
+  min-width: 3rem;
+}
+.charaSheetInputCategoryPCMixin .lineDelete {
+  width: 4.5rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTableInner {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 25px;
+  max-width: 100%;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTableInner .charaSheetInputTable {
+  width: 300px;
+  display: block;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable {
+  background-color: inherit;
+  margin-bottom: 0;
+  max-width: 100%;
+  width: auto;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="text"],
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="number"] {
+  font-size: 0.75rem;
+  line-height: 2.5;
+  height: auto;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="text"][disabled="disabled"],
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="number"][disabled="disabled"] {
+  border: none;
+  opacity: 1;
+  padding-left: 0;
+  background-color: inherit;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="text"] {
+  max-width: 7rem;
+  min-width: 5rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="number"] {
+  max-width: 7rem;
+  min-width: 5rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable input[type="button"] {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th {
+  background-color: #fff;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol {
+  background-color: inherit;
+  border: none;
+  padding-right: 0;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .borderBtn {
+  box-shadow: none;
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .primaryBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .primaryBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .primaryBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .primaryBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .primaryBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .primaryBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .borderBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .borderBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .borderBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .borderBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .borderBtn:hover,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .borderBtn:hover {
+  transform: none;
+  opacity: 0.4;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .primaryBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .primaryBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .primaryBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .primaryBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .primaryBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .primaryBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .borderBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .borderBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .borderBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .borderBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .borderBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .borderBtn.removeColumnBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .primaryBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .primaryBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .primaryBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .primaryBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .primaryBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .primaryBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .borderBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .borderBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .borderBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .borderBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .borderBtn.removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .borderBtn.removeLineBtn {
+  background-color: #d4d4d4;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .primaryBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .primaryBtn {
+  padding: 2px 7px;
+  margin-right: 5px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead td.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody td.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot td.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead th.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody th.controlCol .borderBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot th.controlCol .borderBtn {
+  padding: 0px 5px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead tr th {
+  border-top: none;
+  background-color: #efefef;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead tr th input[disabled="disabled"] {
+  font-weight: bold;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead tr th.linsSumTitle {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable thead tr th:nth-child(2):nth-last-child(2) .removeColumnBtn {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr:first-child:last-child .removeLineBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr:first-child:last-child .moveBtn {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr:first-child:last-child th.moveBtnWrap,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr:first-child:last-child td.moveBtnWrap {
+  padding-left: 8px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr th.moveBtnWrap,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr td.moveBtnWrap {
+  position: relative;
+  padding-left: 35px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr th.moveBtnWrap .moveBtn,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr td.moveBtnWrap .moveBtn {
+  position: absolute;
+  width: 20px;
+  left: 8px;
+  top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 50px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr th {
+  line-height: 1.3;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tbody tr td.lineSum {
+  background-color: #fff;
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot tr th,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot tr td {
+  background-color: #fff;
+  border-bottom: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot tr th.lineSum,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable tfoot tr td.lineSum {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView thead tr th.linsSumTitle,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tbody tr th.linsSumTitle,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tfoot tr th.linsSumTitle,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView thead tr td.linsSumTitle,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tbody tr td.linsSumTitle,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tfoot tr td.linsSumTitle,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView thead tr th.lineSum,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tbody tr th.lineSum,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tfoot tr th.lineSum,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView thead tr td.lineSum,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tbody tr td.lineSum,
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.lineSumView tfoot tr td.lineSum {
+  display: table-cell;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputTable.columnSumView tfoot {
+  display: table-footer-group;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputNumberTable thead tr th:nth-child(2):nth-last-child(3) .removeColumnBtn {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .editCheck .skillSelectWrap {
+  display: block;
+}
+.charaSheetInputCategoryPCMixin .editCheck .checkTableConfirmBtn {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .editCheck .checkTableEditBtn {
+  display: inline-block;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.disabled tbody tr td label {
+  cursor: default;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.disabled tbody tr td label:before {
+  cursor: default;
+  background-color: #efefef;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitOneCheck thead tr th:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitOneCheck tbody tr th:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitOneCheck thead tr td:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitOneCheck tbody tr td:nth-child(3) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitOneCheck thead tr th:nth-child(2) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitOneCheck thead tr th:nth-child(2) label input[type="checkbox"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck thead tr th:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck tbody tr th:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck thead tr td:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck tbody tr td:nth-child(3),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck thead tr th:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck tbody tr th:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck thead tr td:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck tbody tr td:nth-child(5) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck thead tr th:nth-child(4) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitTwoCheck thead tr th:nth-child(4) label input[type="checkbox"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck thead tr th:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck tbody tr th:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck thead tr td:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck tbody tr td:nth-child(5),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck thead tr th:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck tbody tr th:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck thead tr td:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck tbody tr td:nth-child(7) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck thead tr th:nth-child(6) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitThreeCheck thead tr th:nth-child(6) label input[type="checkbox"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck thead tr th:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck tbody tr th:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck thead tr td:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck tbody tr td:nth-child(7),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck thead tr th:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck tbody tr th:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck thead tr td:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck tbody tr td:nth-child(9) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck thead tr th:nth-child(8) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFourCheck thead tr th:nth-child(8) label input[type="checkbox"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck thead tr th:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck tbody tr th:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck thead tr td:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck tbody tr td:nth-child(9),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck thead tr th:nth-child(11),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck tbody tr th:nth-child(11),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck thead tr td:nth-child(11),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck tbody tr td:nth-child(11) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck thead tr th:nth-child(10) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitFiveCheck thead tr th:nth-child(10) label input[type="checkbox"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitSixCheck thead tr th:nth-child(11),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitSixCheck tbody tr th:nth-child(11),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitSixCheck thead tr td:nth-child(11),
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitSixCheck tbody tr td:nth-child(11) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitSixCheck thead tr th:nth-child(12) {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .editCheck .charaSheetCheckTable.hitSixCheck thead tr th:nth-child(12) label input[type="checkbox"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .skillSelectWrap {
+  display: none;
+  padding-bottom: 5px;
+}
+.charaSheetInputCategoryPCMixin .skillSelectWrap label {
+  padding: 5px 8px;
+  margin-right: 5px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+.charaSheetInputCategoryPCMixin .skillSelectWrap label.goodSkill {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .skillSelectWrap label.badSkill {
+  background-color: #333333;
+  color: #fff;
+}
+.charaSheetInputCategoryPCMixin .checkTableConfirmBtn {
+  display: inline-block;
+}
+.charaSheetInputCategoryPCMixin .checkTableEditBtn {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td {
+  border-left: 1px solid #d4d4d4;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th:nth-child(2n),
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th:nth-child(2n),
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td:nth-child(2n),
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td:nth-child(2n) {
+  padding: 0;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th:first-child,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th:first-child,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td:first-child,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td:first-child {
+  border-left: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th {
+  background-color: #efefef;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th:nth-child(2n+1):not(:first-child),
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th:nth-child(2n+1):not(:first-child),
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td:nth-child(2n+1):not(:first-child),
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td:nth-child(2n+1):not(:first-child) {
+  padding: 0 2px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label {
+  position: relative;
+  display: block;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="radio"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="radio"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="radio"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="radio"] {
+  margin-right: 0;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  margin-top: -11px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label span {
+  display: block;
+  margin-left: 0;
+  padding: 8px 8px 8px 28px;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="text"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="text"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="text"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="text"] {
+  width: auto;
+  max-width: 4.5rem;
+  font-size: 0.75rem;
+  padding-left: 2px;
+  padding-right: 2px;
+  line-height: 2.5;
+  height: auto;
+  margin-top: -3px;
+  margin-bottom: -3px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="text"] + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="text"] + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="text"] + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="text"] + span {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="text"][disabled],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="text"][disabled],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="text"][disabled],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="text"][disabled] {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="text"][disabled] + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="text"][disabled] + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="text"][disabled] + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="text"][disabled] + span {
+  display: block;
+  font-size: 0.75rem;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="checkbox"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="checkbox"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="checkbox"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="checkbox"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="radio"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="radio"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="radio"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="radio"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="checkbox"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="checkbox"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="checkbox"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="checkbox"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="radio"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="radio"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr td label input[type="radio"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr td label input[type="radio"]:checked + input + span.badSkillHit {
+  background-color: #333333;
+  color: #fff;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="checkbox"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="checkbox"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="radio"]:checked + input + span,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="radio"]:checked + input + span {
+  background-color: #fed23d;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="checkbox"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="checkbox"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable thead tr th label input[type="radio"]:checked + input + span.badSkillHit,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr th label input[type="radio"]:checked + input + span.badSkillHit {
+  background-color: #333333;
+  color: #fff;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr:last-child th,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable tbody tr:last-child td {
+  border-bottom: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr th label,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr th label,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr td label,
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr td label {
+  padding: 8px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr th input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr th input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr td input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr td input[type="checkbox"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr th input[type="radio"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr th input[type="radio"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr td input[type="radio"],
+.charaSheetInputCategoryPCMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr td input[type="radio"] {
+  display: none;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: -ms-wrap;
+  flex-flow: -wbekit-wrap;
+  flex-flow: wrap;
+  padding-bottom: 12px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li {
+  margin-bottom: 8px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li label {
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li label input[type="radio"] {
+  position: absolute;
+  margin-top: -30px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li label input[type="radio"]:checked + span {
+  border: 3px solid #fed23d;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li label span {
+  display: block;
+  border-radius: 8px;
+  padding: 15px;
+  transition: 0.3s;
+  border: 3px solid rgba(255, 255, 255, 0);
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li label span img {
+  width: 100%;
+  max-width: 177px;
+}
+.charaSheetInputCategoryPCMixin .charaSheetInputSelect li label span strong {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  font-family: "M PLUS 1p";
+  margin-bottom: 8px;
+}
+.charaSheetInputCategorySPMixin {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+}
+.charaSheetInputCategorySPMixin .moveInputCategory {
+  bottom: 12px;
+}
+.charaSheetInputCategorySPMixin .moveInputCategory li a:hover {
+  opacity: 1;
+}
+.charaSheetInputCategorySPMixin .moveBtn,
+.charaSheetInputCategorySPMixin .deleteBtn {
+  line-height: 28px;
+}
+.charaSheetInputCategorySPMixin .moveBtn:hover,
+.charaSheetInputCategorySPMixin .deleteBtn:hover {
+  opacity: 1;
+}
+.charaSheetInputCategorySPMixin .removeBtn {
+  font-size: 1.1rem;
+  color: #333333;
+}
+.charaSheetInputCategorySPMixin .memoOpenWrap .memoOpenTitle br {
+  display: none;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList li {
+  width: 100%;
+  padding-top: 3px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList li input[type="text"] {
+  width: 46%;
+  margin-right: -4%;
+  margin-left: -4%;
+  transform: scale(0.7, 0.7);
+  transform-origin: center center;
+  margin-top: -5px;
+  margin-bottom: -5px;
+  font-size: 1rem;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li .moveBtn {
+  order: 1;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li .deleteBtn,
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li .diceCopyBtn {
+  order: 6;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="number"] {
+  margin-right: -4%;
+  margin-left: -4%;
+  transform: scale(0.7, 0.7);
+  transform-origin: center center;
+  margin-top: -5px;
+  margin-bottom: -5px;
+  font-size: 1rem;
+  height: 42px;
+  border-radius: 0;
+  width: 20%;
+  order: 4;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="text"] {
+  margin-right: -4%;
+  margin-left: -4%;
+  transform: scale(0.7, 0.7);
+  transform-origin: center center;
+  margin-top: -5px;
+  margin-bottom: -5px;
+  font-size: 1rem;
+  height: 42px;
+  order: 2;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="button"] {
+  display: block;
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  width: 11%;
+  height: 30px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="button"][value*="＋"] {
+  border-radius: 0 4px 4px 0;
+  margin-left: 0;
+  order: 5;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="button"][value*="－"] {
+  border-radius: 4px 0 0 4px;
+  order: 3;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="number"]:disabled {
+  width: 46%;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryNumber li input[type="number"]:disabled ~ [type="button"] {
+  display: none;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputCategoryList.charaSheetInputCategoryText li {
+  padding-left: 0;
+  padding-right: 0;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTableInner {
+  padding-bottom: 10px;
+  border-right: 8px solid rgba(255, 255, 255, 0);
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTableInner table {
+  margin-right: 10px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTableWrap {
+  position: relative;
+  margin-right: -5px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTableWrap:after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #f9f9f9);
+  width: 8px;
+  top: 0;
+  bottom: 0;
+  right: 7px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="text"],
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="number"] {
+  transform: scale(0.7, 0.7);
+  font-size: 1rem;
+  margin: -10px -40px -10px 0px;
+  transform-origin: center left;
+  width: 7.4rem;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="number"] {
+  width: 4rem;
+  min-width: 50px;
+  margin-left: 18px;
+  padding-left: 8px;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="button"] {
+  display: block;
+  background-color: #f9f9f9;
+  border: 1px solid #d4d4d4;
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  top: 3px;
+  z-index: 1;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="button"][value*="＋"] {
+  border-radius: 0 4px 4px 0;
+  margin-left: 0;
+  right: 0;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="button"][value*="－"] {
+  border-radius: 4px 0 0 4px;
+  left: 7px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="number"]:disabled {
+  width: 7.4rem;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable input[type="number"]:disabled ~ [type="button"] {
+  display: none;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr th,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr th,
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr td,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr td {
+  position: relative;
+  padding: 7px 6px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr th.controlCol,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr th.controlCol,
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr td.controlCol,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr td.controlCol {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr th.controlCol .primaryBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr th.controlCol .primaryBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr td.controlCol .primaryBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr td.controlCol .primaryBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr th.controlCol .borderBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr th.controlCol .borderBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable thead tr td.controlCol .borderBtn:hover,
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr td.controlCol .borderBtn:hover {
+  opacity: 1;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputTable tbody tr th.moveBtnWrap .moveBtn {
+  line-height: 42px;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th:nth-child(2n),
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th:nth-child(2n),
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td:nth-child(2n),
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td:nth-child(2n) {
+  padding: 0;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th:nth-child(2n) label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th:nth-child(2n) label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td:nth-child(2n) label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td:nth-child(2n) label {
+  display: block;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td {
+  text-align: center;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th:first-child,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th:first-child,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td:first-child,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td:first-child {
+  padding: 0 2px;
+  font-size: 0.7rem;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td label {
+  min-width: 45px;
+  position: relative;
+  overflow: hidden;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th label span,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th label span,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td label span,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td label span {
+  padding: 23px 3px 3px 3px;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th label input[type="checkbox"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th label input[type="checkbox"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td label input[type="checkbox"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td label input[type="checkbox"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th label input[type="radio"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th label input[type="radio"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td label input[type="radio"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td label input[type="radio"] {
+  margin-right: 0;
+  margin-bottom: 3px;
+  top: 3px;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: 0;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th label input[type="text"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th label input[type="text"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td label input[type="text"],
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td label input[type="text"] {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  width: 4.4rem;
+  min-width: 0;
+  margin-left: -2.25rem;
+  transform: scale(0.6, 0.6);
+  font-size: 1rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  transform-origin: top;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr th label input[type="text"][disabled] + span,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr th label input[type="text"][disabled] + span,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable thead tr td label input[type="text"][disabled] + span,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable tbody tr td label input[type="text"][disabled] + span {
+  margin-left: 0px;
+  line-height: 1.3;
+  line-height: 1.4;
+  font-size: 0.68rem;
+  letter-spacing: -0.8px;
+  margin-left: -1px;
+  margin-right: -1px;
+}
+.charaSheetInputCategorySPMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr th label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr th label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable.charaSheetCheckTableEdit thead tr td label,
+.charaSheetInputCategorySPMixin .charaSheetCheckTable.charaSheetCheckTableEdit tbody tr td label {
+  height: 32px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputSelect li label input[type="radio"]:checked + span {
+  border: 2px solid #fed23d;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputSelect li label span {
+  padding: 4px;
+  border: 2px solid rgba(255, 255, 255, 0);
+}
+.charaSheetInputCategorySPMixin .charaSheetInputSelect li label span img {
+  max-width: 92px;
+}
+.charaSheetInputCategorySPMixin .charaSheetInputSelect li label span strong {
+  font-size: 0.75rem;
+  letter-spacing: -1.5px;
+}
+.charaSheetScreenVeiwUserListItemMixin {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  border-top: 1px solid #d4d4d4;
+  padding: 8px;
+  background-color: #fff;
+}
+.charaSheetScreenVeiwUserListItemMixin.titleRow {
+  background-color: #efefef;
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.charaSheetScreenVeiwUserListItemMixin .moveBtn {
+  color: #333333;
+  cursor: move;
+  padding: 5px;
+  margin-right: 8px;
+}
+.charaSheetScreenVeiwUserListItemMixin p {
+  text-align: center;
+  position: relative;
+  margin-right: 8px;
+}
+.charaSheetScreenVeiwUserListItemMixin p span,
+.charaSheetScreenVeiwUserListItemMixin p > img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.charaSheetScreenVeiwUserListItemMixin p span img,
+.charaSheetScreenVeiwUserListItemMixin p > img img {
+  min-width: 78px;
+  margin-left: -18px;
+}
+.charaSheetScreenVeiwUserListItemMixin div {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.charaSheetScreenVeiwUserListItemMixin div ul {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: -ms-wrap;
+  flex-wrap: -webkit-wrap;
+  flex-wrap: wrap;
+  margin-bottom: -5px;
+}
+.charaSheetScreenVeiwUserListItemMixin div ul li {
+  margin-right: 8px;
+  margin-bottom: 5px;
+  cursor: move;
+  padding: 4px;
+  list-style: none;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  background-color: #efefef;
+}
+.charaSheetScreenVeiwUserListItemMixin div ul li strong {
+  display: inline-block;
+  margin-right: 3px;
+}
+.charaSheetScreenVeiwUserListItemMixin div ul li span {
+  display: inline-block;
+}
+.charaSheetScreenVeiwUserListItemMixin div ul li:last-child {
+  margin-right: 0;
+}
+.charaSheetSpecTextMixin {
+  padding-left: 20px;
+  width: 100%;
+}
+.charaSheetSpecTextMixin .charaSheetSpecName {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.charaSheetSpecTextMixin div .charaSheetSpecAge,
+.charaSheetSpecTextMixin div .charaSheetSpecSex,
+.charaSheetSpecTextMixin div .charaSheetSpecJob,
+.charaSheetSpecTextMixin div .charaSheetSpecNote {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.charaSheetSpecTextMixin div .charaSheetSpecNote {
+  width: 100%;
+}
+.charaSheetSpecTextMixin div .charaSheetSpecAge,
+.charaSheetSpecTextMixin div .charaSheetSpecSex {
+  margin-right: 10px;
+}
+.charaSheetSpecTextMixin div .charaSheetSpecAge input,
+.charaSheetSpecTextMixin div .charaSheetSpecSex input {
+  width: 6rem;
+}
+.inputSupportMixin {
+  overflow: hidden;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
+  padding: 15px 15px 10px 15px;
+  border-radius: 4px;
+  width: 100%;
+  left: 0;
+  bottom: 110%;
+  z-index: 10;
+}
+.inputSupportMixin .inputCharaSupportList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: -4px;
+  margin-bottom: -4px;
+  margin-bottom: 5px;
+}
+.inputSupportMixin .inputCharaSupportList li {
+  padding-left: 1px;
+  padding-right: 1px;
+  width: 25%;
+  max-width: 70px;
+  margin-bottom: 4px;
+}
+.inputSupportMixin .inputCharaSupportList li label,
+.inputSupportMixin .inputCharaSupportList div label {
+  position: relative;
+  display: block;
+  vertical-align: middle;
+}
+.inputSupportMixin .inputCharaSupportList li label input,
+.inputSupportMixin .inputCharaSupportList div label input {
+  position: absolute;
+  opacity: 0;
+}
+.inputSupportMixin .inputCharaSupportList li label input + img,
+.inputSupportMixin .inputCharaSupportList div label input + img {
+  border: 4px solid #fff;
+  transition: 0.3s;
+}
+.inputSupportMixin .inputCharaSupportList li label input + span,
+.inputSupportMixin .inputCharaSupportList div label input + span {
+  height: 66px;
+  overflow: hidden;
+  border-radius: 35px;
+  border: 4px solid #fff;
+  width: 66px;
+  position: relative;
+  display: block;
+  transition: 0.3s;
+}
+.inputSupportMixin .inputCharaSupportList li label input + span img,
+.inputSupportMixin .inputCharaSupportList div label input + span img {
+  overflow: hidden;
+  min-width: 100px;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  margin-left: 8px;
+  position: absolute;
+  left: -50%;
+}
+.inputSupportMixin .inputCharaSupportList li label input:hover + img,
+.inputSupportMixin .inputCharaSupportList div label input:hover + img,
+.inputSupportMixin .inputCharaSupportList li label input:checked + img,
+.inputSupportMixin .inputCharaSupportList div label input:checked + img {
+  box-shadow: 0 0 0 2px #fed23d;
+}
+.inputSupportMixin .inputCharaSupportList li label input:hover + span,
+.inputSupportMixin .inputCharaSupportList div label input:hover + span,
+.inputSupportMixin .inputCharaSupportList li label input:checked + span,
+.inputSupportMixin .inputCharaSupportList div label input:checked + span {
+  box-shadow: 0 0 0 2px #fed23d;
+}
+.inputSupportMixin .inputCharaSupportList li label img {
+  border-radius: 35px;
+  background-color: #fff;
+  background-color: #efefef;
+}
+.inputSupportMixin .inputCharaSupportList li label input + span {
+  width: 53px;
+  height: 53px;
+}
+.inputSupportMixin .inputCharaSupportList li label input + span img {
+  min-width: 85px;
+  left: -60%;
+}
+.inputSupportMixin .logInputSupportList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.inputSupportMixin .logInputSupportList li {
+  width: auto;
+  max-width: 100%;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.inputSupportMixinSP {
+  padding: 10px 10px 5px 10px;
+  width: 250px;
+  max-height: 175px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.userListMixin {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 15px 5px 12px 5px;
+  border-bottom: 1px solid #efefef;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.userListMixin li {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 61px;
+  max-width: 61px;
+  min-width: 61px;
+  text-align: center;
+  line-height: 0;
+}
+.userListMixin li a {
+  color: #333333;
+  font-size: 0.8em;
+  line-height: 1.2;
+  display: block;
+  position: relative;
+}
+.userListMixin li a img {
+  width: 50px;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+.userListMixin li a .charaThumbnail,
+.userListMixin li a .kpThumbnail,
+.userListMixin li a .userThumbnail {
+  position: absolute;
+  width: 26px;
+  bottom: 17px;
+  left: 36px;
+  border: 2px solid #fff;
+  border-radius: 13px;
+}
+.userListMixin li a i.charaThumbnail {
+  overflow: hidden;
+  width: 26px;
+  height: 26px;
+}
+.userListMixin li a i.charaThumbnail img {
+  min-width: 40px;
+  margin-left: -10px;
+  box-shadow: none;
+  background-color: #fff;
+}
+.userListMixin li a .kpThumbnail {
+  height: 26px;
+  font-size: 0.8em;
+  background: url(../image/icon_master.png) 50% 50% no-repeat #30c0d8;
+  background-size: 90% auto;
+}
+.userListMixin li a i.charaBigThumbnail {
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  display: block;
+  transition: 0.3s;
+}
+.userListMixin li a i.charaBigThumbnail img {
+  min-width: 100px;
+  margin-left: -25px;
+  box-shadow: none;
+  background-color: #efefef;
+}
+.userListMixin li a span {
+  margin-top: 5px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  letter-spacing: -0.5px;
+}
+.userListMixin li a .batch {
+  position: absolute;
+  display: block;
+  padding: 0px 5px 0px 5px;
+  border-radius: 10px;
+  background-color: #ff0000;
+  top: -2px;
+  right: 0px;
+  text-shadow: none;
+  color: #fff;
+  font-family: "Verdana";
+  line-height: 18px;
+  font-size: 0.9em;
+  font-style: normal;
+  -webkit-animation: batchAnime 1s ease -2s infinite alternate;
+  -ms-animation: batchAnime 1s ease -2s infinite alternate;
+  animation: batchAnime 1s ease -2s infinite alternate;
+  font-weight: bold;
+}
+.userListMixin li a:hover img,
+.userListMixin li.active a img {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.userListMixin li a:hover img.charaThumbnail,
+.userListMixin li.active a img.charaThumbnail,
+.userListMixin li a:hover img.charaBigThumbnail,
+.userListMixin li.active a img.charaBigThumbnail,
+.userListMixin li a:hover img.userThumbnail,
+.userListMixin li.active a img.userThumbnail {
+  box-shadow: none;
+}
+.userListMixin li a:hover .charaBigThumbnail,
+.userListMixin li.active a .charaBigThumbnail {
+  box-shadow: 0 0 0px 3px #fed23d;
+}
+.userListMixin li a:hover .charaThumbnail img,
+.userListMixin li.active a .charaThumbnail img,
+.userListMixin li a:hover .userThumbnail img,
+.userListMixin li.active a .userThumbnail img {
+  box-shadow: none;
+}
+.seekberIcon {
+  display: block;
+  position: absolute;
+  z-index: 105;
+  bottom: 10px;
+  right: 10px;
+}
+.seekberIcon img {
+  width: 50px;
+}
+.seekberOverlay {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 90;
+}
+.seekberWrap {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000 90%) no-repeat;
+  z-index: 100;
+  bottom: 0px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.seekberWrap .seekText {
+  position: relative;
+  /*margin-left: 4rem;*/
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-bottom: 10px;
+}
+.seekberWrap .seekText span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.3em;
+  padding: 8px 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #d4d4d4;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+.seekberWrap .seekText i {
+  position: absolute;
+  left: 2.5%;
+  display: block;
+  bottom: 0;
+}
+.seekberWrap .seekText i:before,
+.seekberWrap .seekText i:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  margin-left: -8px;
+  display: block;
+  border-top: 8px solid #fff;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+.seekberWrap .seekText i:before {
+  bottom: -6px;
+}
+.seekberWrap .seekText i:after {
+  bottom: -8px;
+  opacity: 0.3;
+}
+.seekberWrap .seekberCount {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  /*padding-right: 30px;*/
+  justify-content: -ms-center;
+  justify-content: -weblit-center;
+  justify-content: center;
+}
+.seekberWrap .seekberCount .seekCount {
+  width: 4rem;
+  padding-right: 10px;
+  padding-right: 35px;
+  color: #fff;
+  border: none;
+  line-height: 36px;
+  font-size: 1.3em;
+  text-align: right;
+  display: none;
+}
+.seekberWrap .seekberCount input[type="range"] {
+  width: calc(100% - 5rem);
+  display: block;
+  border-radius: 15px;
+  /*&::-moz-range-progress {
+            background-color: #43e5f7; 
+        }*/
+  /*&::-ms-fill-lower {
+            background-color: #43e5f7; 
+        }*/
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .seekberWrap .seekberCount input[type="range"] {
+    overflow: hidden;
+    height: 30px;
+    -webkit-appearance: none;
+    background-color: #ddd;
+  }
+  .seekberWrap .seekberCount input[type="range"]::-webkit-slider-runnable-track {
+    height: 30px;
+    -webkit-appearance: none;
+    color: #444;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  .seekberWrap .seekberCount input[type="range"]::-webkit-slider-thumb {
+    width: 30px;
+    -webkit-appearance: none;
+    height: 30px;
+    cursor: ew-resize;
+    /*box-shadow: -340px 0 0 320px @mainColor, inset 0 0 0 40px @mainColor;*/
+    border-radius: 50%;
+    transition: box-shadow 0.2s ease-in-out;
+    position: relative;
+    background: #fff;
+    box-shadow: -840px 0 0 832px #fed23d, inset 0 0 0 2px #fed23d;
+  }
+}
+.seekberWrap .seekberCount input[type="range"]::-moz-range-track {
+  background-color: #efefef;
+}
+.seekberWrap .seekberCount input[type="range"]::-ms-fill-upper {
+  background-color: #efefef;
+}
+.screenCharaStatusArea {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: 1000;
+  font-family: "M PLUS 1p";
+  font-size: 1.6rem;
+}
+.screenCharaStatusArea .screenCharaStatusList {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: -ms-center;
+  justify-content: -weblit-center;
+  justify-content: center;
+  padding: 0 10px 10px 10px;
+  overflow: hidden;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft,
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight {
+  flex-flow: -ms-column;
+  flex-flow: -weblit-column;
+  flex-flow: column;
+  position: absolute;
+  top: 20px;
+  max-width: 360px;
+  /*overflow: hidden;*/
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft > li,
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight > li {
+  margin-right: 0;
+  margin-bottom: 10px;
+  padding: 15px 20px 15px 20px;
+  max-width: 100%;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft > li .screenCharaStatusItem li,
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight > li .screenCharaStatusItem li {
+  display: inline-block;
+  margin-right: 12px;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft > li .screenCharaStatusItem li:last-child,
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight > li .screenCharaStatusItem li:last-child {
+  margin-right: 0;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft > li .screenCharaStatusItem li span,
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight > li .screenCharaStatusItem li span {
+  margin-left: 6px;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft {
+  left: 0px;
+  padding-left: 0;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft.defaultBlack > li {
+  background: linear-gradient(90deg, rgba(70, 70, 70, 0.95), rgba(70, 70, 70, 0.78));
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft.defaultWhite > li {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.85));
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListLeft.defaultBrown > li {
+  border-bottom: none;
+  border-right: 4px solid #615148;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight {
+  right: 0px;
+  padding-right: 0;
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight.defaultBlack > li {
+  background: linear-gradient(-90deg, rgba(70, 70, 70, 0.95), rgba(70, 70, 70, 0.78));
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight.defaultWhite > li {
+  background: linear-gradient(-90deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.85));
+}
+.screenCharaStatusArea .screenCharaStatusList.screenCharaStatusListRight.defaultBrown > li {
+  border-bottom: none;
+  border-left: 4px solid #615148;
+}
+.screenCharaStatusArea .screenCharaStatusList.defaultBlack > li {
+  background: linear-gradient(180deg, rgba(70, 70, 70, 0.95), rgba(70, 70, 70, 0.78));
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  text-shadow: 0px 0px 3px #000;
+}
+.screenCharaStatusArea .screenCharaStatusList.defaultWhite > li {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.85));
+  box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.5);
+  color: #333;
+  text-shadow: 0px 0px 3px #fff;
+}
+.screenCharaStatusArea .screenCharaStatusList.defaultBrown > li {
+  background: linear-gradient(180deg, #f7f7f7, rgba(240, 240, 240, 0.9));
+  box-shadow: 0 0 5px 0px #5a4d46;
+  color: #5a4d46;
+  border-bottom: 4px solid #615148;
+}
+.screenCharaStatusArea .screenCharaStatusList > li {
+  padding: 15px 10px 10px 10px;
+  flex: 1 1 100%;
+  margin-right: 10px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  max-width: 250px;
+}
+.screenCharaStatusArea .screenCharaStatusList > li:last-child {
+  margin-right: 0;
+}
+.screenCharaStatusArea .screenCharaStatusList > li p {
+  padding-right: 16px;
+}
+.screenCharaStatusArea .screenCharaStatusList > li p > img {
+  width: 76px;
+  min-width: 76px;
+  border-radius: 38px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.screenCharaStatusArea .screenCharaStatusList > li p span {
+  width: 76px;
+  height: 76px;
+  min-width: 76px;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 38px;
+  background-color: #fff;
+}
+.screenCharaStatusArea .screenCharaStatusList > li p span img {
+  min-width: 150px;
+  max-width: 150px;
+  margin-left: -38px;
+}
+.screenCharaStatusArea .screenCharaStatusList > li .screenCharaStatusItem li:first-child {
+  display: block;
+}
+.screenCharaStatusArea .screenCharaStatusList > li .screenCharaStatusItem li strong.name {
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+.screenCharaStatusArea .screenCharaStatusList > li .screenCharaStatusItem li strong {
+  display: inline;
+}
+.screenCharaStatusArea .screenCharaStatusList > li .screenCharaStatusItem li span {
+  display: inline;
+  margin-left: 8px;
+}
+
+/*Plot用の表示*/
+
+.screenCharaPlotArea {
+  /*shikemoku add */
+  font-family:"Hiragino Sans", "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  padding: 15px 20px 15px 20px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: -ms-column;
+  flex-flow: -weblit-column;
+  flex-flow: column;
+}
+.screenCharaPlotArea li {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  margin-bottom: 5px;
+}
+.screenCharaPlotArea li .name {
+  display: inline-block;
+  margin-right: 5px;
+  max-width: 8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.screenCharaPlotArea li span {
+  margin-left: auto;
+}
+.screenCharaPlotArea.defaultBlack {
+  background: linear-gradient(180deg, rgba(70, 70, 70, 0.95), rgba(70, 70, 70, 0.78));
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  text-shadow: 0px 0px 3px #000;
+}
+.screenCharaPlotArea.defaultWhite {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.85));
+  box-shadow: 0 0 5px 0px rgba(255, 255, 255, 0.5);
+  color: #333;
+  text-shadow: 0px 0px 3px #fff;
+}
+.screenCharaPlotArea.defaultBrown {
+  background: linear-gradient(180deg, #f7f7f7, rgba(240, 240, 240, 0.9));
+  box-shadow: 0 0 5px 0px #5a4d46;
+  color: #5a4d46;
+}
+
+
+
+

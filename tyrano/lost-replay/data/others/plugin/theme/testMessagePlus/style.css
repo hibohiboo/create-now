@@ -1,0 +1,40 @@
+.test_message_area {
+
+	/*
+	ここのプロパティ３項目は
+	このままでお願いします。
+	*/
+
+	display : block;
+	position: absolute;
+	z-index : 99999999;
+
+	/*
+	以下のプロパティは
+	お使いのコンフィグ画面に合わせて
+	調整なさってください。
+	*/
+
+	color :  #66564C;
+	/*
+	font-size: 21px;
+	font-weight: bold;
+	font-family: 'ヒラギノ角ゴ W3', 'ヒラギノ角ゴ ProN W3', 'メイリオ', '游ゴシック', 'ＭＳ ゴシック', sans-serif;
+	font-family: 'ヒラギノ明朝 W3', 'ヒラギノ明朝 ProN W3', '游明朝', 'ＭＳ 明朝', serif;
+	*/
+	top   : 600px;
+	left  : 130px;
+	width : 1000px;
+	height:  90px;
+
+	font-size: 21px;
+
+	/*
+	・color
+	・font-size
+	・font-weight
+	・font-family
+	の４項目については、省略した場合、
+	デフォルトのフォント設定を参照します。
+	*/
+}

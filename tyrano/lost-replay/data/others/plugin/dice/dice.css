@@ -1,0 +1,2080 @@
+@charset "utf-8";
+.viewDiceArea {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.viewDiceArea .diceFigWrap {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  line-height: 1.5em;
+}
+.viewDiceArea .diceFigWrap:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 44px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 340px;
+  right: 10px;
+  filter: blur(6px);
+  border-radius: 15px;
+  animation-name: diceAnimeBG;
+  animation-duration: 1000ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+.viewDiceArea .diceFigWrap .diceFig {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 64px;
+  height: 59px;
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 64px auto;
+  font-size: 1.6em;
+  z-index: 1;
+}
+.viewDiceArea .diceFigWrap .diceFig i {
+  font-style: normal;
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  display: inline-block;
+  animation-name: diceAnimeResult;
+  animation-duration: 1000ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  color: #fed23d;
+}
+.viewDiceArea .diceFigWrap .diceFig i:after {
+  font-family: "RobotoCondensed-Bold", "sans-serif";
+  display: inline-block;
+}
+.viewDiceArea .diceFigWrap .diceFig i:nth-child(1) {
+  opacity: 0;
+  -webkit-animation-name: diceAnimeResultCurrent;
+  -webkit-animation-delay: 300ms;
+  -webkit-animation-duration: 1000ms;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+}
+.viewDiceArea .diceFigWrap .diceFig.diceSecret {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnimeDiceSecret 1000ms forwards linear;
+  background-image: url(../dice/image/secret.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice2 {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnime2Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_2.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice2 i:nth-child(1) {
+  top: 20px;
+  left: 22px;
+  -webkit-transform: rotate(-196deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice2.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice2.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice3 {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnime3Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_3.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice3 i:nth-child(1) {
+  top: 28px;
+  left: 18px;
+  -webkit-transform: rotate(-226deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice3.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice3.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice3.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4 {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnime4Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_4.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4 i:nth-child(1) {
+  top: 20px;
+  left: 32px;
+  -webkit-transform: rotate(-30deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4 i:nth-child(2) {
+  top: 22px;
+  left: 10px;
+  -webkit-transform: rotate(8deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4 i:nth-child(2):after {
+  -webkit-transform: skew(0deg, 10deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current1 i:nth-child(2):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current2 i:nth-child(2):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current3 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current4 i:nth-child(1):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice4.current4 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnime6Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_6.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 i:nth-child(1) {
+  top: 25px;
+  left: 34px;
+  -webkit-transform: rotate(180deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 i:nth-child(1):after {
+  -webkit-transform: skew(0deg, -30deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 i:nth-child(2) {
+  top: 25px;
+  left: 9px;
+  -webkit-transform: rotate(180deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 i:nth-child(2):after {
+  -webkit-transform: skew(0deg, 30deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 i:nth-child(3) {
+  top: 4px;
+  left: 19px;
+  -webkit-transform: rotate(60deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6 i:nth-child(3):after {
+  -webkit-transform: skew(0deg, -30deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current1 i:nth-child(2):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current1 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current2 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current2 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current3 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current3 i:nth-child(3):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current4 i:nth-child(1):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current4 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current4 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current5 i:nth-child(1):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current5 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current5 i:nth-child(3):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current6 i:nth-child(1):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current6 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice6.current6 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8 {
+  -webkit-animation: diceAnime90deg 1000ms forwards linear,diceAnime8Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_8.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8 i:nth-child(1) {
+  top: 12px;
+  left: 27px;
+  -webkit-transform: rotate(-10deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8 i:nth-child(2) {
+  top: 31px;
+  left: 27px;
+  -webkit-transform: scale(0.8, 0.7) rotate(-200deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8 i:nth-child(2):after {
+  -webkit-transform: skew(-30deg, 0deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8 i:nth-child(3) {
+  top: 12px;
+  left: 8px;
+  -webkit-transform: rotate(10deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8 i:nth-child(3):after {
+  -webkit-transform: scaleX(0.7) skew(-20deg, 0deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current1 i:nth-child(2):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current1 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current2 i:nth-child(2):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current2 i:nth-child(3):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current3 i:nth-child(2):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current3 i:nth-child(3):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current4 i:nth-child(1):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current4 i:nth-child(2):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current4 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current5 i:nth-child(1):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current5 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current5 i:nth-child(3):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current6 i:nth-child(1):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current6 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current6 i:nth-child(3):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current7 i:nth-child(1):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current7 i:nth-child(2):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current7 i:nth-child(3):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current8 i:nth-child(1):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current8 i:nth-child(2):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice8.current8 i:nth-child(3):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100 {
+  -webkit-animation: diceAnime90deg 1000ms forwards linear,diceAnime100Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_10.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100 i {
+  font-size: 0.9em;
+  letter-spacing: -2px;
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100 i:nth-child(1) {
+  left: 21px;
+  top: 15px;
+  -webkit-transform: scaleX(0.9);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100 i:nth-child(2) {
+  top: 31px;
+  left: 12px;
+  -webkit-transform: rotate(-200deg) scale(0.7, 0.7) skew(15deg, 50deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100 i:nth-child(3) {
+  top: 31px;
+  left: 33px;
+  -webkit-transform: rotate(-160deg) scale(0.6, 0.7) skew(-15deg, -40deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current10 i:nth-child(1):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current10 i:nth-child(2):after {
+  content: "60";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current10 i:nth-child(3):after {
+  content: "40";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current20 i:nth-child(1):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current20 i:nth-child(2):after {
+  content: "90";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current20 i:nth-child(3):after {
+  content: "50";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current30 i:nth-child(1):after {
+  content: "30";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current30 i:nth-child(2):after {
+  content: "00";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current30 i:nth-child(3):after {
+  content: "80";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current40 i:nth-child(1):after {
+  content: "40";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current40 i:nth-child(2):after {
+  content: "70";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current40 i:nth-child(3):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current50 i:nth-child(1):after {
+  content: "50";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current50 i:nth-child(2):after {
+  content: "80";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current50 i:nth-child(3):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current60 i:nth-child(1):after {
+  content: "60";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current60 i:nth-child(2):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current60 i:nth-child(3):after {
+  content: "90";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current70 i:nth-child(1):after {
+  content: "70";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current70 i:nth-child(2):after {
+  content: "40";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current70 i:nth-child(3):after {
+  content: "00";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current80 i:nth-child(1):after {
+  content: "80";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current80 i:nth-child(2):after {
+  content: "50";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current80 i:nth-child(3):after {
+  content: "30";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current90 i:nth-child(1):after {
+  content: "90";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current90 i:nth-child(2):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current90 i:nth-child(3):after {
+  content: "60";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current00 i:nth-child(1):after {
+  content: "00";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current00 i:nth-child(2):after {
+  content: "30";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice100.current00 i:nth-child(3):after {
+  content: "70";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10 {
+  -webkit-animation: diceAnime90deg 1000ms forwards linear,diceAnime10Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_10.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10 i:nth-child(1) {
+  left: 21px;
+  top: 15px;
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10 i:nth-child(2) {
+  top: 31px;
+  left: 11px;
+  -webkit-transform: rotate(-200deg) scale(0.7, 0.7) skew(15deg, 50deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10 i:nth-child(3) {
+  top: 31px;
+  left: 31px;
+  -webkit-transform: rotate(-160deg) scale(0.7, 0.7) skew(-15deg, -50deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current1 i:nth-child(2):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current1 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current2 i:nth-child(2):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current2 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current3 i:nth-child(2):after {
+  content: "0";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current3 i:nth-child(3):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current4 i:nth-child(1):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current4 i:nth-child(2):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current4 i:nth-child(3):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current5 i:nth-child(1):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current5 i:nth-child(2):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current5 i:nth-child(3):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current6 i:nth-child(1):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current6 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current6 i:nth-child(3):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current7 i:nth-child(1):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current7 i:nth-child(2):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current7 i:nth-child(3):after {
+  content: "0";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current8 i:nth-child(1):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current8 i:nth-child(2):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current8 i:nth-child(3):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current9 i:nth-child(1):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current9 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current9 i:nth-child(3):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current0 i:nth-child(1):after {
+  content: "0";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current0 i:nth-child(2):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice10.current0 i:nth-child(3):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnime12Dice 1000ms forwards linear;
+  background-image: url(../dice/image/dice_bg_12.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i {
+  letter-spacing: -2px;
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i:nth-child(1) {
+  left: 21px;
+  top: 17px;
+  -webkit-transform: rotate(142deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i:nth-child(2) {
+  top: 1px;
+  left: 34px;
+  -webkit-transform: rotate(-160deg) scaleY(0.4) skew(0deg, 30deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i:nth-child(3) {
+  top: 24px;
+  left: 39px;
+  -webkit-transform: rotate(34deg) scaleX(0.6) skew(19deg, 0deg);
+  letter-spacing: -16px;
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i:nth-child(4) {
+  top: 40px;
+  left: 17px;
+  letter-spacing: -4px;
+  -webkit-transform: rotate(60deg) scale(0.7, 0.7) skew(0deg, -35deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i:nth-child(5) {
+  top: 27px;
+  left: 0px;
+  -webkit-transform: rotate(-20deg) scaleX(0.4) skew(5deg, -20deg);
+  letter-spacing: -4px;
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12 i:nth-child(6) {
+  top: -1px;
+  left: 9px;
+  -webkit-transform: rotate(-198deg) scaleY(0.5) skew(0deg, -30deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current1 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current1 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current1 i:nth-child(4):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current1 i:nth-child(5):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current1 i:nth-child(6):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current2 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current2 i:nth-child(3):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current2 i:nth-child(4):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current2 i:nth-child(5):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current2 i:nth-child(6):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current3 i:nth-child(2):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current3 i:nth-child(3):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current3 i:nth-child(4):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current3 i:nth-child(5):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current3 i:nth-child(6):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current4 i:nth-child(1):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current4 i:nth-child(2):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current4 i:nth-child(3):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current4 i:nth-child(4):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current4 i:nth-child(5):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current4 i:nth-child(6):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current5 i:nth-child(1):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current5 i:nth-child(2):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current5 i:nth-child(3):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current5 i:nth-child(4):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current5 i:nth-child(5):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current5 i:nth-child(6):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current6 i:nth-child(1):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current6 i:nth-child(2):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current6 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current6 i:nth-child(4):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current6 i:nth-child(5):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current6 i:nth-child(6):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current7 i:nth-child(1):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current7 i:nth-child(2):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current7 i:nth-child(3):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current7 i:nth-child(4):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current7 i:nth-child(5):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current7 i:nth-child(6):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current8 i:nth-child(1):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current8 i:nth-child(2):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current8 i:nth-child(3):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current8 i:nth-child(4):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current8 i:nth-child(5):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current8 i:nth-child(6):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current9 i:nth-child(1):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current9 i:nth-child(2):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current9 i:nth-child(3):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current9 i:nth-child(4):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current9 i:nth-child(5):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current9 i:nth-child(6):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current10 i:nth-child(1):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current10 i:nth-child(2):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current10 i:nth-child(3):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current10 i:nth-child(4):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current10 i:nth-child(5):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current10 i:nth-child(6):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current11 i:nth-child(1):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current11 i:nth-child(2):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current11 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current11 i:nth-child(4):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current11 i:nth-child(5):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current11 i:nth-child(6):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current12 i:nth-child(1):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current12 i:nth-child(2):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current12 i:nth-child(3):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current12 i:nth-child(4):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current12 i:nth-child(5):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice12.current12 i:nth-child(6):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20 {
+  -webkit-animation: diceAnime 1000ms forwards linear,diceAnime20Dice 1000ms forwards linear;
+  font-size: 1.1em;
+  letter-spacing: -3px;
+  background-image: url(../dice/image/dice_bg_20.png);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20 i:nth-child(1) {
+  top: 24px;
+  left: 26px;
+  letter-spacing: -2.5px;
+  -webkit-transform: rotate(-180deg) skew(0deg, 0deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20 i:nth-child(2) {
+  top: 8px;
+  left: 23px;
+  letter-spacing: -4px;
+  -webkit-transform: rotate(-118deg) skew(0deg, -10deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20 i:nth-child(3) {
+  top: 32px;
+  left: 37px;
+  -webkit-transform: rotate(-115deg) scaleY(0.9) skew(0deg, 10deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20 i:nth-child(4) {
+  top: 26px;
+  left: 8px;
+  -webkit-transform: rotate(-12deg) skew(0deg, 20deg);
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current1 i:nth-child(1):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current1 i:nth-child(2):after {
+  content: "13";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current1 i:nth-child(3):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current1 i:nth-child(4):after {
+  content: "19";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current2 i:nth-child(1):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current2 i:nth-child(2):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current2 i:nth-child(3):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current2 i:nth-child(4):after {
+  content: "18";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current3 i:nth-child(1):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current3 i:nth-child(2):after {
+  content: "19";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current3 i:nth-child(3):after {
+  content: "17";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current3 i:nth-child(4):after {
+  content: "16";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current4 i:nth-child(1):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current4 i:nth-child(2):after {
+  content: "14";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current4 i:nth-child(3):after {
+  content: "18";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current4 i:nth-child(4):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current5 i:nth-child(1):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current5 i:nth-child(2):after {
+  content: "13";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current5 i:nth-child(3):after {
+  content: "18";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current5 i:nth-child(4):after {
+  content: "15";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current6 i:nth-child(1):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current6 i:nth-child(2):after {
+  content: "14";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current6 i:nth-child(3):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current6 i:nth-child(4):after {
+  content: "16";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current7 i:nth-child(1):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current7 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current7 i:nth-child(3):after {
+  content: "15";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current7 i:nth-child(4):after {
+  content: "17";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current8 i:nth-child(1):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current8 i:nth-child(2):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current8 i:nth-child(3):after {
+  content: "16";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current8 i:nth-child(4):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current9 i:nth-child(1):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current9 i:nth-child(2):after {
+  content: "19";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current9 i:nth-child(3):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current9 i:nth-child(4):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current10 i:nth-child(1):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current10 i:nth-child(2):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current10 i:nth-child(3):after {
+  content: "17";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current10 i:nth-child(4):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current11 i:nth-child(1):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current11 i:nth-child(2):after {
+  content: "13";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current11 i:nth-child(3):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current11 i:nth-child(4):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current12 i:nth-child(1):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current12 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current12 i:nth-child(3):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current12 i:nth-child(4):after {
+  content: "15";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current13 i:nth-child(1):after {
+  content: "13";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current13 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current13 i:nth-child(3):after {
+  content: "11";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current13 i:nth-child(4):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current14 i:nth-child(1):after {
+  content: "14";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current14 i:nth-child(2):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current14 i:nth-child(3):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current14 i:nth-child(4):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current15 i:nth-child(1):after {
+  content: "15";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current15 i:nth-child(2):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current15 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current15 i:nth-child(4):after {
+  content: "12";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current16 i:nth-child(1):after {
+  content: "16";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current16 i:nth-child(2):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current16 i:nth-child(3):after {
+  content: "6";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current16 i:nth-child(4):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current17 i:nth-child(1):after {
+  content: "17";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current17 i:nth-child(2):after {
+  content: "7";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current17 i:nth-child(3):after {
+  content: "10";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current17 i:nth-child(4):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current18 i:nth-child(1):after {
+  content: "18";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current18 i:nth-child(2):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current18 i:nth-child(3):after {
+  content: "5";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current18 i:nth-child(4):after {
+  content: "4";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current19 i:nth-child(1):after {
+  content: "19";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current19 i:nth-child(2):after {
+  content: "1";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current19 i:nth-child(3):after {
+  content: "3";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current19 i:nth-child(4):after {
+  content: "9";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current20 i:nth-child(1):after {
+  content: "20";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current20 i:nth-child(2):after {
+  content: "8";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current20 i:nth-child(3):after {
+  content: "2";
+}
+.viewDiceArea .diceFigWrap .diceFig.dice20.current20 i:nth-child(4):after {
+  content: "14";
+}
+@-webkit-keyframes diceAnime {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(15deg);
+  }
+  1.67% {
+    -webkit-transform: translate(-7.5833px, 0.6218px) rotate(16deg);
+  }
+  3.33% {
+    -webkit-transform: translate(-15.1667px, 2.4872px) rotate(17deg);
+  }
+  5% {
+    -webkit-transform: translate(-22.75px, 5.5963px) rotate(18deg);
+  }
+  6.67% {
+    -webkit-transform: translate(-30.3333px, 9.9489px) rotate(19deg);
+  }
+  8.33% {
+    -webkit-transform: translate(-37.9167px, 15.5451px) rotate(20deg);
+  }
+  10% {
+    -webkit-transform: translate(-45.5px, 22.385px) rotate(21deg);
+  }
+  11.67% {
+    -webkit-transform: translate(-53.0833px, 30.4685px) rotate(22deg);
+  }
+  13.33% {
+    -webkit-transform: translate(-60.6667px, 39.7956px) rotate(23deg);
+  }
+  15% {
+    -webkit-transform: translate(-68.25px, 50.3662px) rotate(24deg);
+  }
+  16.67% {
+    -webkit-transform: translate(-75.8333px, 62.1806px) rotate(25deg);
+  }
+  18.33% {
+    -webkit-transform: translate(-83.4167px, 75.2385px) rotate(26deg);
+  }
+  20% {
+    -webkit-transform: translate(-91px, 89.54px) rotate(27deg);
+  }
+  21.67% {
+    -webkit-transform: translate(-98.5833px, 105.0851px) rotate(28deg);
+  }
+  23.33% {
+    -webkit-transform: translate(-106.1667px, 121.8739px) rotate(29deg);
+  }
+  25% {
+    -webkit-transform: translate(-113.75px, 139.9063px) rotate(29deg);
+  }
+  26.67% {
+    -webkit-transform: translate(-121.3333px, 159.1822px) rotate(30deg);
+  }
+  28.33% {
+    -webkit-transform: translate(-128.9167px, 179.7018px) rotate(30deg);
+  }
+  30% {
+    -webkit-transform: translate(-136.5px, 201.465px) rotate(31deg);
+  }
+  31.67% {
+    -webkit-transform: translate(-144.0833px, 224.4718px) rotate(31deg);
+  }
+  33.33% {
+    -webkit-transform: translate(-151.6667px, 248.7222px) rotate(32deg);
+  }
+  35% {
+    -webkit-transform: translate(-159.25px, 274.2162px) rotate(32deg);
+  }
+  36.67% {
+    -webkit-transform: translate(-166.8333px, 293.5539px) rotate(32deg);
+  }
+  38.33% {
+    -webkit-transform: translate(-174.4167px, 280.8351px) rotate(-16deg);
+  }
+  40% {
+    -webkit-transform: translate(-182px, 269.36px) rotate(-17deg);
+  }
+  41.67% {
+    -webkit-transform: translate(-189.5833px, 259.1285px) rotate(-18deg);
+  }
+  43.33% {
+    -webkit-transform: translate(-197.1667px, 250.1406px) rotate(-19deg);
+  }
+  45% {
+    -webkit-transform: translate(-204.75px, 242.3962px) rotate(-20deg);
+  }
+  46.67% {
+    -webkit-transform: translate(-212.3333px, 235.8956px) rotate(-21deg);
+  }
+  48.33% {
+    -webkit-transform: translate(-219.9167px, 230.6385px) rotate(-22deg);
+  }
+  50% {
+    -webkit-transform: translate(-227.5px, 226.625px) rotate(-23deg);
+  }
+  51.67% {
+    -webkit-transform: translate(-235.0833px, 223.8551px) rotate(-24deg);
+  }
+  53.33% {
+    -webkit-transform: translate(-242.6667px, 222.3289px) rotate(-25deg);
+  }
+  55% {
+    -webkit-transform: translate(-250.25px, 222.0462px) rotate(-26deg);
+  }
+  56.67% {
+    -webkit-transform: translate(-257.8333px, 223.0072px) rotate(-27deg);
+  }
+  58.33% {
+    -webkit-transform: translate(-265.4167px, 225.2118px) rotate(-28deg);
+  }
+  60% {
+    -webkit-transform: translate(-273px, 228.66px) rotate(-29deg);
+  }
+  61.67% {
+    -webkit-transform: translate(-280.5833px, 233.3518px) rotate(-30deg);
+  }
+  63.33% {
+    -webkit-transform: translate(-288.1667px, 239.2872px) rotate(-31deg);
+  }
+  65% {
+    -webkit-transform: translate(-295.75px, 246.4663px) rotate(-31deg);
+  }
+  66.67% {
+    -webkit-transform: translate(-303.3333px, 254.8889px) rotate(-32deg);
+  }
+  68.33% {
+    -webkit-transform: translate(-310.9167px, 264.5551px) rotate(-32deg);
+  }
+  70% {
+    -webkit-transform: translate(-318.5px, 275.465px) rotate(-32deg);
+  }
+  71.67% {
+    -webkit-transform: translate(-326.0833px, 287.6185px) rotate(-33deg);
+  }
+  73.33% {
+    -webkit-transform: translate(-333.6667px, 293.6156px) rotate(-33deg);
+  }
+  75% {
+    -webkit-transform: translate(-341.25px, 287.9063px) rotate(-101deg);
+  }
+  76.67% {
+    -webkit-transform: translate(-348.8333px, 283.4406px) rotate(-132deg);
+  }
+  78.33% {
+    -webkit-transform: translate(-356.4167px, 280.2185px) rotate(-133deg);
+  }
+  80% {
+    -webkit-transform: translate(-364px, 278.24px) rotate(-134deg);
+  }
+  81.67% {
+    -webkit-transform: translate(-371.5833px, 277.5051px) rotate(-135deg);
+  }
+  83.33% {
+    -webkit-transform: translate(-379.1667px, 278.0139px) rotate(-136deg);
+  }
+  85% {
+    -webkit-transform: translate(-386.75px, 279.7662px) rotate(-137deg);
+  }
+  86.67% {
+    -webkit-transform: translate(-394.3333px, 282.7622px) rotate(-137deg);
+  }
+  88.33% {
+    -webkit-transform: translate(-401.9167px, 287.0018px) rotate(-138deg);
+  }
+  90% {
+    -webkit-transform: translate(-409.5px, 292.485px) rotate(-138deg);
+  }
+  91.67% {
+    -webkit-transform: translate(-417.0833px, 294.5868px) rotate(-138deg);
+  }
+  93.33% {
+    -webkit-transform: translate(-424.6667px, 292.3822px) rotate(-141deg);
+  }
+  95% {
+    -webkit-transform: translate(-432.25px, 291.4212px) rotate(-140deg);
+  }
+  96.67% {
+    -webkit-transform: translate(-439.8333px, 291.7039px) rotate(-140deg);
+  }
+  98.33% {
+    -webkit-transform: translate(-447.4167px, 293.2301px) rotate(-140deg);
+  }
+  100% {
+    -webkit-transform: translate(-455px, 296px) rotate(-141deg);
+  }
+}
+@keyframes diceAnime {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(15deg);
+  }
+  1.67% {
+    -webkit-transform: translate(-7.5833px, 0.6218px) rotate(16deg);
+  }
+  3.33% {
+    -webkit-transform: translate(-15.1667px, 2.4872px) rotate(17deg);
+  }
+  5% {
+    -webkit-transform: translate(-22.75px, 5.5963px) rotate(18deg);
+  }
+  6.67% {
+    -webkit-transform: translate(-30.3333px, 9.9489px) rotate(19deg);
+  }
+  8.33% {
+    -webkit-transform: translate(-37.9167px, 15.5451px) rotate(20deg);
+  }
+  10% {
+    -webkit-transform: translate(-45.5px, 22.385px) rotate(21deg);
+  }
+  11.67% {
+    -webkit-transform: translate(-53.0833px, 30.4685px) rotate(22deg);
+  }
+  13.33% {
+    -webkit-transform: translate(-60.6667px, 39.7956px) rotate(23deg);
+  }
+  15% {
+    -webkit-transform: translate(-68.25px, 50.3662px) rotate(24deg);
+  }
+  16.67% {
+    -webkit-transform: translate(-75.8333px, 62.1806px) rotate(25deg);
+  }
+  18.33% {
+    -webkit-transform: translate(-83.4167px, 75.2385px) rotate(26deg);
+  }
+  20% {
+    -webkit-transform: translate(-91px, 89.54px) rotate(27deg);
+  }
+  21.67% {
+    -webkit-transform: translate(-98.5833px, 105.0851px) rotate(28deg);
+  }
+  23.33% {
+    -webkit-transform: translate(-106.1667px, 121.8739px) rotate(29deg);
+  }
+  25% {
+    -webkit-transform: translate(-113.75px, 139.9063px) rotate(29deg);
+  }
+  26.67% {
+    -webkit-transform: translate(-121.3333px, 159.1822px) rotate(30deg);
+  }
+  28.33% {
+    -webkit-transform: translate(-128.9167px, 179.7018px) rotate(30deg);
+  }
+  30% {
+    -webkit-transform: translate(-136.5px, 201.465px) rotate(31deg);
+  }
+  31.67% {
+    -webkit-transform: translate(-144.0833px, 224.4718px) rotate(31deg);
+  }
+  33.33% {
+    -webkit-transform: translate(-151.6667px, 248.7222px) rotate(32deg);
+  }
+  35% {
+    -webkit-transform: translate(-159.25px, 274.2162px) rotate(32deg);
+  }
+  36.67% {
+    -webkit-transform: translate(-166.8333px, 293.5539px) rotate(32deg);
+  }
+  38.33% {
+    -webkit-transform: translate(-174.4167px, 280.8351px) rotate(-16deg);
+  }
+  40% {
+    -webkit-transform: translate(-182px, 269.36px) rotate(-17deg);
+  }
+  41.67% {
+    -webkit-transform: translate(-189.5833px, 259.1285px) rotate(-18deg);
+  }
+  43.33% {
+    -webkit-transform: translate(-197.1667px, 250.1406px) rotate(-19deg);
+  }
+  45% {
+    -webkit-transform: translate(-204.75px, 242.3962px) rotate(-20deg);
+  }
+  46.67% {
+    -webkit-transform: translate(-212.3333px, 235.8956px) rotate(-21deg);
+  }
+  48.33% {
+    -webkit-transform: translate(-219.9167px, 230.6385px) rotate(-22deg);
+  }
+  50% {
+    -webkit-transform: translate(-227.5px, 226.625px) rotate(-23deg);
+  }
+  51.67% {
+    -webkit-transform: translate(-235.0833px, 223.8551px) rotate(-24deg);
+  }
+  53.33% {
+    -webkit-transform: translate(-242.6667px, 222.3289px) rotate(-25deg);
+  }
+  55% {
+    -webkit-transform: translate(-250.25px, 222.0462px) rotate(-26deg);
+  }
+  56.67% {
+    -webkit-transform: translate(-257.8333px, 223.0072px) rotate(-27deg);
+  }
+  58.33% {
+    -webkit-transform: translate(-265.4167px, 225.2118px) rotate(-28deg);
+  }
+  60% {
+    -webkit-transform: translate(-273px, 228.66px) rotate(-29deg);
+  }
+  61.67% {
+    -webkit-transform: translate(-280.5833px, 233.3518px) rotate(-30deg);
+  }
+  63.33% {
+    -webkit-transform: translate(-288.1667px, 239.2872px) rotate(-31deg);
+  }
+  65% {
+    -webkit-transform: translate(-295.75px, 246.4663px) rotate(-31deg);
+  }
+  66.67% {
+    -webkit-transform: translate(-303.3333px, 254.8889px) rotate(-32deg);
+  }
+  68.33% {
+    -webkit-transform: translate(-310.9167px, 264.5551px) rotate(-32deg);
+  }
+  70% {
+    -webkit-transform: translate(-318.5px, 275.465px) rotate(-32deg);
+  }
+  71.67% {
+    -webkit-transform: translate(-326.0833px, 287.6185px) rotate(-33deg);
+  }
+  73.33% {
+    -webkit-transform: translate(-333.6667px, 293.6156px) rotate(-33deg);
+  }
+  75% {
+    -webkit-transform: translate(-341.25px, 287.9063px) rotate(-101deg);
+  }
+  76.67% {
+    -webkit-transform: translate(-348.8333px, 283.4406px) rotate(-132deg);
+  }
+  78.33% {
+    -webkit-transform: translate(-356.4167px, 280.2185px) rotate(-133deg);
+  }
+  80% {
+    -webkit-transform: translate(-364px, 278.24px) rotate(-134deg);
+  }
+  81.67% {
+    -webkit-transform: translate(-371.5833px, 277.5051px) rotate(-135deg);
+  }
+  83.33% {
+    -webkit-transform: translate(-379.1667px, 278.0139px) rotate(-136deg);
+  }
+  85% {
+    -webkit-transform: translate(-386.75px, 279.7662px) rotate(-137deg);
+  }
+  86.67% {
+    -webkit-transform: translate(-394.3333px, 282.7622px) rotate(-137deg);
+  }
+  88.33% {
+    -webkit-transform: translate(-401.9167px, 287.0018px) rotate(-138deg);
+  }
+  90% {
+    -webkit-transform: translate(-409.5px, 292.485px) rotate(-138deg);
+  }
+  91.67% {
+    -webkit-transform: translate(-417.0833px, 294.5868px) rotate(-138deg);
+  }
+  93.33% {
+    -webkit-transform: translate(-424.6667px, 292.3822px) rotate(-141deg);
+  }
+  95% {
+    -webkit-transform: translate(-432.25px, 291.4212px) rotate(-140deg);
+  }
+  96.67% {
+    -webkit-transform: translate(-439.8333px, 291.7039px) rotate(-140deg);
+  }
+  98.33% {
+    -webkit-transform: translate(-447.4167px, 293.2301px) rotate(-140deg);
+  }
+  100% {
+    -webkit-transform: translate(-455px, 296px) rotate(-141deg);
+  }
+}
+@-webkit-keyframes diceAnime90deg {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(15deg);
+  }
+  1.67% {
+    -webkit-transform: translate(-7.5833px, 0.6218px) rotate(16deg);
+  }
+  3.33% {
+    -webkit-transform: translate(-15.1667px, 2.4872px) rotate(17deg);
+  }
+  5% {
+    -webkit-transform: translate(-22.75px, 5.5963px) rotate(18deg);
+  }
+  6.67% {
+    -webkit-transform: translate(-30.3333px, 9.9489px) rotate(19deg);
+  }
+  8.33% {
+    -webkit-transform: translate(-37.9167px, 15.5451px) rotate(20deg);
+  }
+  10% {
+    -webkit-transform: translate(-45.5px, 22.385px) rotate(21deg);
+  }
+  11.67% {
+    -webkit-transform: translate(-53.0833px, 30.4685px) rotate(22deg);
+  }
+  13.33% {
+    -webkit-transform: translate(-60.6667px, 39.7956px) rotate(23deg);
+  }
+  15% {
+    -webkit-transform: translate(-68.25px, 50.3662px) rotate(24deg);
+  }
+  16.67% {
+    -webkit-transform: translate(-75.8333px, 62.1806px) rotate(25deg);
+  }
+  18.33% {
+    -webkit-transform: translate(-83.4167px, 75.2385px) rotate(26deg);
+  }
+  20% {
+    -webkit-transform: translate(-91px, 89.54px) rotate(27deg);
+  }
+  21.67% {
+    -webkit-transform: translate(-98.5833px, 105.0851px) rotate(28deg);
+  }
+  23.33% {
+    -webkit-transform: translate(-106.1667px, 121.8739px) rotate(29deg);
+  }
+  25% {
+    -webkit-transform: translate(-113.75px, 139.9063px) rotate(29deg);
+  }
+  26.67% {
+    -webkit-transform: translate(-121.3333px, 159.1822px) rotate(30deg);
+  }
+  28.33% {
+    -webkit-transform: translate(-128.9167px, 179.7018px) rotate(30deg);
+  }
+  30% {
+    -webkit-transform: translate(-136.5px, 201.465px) rotate(31deg);
+  }
+  31.67% {
+    -webkit-transform: translate(-144.0833px, 224.4718px) rotate(31deg);
+  }
+  33.33% {
+    -webkit-transform: translate(-151.6667px, 248.7222px) rotate(32deg);
+  }
+  35% {
+    -webkit-transform: translate(-159.25px, 274.2162px) rotate(32deg);
+  }
+  36.67% {
+    -webkit-transform: translate(-166.8333px, 293.5539px) rotate(32deg);
+  }
+  38.33% {
+    -webkit-transform: translate(-174.4167px, 280.8351px) rotate(-16deg);
+  }
+  40% {
+    -webkit-transform: translate(-182px, 269.36px) rotate(-17deg);
+  }
+  41.67% {
+    -webkit-transform: translate(-189.5833px, 259.1285px) rotate(-18deg);
+  }
+  43.33% {
+    -webkit-transform: translate(-197.1667px, 250.1406px) rotate(-19deg);
+  }
+  45% {
+    -webkit-transform: translate(-204.75px, 242.3962px) rotate(-20deg);
+  }
+  46.67% {
+    -webkit-transform: translate(-212.3333px, 235.8956px) rotate(-21deg);
+  }
+  48.33% {
+    -webkit-transform: translate(-219.9167px, 230.6385px) rotate(-22deg);
+  }
+  50% {
+    -webkit-transform: translate(-227.5px, 226.625px) rotate(-23deg);
+  }
+  51.67% {
+    -webkit-transform: translate(-235.0833px, 223.8551px) rotate(-24deg);
+  }
+  53.33% {
+    -webkit-transform: translate(-242.6667px, 222.3289px) rotate(-25deg);
+  }
+  55% {
+    -webkit-transform: translate(-250.25px, 222.0462px) rotate(-26deg);
+  }
+  56.67% {
+    -webkit-transform: translate(-257.8333px, 223.0072px) rotate(-27deg);
+  }
+  58.33% {
+    -webkit-transform: translate(-265.4167px, 225.2118px) rotate(-28deg);
+  }
+  60% {
+    -webkit-transform: translate(-273px, 228.66px) rotate(-29deg);
+  }
+  61.67% {
+    -webkit-transform: translate(-280.5833px, 233.3518px) rotate(-30deg);
+  }
+  63.33% {
+    -webkit-transform: translate(-288.1667px, 239.2872px) rotate(-31deg);
+  }
+  65% {
+    -webkit-transform: translate(-295.75px, 246.4663px) rotate(-31deg);
+  }
+  66.67% {
+    -webkit-transform: translate(-303.3333px, 254.8889px) rotate(-32deg);
+  }
+  68.33% {
+    -webkit-transform: translate(-310.9167px, 264.5551px) rotate(-32deg);
+  }
+  70% {
+    -webkit-transform: translate(-318.5px, 275.465px) rotate(-32deg);
+  }
+  71.67% {
+    -webkit-transform: translate(-326.0833px, 287.6185px) rotate(-33deg);
+  }
+  73.33% {
+    -webkit-transform: translate(-333.6667px, 293.6156px) rotate(-33deg);
+  }
+  75% {
+    -webkit-transform: translate(-341.25px, 287.9063px) rotate(-191deg);
+  }
+  76.67% {
+    -webkit-transform: translate(-348.8333px, 283.4406px) rotate(-332deg);
+  }
+  78.33% {
+    -webkit-transform: translate(-356.4167px, 280.2185px) rotate(-373deg);
+  }
+  80% {
+    -webkit-transform: translate(-364px, 278.24px) rotate(-374deg);
+  }
+  81.67% {
+    -webkit-transform: translate(-371.5833px, 277.5051px) rotate(-375deg);
+  }
+  83.33% {
+    -webkit-transform: translate(-379.1667px, 278.0139px) rotate(-376deg);
+  }
+  85% {
+    -webkit-transform: translate(-386.75px, 279.7662px) rotate(-377deg);
+  }
+  86.67% {
+    -webkit-transform: translate(-394.3333px, 282.7622px) rotate(-377deg);
+  }
+  88.33% {
+    -webkit-transform: translate(-401.9167px, 287.0018px) rotate(-378deg);
+  }
+  90% {
+    -webkit-transform: translate(-409.5px, 292.485px) rotate(-378deg);
+  }
+  91.67% {
+    -webkit-transform: translate(-417.0833px, 294.5868px) rotate(-378deg);
+  }
+  93.33% {
+    -webkit-transform: translate(-424.6667px, 292.3822px) rotate(-381deg);
+  }
+  95% {
+    -webkit-transform: translate(-432.25px, 291.4212px) rotate(-380deg);
+  }
+  96.67% {
+    -webkit-transform: translate(-439.8333px, 291.7039px) rotate(-380deg);
+  }
+  98.33% {
+    -webkit-transform: translate(-447.4167px, 293.2301px) rotate(-380deg);
+  }
+  100% {
+    -webkit-transform: translate(-455px, 296px) rotate(-380deg);
+  }
+}
+@keyframes diceAnime90deg {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(15deg);
+  }
+  1.67% {
+    -webkit-transform: translate(-7.5833px, 0.6218px) rotate(16deg);
+  }
+  3.33% {
+    -webkit-transform: translate(-15.1667px, 2.4872px) rotate(17deg);
+  }
+  5% {
+    -webkit-transform: translate(-22.75px, 5.5963px) rotate(18deg);
+  }
+  6.67% {
+    -webkit-transform: translate(-30.3333px, 9.9489px) rotate(19deg);
+  }
+  8.33% {
+    -webkit-transform: translate(-37.9167px, 15.5451px) rotate(20deg);
+  }
+  10% {
+    -webkit-transform: translate(-45.5px, 22.385px) rotate(21deg);
+  }
+  11.67% {
+    -webkit-transform: translate(-53.0833px, 30.4685px) rotate(22deg);
+  }
+  13.33% {
+    -webkit-transform: translate(-60.6667px, 39.7956px) rotate(23deg);
+  }
+  15% {
+    -webkit-transform: translate(-68.25px, 50.3662px) rotate(24deg);
+  }
+  16.67% {
+    -webkit-transform: translate(-75.8333px, 62.1806px) rotate(25deg);
+  }
+  18.33% {
+    -webkit-transform: translate(-83.4167px, 75.2385px) rotate(26deg);
+  }
+  20% {
+    -webkit-transform: translate(-91px, 89.54px) rotate(27deg);
+  }
+  21.67% {
+    -webkit-transform: translate(-98.5833px, 105.0851px) rotate(28deg);
+  }
+  23.33% {
+    -webkit-transform: translate(-106.1667px, 121.8739px) rotate(29deg);
+  }
+  25% {
+    -webkit-transform: translate(-113.75px, 139.9063px) rotate(29deg);
+  }
+  26.67% {
+    -webkit-transform: translate(-121.3333px, 159.1822px) rotate(30deg);
+  }
+  28.33% {
+    -webkit-transform: translate(-128.9167px, 179.7018px) rotate(30deg);
+  }
+  30% {
+    -webkit-transform: translate(-136.5px, 201.465px) rotate(31deg);
+  }
+  31.67% {
+    -webkit-transform: translate(-144.0833px, 224.4718px) rotate(31deg);
+  }
+  33.33% {
+    -webkit-transform: translate(-151.6667px, 248.7222px) rotate(32deg);
+  }
+  35% {
+    -webkit-transform: translate(-159.25px, 274.2162px) rotate(32deg);
+  }
+  36.67% {
+    -webkit-transform: translate(-166.8333px, 293.5539px) rotate(32deg);
+  }
+  38.33% {
+    -webkit-transform: translate(-174.4167px, 280.8351px) rotate(-16deg);
+  }
+  40% {
+    -webkit-transform: translate(-182px, 269.36px) rotate(-17deg);
+  }
+  41.67% {
+    -webkit-transform: translate(-189.5833px, 259.1285px) rotate(-18deg);
+  }
+  43.33% {
+    -webkit-transform: translate(-197.1667px, 250.1406px) rotate(-19deg);
+  }
+  45% {
+    -webkit-transform: translate(-204.75px, 242.3962px) rotate(-20deg);
+  }
+  46.67% {
+    -webkit-transform: translate(-212.3333px, 235.8956px) rotate(-21deg);
+  }
+  48.33% {
+    -webkit-transform: translate(-219.9167px, 230.6385px) rotate(-22deg);
+  }
+  50% {
+    -webkit-transform: translate(-227.5px, 226.625px) rotate(-23deg);
+  }
+  51.67% {
+    -webkit-transform: translate(-235.0833px, 223.8551px) rotate(-24deg);
+  }
+  53.33% {
+    -webkit-transform: translate(-242.6667px, 222.3289px) rotate(-25deg);
+  }
+  55% {
+    -webkit-transform: translate(-250.25px, 222.0462px) rotate(-26deg);
+  }
+  56.67% {
+    -webkit-transform: translate(-257.8333px, 223.0072px) rotate(-27deg);
+  }
+  58.33% {
+    -webkit-transform: translate(-265.4167px, 225.2118px) rotate(-28deg);
+  }
+  60% {
+    -webkit-transform: translate(-273px, 228.66px) rotate(-29deg);
+  }
+  61.67% {
+    -webkit-transform: translate(-280.5833px, 233.3518px) rotate(-30deg);
+  }
+  63.33% {
+    -webkit-transform: translate(-288.1667px, 239.2872px) rotate(-31deg);
+  }
+  65% {
+    -webkit-transform: translate(-295.75px, 246.4663px) rotate(-31deg);
+  }
+  66.67% {
+    -webkit-transform: translate(-303.3333px, 254.8889px) rotate(-32deg);
+  }
+  68.33% {
+    -webkit-transform: translate(-310.9167px, 264.5551px) rotate(-32deg);
+  }
+  70% {
+    -webkit-transform: translate(-318.5px, 275.465px) rotate(-32deg);
+  }
+  71.67% {
+    -webkit-transform: translate(-326.0833px, 287.6185px) rotate(-33deg);
+  }
+  73.33% {
+    -webkit-transform: translate(-333.6667px, 293.6156px) rotate(-33deg);
+  }
+  75% {
+    -webkit-transform: translate(-341.25px, 287.9063px) rotate(-191deg);
+  }
+  76.67% {
+    -webkit-transform: translate(-348.8333px, 283.4406px) rotate(-332deg);
+  }
+  78.33% {
+    -webkit-transform: translate(-356.4167px, 280.2185px) rotate(-373deg);
+  }
+  80% {
+    -webkit-transform: translate(-364px, 278.24px) rotate(-374deg);
+  }
+  81.67% {
+    -webkit-transform: translate(-371.5833px, 277.5051px) rotate(-375deg);
+  }
+  83.33% {
+    -webkit-transform: translate(-379.1667px, 278.0139px) rotate(-376deg);
+  }
+  85% {
+    -webkit-transform: translate(-386.75px, 279.7662px) rotate(-377deg);
+  }
+  86.67% {
+    -webkit-transform: translate(-394.3333px, 282.7622px) rotate(-377deg);
+  }
+  88.33% {
+    -webkit-transform: translate(-401.9167px, 287.0018px) rotate(-378deg);
+  }
+  90% {
+    -webkit-transform: translate(-409.5px, 292.485px) rotate(-378deg);
+  }
+  91.67% {
+    -webkit-transform: translate(-417.0833px, 294.5868px) rotate(-378deg);
+  }
+  93.33% {
+    -webkit-transform: translate(-424.6667px, 292.3822px) rotate(-381deg);
+  }
+  95% {
+    -webkit-transform: translate(-432.25px, 291.4212px) rotate(-380deg);
+  }
+  96.67% {
+    -webkit-transform: translate(-439.8333px, 291.7039px) rotate(-380deg);
+  }
+  98.33% {
+    -webkit-transform: translate(-447.4167px, 293.2301px) rotate(-380deg);
+  }
+  100% {
+    -webkit-transform: translate(-455px, 296px) rotate(-380deg);
+  }
+}
+@keyframes diceAnimeDiceSecret {
+  0% {
+    background-image: url(../dice/image/secret.png);
+  }
+  75% {
+    background-image: url(../dice/image/secret.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/secret.png);
+  }
+  100% {
+    background-image: url(../dice/image/secret.png);
+  }
+}
+@keyframes diceAnime2Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_2_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_2_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_2.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_2.png);
+  }
+}
+@keyframes diceAnime3Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_3_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_3_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_3.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_3.png);
+  }
+}
+@keyframes diceAnime4Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_4_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_4_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_4.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_4.png);
+  }
+}
+@keyframes diceAnime6Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_6_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_6_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_6.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_6.png);
+  }
+}
+@keyframes diceAnime8Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_8_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_8_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_8.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_8.png);
+  }
+}
+@keyframes diceAnime10Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_10_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_10_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_10.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_10.png);
+  }
+}
+@keyframes diceAnime12Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_12_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_12_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_12.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_12.png);
+  }
+}
+@keyframes diceAnime20Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_20_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_20_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_20.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_20.png);
+  }
+}
+@keyframes diceAnime100Dice {
+  0% {
+    background-image: url(../dice/image/dice_bg_100_dummy.png);
+  }
+  75% {
+    background-image: url(../dice/image/dice_bg_100_dummy.png);
+  }
+  75.1% {
+    background-image: url(../dice/image/dice_bg_10.png);
+  }
+  100% {
+    background-image: url(../dice/image/dice_bg_10.png);
+  }
+}
+@-webkit-keyframes diceAnimeResult {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  75.1% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes diceAnimeResult {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  75.1% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes diceAnimeBG {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(-171deg);
+    filter: blur(10px);
+  }
+  35% {
+    filter: blur(5px);
+  }
+  36.67% {
+    filter: blur(3px);
+  }
+  38.33% {
+    filter: blur(3px);
+  }
+  40% {
+    filter: blur(5px);
+  }
+  71.67% {
+    filter: blur(7px);
+  }
+  73.33% {
+    filter: blur(3px);
+  }
+  75% {
+    filter: blur(3px);
+  }
+  76.67% {
+    filter: blur(5px);
+  }
+  78.33% {
+    filter: blur(5px);
+  }
+  98.33% {
+    filter: blur(3px);
+  }
+  100% {
+    -webkit-transform: translate(-460px, -15px) rotate(-171deg);
+    filter: blur(3px);
+    width: 36px;
+  }
+}
+@keyframes diceAnimeBG {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(-171deg);
+    filter: blur(10px);
+  }
+  35% {
+    filter: blur(5px);
+  }
+  36.67% {
+    filter: blur(3px);
+  }
+  38.33% {
+    filter: blur(3px);
+  }
+  40% {
+    filter: blur(5px);
+  }
+  71.67% {
+    filter: blur(7px);
+  }
+  73.33% {
+    filter: blur(3px);
+  }
+  75% {
+    filter: blur(3px);
+  }
+  76.67% {
+    filter: blur(5px);
+  }
+  78.33% {
+    filter: blur(5px);
+  }
+  98.33% {
+    filter: blur(3px);
+  }
+  100% {
+    -webkit-transform: translate(-460px, -15px) rotate(-171deg);
+    filter: blur(3px);
+    width: 36px;
+  }
+}
+@-webkit-keyframes diceAnimeResultCurrent {
+  0% {
+    opacity: 0;
+    color: rgba(255, 255, 255, 0);
+  }
+  0.1% {
+    opacity: 1;
+    color: #fed23d;
+  }
+  80% {
+    opacity: 1;
+    color: #fed23d;
+  }
+  100% {
+    opacity: 1;
+    color: #fc6023;
+  }
+}
