@@ -12,5 +12,8 @@
   // デフォルトの設定はオフにしておく
   "typescript.format.enable": false,
   "javascript.format.enable": false,
-  "prettier.disableLanguages": ["markdown"]
+  "prettier.disableLanguages": [
+    "markdown"
+  ],
+  "liveServer.settings.port": 5502
 }
