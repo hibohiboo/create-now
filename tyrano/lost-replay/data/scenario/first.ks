@@ -11,6 +11,9 @@
 [plugin name="dice"]
 [plugin name="depth_mod"]
 
+; 自分で定義したマクロ呼出
+@call storage="macro/lost.ks"
+
 ;ティラノスクリプトが標準で用意している便利なライブラリ群
 ;コンフィグ、CG、回想モードを使う場合は必須
 @call storage="tyrano.ks"
@@ -22,8 +25,10 @@
 ;最初は右下のメニューボタンを非表示にする
 [hidemenubutton]
 
+;タイトル画面へ移動
+@jump storage="title.ks"
 ;コンフィグ設定に移動
-@jump storage="scene1.ks"
+;@jump storage="scene1.ks"
 
 [s]
 
