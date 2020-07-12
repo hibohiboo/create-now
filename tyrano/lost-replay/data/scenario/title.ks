@@ -9,14 +9,16 @@
 ; キャラクターの準備
 @call storage="lost/characters.ks"
 ; ここからテスト
-@jump target=gamestart4
-[s]
+;@jump target=gamestart4
+;[s]
 ; ここまでテスト
 
 [glink target="gamestart" text="キャラクターメイキング" size=20 width="300" x=50 y=50]
 [glink target="gamestart2" text="キャラクター紹介" size=20 width="300" x=50 y=100]
 [glink target="gamestart3" text="【第一話】キャンプフェイズ" size=20 width="300" x=50 y=150]
 [glink target="gamestart4" text="【第一話】探索フェイズ" size=20 width="300" x=50 y=200]
+[glink target="gamestart5" text="【第一話】決戦フェイズ" size=20 width="300" x=50 y=250]
+[glink target="gamestart6" text="【第一話】結果フェイズ" size=20 width="300" x=50 y=300]
 
 ; glink color="blue" graphic="button/button_test.png" storage="scene1.ks" size="20" x="260" width="300" y="100" enterse="button_2.ogg"]
 ;[button x=135 y=230 graphic="title/button_start.png" enterimg="title/button_start2.png"  target="gamestart"]
@@ -38,3 +40,7 @@
 @jump storage="scenes/session1/camp.ks"
 *gamestart4
 @jump storage="scenes/session1/explorer.ks"
+*gamestart5
+@jump storage="scenes/session1/showdown.ks"
+*gamestart6
+@jump storage="scenes/session1/ending.ks"
