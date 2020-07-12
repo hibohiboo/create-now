@@ -259,4 +259,4 @@ TRPGが初めてな、いのはらさんから作りますか。
 [freeimage layer=0]
 
 
-
+@jump storage="scenes/session0/characters.ks"

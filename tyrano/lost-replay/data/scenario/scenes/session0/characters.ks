@@ -72,6 +72,11 @@
 矢筒、矢(30本)、リュックサック、手書きのメモ
 [p]
 
+リュックサック[r]
+セミのぬけがら
+[p]
+
+
 [chara_hide_all]
 [chara_show  name="mugi"]
 
@@ -98,4 +103,4 @@
 火付け道具
 [p]
 
-@jump storage=scene3.ks
+@jump storage="scenes/session1/camp.ks"

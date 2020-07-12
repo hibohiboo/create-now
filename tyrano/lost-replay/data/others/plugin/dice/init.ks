@@ -42,28 +42,28 @@ var dice_eye_html = {
 function rand(max_number,min_number){
 
     var fix_number = Math.floor( Math.random() * (max_number + 1 - min_number) ) + min_number ;
-    return fix_number;    
+    return fix_number;
 
 }
 
 //ダイスを投げる
 for(var i in array_dice){
-    
-    var left = rand(-300,300); 
-    var top = rand(-300,100); 
-    
+
+    var left = rand(-300,300);
+    var top = rand(-300,100);
+
     var d = array_dice[i]
     var result = array_result[i]
-    
+
     var html = '';
 
     if(d ==="100"){
-        
+
         var result_one = "";
         var result_two = "";
-        
+
         result = parseInt(result);
-        
+
         if(result < 10){
             result_two = "00";
             result_one = result;
@@ -75,39 +75,39 @@ for(var i in array_dice){
             result_two = sep[0]+"0";
             result_one = sep[1];
         }
-        
-             
+
+
         //10のくらい
         html += '<div class="diceFigWrap" style="margin-left: '+left+'px; margin-top: '+top+'px">';
 	    html +=    '<div class="diceFig dice'+100+' current'+result_two+'">'+dice_eye_html[100]+'</div>'
-        html += '</div>';    
+        html += '</div>';
         j_viewDiceArea.append($(html));
-    
+
         //１のくらい
         html += '<div class="diceFigWrap" style="margin-left: '+(left+50)+'px; margin-top: '+top+'px">';
 	    html +=    '<div class="diceFig dice'+10+' current'+result_one+'">'+dice_eye_html[10]+'</div>'
-        html += '</div>';    
+        html += '</div>';
         j_viewDiceArea.append($(html));
-        
-        
-        
+
+
+
     }else{
-        
+
         //current0 対策
         if(d==10 && result==10){
             result=0;
         }
-        
+
         html += '<div class="diceFigWrap" style="margin-left: '+left+'px; margin-top: '+top+'px">';
 	    html +=    '<div class="diceFig dice'+d+' current'+result+'">'+dice_eye_html[d]+'</div>'
-        html += '</div>';    
-        
+        html += '</div>';
+
         j_viewDiceArea.append($(html));
-       
-        
+
+
     }
-    
-    
+
+
 }
 
 
@@ -126,18 +126,18 @@ $("#tyrano_base").append(j_viewDiceArea);
 
 clearTimeout(timerID);
 timerID = setTimeout(function(){
-    
+
     j_viewDiceArea.fadeOut(1000,function(){
         j_viewDiceArea.empty();
         j_viewDiceArea.hide();
     });
-    
-},5000);
+
+},1500);
 
 
 [endscript]
 
-[wait time=4000]
+[wait time=500]
 [text val=%result_str ]
 [p]
 

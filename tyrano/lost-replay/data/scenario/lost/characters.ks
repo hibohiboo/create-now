@@ -7,12 +7,13 @@
 
 ;上記で定義した領域がキャラクターの名前表示であることを宣言（これがないと#の部分でエラーになります）
 [chara_config ptext="chara_name_area"]
-
+; 発言者以外を暗くする
+[chara_config brightness=40 talk_focus=brightness]
 ;このゲームで登場するキャラクターを宣言
 ;akane
 [chara_new  name="mugi" storage="chara/mugi/2020.7.7.png" jname="ムギ"  ]
-[chara_new  name="morisaki" storage="chara/morisaki/2020.7.4trpg.png" jname="森崎"  ]
-[chara_new  name="yumisaki" storage="chara/yumisaki/31c9557cc2654edf.png" jname="弓崎"  ]
+[chara_new  name="mori" storage="chara/morisaki/2020.7.4trpg.png" jname="森崎"  ]
+[chara_new  name="yumi" storage="chara/yumisaki/31c9557cc2654edf.png" jname="弓崎"  ]
 [chara_new  name="yamato" storage="chara/yumisaki/animal_01_a.png" jname="ヤマト"  ]
 [chara_new  name="mag" storage="chara/npc/mag.png" jname="マグ"  ]
 [chara_new  name="rirum" storage="chara/npc/rirum.png" jname="リルム"  ]
