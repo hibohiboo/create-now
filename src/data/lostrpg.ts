@@ -3038,7 +3038,7 @@ export const trophyAbilityList = [
         name: 'ピンチのときほど',
         group: 'スター',
         type: '割込み',
-        recoil: '3',
+        recoil: '-',
         specialty: '《閃く》',
         target: '自身',
         effect:
@@ -3272,6 +3272,42 @@ export const trophyAbilityList = [
         target: '単体',
         effect:
           '自分以外の判定の直前に使用する。指定特技の判定に成功すると対象の達成値にプラス1の修正がつく',
+      },
+    ],
+  },
+  {
+    name: 'グンシ',
+    id: 'tactician',
+    list: [
+      {
+        name: '作戦会議',
+        group: 'グンシ',
+        type: '支援',
+        recoil: '3',
+        specialty: '《考える》',
+        target: '全体',
+        effect:
+          '探索フェイズに使用することができる。指定特技の判定に成功すると、対象がそのサイクルで行う判定の達成値にプラス2の修正がつく。',
+      },
+      {
+        name: '連携指示',
+        group: 'グンシ',
+        type: '支援',
+        recoil: '2',
+        specialty: '《伝える》',
+        target: '単体',
+        effect:
+          '指定特技の判定に成功すると、対象は行動を消費せずに即座に「連携攻撃」を行うことができる。',
+      },
+      {
+        name: 'デスマーチ',
+        group: 'グンシ',
+        type: '割込み',
+        recoil: '5',
+        specialty: '《休まない》',
+        target: '自身',
+        effect:
+          '自身が行動を開始するときに割込んで使用する。指定特技の判定に成功すると、1d6のダメージを受け、その行動では【支援】タイプのアビリティを2回使用することができる。',
       },
     ],
   },
