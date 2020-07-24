@@ -5,11 +5,23 @@ import crossLayout from './cross-layout.module.css'
 
 const Controller: React.FC = () => {
   return (
-    <div className={crossLayout.layout}>
-      <button className={crossLayout.positionTop}>X</button>
-      <button className={crossLayout.positionLeft}>Y</button>
-      <button className={crossLayout.positionRight}>A</button>
-      <button className={crossLayout.positionBottom}>B</button>
+    <div className="game-controller">
+      <div className="abxy-btn-set">
+        <div className="cross-layout">
+          <button className="btn abxy-btn cross-layout-position-top btn-x">
+            X
+          </button>
+          <button className="btn abxy-btn cross-layout-position-left btn-y">
+            Y
+          </button>
+          <button className="btn abxy-btn cross-layout-position-right btn-a">
+            A
+          </button>
+          <button className="btn abxy-btn cross-layout-position-bottom btn-b">
+            B
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
