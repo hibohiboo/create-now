@@ -36,18 +36,17 @@ interface Location {
   y: number
 }
 type GameState = {
-  actor: Actor
   unit: Location
 }
 
 export const init: GameState = {
-  actor: new Actor(),
   unit: { x: 0, y: 0 },
 }
 
 const getSelectedUnit = (state: GameState) =>
   new Unit(state.unit.x, state.unit.y)
 let lastCommand: UndoCommand | null = null
+const actor = new Actor()
 // actions と reducers の定義
 const gameModule = createSlice({
   name: 'game',
@@ -55,9 +54,9 @@ const gameModule = createSlice({
   reducers: {
     setCommand: (state, action: PayloadAction<CommandButton>) => {
       const btn = action.payload
-      if (isPressed('B', btn)) return lastCommand.undo(state)
+      if (isPressed('B', btn) && lastCommand) return lastCommand.undo(state)
       const command = inputHandler(btn)
-      if (command) return command.execute(state.actor)
+      if (command) return command.execute(actor)
       const unit = getSelectedUnit(state)
       const ucmd = inputHandle2(btn, unit)
       ucmd.execute(state)
@@ -133,6 +132,7 @@ class MoveUnitCommand implements UndoCommand {
   undo(state: GameState) {
     this.unit.moveTo(this.xBefore, this.yBefore)
     state.unit = { x: this.x, y: this.y }
+    lastCommand = null
   }
 }
 
