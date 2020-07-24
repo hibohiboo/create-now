@@ -8,6 +8,7 @@ import memoListModule, { init as memoListInit } from './modules/memoListModule'
 import trpgManualModule, {
   init as trpgManualInit,
 } from './modules/trpgManualModule'
+import gameModule, { init as gameInit } from './modules/gameModule'
 
 const rootReducer = combineReducers({
   scenario: scenarioModule.reducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   lost: lostModule.reducer,
   memoList: memoListModule.reducer,
   trpgManual: trpgManualModule.reducer,
+  game: gameModule.reducer,
 })
 export default rootReducer
 
@@ -26,6 +28,7 @@ const rootPreloadedState = {
   lost: lostInit,
   memoList: memoListInit,
   trpgManual: trpgManualInit,
+  game: gameInit,
 }
 
 export type RootState = typeof rootPreloadedState

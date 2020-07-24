@@ -3,15 +3,16 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '~/components/pages/game/Layout'
 import utilStyles from '~/styles/utils.module.scss'
 import Controller from '~/components/molcures/game/Controller'
-
+import { viewModel } from '~/store/modules/gameModule'
 export default function Home() {
+  const vm = viewModel()
   return (
     <Layout home={true}>
       <Head>
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <Controller />
+        <Controller onClick={vm.handleInput} />
       </section>
     </Layout>
   )
