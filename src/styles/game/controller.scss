@@ -65,4 +65,35 @@
     padding: 20px;
     border-radius: 50%;
   }
+
+  // 十字キー
+  .cross-key-btn {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(66, 86, 123, 0.5);
+  }
+
+  .left-mark {
+    display: block;
+    transform: rotate(-90deg);
+  }
+
+  .right-mark {
+    display: block;
+    transform: rotate(90deg);
+  }
+
+  .bottom-mark {
+    display: block;
+    transform: rotate(180deg);
+  }
+  .controller-left {
+    display: inline-block;
+    background-color: rgb(229, 227, 250);
+    padding: 30px;
+    border-radius: 50%;
+  }
+  .spf-controller {
+    display: flex;
+  }
 }

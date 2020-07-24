@@ -14,14 +14,25 @@ class Actor {
     console.log('LurchIneffectively')
   }
 }
+class Unit {
+  public x = 0
+  public y = 0
+  moveTo(x: number, y: number) {
+    console.log(`move from x:${this.x} y:${this.y} to x:${x} y:${y}`)
+    this.x = x
+    this.y = y
+  }
+}
 type GameState = {
-  hoge: string
   actor: Actor
+  unit: Unit
+  lastCommand: Command | null
 }
 
 export const init: GameState = {
-  hoge: '',
   actor: new Actor(),
+  unit: new Unit(),
+  lastCommand: null,
 }
 
 // actions と reducers の定義
@@ -29,8 +40,8 @@ const gameModule = createSlice({
   name: 'game',
   initialState: init,
   reducers: {
-    setHoge: (state, action: PayloadAction<string>) => {
-      state.hoge = action.payload
+    setCommand: (state, action: PayloadAction<Command>) => {
+      state.lastCommand = action.payload
     },
   },
 })
@@ -39,11 +50,15 @@ export default gameModule
 export type GameModule = ReturnType<typeof gameModule.reducer>
 export const viewModel = () =>
   useSelector((state: { game: GameModule }) => {
-    const { actor } = state.game
+    const { actor, unit } = state.game
+    const getSelectedUnit = () => unit
     return {
       handleInput: (btn: CommandButton) => {
         const command = inputHandler(btn)
-        if (command) command.execute(actor)
+        if (command) return command.execute(actor)
+        const unit = getSelectedUnit()
+        const ucmd = inputHandle2(btn, unit)
+        ucmd.execute()
       },
     }
   })
@@ -58,12 +73,15 @@ const inputHandler = (btn: CommandButton) => {
   if (isPressed('B', btn)) return buttonB
   return null
 }
-export type CommandButton = 'X' | 'Y' | 'A' | 'B'
+export type CommandButton = 'X' | 'Y' | 'A' | 'B' | 'UP' | 'DOWN'
 const isPressed = (expected: CommandButton, actual: CommandButton) =>
   expected === actual
 
 interface Command {
   execute(actor: Actor): void
+}
+type UndoCommand = Command & {
+  undo(): void
 }
 class JumpCommand implements Command {
   execute(actor: Actor) {
@@ -85,4 +103,28 @@ class LurchIneffectivelyCommand implements Command {
   execute(actor: Actor) {
     actor.lurchIneffectively()
   }
+}
+
+class MoveUnitCommand implements UndoCommand {
+  private xBefore = 0
+  private yBefore = 0
+  constructor(private unit: Unit, private x: number, private y: number) {}
+  execute() {
+    this.xBefore = this.unit.x
+    this.yBefore = this.unit.y
+    this.unit.moveTo(this.x, this.y)
+  }
+  undo() {
+    this.unit.moveTo(this.xBefore, this.yBefore)
+  }
+}
+
+const inputHandle2 = (btn: CommandButton, unit: Unit) => {
+  if (isPressed('UP', btn)) {
+    return new MoveUnitCommand(unit, unit.x, unit.y - 1)
+  }
+  if (isPressed('DOWN', btn)) {
+    return new MoveUnitCommand(unit, unit.x, unit.y + 1)
+  }
+  return null
 }
