@@ -1,12 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux'
-
+class Actor {
+  jump() {
+    console.log('Jump')
+  }
+  fire() {
+    console.log('Fire')
+  }
+  swap() {
+    console.log('Swap')
+  }
+  lurchIneffectively() {
+    console.log('LurchIneffectively')
+  }
+}
 type GameState = {
   hoge: string
+  actor: Actor
 }
 
 export const init: GameState = {
   hoge: '',
+  actor: new Actor(),
 }
 
 // actions と reducers の定義
@@ -24,43 +39,50 @@ export default gameModule
 export type GameModule = ReturnType<typeof gameModule.reducer>
 export const viewModel = () =>
   useSelector((state: { game: GameModule }) => {
-    const buttonX = new FireCommand()
-    const buttonY = new JumpCommand()
-    const buttonA = new LurchIneffectivelyCommand()
-    const buttonB = new SwapCommand()
+    const { actor } = state.game
     return {
       handleInput: (btn: CommandButton) => {
-        if (isPressed('X', btn)) buttonX.execute()
-        if (isPressed('Y', btn)) buttonY.execute()
-        if (isPressed('A', btn)) buttonA.execute()
-        if (isPressed('B', btn)) buttonB.execute()
+        const command = inputHandler(btn)
+        if (command) command.execute(actor)
       },
     }
   })
+const inputHandler = (btn: CommandButton) => {
+  const buttonX = new FireCommand()
+  const buttonY = new JumpCommand()
+  const buttonA = new LurchIneffectivelyCommand()
+  const buttonB = new SwapCommand()
+  if (isPressed('X', btn)) return buttonX
+  if (isPressed('Y', btn)) return buttonY
+  if (isPressed('A', btn)) return buttonA
+  if (isPressed('B', btn)) return buttonB
+  return null
+}
 export type CommandButton = 'X' | 'Y' | 'A' | 'B'
 const isPressed = (expected: CommandButton, actual: CommandButton) =>
   expected === actual
+
 interface Command {
-  execute: () => void
+  execute(actor: Actor): void
 }
 class JumpCommand implements Command {
-  execute() {
-    console.log('Jump')
+  execute(actor: Actor) {
+    actor.jump()
   }
 }
 class FireCommand implements Command {
-  execute() {
-    console.log('Fire')
+  execute(actor: { fire: () => void }) {
+    actor.fire()
   }
 }
 
 class SwapCommand implements Command {
-  execute() {
-    console.log('Swap')
+  execute(actor: Actor) {
+    actor.swap()
   }
 }
 class LurchIneffectivelyCommand implements Command {
-  execute() {
-    console.log('LurchIneffectively')
+  execute(actor: Actor) {
+    actor.lurchIneffectively()
   }
 }
