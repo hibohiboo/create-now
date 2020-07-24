@@ -12,25 +12,25 @@ const Controller: React.FC<{ onClick: (x: CommandButton) => void }> = ({
         <div className="cross-layout">
           <button
             className="btn abxy-btn cross-layout-position-top btn-x"
-            onClick={() => onClick('x')}
+            onClick={() => onClick('X')}
           >
             X
           </button>
           <button
             className="btn abxy-btn cross-layout-position-left btn-y"
-            onClick={() => onClick('y')}
+            onClick={() => onClick('Y')}
           >
             Y
           </button>
           <button
             className="btn abxy-btn cross-layout-position-right btn-a"
-            onClick={() => onClick('a')}
+            onClick={() => onClick('A')}
           >
             A
           </button>
           <button
             className="btn abxy-btn cross-layout-position-bottom btn-b"
-            onClick={() => onClick('b')}
+            onClick={() => onClick('B')}
           >
             B
           </button>
