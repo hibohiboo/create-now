@@ -1,0 +1,30 @@
+.layout {
+  display: grid;
+  grid-template-columns: 30px 30px 30px;
+  grid-template-rows: 30px 30px 30px;
+}
+
+.positionTop {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+
+.positionLeft {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+.positionCenter {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
+.positionRight {
+  grid-row: 2 / 3;
+  grid-column: 3/4;
+}
+
+.positionBottom {
+  grid-row: 3 / 4;
+  grid-column: 2/3;
+}
