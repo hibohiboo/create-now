@@ -1,6 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux'
-class Actor {
+import { sampleTable } from '~/data/lostrpg-en'
+interface Actor {
+  jump(): void
+  fire(): void
+  swap(): void
+  lurchIneffectively(): void
+}
+
+class Actor implements Actor {
   jump() {
     console.log('Jump')
   }
@@ -15,28 +23,31 @@ class Actor {
   }
 }
 class Unit {
-  public x = 0
-  public y = 0
+  constructor(public x = 0, public y = 0) {}
+
   moveTo(x: number, y: number) {
     console.log(`move from x:${this.x} y:${this.y} to x:${x} y:${y}`)
     this.x = x
     this.y = y
   }
 }
+interface Location {
+  x: number
+  y: number
+}
 type GameState = {
   actor: Actor
-  unit: Unit
-  lastCommand: Command | null
+  unit: Location
 }
 
 export const init: GameState = {
   actor: new Actor(),
-  unit: new Unit(),
-  lastCommand: null,
+  unit: { x: 0, y: 0 },
 }
 
-const getSelectedUnit = (state) => state.unit
-
+const getSelectedUnit = (state: GameState) =>
+  new Unit(state.unit.x, state.unit.y)
+let lastCommand: UndoCommand | null = null
 // actions と reducers の定義
 const gameModule = createSlice({
   name: 'game',
@@ -44,12 +55,13 @@ const gameModule = createSlice({
   reducers: {
     setCommand: (state, action: PayloadAction<CommandButton>) => {
       const btn = action.payload
+      if (isPressed('B', btn)) return lastCommand.undo(state)
       const command = inputHandler(btn)
       if (command) return command.execute(state.actor)
       const unit = getSelectedUnit(state)
       const ucmd = inputHandle2(btn, unit)
-      ucmd.execute()
-      state.lastCommand = ucmd
+      ucmd.execute(state)
+      lastCommand = ucmd
     },
   },
 })
@@ -82,9 +94,7 @@ const isPressed = (expected: CommandButton, actual: CommandButton) =>
 interface Command {
   execute(actor: Actor): void
 }
-type UndoCommand = Command & {
-  undo(): void
-}
+
 class JumpCommand implements Command {
   execute(actor: Actor) {
     actor.jump()
@@ -106,18 +116,23 @@ class LurchIneffectivelyCommand implements Command {
     actor.lurchIneffectively()
   }
 }
-
+type UndoCommand = {
+  execute(state: GameState): void
+  undo(state: GameState): void
+}
 class MoveUnitCommand implements UndoCommand {
   private xBefore = 0
   private yBefore = 0
   constructor(private unit: Unit, private x: number, private y: number) {}
-  execute() {
+  execute(state: GameState) {
     this.xBefore = this.unit.x
     this.yBefore = this.unit.y
     this.unit.moveTo(this.x, this.y)
+    state.unit = { x: this.x, y: this.y }
   }
-  undo() {
+  undo(state: GameState) {
     this.unit.moveTo(this.xBefore, this.yBefore)
+    state.unit = { x: this.x, y: this.y }
   }
 }
 
