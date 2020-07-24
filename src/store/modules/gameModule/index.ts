@@ -35,31 +35,33 @@ export const init: GameState = {
   lastCommand: null,
 }
 
+const getSelectedUnit = (state) => state.unit
+
 // actions と reducers の定義
 const gameModule = createSlice({
   name: 'game',
   initialState: init,
   reducers: {
-    setCommand: (state, action: PayloadAction<Command>) => {
-      state.lastCommand = action.payload
+    setCommand: (state, action: PayloadAction<CommandButton>) => {
+      const btn = action.payload
+      const command = inputHandler(btn)
+      if (command) return command.execute(state.actor)
+      const unit = getSelectedUnit(state)
+      const ucmd = inputHandle2(btn, unit)
+      ucmd.execute()
+      state.lastCommand = ucmd
     },
   },
 })
 
 export default gameModule
 export type GameModule = ReturnType<typeof gameModule.reducer>
+const actions = gameModule.actions
 export const viewModel = () =>
   useSelector((state: { game: GameModule }) => {
-    const { actor, unit } = state.game
-    const getSelectedUnit = () => unit
+    const dispatch = useDispatch()
     return {
-      handleInput: (btn: CommandButton) => {
-        const command = inputHandler(btn)
-        if (command) return command.execute(actor)
-        const unit = getSelectedUnit()
-        const ucmd = inputHandle2(btn, unit)
-        ucmd.execute()
-      },
+      handleInput: (btn: CommandButton) => dispatch(actions.setCommand(btn)),
     }
   })
 const inputHandler = (btn: CommandButton) => {
