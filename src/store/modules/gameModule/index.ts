@@ -170,18 +170,31 @@ class World {
   private riverTerrain: Terrain = generateTerrain(2, true, 'river')
   constructor(private cols = 8, private rows = 6) {}
   generateTerrains() {
-    const tiles: (Terrain | null)[][] = Array(this.rows).fill(Array(this.cols))
-    for (let x = 0; x < this.cols; x++) {
-      for (let y = 0; y < this.rows; y++) {
-        const random = _.random(0, 10)
-        console.log(`x: ${x} y:${y} random: ${random}`)
-        if (random === 0) {
-          tiles[y][x] = this.hillTerrain
-        } else {
-          tiles[y][x] = this.grassTerrain
+    const tiles: Terrain[][] = Array(this.rows).fill(
+      Array(this.cols).fill(this.grassTerrain),
+    )
+    const HILLS_RANDOM_RANGE = 10
+
+    // 川を配置
+    // TODO: randomを使うと、Prop `className` did not match. Serverのエラー
+    const riverXpos = _.random(0, this.cols - 1)
+
+    const result = tiles.map((row) =>
+      row.map((cell, xIndex) => {
+        // 川を配置
+        if (riverXpos === xIndex) {
+          return this.riverTerrain
         }
-      }
-    }
-    return tiles
+
+        // 丘を点在
+        if (_.random(0, HILLS_RANDOM_RANGE) === 0) {
+          return this.hillTerrain
+        }
+
+        return cell
+      }),
+    )
+
+    return result
   }
 }
