@@ -177,9 +177,9 @@ class World {
 
     // 川を配置
     // TODO: randomを使うと、Prop `className` did not match. Serverのエラー
-    const riverXpos = _.random(0, this.cols - 1)
+    const riverXpos = 3 //_.random(0, this.cols - 1)
 
-    const result = tiles.map((row) =>
+    const result = tiles.map((row, yIndex) =>
       row.map((cell, xIndex) => {
         // 川を配置
         if (riverXpos === xIndex) {
@@ -187,7 +187,10 @@ class World {
         }
 
         // 丘を点在
-        if (_.random(0, HILLS_RANDOM_RANGE) === 0) {
+        // if (_.random(0, HILLS_RANDOM_RANGE) === 0) {
+        //   return this.hillTerrain
+        // }
+        if ((xIndex === 0 && yIndex === 0) || (xIndex === 4 && yIndex === 4)) {
           return this.hillTerrain
         }
 
