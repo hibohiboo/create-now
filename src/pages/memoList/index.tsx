@@ -19,7 +19,7 @@ import MaterialTable from 'material-table'
 import { useViewModel, separateTags } from '~/store/modules/memoListModule'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import Link from '~/components/atoms/mui/Link'
-import TableIcons from '~/components/molcures/TableIcons'
+import TableIcons from '~/components/molecules/TableIcons'
 import InputField from '~/components/form/InputField'
 import sanitize from 'sanitize-html'
 
