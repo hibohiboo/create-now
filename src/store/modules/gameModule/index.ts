@@ -150,7 +150,14 @@ const inputHandle2 = (btn: CommandButton, unit: Unit) => {
   return null
 }
 // フライウェイトパターン
-const getTiles = () => new World().generateTerrains()
+const getTiles = () => {
+  const world = new World()
+  const tiles = world.generateTerrains()
+  console.log('grass', world.getTerrain(0, 1))
+  console.log('hill', world.getTerrain(0, 0))
+  console.log('river', world.getTerrain(3, 0))
+  return tiles
+}
 
 type Texture = 'grass' | 'river' | 'hill'
 
@@ -168,18 +175,19 @@ class World {
   private grassTerrain: Terrain = generateTerrain(1, false, 'grass')
   private hillTerrain: Terrain = generateTerrain(3, false, 'hill')
   private riverTerrain: Terrain = generateTerrain(2, true, 'river')
-  constructor(private cols = 8, private rows = 6) {}
+  private tiles: Terrain[][] | null = null
+  constructor(private colNumber = 8, private rowNumber = 6) {}
   generateTerrains() {
-    const tiles: Terrain[][] = Array(this.rows).fill(
-      Array(this.cols).fill(this.grassTerrain),
+    const tiles: Terrain[][] = Array(this.rowNumber).fill(
+      Array(this.colNumber).fill(this.grassTerrain),
     )
-    const HILLS_RANDOM_RANGE = 10
 
     // 川を配置
     // TODO: randomを使うと、Prop `className` did not match. Serverのエラー
-    const riverXpos = 3 //_.random(0, this.cols - 1)
+    // const HILLS_RANDOM_RANGE = 10
+    const riverXpos = 3 //_.random(0, this.colNumber - 1)
 
-    const result = tiles.map((row, yIndex) =>
+    this.tiles = tiles.map((row, yIndex) =>
       row.map((cell, xIndex) => {
         // 川を配置
         if (riverXpos === xIndex) {
@@ -198,6 +206,15 @@ class World {
       }),
     )
 
-    return result
+    return this.tiles
+  }
+
+  getTerrain(x: number, y: number) {
+    if (!this.tiles) throw new Error('not terrains. please generate use before')
+    if (y >= this.colNumber || x >= this.rowNumber)
+      throw new Error(
+        `out of range: col:${this.colNumber} x:${x} row:${this.rowNumber} y:${y} `,
+      )
+    return this.tiles[y][x]
   }
 }
