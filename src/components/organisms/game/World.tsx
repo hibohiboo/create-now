@@ -1,6 +1,6 @@
 import React from 'react'
-
-const World: React.FC<{ tiles: number[][] }> = ({ tiles }) => {
+import type { Terrain } from '~/store/modules/gameModule'
+const World: React.FC<{ tiles: Terrain[][] }> = ({ tiles }) => {
   return (
     <div className="game-world">
       <div className="game-table">
@@ -8,7 +8,7 @@ const World: React.FC<{ tiles: number[][] }> = ({ tiles }) => {
           <div className="game-table-row" key={`row-${rowIndex}`}>
             {row.map((col, colIndex) => (
               <div
-                className="game-table-cell"
+                className={`game-table-cell game-object-terrain-${col.texture}`}
                 key={`row-${rowIndex}-col-${colIndex}`}
               ></div>
             ))}

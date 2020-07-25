@@ -1,16 +1,31 @@
-.game-world {
-  .game- {
-    &table {
-      display: table;
-      &-row {
-        display: table-row;
+.game- {
+  &world {
+    .game- {
+      &table {
+        display: table;
+        &-row {
+          display: table-row;
+        }
+        &-cell {
+          display: table-cell;
+          border: 1px solid #000;
+          border-collapse: collapse;
+          width: 30px;
+          height: 30px;
+        }
       }
-      &-cell {
-        display: table-cell;
-        border: 1px solid #000;
-        border-collapse: collapse;
-        width: 30px;
-        height: 30px;
+    }
+  }
+  &object- {
+    &terrain- {
+      &grass {
+        background-color: green;
+      }
+      &hill {
+        background-color: brown;
+      }
+      &river {
+        background-color: blue;
       }
     }
   }

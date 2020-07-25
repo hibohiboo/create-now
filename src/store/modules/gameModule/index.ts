@@ -1,6 +1,7 @@
+import * as _ from 'lodash'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux'
-import { sampleTable } from '~/data/lostrpg-en'
+
 interface Actor {
   jump(): void
   fire(): void
@@ -73,8 +74,11 @@ export const viewModel = () =>
     const dispatch = useDispatch()
     return {
       handleInput: (btn: CommandButton) => dispatch(actions.setCommand(btn)),
+      tiles: getTiles(),
     }
   })
+
+// コマンドパターン
 const inputHandler = (btn: CommandButton) => {
   const buttonX = new FireCommand()
   const buttonY = new JumpCommand()
@@ -144,4 +148,40 @@ const inputHandle2 = (btn: CommandButton, unit: Unit) => {
     return new MoveUnitCommand(unit, unit.x, unit.y + 1)
   }
   return null
+}
+// フライウェイトパターン
+const getTiles = () => new World().generateTerrains()
+
+type Texture = 'grass' | 'river' | 'hill'
+
+export interface Terrain {
+  moveCost: number
+  isWater: boolean
+  texture: Texture
+}
+const generateTerrain = (
+  moveCost: number,
+  isWater: boolean,
+  texture: Texture,
+): Terrain => ({ moveCost, isWater, texture })
+class World {
+  private grassTerrain: Terrain = generateTerrain(1, false, 'grass')
+  private hillTerrain: Terrain = generateTerrain(3, false, 'hill')
+  private riverTerrain: Terrain = generateTerrain(2, true, 'river')
+  constructor(private cols = 8, private rows = 6) {}
+  generateTerrains() {
+    const tiles: (Terrain | null)[][] = Array(this.rows).fill(Array(this.cols))
+    for (let x = 0; x < this.cols; x++) {
+      for (let y = 0; y < this.rows; y++) {
+        const random = _.random(0, 10)
+        console.log(`x: ${x} y:${y} random: ${random}`)
+        if (random === 0) {
+          tiles[y][x] = this.hillTerrain
+        } else {
+          tiles[y][x] = this.grassTerrain
+        }
+      }
+    }
+    return tiles
+  }
 }

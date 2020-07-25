@@ -14,12 +14,7 @@ export default function Home() {
       </Head>
       <section className={utilStyles.headingMd}>
         <Controller onClick={vm.handleInput} />
-        <World
-          tiles={[
-            [1, 2],
-            [3, 4],
-          ]}
-        />
+        <World tiles={vm.tiles} />
       </section>
     </Layout>
   )
