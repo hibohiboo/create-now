@@ -1,0 +1,17 @@
+.game-world {
+  .game- {
+    &table {
+      display: table;
+      &-row {
+        display: table-row;
+      }
+      &-cell {
+        display: table-cell;
+        border: 1px solid #000;
+        border-collapse: collapse;
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
