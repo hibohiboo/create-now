@@ -78,7 +78,7 @@ export const viewModel = () =>
     }
   })
 
-// コマンドパターン
+// ## コマンドパターン
 /// リクエストをオブジェクトとしてカプセル化する
 /// これによって、異なるリクエスト/キュー/ログリクエストをもったクライアントの
 /// パラメータ化および取り消し可能なオペレーションが実装できるようになる。
@@ -152,7 +152,7 @@ const inputHandle2 = (btn: CommandButton, unit: Unit) => {
   }
   return null
 }
-// フライウェイト
+// ## フライウェイト
 /// 共有を利用することで、多数の細かいオブジェクトを効率よく処理する
 const getTiles = () => {
   const world = new World()
@@ -223,7 +223,7 @@ class World {
   }
 }
 
-// オブザーバ
+// ## オブザーバ
 /// オブジェクト間に一対多の依存関係を定義する
 /// これにより、あるオブジェクトが状態を変えた時に、
 /// 依存関係にある全てのオブジェクトにその変化が知らされ、
@@ -277,7 +277,7 @@ class Subject {
 // TODO: 実際に使った例。
 /// https://qiita.com/41semicolon/items/0d2f2509d4ac1558badb
 
-// プロトタイプ
+// ## プロトタイプ
 /// あるインスタンスをプロトタイプとして使うことで、
 /// 作成するオブジェクトの種類を特定する
 /// そのプロトタイプをコピーすることで、新しいオブジェクトを作成する
@@ -308,14 +308,14 @@ const gobliWizard = {
   spells: ['fire ball', 'lightning bolt'],
 }
 
-// シングルトン
+// ## シングルトン
 /// 1つのクラスに単一のインスタンスしかないことを確実にし、
 /// そのインスタンスへのグローバルなアクセスポイントを提供する
 
 // 使う前に、メリット・デメリットをよく考えること。
 // 結局はグローバル
 
-// ステート
+// ## ステート
 /// オブジェクト内部の状態が変化したときにオブジェクトの振る舞いが
 /// 変わるようにする。オブジェクトはクラスが変わったように見える。
 
@@ -376,5 +376,94 @@ class Heroine {
   setGraphics(imgpath: string) {
     // 画像の切り替え
     console.log('change stand', imgpath)
+  }
+}
+
+// 階層的状態機械
+/// 状態のスタックを使って、親子関係をさかのぼって処理を継続する
+
+// プッシュダウンオートマトン
+/// 前の状態を覚えておく。プッシュとポップを行う
+
+// FSMが役に立つ場合
+/// キャラクターの行動が内部状態によって変化する
+/// 状態が、明確に区別される、比較的少数の選択肢にはっきりと分割できる
+/// キャラクターが時間経過とともに一連のイベントや入力に反応する
+
+// ## ダブルバッファ
+/// 逐次処理した複数の作業を、
+/// 一瞬であるいは同時に処理したように見せる
+
+// グラフィック関連で利用されている
+
+// ## ゲームループ
+/// ゲーム内での時間の進行を
+/// ユーザからの入力やプロセッサの速度から切り離す
+
+// イベントループ
+// while (true) {
+//   processInput() // 前回呼び出された以降に生じたユーザ入力を全て処理
+//   update() // ゲームのシミュレーションを1段階進める
+//   render() // ゲームの場面を描画する
+// }
+
+// 1目盛り(ティック/フレーム)
+
+// Webブラウザ上では古典的なゲームループを自分で書くことはできない。
+// 根本的な仕組みがイベントベースのため
+
+// ## 更新メソッド
+/// さまざまな独立したオブジェクトを集合にまとめ、フレーム更新のたびに
+/// 一斉に1フレーム分の振る舞いを実行するように制御する
+
+// 役に立つとき
+/// 同時に動く沢山のオブジェクトやシステムがある
+/// 各々のオブジェクトのビヘイビアは他のオブジェクトからほぼ独立している
+/// オブジェクトの動き位はゲームの間中、続いている
+
+// ## バイトコード
+/// ゲームのビヘイビアをバーチャルマシンの命令として記述することで
+/// データとしての柔軟性をビヘイビアに持たせる
+
+// インタプリタパターン
+type Wizard = 0 | 1 // 0: プレイヤー 1:相手
+const setHealth = (wizard: Wizard, amount: number) =>
+  console.log(wizard, amount) //生命力を設定
+const setWithdom = (wizard: Wizard, amount: number) =>
+  console.log(wizard, amount) //知恵を設定
+const setAgility = (wizard: Wizard, amount: number) =>
+  console.log(wizard, amount) //敏捷力を設定
+const playSound = (soundId: number) => console.log(soundId) // 音を出力する
+const spawnParticles = (particleType: number) => console.log(particleType) // 視覚効果を表示
+enum Instruction {
+  INST_SET_HEALTH = 0x00,
+  INST_SET_WISDOM = 0x01,
+  INST_SET_AGILITY = 0x02,
+  INST_PLAY_SOUND = 0x03,
+  INST_SPAWN_PARTIVLES = 0x04,
+}
+
+class VM {
+  interpret(bytecode: Instruction[], size: number) {
+    for (let i = 0; i < size; i++) {
+      const instruction: Instruction = bytecode[i]
+      switch (instruction as Instruction) {
+        case Instruction.INST_SET_HEALTH:
+          setHealth(0, 100)
+          break
+        case Instruction.INST_SET_WISDOM:
+          setWithdom(0, 100)
+          break
+        case Instruction.INST_SET_AGILITY:
+          setAgility(0, 100)
+          break
+        case Instruction.INST_PLAY_SOUND:
+          playSound(0)
+          break
+        case Instruction.INST_SPAWN_PARTIVLES:
+          spawnParticles(0)
+          break
+      }
+    }
   }
 }
