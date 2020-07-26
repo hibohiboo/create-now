@@ -293,3 +293,65 @@ class Spawner {
     return this.spawanCallback()
   }
 }
+
+// jsonにメタデータを含ませるプロトタイプパターン
+const goblin = {
+  name: 'goblint grunt',
+  minHealth: 20,
+  maxHealth: 30,
+  resists: ['cold', 'poison'],
+  weakness: ['fire', 'light'],
+}
+const gobliWizard = {
+  neme: 'goblin wizard',
+  protorype: 'goblin grunt',
+  spells: ['fire ball', 'lightning bolt'],
+}
+
+// シングルトン
+/// 1つのクラスに単一のインスタンスしかないことを確実にし、
+/// そのインスタンスへのグローバルなアクセスポイントを提供する
+
+// 使う前に、メリット・デメリットをよく考えること。
+// 結局はグローバル
+
+// ステート
+/// オブジェクト内部の状態が変化したときにオブジェクトの振る舞いが
+/// 変わるようにする。オブジェクトはクラスが変わったように見える。
+
+// 有限状態機械(FSM)
+// const HeroineState = {
+//   standing: 'STANDING',
+//   jumping: 'JUMPING',
+//   docking: 'DUCKING',
+//   diving: 'DIVING',
+// }
+enum HeroineState {
+  Standing,
+  Jumping,
+  Ducking,
+  Diving,
+}
+
+enum HeroinInput {
+  PRESS_B = 'b',
+  PRESS_DOWN = 'down',
+}
+
+class Heroine {
+  private state = HeroineState.Standing
+  handleInput(input: HeroinInput) {
+    switch (this.state) {
+      case HeroineState.Standing:
+        if (input === HeroinInput.PRESS_B) {
+          this.state = HeroineState.Jumping
+          return
+        }
+        if (input === HeroinInput.PRESS_DOWN) {
+          this.state = HeroineState.Ducking
+          return
+        }
+        return
+    }
+  }
+}
