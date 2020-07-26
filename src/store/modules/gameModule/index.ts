@@ -495,12 +495,23 @@ class VM {
 /// 表すようにする。これで多くの「クラス」を柔軟に作成できるようになる。
 
 class Breed {
-  constructor(private health: number, private attackMessage: string) {}
+  constructor(
+    private parent: Breed | null = null,
+    private health: number,
+    private attackMessage: string,
+  ) {}
   getHealth() {
-    return this.health
+    // オーバーライド 動的に委任
+    if (this.health !== 0 || this.parent === null) {
+      return this.health
+    }
+    return this.parent.getHealth()
   }
   getAttack() {
-    return this.attackMessage
+    if (this.attackMessage !== null || this.parent === null) {
+      return this.attackMessage
+    }
+    return this.parent.getAttack()
   }
   newMonster() {
     return new Monster2(this)
