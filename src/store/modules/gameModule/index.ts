@@ -79,6 +79,9 @@ export const viewModel = () =>
   })
 
 // コマンドパターン
+/// リクエストをオブジェクトとしてカプセル化する
+/// これによって、異なるリクエスト/キュー/ログリクエストをもったクライアントの
+/// パラメータ化および取り消し可能なオペレーションが実装できるようになる。
 const inputHandler = (btn: CommandButton) => {
   const buttonX = new FireCommand()
   const buttonY = new JumpCommand()
@@ -149,7 +152,8 @@ const inputHandle2 = (btn: CommandButton, unit: Unit) => {
   }
   return null
 }
-// フライウェイトパターン
+// フライウェイト
+/// 共有を利用することで、多数の細かいオブジェクトを効率よく処理する
 const getTiles = () => {
   const world = new World()
   const tiles = world.generateTerrains()
@@ -216,5 +220,101 @@ class World {
         `out of range: col:${this.colNumber} x:${x} row:${this.rowNumber} y:${y} `,
       )
     return this.tiles[y][x]
+  }
+}
+
+// オブザーバ
+/// オブジェクト間に一対多の依存関係を定義する
+/// これにより、あるオブジェクトが状態を変えた時に、
+/// 依存関係にある全てのオブジェクトにその変化が知らされ、
+/// 必要な更新が行わるようにする
+
+// 現在は、クラスより関数で実装するほうが多い
+type Entity = any
+type ObserveEvent = 'EVENT_ENTITY_FELL'
+type AchievementName = 'ACHEIEVEMENT_FELL_OF_BRIDGE'
+
+interface Observer {
+  onNotify(entity: Entity, event: ObserveEvent): void
+  // TODO: 破棄時にサブジェクトにobeserverから外させる処理があるとよりよい
+  // 無効リスナー問題（Lapsed Listener Problem)
+}
+class Achievements implements Observer {
+  public heroIsOnBridge = false
+  onNotify(entity: Entity, event: ObserveEvent) {
+    switch (event) {
+      case 'EVENT_ENTITY_FELL':
+        if (entity.isHero() && this.heroIsOnBridge) {
+          this.unlock('ACHEIEVEMENT_FELL_OF_BRIDGE')
+        }
+    }
+  }
+  unlock(achievement: AchievementName) {
+    // まだ与えられていない場合は達成バッジを与える
+    console.log(achievement)
+  }
+}
+
+class Subject {
+  observers: Observer[] = []
+  numObservers = 0
+  addObserver(observer: Observer) {
+    this.observers.push(observer)
+    this.numObservers++
+  }
+  removeObserver(observer: Observer) {
+    // https://lodash.com/docs/4.17.15#pull
+    this.observers = _.pull(this.observers, observer)
+    this.numObservers--
+  }
+  noify(entity: Entity, event: ObserveEvent) {
+    this.observers.forEach((observer) => {
+      observer.onNotify(entity, event)
+    })
+  }
+}
+
+// TODO: 実際に使った例。
+/// https://qiita.com/41semicolon/items/0d2f2509d4ac1558badb
+
+// プロトタイプ
+/// あるインスタンスをプロトタイプとして使うことで、
+/// 作成するオブジェクトの種類を特定する
+/// そのプロトタイプをコピーすることで、新しいオブジェクトを作成する
+
+interface Monster {
+  clone(): Monster
+}
+class Ghost implements Monster {
+  clone() {
+    return new Ghost()
+  }
+}
+class Demon implements Monster {
+  clone() {
+    return new Demon()
+  }
+}
+class Sorcerer implements Monster {
+  clone() {
+    return new Sorcerer()
+  }
+}
+interface Spawner {
+  spawnMonster: () => Monster
+}
+class GhostSpawner implements Spawner {
+  spawnMonster() {
+    return new Ghost()
+  }
+}
+class DemonSpawner implements Spawner {
+  spawnMonster() {
+    return new Demon()
+  }
+}
+class SorcererSpawner implements Spawner {
+  spawnMonster() {
+    return new Sorcerer()
   }
 }
