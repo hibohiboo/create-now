@@ -485,3 +485,34 @@ class VM {
     return this.stack.pop()
   }
 }
+
+// ## サブクラスサンドボックス
+/// 基底クラスに実装した一連の操作を使って
+/// サブクラス内にビヘイビアを実装する
+
+// ## 型オブジェクト
+/// クラスを１つ作成し、そのクラスのインスタンス１つ１つが異なった型を
+/// 表すようにする。これで多くの「クラス」を柔軟に作成できるようになる。
+
+class Breed {
+  constructor(private health: number, private attackMessage: string) {}
+  getHealth() {
+    return this.health
+  }
+  getAttack() {
+    return this.attackMessage
+  }
+  newMonster() {
+    return new Monster2(this)
+  }
+}
+
+class Monster2 {
+  private health: number
+  constructor(private breed) {
+    this.health = breed.getHealth()()
+  }
+  getAttack() {
+    return this.breed.getAttack()
+  }
+}
