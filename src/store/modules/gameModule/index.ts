@@ -320,13 +320,7 @@ const gobliWizard = {
 /// 変わるようにする。オブジェクトはクラスが変わったように見える。
 
 // 有限状態機械(FSM)
-// const HeroineState = {
-//   standing: 'STANDING',
-//   jumping: 'JUMPING',
-//   docking: 'DUCKING',
-//   diving: 'DIVING',
-// }
-enum HeroineState {
+enum HeroineStateEnum {
   Standing,
   Jumping,
   Ducking,
@@ -338,20 +332,41 @@ enum HeroinInput {
   PRESS_DOWN = 'down',
 }
 
-class Heroine {
-  private state = HeroineState.Standing
+const MAX_CHRGE = 3
+class HeroineState {
+  private state = HeroineStateEnum.Standing
+  private chargeTime = 0
   handleInput(input: HeroinInput) {
     switch (this.state) {
-      case HeroineState.Standing:
+      case HeroineStateEnum.Standing:
         if (input === HeroinInput.PRESS_B) {
-          this.state = HeroineState.Jumping
+          this.state = HeroineStateEnum.Jumping
           return
         }
         if (input === HeroinInput.PRESS_DOWN) {
-          this.state = HeroineState.Ducking
+          this.state = HeroineStateEnum.Ducking
           return
         }
         return
     }
+  }
+  update(heroine: Heroine) {
+    this.chargeTime++
+    if (this.chargeTime > MAX_CHRGE) {
+      heroine.superBomb()
+    }
+  }
+}
+class Heroine {
+  private isSuperBomb = false
+  constructor(private state: HeroineState = new HeroineState()) {}
+  superBomb() {
+    this.isSuperBomb = true
+  }
+  handleInput(input: HeroinInput) {
+    this.state.handleInput(input)
+  }
+  update() {
+    this.state.update(this)
   }
 }
