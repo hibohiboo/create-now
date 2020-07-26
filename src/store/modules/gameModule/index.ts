@@ -282,27 +282,14 @@ class Subject {
 /// 作成するオブジェクトの種類を特定する
 /// そのプロトタイプをコピーすることで、新しいオブジェクトを作成する
 
-interface Monster {
-  clone(): Monster
-}
-class Ghost implements Monster {
-  clone() {
-    return new Ghost()
-  }
-}
-class Demon implements Monster {
-  clone() {
-    return new Demon()
-  }
-}
-class Sorcerer implements Monster {
-  clone() {
-    return new Sorcerer()
-  }
-}
+class Monster {}
+class Ghost implements Monster {}
+class Demon implements Monster {}
+class Sorcerer implements Monster {}
+const spawnGhost = () => new Ghost()
 class Spawner {
-  constructor(private prototypeMonster: Monster) {}
+  constructor(private spawanCallback: () => Monster) {}
   spawnMonster() {
-    return this.prototypeMonster.clone()
+    return this.spawanCallback()
   }
 }
