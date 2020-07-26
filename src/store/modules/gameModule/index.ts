@@ -300,21 +300,9 @@ class Sorcerer implements Monster {
     return new Sorcerer()
   }
 }
-interface Spawner {
-  spawnMonster: () => Monster
-}
-class GhostSpawner implements Spawner {
+class Spawner {
+  constructor(private prototypeMonster: Monster) {}
   spawnMonster() {
-    return new Ghost()
-  }
-}
-class DemonSpawner implements Spawner {
-  spawnMonster() {
-    return new Demon()
-  }
-}
-class SorcererSpawner implements Spawner {
-  spawnMonster() {
-    return new Sorcerer()
+    return this.prototypeMonster.clone()
   }
 }
