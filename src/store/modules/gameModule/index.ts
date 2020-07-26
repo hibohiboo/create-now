@@ -449,7 +449,11 @@ class VM {
       const instruction: Instruction = bytecode[i]
       switch (instruction as Instruction) {
         case Instruction.INST_SET_HEALTH:
-          setHealth(0, 100)
+          {
+            const amount = this.pop()
+            const wizard = this.pop() as Wizard
+            setHealth(wizard, amount)
+          }
           break
         case Instruction.INST_SET_WISDOM:
           setWithdom(0, 100)
@@ -465,5 +469,19 @@ class VM {
           break
       }
     }
+  }
+
+  private stackSize = 0
+  private MAX_STACK = 128
+  private stack: number[]
+  push(value: number) {
+    if (this.stackSize >= this.MAX_STACK) throw Error('vm stack over')
+    this.stack.push(value)
+    this.stackSize++
+  }
+  pop() {
+    if (this.stackSize === 0) throw Error('vm stack empty')
+    this.stackSize--
+    return this.stack.pop()
   }
 }
