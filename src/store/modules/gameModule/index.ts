@@ -336,6 +336,9 @@ const MAX_CHRGE = 3
 class HeroineState {
   private state = HeroineStateEnum.Standing
   private chargeTime = 0
+  enter(heroine: Heroine) {
+    heroine.setGraphics('IMAGE_STAND')
+  }
   handleInput(input: HeroinInput) {
     switch (this.state) {
       case HeroineStateEnum.Standing:
@@ -365,8 +368,13 @@ class Heroine {
   }
   handleInput(input: HeroinInput) {
     this.state.handleInput(input)
+    this.state.enter(this)
   }
   update() {
     this.state.update(this)
+  }
+  setGraphics(imgpath: string) {
+    // 画像の切り替え
+    console.log('change stand', imgpath)
   }
 }
