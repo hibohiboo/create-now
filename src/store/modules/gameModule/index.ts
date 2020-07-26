@@ -496,22 +496,26 @@ class VM {
 
 class Breed {
   constructor(
-    private parent: Breed | null = null,
-    private health: number,
-    private attackMessage: string,
-  ) {}
-  getHealth() {
-    // オーバーライド 動的に委任
-    if (this.health !== 0 || this.parent === null) {
-      return this.health
+    parent: Breed | null = null,
+    private health: number = 0,
+    private attackMessage: string = null,
+  ) {
+    // コピーダウンデリゲーション
+    if (parent === null) {
+      return
     }
-    return this.parent.getHealth()
+    if (health === 0) {
+      this.health = parent.getHealth()
+    }
+    if (attackMessage === null) {
+      this.attackMessage = parent.getAttack()
+    }
+  }
+  getHealth() {
+    return this.health
   }
   getAttack() {
-    if (this.attackMessage !== null || this.parent === null) {
-      return this.attackMessage
-    }
-    return this.parent.getAttack()
+    return this.attackMessage
   }
   newMonster() {
     return new Monster2(this)
