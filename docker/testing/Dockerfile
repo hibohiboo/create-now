@@ -134,4 +134,6 @@ RUN npm i dotenv --save-dev
 # window is not defined の問題が 1.64.0 で起きているので、一旦64.2にする
 # https://github.com/mbrn/material-table/issues/2112
 # RUN npm update material-table lodash sass
-RUN npm i material-table@1.62.0
+# RUN npm i material-table@1.62.0
+
+RUN npm i react-draggable
