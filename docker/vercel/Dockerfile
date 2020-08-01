@@ -101,3 +101,4 @@ RUN npm i crypto-js
 RUN npm i dotenv --save-dev
 
 RUN npm i react-draggable
+RUN npm i react-resizable

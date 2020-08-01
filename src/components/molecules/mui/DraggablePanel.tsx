@@ -1,19 +1,11 @@
 import React from 'react'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { Box, Checkbox, Button } from '@material-ui/core'
-
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Paper, { PaperProps } from '@material-ui/core/Paper'
 import Draggable from 'react-draggable'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import { Resizable, ResizableBox } from 'react-resizable'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,8 +31,7 @@ function PaperComponent(props: PaperProps) {
     </Draggable>
   )
 }
-
-export default function DraggablePanel() {
+const DraggablePanel: React.FC = ({ children }) => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
 
@@ -51,25 +42,33 @@ export default function DraggablePanel() {
   const handleClose = () => {
     setOpen(false)
   }
-
+  const [height, setHeight] = React.useState(200)
+  const [width, setWidth] = React.useState(200)
+  const onResize = (event, { element, size, handle }) => {
+    console.log(size)
+    setHeight(size.height)
+    setWidth(size.width)
+  }
   return (
-    <PaperComponent style={{ width: '1240px', height: '850px' }}>
-      <AppBar position="static" id="draggable-dialog-title">
-        <Toolbar variant="dense">
-          <Typography variant="subtitle2" className={classes.title}>
-            ユドナリウム
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      <iframe
-        src="/third/udonarium/index.html"
-        width="1240px"
-        height="800px"
-        scrolling="no"
-        frameBorder="0"
-        allowFullScreen
-      ></iframe>
-    </PaperComponent>
+    <Resizable
+      className="box"
+      height={height}
+      width={width}
+      onResize={onResize}
+      resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
+      style={{ overflow: 'hidden' }}
+    >
+      <PaperComponent style={{ width: `${width}px`, height: `${height}px` }}>
+        <AppBar position="static" id="draggable-dialog-title">
+          <Toolbar variant="dense">
+            <Typography variant="subtitle2" className={classes.title}>
+              ユドナリウム
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        {children}
+      </PaperComponent>
+    </Resizable>
   )
 }
+export default DraggablePanel

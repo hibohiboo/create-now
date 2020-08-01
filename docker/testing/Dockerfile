@@ -137,3 +137,4 @@ RUN npm i dotenv --save-dev
 # RUN npm i material-table@1.62.0
 
 RUN npm i react-draggable
+RUN npm i react-resizable
