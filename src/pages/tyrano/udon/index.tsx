@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Layout from '~/components/templates/tyrano/Layout'
-import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
+import UdonariumPanel from '~/components/organisms/tyranoudon/UdonariumPanel'
 interface Prop {
   base_path: string
 }
@@ -18,16 +18,7 @@ export default function Home({ base_path }: Prop) {
       <Head>
         <title>Loading Udonarium</title>
       </Head>
-      <DraggablePanel width={width} height={height} onResize={onResize}>
-        <iframe
-          src="/third/udonarium/index.html"
-          width={`${width}px`}
-          height={`${height}px`}
-          scrolling="no"
-          frameBorder="0"
-          allowFullScreen
-        ></iframe>
-      </DraggablePanel>
+      <UdonariumPanel />
     </div>
   )
 }

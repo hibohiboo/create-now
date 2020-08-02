@@ -32,16 +32,17 @@ function PaperComponent(props: PaperProps) {
   )
 }
 const DraggablePanel: React.FC<{
+  title: string
   height: number
   width: number
   onResize: (size: { height: number; width: number }) => void
-}> = ({ children, height, width, onResize }) => {
+}> = ({ children, title, height, width, onResize }) => {
   const classes = useStyles()
   const onResizeHandler = (event, { element, size, handle }) => {
     onResize(size)
   }
   const wrapperHeight = height
-  const wrapperWidht = height
+  const wrapperWidht = width
   return (
     <Resizable
       className="box"
@@ -50,7 +51,7 @@ const DraggablePanel: React.FC<{
       onResize={onResizeHandler}
       style={{ overflow: 'hidden' }}
       // resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
-      resizeHandles={['se', 'e', 's']}
+      resizeHandles={['se']}
     >
       <PaperComponent
         style={{ width: `${wrapperWidht}px`, height: `${wrapperHeight}px` }}
@@ -58,7 +59,7 @@ const DraggablePanel: React.FC<{
         <AppBar position="static" id="draggable-dialog-title">
           <Toolbar variant="dense">
             <Typography variant="subtitle2" className={classes.title}>
-              ユドナリウム
+              {title}
             </Typography>
           </Toolbar>
         </AppBar>
