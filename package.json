@@ -39,6 +39,7 @@
     "react-dropzone": "^11.0.2",
     "react-firebaseui": "^4.1.0",
     "react-konva": "^16.13.0-5",
+    "react-resizable": "^1.10.1",
     "remark": "^12.0.1",
     "remark-html": "^12.0.0",
     "rosetta": "^1.1.0",

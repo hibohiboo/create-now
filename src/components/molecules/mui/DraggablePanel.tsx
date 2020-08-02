@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import { Resizable, ResizableBox } from 'react-resizable'
-
+import { Box } from '@material-ui/core'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -31,34 +31,30 @@ function PaperComponent(props: PaperProps) {
     </Draggable>
   )
 }
-const DraggablePanel: React.FC = ({ children }) => {
+const DraggablePanel: React.FC<{
+  height: number
+  width: number
+  onResize: (size: { height: number; width: number }) => void
+}> = ({ children, height, width, onResize }) => {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
+  const onResizeHandler = (event, { element, size, handle }) => {
+    onResize(size)
   }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const [height, setHeight] = React.useState(200)
-  const [width, setWidth] = React.useState(200)
-  const onResize = (event, { element, size, handle }) => {
-    console.log(size)
-    setHeight(size.height)
-    setWidth(size.width)
-  }
+  const wrapperHeight = height
+  const wrapperWidht = height
   return (
     <Resizable
       className="box"
-      height={height}
-      width={width}
-      onResize={onResize}
-      resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
+      height={wrapperHeight}
+      width={wrapperWidht}
+      onResize={onResizeHandler}
       style={{ overflow: 'hidden' }}
+      // resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
+      resizeHandles={['se', 'e', 's']}
     >
-      <PaperComponent style={{ width: `${width}px`, height: `${height}px` }}>
+      <PaperComponent
+        style={{ width: `${wrapperWidht}px`, height: `${wrapperHeight}px` }}
+      >
         <AppBar position="static" id="draggable-dialog-title">
           <Toolbar variant="dense">
             <Typography variant="subtitle2" className={classes.title}>
