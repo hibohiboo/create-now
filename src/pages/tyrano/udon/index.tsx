@@ -5,6 +5,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Layout from '~/components/templates/tyrano/Layout'
 import UdonariumPanel from '~/components/organisms/tyranoudon/UdonariumPanel'
 import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
+import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -16,6 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Home() {
   const classes = useStyles()
+  const vm = useViewModel()
+  console.log('viewModel', vm)
   return (
     <div className={classes.root}>
       <Head>
