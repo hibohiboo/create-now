@@ -4,7 +4,7 @@ import { addUdonariumMessage } from '../actions'
 export interface TyranoUdon {
   text: string
 }
-export const initialState = (): TyranoUdon => ({ text: 'テストー' })
+export const initialState = (): TyranoUdon => ({ text: '' })
 
 const reducer = createReducer(initialState(), (builder) =>
   builder.addCase(addUdonariumMessage, (state, action) => {

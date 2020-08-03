@@ -16,7 +16,8 @@ const UdonariumPanel: FC = () => {
       onResize={onResize}
     >
       <iframe
-        src="/third/udonarium/index.html"
+        id="iframe-udonarium"
+        src={process.env.UDONARIUM_URL}
         width={`${width}px`}
         height={`${height}px`}
         scrolling="no"
