@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import type { TyranoUdon } from '../reducer'
 import { addUdonariumMessage } from '../actions'
+import type { TyranoUdon } from '../reducer'
+import type { PostMessageChat } from '../ports/udon'
 
 interface UdonariumPorts {
   chat: any
@@ -36,7 +37,6 @@ export const useViewModel = () =>
 
     useEffect(() => {
       window.addEventListener('message', receiveMessage, false)
-
       dispatch(addUdonariumMessage('sample Message:'))
     }, [])
 
@@ -46,7 +46,7 @@ export const useViewModel = () =>
         const udon = document.getElementById(
           'iframe-udonarium',
         ) as HTMLIFrameElement
-        console.log('iframe ユドナリウム', udon.contentWindow)
+
         const chatMessage = {
           from: '',
           to: '',
@@ -56,14 +56,11 @@ export const useViewModel = () =>
           tag: '', // GameType
           text: '送信テスト',
         }
-        udon.contentWindow.postMessage(
-          {
-            event: 'sendMessage',
-            message: chatMessage,
-            tab: 'MainTab',
-          },
-          process.env.UDONARIUM_DOMAIN,
-        )
+        const message: PostMessageChat = {
+          type: 'chat',
+          payload: { message: chatMessage, tab: 'MainTab' },
+        }
+        udon.contentWindow.postMessage(message, process.env.UDONARIUM_DOMAIN)
       },
     }
   })
