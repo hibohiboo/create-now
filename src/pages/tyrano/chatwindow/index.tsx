@@ -7,11 +7,27 @@ interface Prop {
 }
 declare global {
   interface Window {
-    jQuery: any
-    $: any
+    TYRANO: {
+      kag: {
+        ftag: { startTag: (a: string, b: any) => void }
+        parser: { parseScenario: (a: string) => { array_s: any[] } }
+      }
+    }
   }
 }
 export default function Home({ base_path }: Prop) {
+  useEffect(() => {
+    if (!window) return
+    setTimeout(() => {
+      window.TYRANO.kag.parser
+        .parseScenario('[cm]\n#てすと\nさんぷる')
+        .array_s.forEach((tag) => {
+          window.TYRANO.kag.ftag.startTag(tag.name, tag.pm)
+        })
+      console.log('test')
+    }, 3000)
+  })
+
   return (
     <>
       <Head>
@@ -80,7 +96,7 @@ export default function Home({ base_path }: Prop) {
           src="/tyrano/libs/html2canvas.js"
         ></script>
 
-        <script src="/tyranoudon/data/system/KeyConfig.js"></script>
+        <script src="/data/system/KeyConfig.js"></script>
 
         <script type="text/javascript" src="/tyrano/lang.js"></script>
         <script type="text/javascript" src="/tyrano/libs.js"></script>
