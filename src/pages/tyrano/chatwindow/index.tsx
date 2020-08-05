@@ -9,23 +9,38 @@ declare global {
   interface Window {
     TYRANO: {
       kag: {
-        ftag: { startTag: (a: string, b: any) => void }
+        ftag: {
+          startTag: (a: string, b: any) => void
+          buildTag: (a: any[]) => void
+        }
         parser: { parseScenario: (a: string) => { array_s: any[] } }
       }
     }
   }
 }
+
+// https://kido0617.github.io/tyrano/2018-08-02-make-plugin/
+// https://qiita.com/diyin_near_j/items/7f94c080add33d045654
 export default function Home({ base_path }: Prop) {
   useEffect(() => {
     if (!window) return
     setTimeout(() => {
-      window.TYRANO.kag.parser
-        .parseScenario('[cm]\n#てすと\nさんぷる')
-        .array_s.forEach((tag) => {
-          window.TYRANO.kag.ftag.startTag(tag.name, tag.pm)
-        })
-      console.log('test')
-    }, 3000)
+      window.TYRANO.kag.ftag.buildTag(
+        window.TYRANO.kag.parser.parseScenario(
+          `
+        [chara_show  name="akane"  ]
+        #?
+        こんにちは。[p]
+        私の名前はあかね。[p]
+        `,
+        ).array_s,
+      )
+      // window.TYRANO.kag.parser
+      // .parseScenario('[cm]\n#てすと\nさんぷる')
+      // .array_s.forEach((tag) => {
+      //   window.TYRANO.kag.ftag.startTag(tag.name, tag.pm)
+      // })
+    }, 1000)
   })
 
   return (
