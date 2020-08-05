@@ -47,6 +47,7 @@ const nextConfig = {
     SESSION_SECRET_PREVIOUS: process.env.SESSION_SECRET_PREVIOUS,
     UDONARIUM_URL: process.env.UDONARIUM_URL,
     UDONARIUM_DOMAIN: process.env.UDONARIUM_DOMAIN,
+    TYRANO_DOMAIN: process.env.TYRANO_DOMAIN,
   },
 }
 

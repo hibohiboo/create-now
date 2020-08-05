@@ -8,13 +8,13 @@ interface UdonariumPorts {
   chat: any
 }
 
-// ユドナリウムとの接続口を定義
 declare global {
   interface Window {
+    // ユドナリウムとの接続口を定義
     udon: { ports: UdonariumPorts }
   }
 }
-const receiveMessage = (event: MessageEvent) => {
+const receiveUdonMessage = (event: MessageEvent) => {
   console.log(event)
   // このメッセージの送信者は信頼している者か？
   if (event.origin !== process.env.UDONARIUM_DOMAIN) return
@@ -30,37 +30,58 @@ const receiveMessage = (event: MessageEvent) => {
   //   [],
   // )
 }
+
 export const useViewModel = () =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
     const { text } = state.tyranoudon
 
     useEffect(() => {
-      window.addEventListener('message', receiveMessage, false)
+      window.addEventListener('message', receiveUdonMessage, false)
       dispatch(addUdonariumMessage('sample Message:'))
     }, [])
 
     return {
       text,
       sendMessage: () => {
-        const udon = document.getElementById(
-          'iframe-udonarium',
-        ) as HTMLIFrameElement
-
-        const chatMessage = {
-          from: '',
-          to: '',
-          name: 'テスト',
-          imageIdentifier: '',
-          timestamp: Date.now(),
-          tag: '', // GameType
-          text: '送信テスト',
-        }
-        const message: PostMessageChat = {
-          type: 'chat',
-          payload: { message: chatMessage, tab: 'MainTab' },
-        }
-        udon.contentWindow.postMessage(message, process.env.UDONARIUM_DOMAIN)
+        sendUdonMessage()
+        sendTyranoMessage()
       },
     }
   })
+const sendUdonMessage = () => {
+  const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
+
+  const chatMessage = {
+    from: '',
+    to: '',
+    name: 'テスト',
+    imageIdentifier: '',
+    timestamp: Date.now(),
+    tag: '', // GameType
+    text: '送信テスト',
+  }
+  const message: PostMessageChat = {
+    type: 'chat',
+    payload: { message: chatMessage, tab: 'MainTab' },
+  }
+  udon.contentWindow.postMessage(message, process.env.UDONARIUM_DOMAIN)
+}
+interface TyranoChat {
+  type: 'chat'
+  payload: { scenario: string }
+}
+const testMessage = `
+[chara_show  name="akane"]
+#あかね
+こんにちはですよ。[p]
+`
+const sendTyranoMessage = () => {
+  const tyrano = document.getElementById('iframe-tyrano') as HTMLIFrameElement
+
+  const message: TyranoChat = {
+    type: 'chat',
+    payload: { scenario: testMessage },
+  }
+  tyrano.contentWindow.postMessage(message, process.env.TYRANO_DOMAIN)
+}

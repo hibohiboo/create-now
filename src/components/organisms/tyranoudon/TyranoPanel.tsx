@@ -16,7 +16,8 @@ const TryranoPanel: FC = () => {
       onResize={onResize}
     >
       <iframe
-        src="/lost-replay-1/index.html"
+        id="iframe-tyrano"
+        src="/tyrano/chatwindow"
         width={`${width}px`}
         height={`${height}px`}
         scrolling="no"

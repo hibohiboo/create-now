@@ -18,29 +18,29 @@ declare global {
     }
   }
 }
-
+interface TyranoChat {
+  type: 'chat'
+  payload: { scenario: string }
+}
 // https://kido0617.github.io/tyrano/2018-08-02-make-plugin/
 // https://qiita.com/diyin_near_j/items/7f94c080add33d045654
 export default function Home({ base_path }: Prop) {
   useEffect(() => {
     if (!window) return
-    setTimeout(() => {
-      window.TYRANO.kag.ftag.buildTag(
-        window.TYRANO.kag.parser.parseScenario(
-          `
-        [chara_show  name="akane"  ]
-        #?
-        こんにちは。[p]
-        私の名前はあかね。[p]
-        `,
-        ).array_s,
-      )
-      // window.TYRANO.kag.parser
-      // .parseScenario('[cm]\n#てすと\nさんぷる')
-      // .array_s.forEach((tag) => {
-      //   window.TYRANO.kag.ftag.startTag(tag.name, tag.pm)
-      // })
-    }, 1000)
+    window.addEventListener(
+      'message',
+      (event: MessageEvent) => {
+        console.log(event)
+        if (event.origin !== process.env.TYRANO_DOMAIN) return
+        if (event.data.type !== 'chat') return
+        console.log('received chat message', event.data)
+        window.TYRANO.kag.ftag.buildTag(
+          window.TYRANO.kag.parser.parseScenario(event.data.payload.scenario)
+            .array_s,
+        )
+      },
+      false,
+    )
   })
 
   return (
