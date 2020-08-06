@@ -79,7 +79,12 @@ const settings = {
   vchat: {
     configs: [
       ['vchat', 'true'],
-      ['vchatMenuVisible', 'true'],
+      ['vchatMenuVisible', 'false'],
+      ['configLeft', '750'],
+      ['configTop', '1170'],
+      ['alreadyReadTextColor', '0x87cefa'],
+      ['defaultFontSize', '26'],
+      ['defaultChColor', '0x242424'],
     ],
   },
 } as const
