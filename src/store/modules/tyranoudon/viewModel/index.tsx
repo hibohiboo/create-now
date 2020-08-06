@@ -35,6 +35,7 @@ export const useViewModel = () =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
     const { text } = state.tyranoudon
+    const tyranoSample = 'sample'
 
     useEffect(() => {
       window.addEventListener('message', receiveUdonMessage, false)
@@ -43,9 +44,10 @@ export const useViewModel = () =>
 
     return {
       text,
+      tyranoSample,
       sendMessage: () => {
         sendUdonMessage()
-        sendTyranoMessage()
+        sendTyranoMessage(tyranoSample)
       },
     }
   })
@@ -76,8 +78,10 @@ const testMessage = `
 #あかね
 こんにちはですよ。[p]
 `
-const sendTyranoMessage = () => {
-  const tyrano = document.getElementById('iframe-tyrano') as HTMLIFrameElement
+const sendTyranoMessage = (name: string) => {
+  const tyrano = document.getElementById(
+    `iframe-tyrano-${name}`,
+  ) as HTMLIFrameElement
 
   const message: TyranoChat = {
     type: 'chat',

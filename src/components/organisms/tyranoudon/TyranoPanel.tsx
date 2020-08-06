@@ -1,7 +1,7 @@
 import { useState, FC } from 'react'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 
-const TryranoPanel: FC = () => {
+const TryranoPanel: FC<{ name: string }> = ({ name }) => {
   const [height, setHeight] = useState(640)
   const [width, setWidth] = useState(800)
   const onResize = (size) => {
@@ -16,8 +16,8 @@ const TryranoPanel: FC = () => {
       onResize={onResize}
     >
       <iframe
-        id="iframe-tyrano"
-        src="/tyrano/chatwindow"
+        id={`iframe-tyrano-${name}`}
+        src={`/tyrano/chatwindow/${name}`}
         width={`${width}px`}
         height={`${height}px`}
         scrolling="no"

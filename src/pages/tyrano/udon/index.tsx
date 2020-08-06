@@ -26,7 +26,7 @@ export default function Home() {
         <title>Loading Udonarium</title>
       </Head>
       <UdonariumPanel />
-      <TyranoPanel />
+      <TyranoPanel name={vm.tyranoSample} />
       <button onClick={vm.sendMessage}>test send </button>
     </div>
   )

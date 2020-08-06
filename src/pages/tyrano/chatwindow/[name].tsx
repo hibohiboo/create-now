@@ -1,0 +1,72 @@
+import { GetStaticProps, GetStaticPaths } from 'next'
+import { useEffect } from 'react'
+import TyranoHead from '~/components/organisms/tyranoudon/TyranoHead'
+import TyranoBody from '~/components/organisms/tyranoudon/TyranoBody'
+import Layout from '~/components/templates/tyrano/Layout'
+interface Prop {
+  base_path: string
+}
+declare global {
+  interface Window {
+    TYRANO: {
+      kag: {
+        ftag: {
+          startTag: (a: string, b: any) => void
+          buildTag: (a: any[]) => void
+        }
+        parser: { parseScenario: (a: string) => { array_s: any[] } }
+      }
+    }
+  }
+}
+interface TyranoChat {
+  type: 'chat'
+  payload: { scenario: string }
+}
+
+export const isChatMessage = (data: any): data is TyranoChat =>
+  data.type === 'chat'
+
+// https://kido0617.github.io/tyrano/2018-08-02-make-plugin/
+// https://qiita.com/diyin_near_j/items/7f94c080add33d045654
+export default function Home({ base_path }: Prop) {
+  useEffect(() => {
+    if (!window) return
+    window.addEventListener(
+      'message',
+      (event: MessageEvent) => {
+        console.log(event)
+        if (event.origin !== process.env.TYRANO_DOMAIN) return
+        if (!isChatMessage(event.data)) return
+        console.log('received chat message', event.data)
+        window.TYRANO.kag.ftag.buildTag(
+          window.TYRANO.kag.parser.parseScenario(event.data.payload.scenario)
+            .array_s,
+        )
+      },
+      false,
+    )
+  })
+
+  return (
+    <>
+      <TyranoHead />
+      <TyranoBody />
+    </>
+  )
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = ['sample'].map((repo) => `/tyrano/chatwindow/${repo}`)
+  return { paths, fallback: true }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const base_path = (params && params.name) || '/'
+  console.log('params', params)
+  return {
+    props: {
+      base_path,
+    },
+  }
+}
