@@ -1,10 +1,11 @@
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { useEffect } from 'react'
+import * as _ from 'lodash'
 import TyranoHead from '~/components/organisms/tyranoudon/TyranoHead'
 import TyranoBody from '~/components/organisms/tyranoudon/TyranoBody'
 import Layout from '~/components/templates/tyrano/Layout'
 interface Prop {
-  base_path: string
+  setting: { configs: any[] }
 }
 declare global {
   interface Window {
@@ -29,7 +30,7 @@ export const isChatMessage = (data: any): data is TyranoChat =>
 
 // https://kido0617.github.io/tyrano/2018-08-02-make-plugin/
 // https://qiita.com/diyin_near_j/items/7f94c080add33d045654
-export default function Home({ base_path }: Prop) {
+export default function Home({ setting }: Prop) {
   useEffect(() => {
     if (!window) return
     window.addEventListener(
@@ -51,22 +52,39 @@ export default function Home({ base_path }: Prop) {
   return (
     <>
       <TyranoHead />
-      <TyranoBody />
+      <TyranoBody configs={setting.configs} />
     </>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = ['sample'].map((repo) => `/tyrano/chatwindow/${repo}`)
+  const paths = settingsKeys.map((repo) => `/tyrano/chatwindow/${repo}`)
   return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const base_path = (params && params.name) || '/'
-  console.log('params', params)
+  const key: SettingKeys = isSettingsKeys(params.name) ? params.name : 'sample'
+  const setting = settings[key]
   return {
     props: {
-      base_path,
+      setting,
     },
   }
 }
+
+const settings = {
+  sample: {
+    configs: [],
+  },
+  vchat: {
+    configs: [
+      ['vchat', 'true'],
+      ['vchatMenuVisible', 'true'],
+    ],
+  },
+} as const
+const settingsKeys = _.keys(settings)
+
+type SettingKeys = keyof typeof settings
+const isSettingsKeys = (key: any): key is SettingKeys =>
+  settingsKeys.includes(key)
