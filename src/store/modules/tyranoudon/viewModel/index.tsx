@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addUdonariumMessage } from '../actions'
+import { addUdonariumMessage, changeName, changeFace } from '../actions'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat } from '../ports/udon'
 
@@ -34,7 +34,7 @@ const receiveUdonMessage = (event: MessageEvent) => {
 export const useViewModel = () =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
-    const { text } = state.tyranoudon
+    const { text, name, face } = state.tyranoudon
     const tyranoSample = 'sample'
     const tyranoVchat = 'vchat'
 
@@ -45,14 +45,28 @@ export const useViewModel = () =>
 
     return {
       text,
+      name,
+      face,
       tyranoSample,
       tyranoVchat,
+      faceList:
+        name === 'あかね'
+          ? [
+              { name: ' ' },
+              { name: 'happy' },
+              { name: 'doki' },
+              { name: 'angry' },
+              { name: 'sad' },
+            ]
+          : [{ name: ' ' }],
       sendMessage: () => {
         sendUdonMessage()
         sendTyranoMessage(tyranoSample, testMessage)
         sendTyranoMessage(tyranoVchat, testMessage)
         sendTyranoChatMessage()
       },
+      changeName: (name: string) => dispatch(changeName(name)),
+      changeFace: (face: string) => dispatch(changeFace(face)),
     }
   })
 const sendUdonMessage = () => {
@@ -79,7 +93,7 @@ interface TyranoChat {
 }
 const testMessage = `
 [chara_show  name="akane"]
-#あかね
+#あかね:
 こんにちはですよ。[p]
 `
 const sendTyranoMessage = (name: string, scenario: string) => {

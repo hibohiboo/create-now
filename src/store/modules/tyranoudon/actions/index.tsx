@@ -5,4 +5,12 @@ export const addUdonariumMessage = createAction(
   (text: string) => ({ payload: { text } }),
 )
 
+export const changeName = createAction('CHANGE_CHARA_NAME', (text: string) => ({
+  payload: { text },
+}))
+
+export const changeFace = createAction('CHANGE_CHARA_FACE', (text: string) => ({
+  payload: { text },
+}))
+
 export default { addUdonariumMessage }
