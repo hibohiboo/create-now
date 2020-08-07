@@ -28,7 +28,7 @@ export default function Home() {
       <UdonariumPanel />
       <TyranoPanel
         name={vm.tyranoSample}
-        defaultHeight={450}
+        defaultHeight={480}
         defaultWidth={800}
       />
       <TyranoPanel
@@ -36,6 +36,7 @@ export default function Home() {
         defaultHeight={800}
         defaultWidth={640}
       />
+      <TyranoPanel name={'chat_talk'} defaultHeight={640} defaultWidth={430} />
       <button onClick={vm.sendMessage}>test send </button>
     </div>
   )

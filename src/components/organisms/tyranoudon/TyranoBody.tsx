@@ -1,6 +1,9 @@
 import { FC } from 'react'
 
-const TryranoBody: FC<{ configs: any[] }> = ({ configs }) => {
+const TryranoBody: FC<{ name: string; configs: any[] }> = ({
+  name,
+  configs,
+}) => {
   return (
     <>
       <div
@@ -31,6 +34,11 @@ const TryranoBody: FC<{ configs: any[] }> = ({ configs }) => {
           OK
         </button>
       </div>
+      <input
+        type="hidden"
+        id="first_scenario_file"
+        value={`${name}.ks`}
+      ></input>
       {configs.map(([key, val]) => (
         <input
           data-tyrano="config"

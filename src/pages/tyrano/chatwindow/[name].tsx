@@ -6,6 +6,7 @@ import TyranoBody from '~/components/organisms/tyranoudon/TyranoBody'
 import Layout from '~/components/templates/tyrano/Layout'
 interface Prop {
   setting: { configs: any[] }
+  name: SettingKeys
 }
 declare global {
   interface Window {
@@ -30,7 +31,7 @@ export const isChatMessage = (data: any): data is TyranoChat =>
 
 // https://kido0617.github.io/tyrano/2018-08-02-make-plugin/
 // https://qiita.com/diyin_near_j/items/7f94c080add33d045654
-export default function Home({ setting }: Prop) {
+export default function Home({ setting, name }: Prop) {
   useEffect(() => {
     if (!window) return
     window.addEventListener(
@@ -52,7 +53,7 @@ export default function Home({ setting }: Prop) {
   return (
     <>
       <TyranoHead />
-      <TyranoBody configs={setting.configs} />
+      <TyranoBody configs={setting.configs} name={name} />
     </>
   )
 }
@@ -68,13 +69,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       setting,
+      name: key,
     },
   }
 }
 
 const settings = {
   sample: {
-    configs: [],
+    configs: [['chSpeed', '0']],
   },
   vchat: {
     configs: [
@@ -85,6 +87,19 @@ const settings = {
       ['alreadyReadTextColor', '0x87cefa'],
       ['defaultFontSize', '26'],
       ['defaultChColor', '0x242424'],
+      ['chSpeed', '0'],
+    ],
+  },
+  chat_talk: {
+    configs: [
+      ['scWidth', '860'],
+      ['scHeight', '1280'],
+      ['configLeft', '750'],
+      ['configTop', '1170'],
+      ['alreadyReadTextColor', '0x87cefa'],
+      ['defaultFontSize', '26'],
+      ['defaultChColor', '0x242424'],
+      ['chSpeed', '0'],
     ],
   },
 } as const

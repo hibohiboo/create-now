@@ -49,8 +49,9 @@ export const useViewModel = () =>
       tyranoVchat,
       sendMessage: () => {
         sendUdonMessage()
-        sendTyranoMessage(tyranoSample)
-        sendTyranoMessage(tyranoVchat)
+        sendTyranoMessage(tyranoSample, testMessage)
+        sendTyranoMessage(tyranoVchat, testMessage)
+        sendTyranoChatMessage()
       },
     }
   })
@@ -81,14 +82,20 @@ const testMessage = `
 #あかね
 こんにちはですよ。[p]
 `
-const sendTyranoMessage = (name: string) => {
+const sendTyranoMessage = (name: string, scenario: string) => {
   const tyrano = document.getElementById(
     `iframe-tyrano-${name}`,
   ) as HTMLIFrameElement
 
   const message: TyranoChat = {
     type: 'chat',
-    payload: { scenario: testMessage },
+    payload: { scenario },
   }
   tyrano.contentWindow.postMessage(message, process.env.TYRANO_DOMAIN)
+}
+
+const sendTyranoChatMessage = () => {
+  const message =
+    '[chat_talk pos="left" name="あかね" text="なんだい？"  face="chat/akane/hirameki.png"  ]'
+  sendTyranoMessage('chat_talk', message)
 }
