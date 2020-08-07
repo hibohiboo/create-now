@@ -60,26 +60,32 @@ export const useViewModel = () =>
             ]
           : [{ name: ' ' }],
       sendMessage: () => {
-        sendUdonMessage()
-        sendTyranoMessage(tyranoSample, testMessage)
-        sendTyranoMessage(tyranoVchat, testMessage)
-        sendTyranoChatMessage()
+        if (!text) return
+        sendUdonMessage(state.tyranoudon)
+        const msg = `[cm]
+#${name}:${face}
+${text}`
+        sendTyranoMessage(tyranoSample, msg)
+        sendTyranoMessage(tyranoVchat, msg)
+        sendTyranoChatMessage(state.tyranoudon)
+        dispatch(addUdonariumMessage(''))
       },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
+      changeText: (t: string) => dispatch(addUdonariumMessage(t)),
     }
   })
-const sendUdonMessage = () => {
+const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
 
   const chatMessage = {
     from: '',
     to: '',
-    name: 'テスト',
+    name: face.trim() === '' ? name : `${name}:${face}`,
     imageIdentifier: '',
     timestamp: Date.now(),
     tag: '', // GameType
-    text: '送信テスト',
+    text: text,
   }
   const message: PostMessageChat = {
     type: 'chat',
@@ -91,11 +97,11 @@ interface TyranoChat {
   type: 'chat'
   payload: { scenario: string }
 }
-const testMessage = `
-[chara_show  name="akane"]
-#あかね:
-こんにちはですよ。[p]
-`
+// const testMessage = `
+// [chara_show  name="akane"]
+// #あかね:
+// こんにちはですよ。[p]
+// `
 const sendTyranoMessage = (name: string, scenario: string) => {
   const tyrano = document.getElementById(
     `iframe-tyrano-${name}`,
@@ -108,8 +114,9 @@ const sendTyranoMessage = (name: string, scenario: string) => {
   tyrano.contentWindow.postMessage(message, process.env.TYRANO_DOMAIN)
 }
 
-const sendTyranoChatMessage = () => {
-  const message =
-    '[chat_talk pos="left" name="あかね" text="なんだい？"  face="chat/akane/hirameki.png"  ]'
+const sendTyranoChatMessage = ({ name, face, text }: TyranoUdon) => {
+  let message = `[chat_talk pos="left" name="${name}" text="${text}"  face="chat/akane/hirameki.png"]`
+  if (name === 'やまと')
+    message = `[chat_talk pos="right" name="${name}" text="${text}" face="chat/yamato/normal.png"]`
   sendTyranoMessage('chat_talk', message)
 }

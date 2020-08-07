@@ -8,7 +8,8 @@ import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
 import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
 import SelectField from '~/components/form/SelectField'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
-import { Box } from '@material-ui/core'
+import { Box, FormControl, TextareaAutosize, Button } from '@material-ui/core'
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -23,7 +24,7 @@ export default function Home() {
   const vm = useViewModel()
   console.log('viewModel', vm)
   const [height, setHeight] = useState(360)
-  const [width, setWidth] = useState(1600)
+  const [width, setWidth] = useState(1200)
   const onResize = (size) => {
     setHeight(size.height)
     setWidth(size.width)
@@ -68,6 +69,21 @@ export default function Home() {
               changeHandler={({ name }) => vm.changeFace(name)}
             />
           </div>
+        </Box>
+        <Box my={1} mx={3}>
+          <FormControl fullWidth style={{ marginTop: '10px' }}>
+            <TextareaAutosize
+              aria-label={'text'}
+              rowsMin={3}
+              value={vm.text}
+              onChange={(e) => vm.changeText(e.target.value)}
+            />
+          </FormControl>
+        </Box>
+        <Box my={2} mx={4}>
+          <Button variant="contained" color="primary" onClick={vm.sendMessage}>
+            送信
+          </Button>
         </Box>
       </DraggablePanel>
       <TyranoPanel
