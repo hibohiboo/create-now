@@ -36,6 +36,7 @@ export const useViewModel = () =>
     const dispatch = useDispatch()
     const { text } = state.tyranoudon
     const tyranoSample = 'sample'
+    const tyranoVchat = 'vchat'
 
     useEffect(() => {
       window.addEventListener('message', receiveUdonMessage, false)
@@ -45,9 +46,11 @@ export const useViewModel = () =>
     return {
       text,
       tyranoSample,
+      tyranoVchat,
       sendMessage: () => {
         sendUdonMessage()
         sendTyranoMessage(tyranoSample)
+        sendTyranoMessage(tyranoVchat)
       },
     }
   })

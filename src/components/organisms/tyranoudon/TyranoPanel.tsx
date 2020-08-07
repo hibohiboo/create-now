@@ -1,9 +1,13 @@
 import { useState, FC } from 'react'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 
-const TryranoPanel: FC<{ name: string }> = ({ name }) => {
-  const [height, setHeight] = useState(640)
-  const [width, setWidth] = useState(800)
+const TryranoPanel: FC<{
+  name: string
+  defaultWidth: number
+  defaultHeight: number
+}> = ({ name, defaultWidth, defaultHeight }) => {
+  const [height, setHeight] = useState(defaultHeight)
+  const [width, setWidth] = useState(defaultWidth)
   const onResize = (size) => {
     setHeight(size.height)
     setWidth(size.width)
