@@ -20,5 +20,5 @@ export type PostMessageChat = PostMessageData<{
   message: ChatMessageContext
   tab: string
 }>
-const isChatMessage = (data: any): data is PostMessageChat =>
+export const isChatMessage = (data: any): data is PostMessageChat =>
   ['chat', 'dice'].includes(data.type)

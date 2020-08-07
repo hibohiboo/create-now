@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addUdonariumMessage, changeName, changeFace } from '../actions'
+import { isChatMessage } from '../ports/udon'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat } from '../ports/udon'
 
@@ -14,12 +15,21 @@ declare global {
     udon: { ports: UdonariumPorts }
   }
 }
+const tyranoSample = 'sample'
+const tyranoVchat = 'vchat'
 const receiveUdonMessage = (event: MessageEvent) => {
   console.log(event)
   // このメッセージの送信者は信頼している者か？
   if (event.origin !== process.env.UDONARIUM_DOMAIN) return
+  const data = event.data
+  if (!isChatMessage(data)) return
   console.log('received udonarium message', event.data)
-
+  const [name, face] = data.payload.message.name.split(':')
+  const text = data.payload.message.text
+  const msg = createTyranoMessage(name, face || '', text)
+  sendTyranoMessage(tyranoSample, msg)
+  sendTyranoMessage(tyranoVchat, msg)
+  sendTyranoChatMessage({ name, face, text })
   // 受け取ったメッセージのオリジンを確かめたい場合（どんな場合でもそうするべ
   // きです）、メッセージに返答するための便利なイディオムは event.source 上
   // の postMessage を呼び出し、targetOrigin に event.origin を指定すること
@@ -35,8 +45,6 @@ export const useViewModel = () =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
     const { text, name, face } = state.tyranoudon
-    const tyranoSample = 'sample'
-    const tyranoVchat = 'vchat'
 
     useEffect(() => {
       window.addEventListener('message', receiveUdonMessage, false)
@@ -62,9 +70,7 @@ export const useViewModel = () =>
       sendMessage: () => {
         if (!text) return
         sendUdonMessage(state.tyranoudon)
-        const msg = `[cm]
-#${name}:${face}
-${text}`
+        const msg = createTyranoMessage(name, face, text)
         sendTyranoMessage(tyranoSample, msg)
         sendTyranoMessage(tyranoVchat, msg)
         sendTyranoChatMessage(state.tyranoudon)
@@ -75,6 +81,21 @@ ${text}`
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
     }
   })
+const createTyranoMessage = (
+  name: string,
+  face: string | undefined,
+  text: string,
+) => {
+  if (face) {
+    return `[cm]
+    #${name}:${face}
+    ${text}`
+  }
+  return `[cm]
+  #${name}
+  ${text}`
+}
+
 const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
 
