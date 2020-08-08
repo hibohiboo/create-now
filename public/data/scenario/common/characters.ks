@@ -5,8 +5,12 @@
 ;キャラクターの名前が表示される文字領域
 [ptext name="chara_name_area" layer="message0" color="white" size=28 bold=true x=180 y=510]
 
+
 ;上記で定義した領域がキャラクターの名前表示であることを宣言（これがないと#の部分でエラーになります）
-[chara_config ptext="chara_name_area"]
+;[chara_config ptext="chara_name_area"]
+
+; 発言時に沈むように設定
+[chara_config ptext="chara_name_area" memory="true" talk_anim="down" pos_mode="true" ]
 ; 発言者以外を暗くする
 [chara_config brightness=40 talk_focus=brightness]
 ;このゲームで登場するキャラクターを宣言
