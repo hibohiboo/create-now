@@ -1,6 +1,7 @@
 ;ティラノスクリプトサンプルゲーム
 
 *start
+[stop_keyconfig]
 [plugin name="dice"]
 [cm  ]
 [clearfix]
@@ -9,8 +10,6 @@
 
 [bg storage="room.jpg" time="100"]
 
-;メニューボタンの表示
-@showmenubutton
 @hidemenubutton
 ;メッセージウィンドウの設定
 [position layer="message0" left=160 top=500 width=1000 height=200 page=fore visible=true]
@@ -26,5 +25,11 @@
 @call storage="common/characters.ks"
 [chara_show  name="akane"]
 [chara_show  name="yamato"]
-[p]
-
+;[p]
+; #あかね
+; [dice array_dice="6,6" array_result="3,4" result_str="aaa" chara_name="あかね"]
+; #あかね
+; [dice array_dice="6,6" array_result="3,4" result_str="b" chara_name="あかね"]
+; #あかね
+; [dice array_dice="6,6" array_result="3,4" result_str="c" chara_name="あかね"]
+[s]

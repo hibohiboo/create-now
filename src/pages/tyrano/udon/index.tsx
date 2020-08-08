@@ -29,11 +29,11 @@ export default function Home() {
     setHeight(size.height)
     setWidth(size.width)
   }
-  let firstTyranoPanelWidth = 200
-  if (global.window && global.window.innerWidth < 1600) {
-    firstTyranoPanelWidth = global.window.innerWidth - 850
-    console.log('width', global.window.innerWidth)
-  }
+  const firstTyranoPanelWidth = 800
+  // if (global.window && global.window.innerWidth < 1600) {
+  //   firstTyranoPanelWidth = global.window.innerWidth - 850
+  //   console.log('width', global.window.innerWidth)
+  // }
   return (
     <div className={classes.root}>
       <Head>

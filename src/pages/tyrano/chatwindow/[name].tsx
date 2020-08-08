@@ -41,10 +41,11 @@ export default function Home({ setting, name }: Prop) {
         if (event.origin !== process.env.TYRANO_DOMAIN) return
         if (!isChatMessage(event.data)) return
         console.log('received chat message', event.data)
-        window.TYRANO.kag.ftag.buildTag(
-          window.TYRANO.kag.parser.parseScenario(event.data.payload.scenario)
-            .array_s,
-        )
+        const array_s = window.TYRANO.kag.parser.parseScenario(
+          event.data.payload.scenario,
+        ).array_s
+        console.log('array_s', array_s)
+        window.TYRANO.kag.ftag.buildTag(array_s)
       },
       false,
     )
@@ -60,7 +61,7 @@ export default function Home({ setting, name }: Prop) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = settingsKeys.map((repo) => `/tyrano/chatwindow/${repo}`)
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {

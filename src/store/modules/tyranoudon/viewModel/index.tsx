@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import * as _ from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
 import { addUdonariumMessage, changeName, changeFace } from '../actions'
 import { isChatMessage } from '../ports/udon'
@@ -86,14 +87,48 @@ const createTyranoMessage = (
   face: string | undefined,
   text: string,
 ) => {
+  const escape = (str: string) => {
+    return str
+      .replace('[', '［')
+      .replace(']', '］')
+      .replace('@', '＠')
+      .replace('#', '＃')
+  }
+  const fname = face ? `${escape(name)}:${escape(face)}` : escape(name)
+
+  if (name.includes('BCDice')) {
+    const bcname = name.replace('<BCDice：', '').replace('>', '')
+    // ;`(2D6) → 6[2,4] → 6`
+    const regex = /\(([0-9]+)[D|d]([0-9]+)\)/
+    const [m, diceNum, diceFace] = text.match(regex) // 一致, ダイスの個数, n面体
+    const dice = _.fill(Array(Number(diceNum)), Number(diceFace)).join(',')
+    if (diceNum === '1') {
+      const r = text.replace(`DiceBot : (1D${diceFace}) → `, '')
+      return `[cm]
+#${bcname}
+[dice array_dice="${dice}" array_result="${r}" result_str="${text}" chara_name="${bcname}"]
+`
+    }
+    const resultRegex = /\[([0-9,]+)\]/
+    const [m2, result] = text.match(resultRegex)
+
+    const fbcname = face ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
+    // #${fbcname} を入れると、nextOrderがバグる
+    return `
+#${fbcname}
+[dice array_dice="${dice}" array_result="${result}" result_str="${text}" chara_name="${bcname}"]
+`
+  }
   if (face) {
     return `[cm]
-    #${name}:${face}
-    ${text}`
+#${fname}
+${escape(text)}
+`
   }
   return `[cm]
-  #${name}
-  ${text}`
+#${fname}
+${escape(text)}
+`
 }
 
 const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {

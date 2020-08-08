@@ -1,6 +1,7 @@
 ;ティラノスクリプトサンプルゲーム
 
 *start
+[stop_keyconfig]
 [plugin name="dice"]
 [cm  ]
 [clearfix]
@@ -9,8 +10,6 @@
 
 [bg storage="room.jpg" time="100"]
 
-;メニューボタンの表示
-@showmenubutton
 @hidemenubutton
 ;メッセージウィンドウの設定
 [position layer="message0" left=160 top=500 width=1000 height=200 page=fore visible=true]

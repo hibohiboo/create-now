@@ -1,6 +1,7 @@
 ;ティラノストーリー　サンプルゲーム
 
 *start
+[stop_keyconfig]
 [plugin name="dice"]
 ;キー操作を無効にするか、有効にするかを設定するか。
 [start_keyconfig]

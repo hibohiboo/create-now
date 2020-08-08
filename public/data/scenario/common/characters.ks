@@ -10,7 +10,8 @@
 ;[chara_config ptext="chara_name_area"]
 
 ; 発言時に沈むように設定
-[chara_config ptext="chara_name_area" memory="true" talk_anim="down" pos_mode="true" ]
+;[chara_config ptext="chara_name_area" memory="true" talk_anim="down" pos_mode="true" ]
+[chara_config ptext="chara_name_area" memory="false" talk_anim="down" pos_mode="true" ]
 ; 発言者以外を暗くする
 [chara_config brightness=40 talk_focus=brightness]
 ;このゲームで登場するキャラクターを宣言
