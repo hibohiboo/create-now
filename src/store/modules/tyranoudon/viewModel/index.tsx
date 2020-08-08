@@ -70,10 +70,10 @@ export const useViewModel = () =>
       sendMessage: () => {
         if (!text) return
         sendUdonMessage(state.tyranoudon)
-        const msg = createTyranoMessage(name, face, text)
-        sendTyranoMessage(tyranoSample, msg)
-        sendTyranoMessage(tyranoVchat, msg)
-        sendTyranoChatMessage(state.tyranoudon)
+        // const msg = createTyranoMessage(name, face, text)
+        // sendTyranoMessage(tyranoSample, msg)
+        // sendTyranoMessage(tyranoVchat, msg)
+        // sendTyranoChatMessage(state.tyranoudon)
         dispatch(addUdonariumMessage(''))
       },
       changeName: (name: string) => dispatch(changeName(name)),

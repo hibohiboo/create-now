@@ -98,7 +98,7 @@ const settings = {
       ['configTop', '1170'],
       ['alreadyReadTextColor', '0x87cefa'],
       ['defaultFontSize', '26'],
-      ['defaultChColor', '0x242424'],
+      ['defaultChColor', '0x000000'],
       ['chSpeed', '0'],
     ],
   },
