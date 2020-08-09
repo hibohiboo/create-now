@@ -13,7 +13,7 @@ RUN npm init -y
 RUN npm i -D jest @testing-library/jest-dom jest-css-modules
 RUN npm i -D ts-jest @types/jest
 RUN npm i -D @testing-library/react
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tests\": \"jest src\/__tests__\/.*\/*.spec.tsx?$\", /g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tests\": \"jest tests\/__tests__\/.*\/*.spec.tsx?$\", /g" /app/package.json
 
 # Story Book
 RUN npx -p @storybook/cli sb init --type react
@@ -21,7 +21,7 @@ RUN npm i -D babel-preset-react-app
 RUN npm i -D @storybook/addon-knobs @storybook/addon-storysource @storybook/addon-viewport @storybook/addon-backgrounds @storybook/addon-console
 ## Story Shot
 RUN npm i -D @storybook/addon-storyshots @storybook/addon-storyshots-puppeteer puppeteer react-test-renderer
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"puppeteer-storyshots\": \"jest src\/__tests__\/puppeteer-storyshots*.runner.ts\", /g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"puppeteer-storyshots\": \"jest tests\/__tests__\/puppeteer-storyshots*.runner.ts\", /g" /app/package.json
 
 ### puppetieer troubleshooting
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
@@ -72,7 +72,7 @@ RUN npm i react-konva konva --save
 
 RUN npm i pdfmake
 
-# Node13.12.0、 Now CLI 17.1.1 dev (beta)にアップデートしたら、Watchpack Error (watcher): Error: ENOSPC: System limit for number of file watchers reached, watch '/app/src' が出るようになったため対応
+# Node13.12.0、 Now CLI 17.1.1 dev (beta)にアップデートしたら、Watchpack Error (watcher): Error: ENOSPC: System limit for number of file watchers reached, watch '/app/tests' が出るようになったため対応
 # https://qiita.com/yoshi0518/items/3fe5e162df6c5bd0fe6b
 # https://qiita.com/enta0701/items/bc9f8f8c780222979784
 # ホストと共有しているようなので、以下をホストで実行
@@ -137,4 +137,3 @@ RUN npm i dotenv --save-dev
 # RUN npm i material-table@1.62.0
 
 RUN npm i react-draggable
-RUN npm i react-resizable

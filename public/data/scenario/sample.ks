@@ -8,7 +8,7 @@
 [start_keyconfig]
 
 
-[bg storage="room.jpg" time="100"]
+[bg storage="forest.jpg" time="100"]
 
 @hidemenubutton
 ;メッセージウィンドウの設定

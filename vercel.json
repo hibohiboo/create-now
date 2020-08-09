@@ -27,7 +27,10 @@
     "FIREBASE_CLIENT_EMAIL": "@firebase-client-email",
     "FIREBASE_PRIVATE_KEY": "@firebase-private-key",
     "SESSION_SECRET": "@session-secret",
-    "SESSION_SECRET_PREVIOUS": "@session-secret-previous"
+    "SESSION_SECRET_PREVIOUS": "@session-secret-previous",
+    "UDONARIUM_URL": "@udonarium-url",
+    "UDONARIUM_DOMAIN": "@udonarium-domain",
+    "TYRANO_DOMAIN": "@tyrano-domain"
   },
   "build": {
     "env": {
@@ -38,7 +41,10 @@
       "FIREBASE_CLIENT_EMAIL": "@firebase-client-email",
       "FIREBASE_PRIVATE_KEY": "@firebase-private-key",
       "SESSION_SECRET": "@session-secret",
-      "SESSION_SECRET_PREVIOUS": "@session-secret-previous"
+      "SESSION_SECRET_PREVIOUS": "@session-secret-previous",
+      "UDONARIUM_URL": "@udonarium-url",
+      "UDONARIUM_DOMAIN": "@udonarium-domain",
+      "TYRANO_DOMAIN": "@tyrano-domain"
     }
   }
 }

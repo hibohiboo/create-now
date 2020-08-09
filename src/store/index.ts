@@ -20,12 +20,12 @@ export const setupStore = (preloadedState?): EnhancedStore => {
     preloadedState,
   })
 
-  if (module.hot) {
-    module.hot.accept('./rootState', () => {
-      console.log('Replacing reducer')
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      store.replaceReducer(require('./rootState').default)
-    })
-  }
+  // if (module.hot) {
+  //   module.hot.accept('./rootState', () => {
+  //     console.log('Replacing reducer')
+  //     // eslint-disable-next-line @typescript-eslint/no-var-requires
+  //     store.replaceReducer(require('./rootState').default)
+  //   })
+  // }
   return store
 }

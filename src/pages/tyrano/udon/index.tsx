@@ -96,7 +96,33 @@ export default function Home() {
         defaultWidth={640}
       />
       <TyranoPanel name={'chat_talk'} defaultHeight={640} defaultWidth={430} />
-      <button onClick={vm.sendMessage}>test send </button>
+      <DraggablePanel
+        title="チャット"
+        width={width}
+        height={height}
+        onResize={onResize}
+      >
+        <Box my={2} mx={3}>
+          <ul>
+            <li>
+              <a href="http://www5d.biglobe.ne.jp/~gakai/">
+                背景素材： きまぐれアフター
+              </a>
+            </li>
+            <li>
+              <a href="https://tyrano.jp/">参考： ティラノスクリプト</a>
+            </li>
+            <li>
+              <a href="https://trpg-studio.com/">参考： ＴＲＰＧスタジオ</a>
+            </li>
+            <li>
+              <a href="https://github.com/TK11235/udonarium">
+                参考： ユドナリウム
+              </a>
+            </li>
+          </ul>
+        </Box>
+      </DraggablePanel>
     </div>
   )
 }
