@@ -1,0 +1,33 @@
+export const bgMethods = [
+  { name: 'fadeIn' },
+  { name: 'fadeInDown' },
+  { name: 'fadeInLeft' },
+  { name: 'fadeInRight' },
+  { name: 'fadeInUp' },
+  { name: 'lightSpeedIn' },
+  { name: 'rotateIn' },
+  { name: 'rotateInDownLeft' },
+  { name: 'rotateInDownRight' },
+  { name: 'rotateInUpLeft' },
+  { name: 'rotateInUpRight' },
+  { name: 'zoomIn' },
+  { name: 'zoomInDown' },
+  { name: 'zoomInLeft' },
+  { name: 'zoomInRight' },
+  { name: 'zoomInUp' },
+  { name: 'slideInDown' },
+  { name: 'slideInLeft' },
+  { name: 'slideInRight' },
+  { name: 'slideInUp' },
+  { name: 'bounceIn ' },
+  { name: 'bounceInDown' },
+  { name: 'bounceInLeft' },
+  { name: 'bounceInRight' },
+  { name: 'bounceInUp' },
+  { name: 'rollIn' },
+  { name: 'vanishIn' },
+  { name: 'puffIn' },
+] as const
+export type TyranoMethos = typeof bgMethods[number]['name']
+export const isBackgroundMethod = (m: string): m is TyranoMethos =>
+  bgMethods.map((item) => item.name as string).includes(m)

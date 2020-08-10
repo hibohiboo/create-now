@@ -23,7 +23,7 @@ export default function Page(ctx) {
   const classes = useStyles()
   const vm = useViewModel(ctx)
   console.log('viewModel', vm)
-  const [height, setHeight] = useState(360)
+  const [height, setHeight] = useState(200)
   const [width, setWidth] = useState(1200)
   const onResize = (size) => {
     setHeight(size.height)
@@ -105,6 +105,14 @@ export default function Page(ctx) {
           >
             ユドナリウムの背景を適用
           </Button>
+          <SelectField
+            id="bg-method"
+            labelText="背景切替演出"
+            items={[...vm.methodList]}
+            unselectedText=""
+            value={vm.tyranoBackgroundMethod}
+            changeHandler={({ name }) => vm.changeBgMethod(name)}
+          />
         </Box>
       </DraggablePanel>
       <DraggablePanel

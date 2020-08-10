@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import type { Dispatch } from 'redux'
-
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../actions'
 import { isChatMessage, isTableImageMessage } from '../ports/udon'
 import { createTyranoMessage, isTagMessage } from '../utils/tyranoMessage'
+import * as constants from '../constants'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
@@ -73,7 +73,6 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
         false,
       )
       // dispatch(addUdonariumMessage('sample Message:'))
-      dispatch(actions.changeTyranoName(ctx.tyrano_name))
     }, [])
 
     return {
@@ -90,6 +89,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
               { name: 'sad' },
             ]
           : [{ name: ' ' }],
+      methodList: constants.bgMethods,
       sendMessage: () => {
         if (!text) return
         sendUdonMessage(state.tyranoudon)
@@ -102,12 +102,14 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       sendTyranBgImageChange: () => {
         sendUdonMessage({
           ...state.tyranoudon,
-          text: `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}"]`,
+          text: `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}" method="${state.tyranoudon.tyranoBackgroundMethod}"]`,
         })
       },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
+      changeBgMethod: (t: string) =>
+        dispatch(actions.changeTyranoBackgroundMethod(t)),
     }
   })
 

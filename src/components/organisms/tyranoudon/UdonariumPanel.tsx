@@ -3,7 +3,7 @@ import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 
 const UdonariumPanel: FC = () => {
   const [height, setHeight] = useState(640)
-  const [width, setWidth] = useState(800)
+  const [width, setWidth] = useState(700)
   const onResize = (size) => {
     setHeight(size.height)
     setWidth(size.width)
