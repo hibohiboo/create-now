@@ -1,0 +1,6 @@
+[stop_keyconfig]
+[plugin name="dice"]
+[plugin name="bg3"]
+[cm  ]
+[clearfix]
+[start_keyconfig]

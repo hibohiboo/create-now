@@ -1,14 +1,9 @@
 ;ティラノスクリプトサンプルゲーム
 
 *start
-[stop_keyconfig]
-[plugin name="dice"]
-[plugin name="bg3"]
-[cm  ]
-[clearfix]
-[start_keyconfig]
 
-
+; 共通設定/プラグイン読込
+@call storage="common/common.ks"
 [bg storage="forest.jpg" time="100"]
 
 @hidemenubutton

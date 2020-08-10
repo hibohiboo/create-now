@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import type { Dispatch } from 'redux'
-import * as _ from 'lodash'
+
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../actions'
 import { isChatMessage, isTableImageMessage } from '../ports/udon'
+import { createTyranoMessage } from '../utils/tyranoMessage'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
@@ -90,64 +91,16 @@ export const useViewModel = () =>
         dispatch(addUdonariumMessage(''))
       },
       sendTyranBgImageChange: () => {
-        sendTyranoChatMessage(
-          tyranoSample,
-          `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}"]`,
-        )
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}"]`,
+        })
       },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
     }
   })
-const createTyranoMessage = (
-  name: string,
-  face: string | undefined,
-  text: string,
-) => {
-  const escape = (str: string) => {
-    return str
-      .replace('[', '［')
-      .replace(']', '］')
-      .replace('@', '＠')
-      .replace('#', '＃')
-  }
-  const fname = face ? `${escape(name)}:${escape(face)}` : escape(name)
-
-  if (name.includes('BCDice')) {
-    const bcname = name.replace('<BCDice：', '').replace('>', '')
-    // ;`(2D6) → 6[2,4] → 6`
-    const regex = /\(([0-9]+)[D|d]([0-9]+)\)/
-    const [m, diceNum, diceFace] = text.match(regex) // 一致, ダイスの個数, n面体
-    const dice = _.fill(Array(Number(diceNum)), Number(diceFace)).join(',')
-    if (diceNum === '1') {
-      const r = text.replace(`DiceBot : (1D${diceFace}) → `, '')
-      return `[cm]
-#${bcname}
-[dice array_dice="${dice}" array_result="${r}" result_str="${text}" chara_name="${bcname}"]
-`
-    }
-    const resultRegex = /\[([0-9,]+)\]/
-    const [m2, result] = text.match(resultRegex)
-
-    const fbcname = face ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
-    // #${fbcname} を入れると、nextOrderがバグる
-    return `
-#${fbcname}
-[dice array_dice="${dice}" array_result="${result}" result_str="${text}" chara_name="${bcname}"]
-`
-  }
-  if (face) {
-    return `[cm]
-#${fname}
-${escape(text)}
-`
-  }
-  return `[cm]
-#${fname}
-${escape(text)}
-`
-}
 
 const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement

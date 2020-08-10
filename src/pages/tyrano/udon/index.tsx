@@ -96,13 +96,15 @@ export default function Home() {
         height={height}
         onResize={onResize}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={vm.sendTyranBgImageChange}
-        >
-          背景変更
-        </Button>
+        <Box my={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendTyranBgImageChange}
+          >
+            ユドナリウムの背景を適用
+          </Button>
+        </Box>
       </DraggablePanel>
       <TyranoPanel
         name={vm.tyranoVchat}

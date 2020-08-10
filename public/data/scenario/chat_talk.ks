@@ -1,10 +1,8 @@
 ;ティラノストーリー　サンプルゲーム
 
 *start
-[stop_keyconfig]
-[plugin name="dice"]
-;キー操作を無効にするか、有効にするかを設定するか。
-[start_keyconfig]
+; 共通設定/プラグイン読込
+@call storage="common/common.ks"
 
 ;背景を設定する所
 [bg storage="bgchat.png" time="100"]
