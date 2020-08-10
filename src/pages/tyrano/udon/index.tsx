@@ -164,7 +164,23 @@ export default function Page(ctx) {
           <Button variant="contained" color="primary" onClick={vm.rubySample}>
             ルビサンプル
           </Button>
-
+          <Button variant="contained" color="primary" onClick={vm.sendZawaZawa}>
+            ざわ……ざわ……
+          </Button>
+          <InputField
+            model={vm}
+            type="text"
+            prop="sceneName"
+            labelText={'シーン名'}
+            changeHandler={(e) => vm.changeEffectTime(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendSceneName}
+          >
+            シーン名表示
+          </Button>
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>

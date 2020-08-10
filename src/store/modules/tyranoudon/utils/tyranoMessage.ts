@@ -38,15 +38,15 @@ export const isTagMessage = (text: string) => {
   if (_.startsWith(text, '[chara_show ')) return true
   if (_.startsWith(text, '[chara_hide ')) return true
   if (_.startsWith(text, '[chara_hide_all ')) return true
-  if (_.startsWith(text, '[layopt ')) return true
-  if (_.startsWith(text, '[image ')) return true
-  if (_.startsWith(text, '[kanim ')) return true
-  if (_.startsWith(text, '[wa ')) return true
+  // if (_.startsWith(text, '[layopt ')) return true
+  // if (_.startsWith(text, '[image ')) return true
+  // if (_.startsWith(text, '[kanim ')) return true
+  // if (_.startsWith(text, '[wa ')) return true
   if (_.startsWith(text, '[keyframe ')) return true
-  if (_.startsWith(text, '[frame ')) return true
-  if (_.startsWith(text, '[endkeyframe ')) return true
-  if (_.startsWith(text, '[freeimage ')) return true
-
+  // if (_.startsWith(text, '[frame ')) return true
+  // if (_.startsWith(text, '[endkeyframe ')) return true
+  // if (_.startsWith(text, '[freeimage ')) return true
+  if (_.startsWith(text, '[mtext ')) return true
   return false
 }
 
@@ -80,7 +80,8 @@ const createBcdiceMessage = (
 
 export const createBgMessage = (img: string, method: string, time: number) => {
   if (method === '帯') {
-    return `[keyframe name="slideInA"]
+    return `[chara_hide_all time="0"]
+[keyframe name="slideInA"]
   [frame p="  0%" rotate="-40deg" x="-800"]
   [frame p=" 25%" rotate="-40deg" x="0"]
   [frame p="100%" rotate="-40deg" x="0"]
@@ -125,7 +126,6 @@ export const createBgMessage = (img: string, method: string, time: number) => {
   [frame p="100%" rotate="-80deg" x="-2000"]
 [endkeyframe]
 
-[chara_hide_all time="0"]
 [layopt layer="message0" visible="false"]
 [layopt layer="fix"      visible="false"]
 [image layer="1" x="-350"  y="-100" width=" 800" height="400" storage="color/col1.png" name="a" zindex="4"]
@@ -165,3 +165,14 @@ export const createCharacterHideMessage = (name: string, time: number) =>
   `[chara_hide name="${escape(name)}" time="${time}"]`
 export const createCharacterHideAllMessage = (time: number) =>
   `[chara_hide_all time="${time}"]`
+
+export const createMTextZawaZawaMessage = () => {
+  return `[mtext text="ざわ･･" layer="0" x="200" y="100" size="70" in_effect="wobble" time="0" color="0x000000" edge="0xffffff" wait="false"]
+    [mtext text="ざわ･･" layer="0" x="460" y="300" size="70" in_effect="wobble" time="0" color="0x000000" edge="0xffffff" wait="false"]
+    [mtext text="ざわ･･" layer="0" x="560" y="100" size="70" in_effect="wobble" time="0" color="0x000000" edge="0xffffff" wait="false"]
+    [mtext text="ざわ･･" layer="0" x="140" y="300" size="70" in_effect="wobble" time="0" color="0x000000" edge="0xffffff"]
+    `
+}
+export const createMTextMessage = (text: string) => {
+  return `[mtext text="${text}" layer="0" x="5" y="5" size="40" in_effect="fadeInRightBig" time="0" color="0xc0006f" edge="0xffffff" fadeout="false" name="mtext"]`
+}

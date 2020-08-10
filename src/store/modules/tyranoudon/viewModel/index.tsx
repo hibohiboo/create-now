@@ -148,7 +148,18 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
           ),
         })
       },
-
+      sendZawaZawa: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createMTextZawaZawaMessage(),
+        })
+      },
+      sendSceneName: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createMTextMessage(state.tyranoudon.sceneName),
+        })
+      },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
@@ -160,6 +171,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
         dispatch(actions.changeTyranoFontColor(t)),
       changeFontSize: (t: string) =>
         dispatch(actions.changeTyranoFontSize(Number(t))),
+      changeSceneName: (t: string) => dispatch(actions.changeSceneName(t)),
     }
   })
 

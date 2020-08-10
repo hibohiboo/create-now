@@ -43,6 +43,9 @@ const changeTyranoFontSize = createAction(
     payload: { n },
   }),
 )
+const changeSceneName = createAction('CHANGE_SCENE_NAME', (text: string) => ({
+  payload: { text },
+}))
 export default {
   addUdonariumMessage,
   changeName,
@@ -52,4 +55,5 @@ export default {
   changeTyranoEffectTime,
   changeTyranoFontColor,
   changeTyranoFontSize,
+  changeSceneName,
 }

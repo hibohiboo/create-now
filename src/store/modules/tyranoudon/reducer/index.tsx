@@ -12,6 +12,7 @@ export interface TyranoUdon {
   tyranoEffectTime: number
   tyranoFontColor: string
   tyranoFontSize: number
+  sceneName: string
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
@@ -22,6 +23,7 @@ export const initialState = (): TyranoUdon => ({
   tyranoEffectTime: 1000,
   tyranoFontColor: '#ffffff',
   tyranoFontSize: 26,
+  sceneName: 'ミドルフェイス / シーン2 【シーンプレイヤー：あかね】',
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -52,6 +54,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeTyranoFontSize, (state, actions) => {
       state.tyranoFontSize = actions.payload.n
+    })
+    .addCase(actions.changeSceneName, (state, actions) => {
+      state.sceneName = actions.payload.text
     }),
 )
 
