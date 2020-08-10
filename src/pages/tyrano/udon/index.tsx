@@ -90,14 +90,29 @@ export default function Home() {
           </Button>
         </Box>
       </DraggablePanel>
+      <DraggablePanel
+        title="コマンド"
+        width={width}
+        height={height}
+        onResize={onResize}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.sendTyranBgImageChange}
+        >
+          背景変更
+        </Button>
+      </DraggablePanel>
       <TyranoPanel
         name={vm.tyranoVchat}
         defaultHeight={800}
         defaultWidth={640}
       />
+
       <TyranoPanel name={'chat_talk'} defaultHeight={640} defaultWidth={430} />
       <DraggablePanel
-        title="チャット"
+        title="参考"
         width={width}
         height={height}
         onResize={onResize}
@@ -120,6 +135,7 @@ export default function Home() {
                 参考： ユドナリウム
               </a>
             </li>
+            <li>{`${vm.udonariumBackgroundImage}`}</li>
           </ul>
         </Box>
       </DraggablePanel>

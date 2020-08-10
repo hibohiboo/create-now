@@ -13,7 +13,7 @@ interface ChatMessageContext {
 }
 interface PostMessageData<T> {
   payload: T
-  type: 'chat' | 'dice'
+  type: 'chat' | 'dice' | 'table-background'
 }
 
 export type PostMessageChat = PostMessageData<{
@@ -22,3 +22,6 @@ export type PostMessageChat = PostMessageData<{
 }>
 export const isChatMessage = (data: any): data is PostMessageChat =>
   ['chat', 'dice'].includes(data.type)
+export type PostMessageTableImage = PostMessageData<{ url: string }>
+export const isTableImageMessage = (data: any): data is PostMessageTableImage =>
+  ['table-background'].includes(data.type)

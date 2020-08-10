@@ -1,15 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { addUdonariumMessage, changeName, changeFace } from '../actions'
+import actions from '../actions'
+const { addUdonariumMessage, changeName, changeFace } = actions
 
 export interface TyranoUdon {
   text: string
   name: string
   face: string
+  udonariumBackgroundImage: string
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
   name: 'あかね',
   face: ' ',
+  udonariumBackgroundImage: './assets/images/BG10a_80.jpg',
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -23,6 +26,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(changeFace, (state, action) => {
       state.face = action.payload.text
+    })
+    .addCase(actions.changeUdonariumBackgroundImage, (state, actions) => {
+      state.udonariumBackgroundImage = actions.payload.text
     }),
 )
 
