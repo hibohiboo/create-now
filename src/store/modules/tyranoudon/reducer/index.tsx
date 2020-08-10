@@ -13,7 +13,7 @@ export interface TyranoUdon {
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
-  name: 'あかね',
+  name: 'akane',
   face: ' ',
   udonariumBackgroundImage: 'forest.jpg',
   tyranoBackgroundMethod: 'fadeIn',

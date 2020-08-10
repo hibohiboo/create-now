@@ -7,13 +7,13 @@ const escape = (str: string) => {
     .replace('@', '＠')
     .replace('#', '＃')
 }
-
+const hasFace = (face) => face && face.trim() !== ''
 export const createTyranoMessage = (
   name: string,
   face: string | undefined,
   text: string,
 ) => {
-  const fname = face ? `${escape(name)}:${escape(face)}` : escape(name)
+  const fname = hasFace(face) ? `${escape(name)}:${escape(face)}` : escape(name)
 
   if (name.includes('BCDice')) {
     return createBcdiceMessage(name, face, text)
@@ -29,7 +29,8 @@ ${escape(text)}
 
 export const isTagMessage = (text: string) => {
   if (!_.startsWith(text, '[')) return false
-  if (_.startsWith(text, '[bg3')) return true
+  if (_.startsWith(text, '[bg3 ')) return true
+  if (_.startsWith(text, '[chara_show ')) return true
   return false
 }
 
@@ -60,3 +61,17 @@ const createBcdiceMessage = (
 [dice array_dice="${dice}" array_result="${result}" result_str="${text}" chara_name="${bcname}"]
 `
 }
+
+export const createBgMessage = (img: string, method: string, time: number) =>
+  `[bg3 storage="${img}" method="${method}" time="${time}"]`
+
+export const createCharacterShowMessage = (
+  name: string,
+  face: string | undefined,
+  time: number,
+) =>
+  hasFace(face)
+    ? `[chara_show name="${escape(name)}" face="${escape(
+        face,
+      )}" time="${time}"]`
+    : `[chara_show name="${escape(name)}" time="${time}"]`

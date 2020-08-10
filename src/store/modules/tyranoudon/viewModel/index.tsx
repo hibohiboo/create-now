@@ -3,7 +3,7 @@ import type { Dispatch } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../actions'
 import { isChatMessage, isTableImageMessage } from '../ports/udon'
-import { createTyranoMessage, isTagMessage } from '../utils/tyranoMessage'
+import * as tyranoMessage from '../utils/tyranoMessage'
 import * as constants from '../constants'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
@@ -50,11 +50,11 @@ const chatMessageHandler = (data: PostMessageChat, tyranoName: string) => {
   const text = data.payload.message.text
   console.log('tyranoName', tyranoName)
   if (tyranoName === 'chat_talk') {
-    if (isTagMessage(text)) return
+    if (tyranoMessage.isTagMessage(text)) return
     sendTyranoChatTalkMessage({ name, face, text })
     return
   }
-  const msg = createTyranoMessage(name, face || '', text)
+  const msg = tyranoMessage.createTyranoMessage(name, face || '', text)
   sendTyranoChatMessage(tyranoName, msg)
 }
 const tableImageHandler = (data: PostMessageTableImage, dispatch: Dispatch) => {
@@ -90,6 +90,10 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
             ]
           : [{ name: ' ' }],
       methodList: constants.bgMethods,
+      nameList: [
+        { name: 'あかね', value: 'akane' },
+        { name: 'やまと', value: 'yamato' },
+      ],
       sendMessage: () => {
         if (!text) return
         sendUdonMessage(state.tyranoudon)
@@ -102,7 +106,21 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       sendTyranBgImageChange: () => {
         sendUdonMessage({
           ...state.tyranoudon,
-          text: `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}" method="${state.tyranoudon.tyranoBackgroundMethod}" time="${state.tyranoudon.tyranoEffectTime}"]`,
+          text: tyranoMessage.createBgMessage(
+            state.tyranoudon.udonariumBackgroundImage,
+            state.tyranoudon.tyranoBackgroundMethod,
+            state.tyranoudon.tyranoEffectTime,
+          ),
+        })
+      },
+      sendTyranoCharaShow: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createCharacterShowMessage(
+            state.tyranoudon.name,
+            state.tyranoudon.face,
+            state.tyranoudon.tyranoEffectTime,
+          ),
         })
       },
       changeName: (name: string) => dispatch(changeName(name)),

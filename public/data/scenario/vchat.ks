@@ -20,6 +20,6 @@
 ; キャラクターの準備
 @call storage="common/characters.ks"
 [chara_show  name="akane"]
-[chara_show  name="yamato"]
+
 [p]
 

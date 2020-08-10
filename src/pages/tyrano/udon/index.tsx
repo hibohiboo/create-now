@@ -24,7 +24,7 @@ export default function Page(ctx) {
   const classes = useStyles()
   const vm = useViewModel(ctx)
   console.log('viewModel', vm)
-  const [height, setHeight] = useState(200)
+  const [height, setHeight] = useState(240)
   const [width, setWidth] = useState(1200)
   const onResize = (size) => {
     setHeight(size.height)
@@ -59,10 +59,11 @@ export default function Page(ctx) {
             <SelectField
               id="name"
               labelText="名前"
-              items={[{ name: 'あかね' }, { name: 'やまと' }]}
+              items={vm.nameList}
               unselectedText=""
               value={vm.name}
-              changeHandler={({ name }) => vm.changeName(name)}
+              valueProp="value"
+              changeHandler={({ name, value }: any) => vm.changeName(value)}
             />
           </div>
           <div style={{ width: '100px' }}>
@@ -75,6 +76,13 @@ export default function Page(ctx) {
               changeHandler={({ name }) => vm.changeFace(name)}
             />
           </div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendTyranoCharaShow}
+          >
+            登場
+          </Button>
         </Box>
         <Box my={1} mx={3}>
           <FormControl fullWidth style={{ marginTop: '10px' }}>

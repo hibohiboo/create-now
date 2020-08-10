@@ -20,7 +20,7 @@
 ; キャラクターの準備
 @call storage="common/characters.ks"
 [chara_show  name="akane"]
-[chara_show  name="yamato"]
+
 ;[p]
 ; #あかね
 ; [dice array_dice="6,6" array_result="3,4" result_str="aaa" chara_name="あかね"]
