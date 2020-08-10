@@ -31,6 +31,12 @@ const changeTyranoEffectTime = createAction(
     payload: { n },
   }),
 )
+const changeTyranoFontColor = createAction(
+  'CHANGE_TYRANO_FONT_COLOR',
+  (text: string) => ({
+    payload: { text },
+  }),
+)
 export default {
   addUdonariumMessage,
   changeName,
@@ -38,4 +44,5 @@ export default {
   changeUdonariumBackgroundImage,
   changeTyranoBackgroundMethod,
   changeTyranoEffectTime,
+  changeTyranoFontColor,
 }

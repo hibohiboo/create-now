@@ -1,11 +1,15 @@
 import * as _ from 'lodash'
 
 const escape = (str: string) => {
-  return str
-    .replace('[', '［')
-    .replace(']', '］')
-    .replace('@', '＠')
-    .replace('#', '＃')
+  return (
+    str
+      .replace('[', '［')
+      // .replace(']', '］')
+      .replace('@', '＠')
+      .replace('#', '＃')
+      .replace('［font', '[font')
+      .replace('［resetfont', '[resetfont')
+  )
 }
 const hasFace = (face) => face && face.trim() !== ''
 export const createTyranoMessage = (

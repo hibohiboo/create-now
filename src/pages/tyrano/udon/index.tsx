@@ -76,6 +76,15 @@ export default function Page(ctx) {
               changeHandler={({ name }) => vm.changeFace(name)}
             />
           </div>
+          <div style={{ width: '50px' }}>
+            <InputField
+              model={vm}
+              type="color"
+              prop="tyranoFontColor"
+              labelText={'文字色'}
+              changeHandler={(e) => vm.changeFontColor(e.target.value)}
+            />
+          </div>
           <Button
             variant="contained"
             color="primary"
@@ -113,7 +122,7 @@ export default function Page(ctx) {
         height={height}
         onResize={onResize}
       >
-        <Box my={2}>
+        <Box my={2} style={{ height: `${height - 50}px`, overflowY: 'scroll' }}>
           <Button
             variant="contained"
             color="primary"
@@ -143,6 +152,8 @@ export default function Page(ctx) {
           >
             全員退場
           </Button>
+
+          <Box my={2}></Box>
         </Box>
       </DraggablePanel>
       <DraggablePanel
@@ -170,6 +181,7 @@ export default function Page(ctx) {
               </a>
             </li>
             <li>{`${vm.udonariumBackgroundImage}`}</li>
+            <li>{`${vm.tyranoFontColor}`}</li>
           </ul>
         </Box>
       </DraggablePanel>

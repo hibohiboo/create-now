@@ -80,7 +80,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       tyranoSample,
       tyranoVchat,
       faceList:
-        name === 'あかね'
+        name === 'akane'
           ? [
               { name: ' ' },
               { name: 'happy' },
@@ -148,10 +148,12 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
         dispatch(actions.changeTyranoBackgroundMethod(t)),
       changeEffectTime: (t: string) =>
         dispatch(actions.changeTyranoEffectTime(Number(t))),
+      changeFontColor: (t: string) =>
+        dispatch(actions.changeTyranoFontColor(t)),
     }
   })
 
-const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
+const sendUdonMessage = ({ name, face, text, tyranoFontColor }: TyranoUdon) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
 
   const chatMessage = {
@@ -161,7 +163,13 @@ const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
     imageIdentifier: '',
     timestamp: Date.now(),
     tag: '', // GameType
-    text: text,
+    text:
+      tyranoFontColor === '#ffffff'
+        ? text
+        : `[font color="${tyranoFontColor.replace(
+            '#',
+            '0x',
+          )}"]${text}[resetfont]`,
   }
   const message: PostMessageChat = {
     type: 'chat',

@@ -10,6 +10,7 @@ export interface TyranoUdon {
   udonariumBackgroundImage: string
   tyranoBackgroundMethod: string
   tyranoEffectTime: number
+  tyranoFontColor: string
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
@@ -18,6 +19,7 @@ export const initialState = (): TyranoUdon => ({
   udonariumBackgroundImage: 'forest.jpg',
   tyranoBackgroundMethod: 'fadeIn',
   tyranoEffectTime: 1000,
+  tyranoFontColor: '#ffffff',
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -42,6 +44,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeTyranoEffectTime, (state, actions) => {
       state.tyranoEffectTime = actions.payload.n
+    })
+    .addCase(actions.changeTyranoFontColor, (state, actions) => {
+      state.tyranoFontColor = actions.payload.text
     }),
 )
 
