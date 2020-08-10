@@ -7,6 +7,7 @@ import UdonariumPanel from '~/components/organisms/tyranoudon/UdonariumPanel'
 import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
 import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
 import SelectField from '~/components/form/SelectField'
+import InputField from '~/components/form/InputField'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 import { Box, FormControl, TextareaAutosize, Button } from '@material-ui/core'
 
@@ -112,6 +113,13 @@ export default function Page(ctx) {
             unselectedText=""
             value={vm.tyranoBackgroundMethod}
             changeHandler={({ name }) => vm.changeBgMethod(name)}
+          />
+          <InputField
+            model={vm}
+            type="number"
+            prop="tyranoEffectTime"
+            labelText={'効果演出時間'}
+            changeHandler={(e) => vm.changeEffectTime(e.target.value)}
           />
         </Box>
       </DraggablePanel>

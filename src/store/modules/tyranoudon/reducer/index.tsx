@@ -9,13 +9,15 @@ export interface TyranoUdon {
   face: string
   udonariumBackgroundImage: string
   tyranoBackgroundMethod: string
+  tyranoEffectTime: number
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
   name: 'あかね',
   face: ' ',
-  udonariumBackgroundImage: './assets/images/BG10a_80.jpg',
+  udonariumBackgroundImage: 'forest.jpg',
   tyranoBackgroundMethod: 'fadeIn',
+  tyranoEffectTime: 1000,
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -37,6 +39,9 @@ const reducer = createReducer(initialState(), (builder) =>
       if (isBackgroundMethod(actions.payload.text)) {
         state.tyranoBackgroundMethod = actions.payload.text
       }
+    })
+    .addCase(actions.changeTyranoEffectTime, (state, actions) => {
+      state.tyranoEffectTime = actions.payload.n
     }),
 )
 

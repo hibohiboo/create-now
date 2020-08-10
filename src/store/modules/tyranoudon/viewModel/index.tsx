@@ -102,7 +102,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       sendTyranBgImageChange: () => {
         sendUdonMessage({
           ...state.tyranoudon,
-          text: `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}" method="${state.tyranoudon.tyranoBackgroundMethod}"]`,
+          text: `[bg3 storage="${state.tyranoudon.udonariumBackgroundImage}" method="${state.tyranoudon.tyranoBackgroundMethod}" time="${state.tyranoudon.tyranoEffectTime}"]`,
         })
       },
       changeName: (name: string) => dispatch(changeName(name)),
@@ -110,6 +110,8 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
       changeBgMethod: (t: string) =>
         dispatch(actions.changeTyranoBackgroundMethod(t)),
+      changeEffectTime: (t: string) =>
+        dispatch(actions.changeTyranoEffectTime(Number(t))),
     }
   })
 

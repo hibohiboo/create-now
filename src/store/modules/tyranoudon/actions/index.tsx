@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit'
-import type { TyranoMethos } from '../constants'
 
 const addUdonariumMessage = createAction(
   'ADD_UDONARIUM_MESSAGE',
@@ -26,10 +25,17 @@ const changeTyranoBackgroundMethod = createAction(
     payload: { text },
   }),
 )
+const changeTyranoEffectTime = createAction(
+  'CHANGE_TYRANO_EFFECT_TIME',
+  (n: number) => ({
+    payload: { n },
+  }),
+)
 export default {
   addUdonariumMessage,
   changeName,
   changeFace,
   changeUdonariumBackgroundImage,
-  changeTyranoBackgroundMethod: changeTyranoBackgroundMethod,
+  changeTyranoBackgroundMethod,
+  changeTyranoEffectTime,
 }
