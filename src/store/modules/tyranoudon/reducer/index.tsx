@@ -11,6 +11,7 @@ export interface TyranoUdon {
   tyranoBackgroundMethod: string
   tyranoEffectTime: number
   tyranoFontColor: string
+  tyranoFontSize: number
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
@@ -20,6 +21,7 @@ export const initialState = (): TyranoUdon => ({
   tyranoBackgroundMethod: 'fadeIn',
   tyranoEffectTime: 1000,
   tyranoFontColor: '#ffffff',
+  tyranoFontSize: 26,
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -47,6 +49,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeTyranoFontColor, (state, actions) => {
       state.tyranoFontColor = actions.payload.text
+    })
+    .addCase(actions.changeTyranoFontSize, (state, actions) => {
+      state.tyranoFontSize = actions.payload.n
     }),
 )
 

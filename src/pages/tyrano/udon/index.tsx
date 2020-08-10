@@ -76,13 +76,22 @@ export default function Page(ctx) {
               changeHandler={({ name }) => vm.changeFace(name)}
             />
           </div>
-          <div style={{ width: '50px' }}>
+          <div style={{ width: '50px', marginTop: '-10px' }}>
             <InputField
               model={vm}
               type="color"
               prop="tyranoFontColor"
               labelText={'文字色'}
               changeHandler={(e) => vm.changeFontColor(e.target.value)}
+            />
+          </div>
+          <div style={{ width: '50px', marginTop: '-10px' }}>
+            <InputField
+              model={vm}
+              type="number"
+              prop="tyranoFontSize"
+              labelText={'サイズ'}
+              changeHandler={(e) => vm.changeFontSize(e.target.value)}
             />
           </div>
           <Button
