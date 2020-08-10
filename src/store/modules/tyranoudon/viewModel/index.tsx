@@ -96,6 +96,12 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
         { name: 'あかね', value: 'akane' },
         { name: 'やまと', value: 'yamato' },
       ],
+      rubySample: () => {
+        dispatch(
+          addUdonariumMessage(`${text}
+[ruby text="かん"]漢[ruby text="じ"]字`),
+        )
+      },
       sendMessage: () => {
         if (!text) return
         sendUdonMessage(state.tyranoudon)

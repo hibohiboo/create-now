@@ -161,6 +161,9 @@ export default function Page(ctx) {
           >
             全員退場
           </Button>
+          <Button variant="contained" color="primary" onClick={vm.rubySample}>
+            ルビサンプル
+          </Button>
 
           <Box my={2}></Box>
         </Box>

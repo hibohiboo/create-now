@@ -1,5 +1,6 @@
 export const bgMethods = [
   { name: 'fadeIn' },
+  { name: '帯' },
   { name: 'fadeInDown' },
   { name: 'fadeInLeft' },
   { name: 'fadeInRight' },
