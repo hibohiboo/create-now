@@ -31,6 +31,9 @@ export const isTagMessage = (text: string) => {
   if (!_.startsWith(text, '[')) return false
   if (_.startsWith(text, '[bg3 ')) return true
   if (_.startsWith(text, '[chara_show ')) return true
+  if (_.startsWith(text, '[chara_hide ')) return true
+  if (_.startsWith(text, '[chara_hide_all ')) return true
+
   return false
 }
 
@@ -75,3 +78,7 @@ export const createCharacterShowMessage = (
         face,
       )}" time="${time}"]`
     : `[chara_show name="${escape(name)}" time="${time}"]`
+export const createCharacterHideMessage = (name: string, time: number) =>
+  `[chara_hide name="${escape(name)}" time="${time}"]`
+export const createCharacterHideAllMessage = (time: number) =>
+  `[chara_hide_all time="${time}"]`

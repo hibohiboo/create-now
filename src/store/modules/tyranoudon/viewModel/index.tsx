@@ -123,6 +123,24 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
           ),
         })
       },
+      sendTyranoCharaHide: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createCharacterHideMessage(
+            state.tyranoudon.name,
+            state.tyranoudon.tyranoEffectTime,
+          ),
+        })
+      },
+      sendTyranoCharaHideAll: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createCharacterHideAllMessage(
+            state.tyranoudon.tyranoEffectTime,
+          ),
+        })
+      },
+
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),

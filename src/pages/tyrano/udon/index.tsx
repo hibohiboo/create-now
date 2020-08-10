@@ -83,6 +83,13 @@ export default function Page(ctx) {
           >
             登場
           </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendTyranoCharaHide}
+          >
+            退場
+          </Button>
         </Box>
         <Box my={1} mx={3}>
           <FormControl fullWidth style={{ marginTop: '10px' }}>
@@ -129,6 +136,13 @@ export default function Page(ctx) {
             labelText={'効果演出時間'}
             changeHandler={(e) => vm.changeEffectTime(e.target.value)}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendTyranoCharaHideAll}
+          >
+            全員退場
+          </Button>
         </Box>
       </DraggablePanel>
       <DraggablePanel
