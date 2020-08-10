@@ -7,12 +7,14 @@ export interface TyranoUdon {
   name: string
   face: string
   udonariumBackgroundImage: string
+  tyranoName: string
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
   name: 'あかね',
   face: ' ',
   udonariumBackgroundImage: './assets/images/BG10a_80.jpg',
+  tyranoName: 'sample',
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -29,6 +31,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeUdonariumBackgroundImage, (state, actions) => {
       state.udonariumBackgroundImage = actions.payload.text
+    })
+    .addCase(actions.changeTyranoName, (state, actions) => {
+      state.tyranoName = actions.payload.text
     }),
 )
 

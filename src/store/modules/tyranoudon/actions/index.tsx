@@ -19,10 +19,13 @@ const changeUdonariumBackgroundImage = createAction(
     payload: { text },
   }),
 )
-
+const changeTyranoName = createAction('CHANGE_TYRANO_NAME', (text: string) => ({
+  payload: { text },
+}))
 export default {
   addUdonariumMessage,
   changeName,
   changeFace,
   changeUdonariumBackgroundImage,
+  changeTyranoName,
 }

@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-export default function Home() {
+export default function Page(ctx) {
   const classes = useStyles()
-  const vm = useViewModel()
+  const vm = useViewModel(ctx)
   console.log('viewModel', vm)
   const [height, setHeight] = useState(360)
   const [width, setWidth] = useState(1200)
@@ -29,11 +29,12 @@ export default function Home() {
     setHeight(size.height)
     setWidth(size.width)
   }
-  const firstTyranoPanelWidth = 800
+  // const firstTyranoPanelWidth = 800
   // if (global.window && global.window.innerWidth < 1600) {
   //   firstTyranoPanelWidth = global.window.innerWidth - 850
   //   console.log('width', global.window.innerWidth)
   // }
+
   return (
     <div className={classes.root}>
       <Head>
@@ -42,9 +43,9 @@ export default function Home() {
 
       <UdonariumPanel />
       <TyranoPanel
-        name={vm.tyranoSample}
-        defaultHeight={500}
-        defaultWidth={firstTyranoPanelWidth}
+        name={ctx.tyrano_name}
+        defaultHeight={ctx.tyrano_height}
+        defaultWidth={ctx.tyrano_width}
       />
       <DraggablePanel
         title="チャット"
@@ -106,13 +107,6 @@ export default function Home() {
           </Button>
         </Box>
       </DraggablePanel>
-      <TyranoPanel
-        name={vm.tyranoVchat}
-        defaultHeight={800}
-        defaultWidth={640}
-      />
-
-      <TyranoPanel name={'chat_talk'} defaultHeight={640} defaultWidth={430} />
       <DraggablePanel
         title="参考"
         width={width}
@@ -143,4 +137,14 @@ export default function Home() {
       </DraggablePanel>
     </div>
   )
+}
+Page.getInitialProps = async ({ query }) => {
+  const tyrano = query.tyrano as string
+  if (tyrano === 'chat_talk') {
+    return { tyrano_name: tyrano, tyrano_width: 430, tyrano_height: 640 }
+  }
+  if (tyrano === 'vchat') {
+    return { tyrano_name: tyrano, tyrano_width: 640, tyrano_height: 800 }
+  }
+  return { tyrano_name: 'sample', tyrano_width: 800, tyrano_height: 640 }
 }

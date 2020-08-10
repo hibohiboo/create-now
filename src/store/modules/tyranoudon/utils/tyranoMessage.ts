@@ -27,7 +27,7 @@ ${escape(text)}
 `
 }
 
-const isTagMessage = (text: string) => {
+export const isTagMessage = (text: string) => {
   if (!_.startsWith(text, '[')) return false
   if (_.startsWith(text, '[bg3')) return true
   return false

@@ -4,7 +4,7 @@ import type { Dispatch } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../actions'
 import { isChatMessage, isTableImageMessage } from '../ports/udon'
-import { createTyranoMessage } from '../utils/tyranoMessage'
+import { createTyranoMessage, isTagMessage } from '../utils/tyranoMessage'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
@@ -22,14 +22,18 @@ declare global {
 }
 const tyranoSample = 'sample'
 const tyranoVchat = 'vchat'
-const receiveUdonMessage = (event: MessageEvent, dispatch: Dispatch) => {
+const receiveUdonMessage = (
+  event: MessageEvent,
+  tyranoName: string,
+  dispatch: Dispatch,
+) => {
   console.log(event)
   // このメッセージの送信者は信頼している者か？
   if (event.origin !== process.env.UDONARIUM_DOMAIN) return
   const data = event.data
   console.log('received udonarium message', event.data)
   if (isChatMessage(data)) {
-    chatMessageHandler(data)
+    chatMessageHandler(data, tyranoName)
     return
   }
   if (isTableImageMessage(data)) {
@@ -41,19 +45,23 @@ const receiveUdonMessage = (event: MessageEvent, dispatch: Dispatch) => {
   // 、メッセージに返答するための便利なイディオムは event.source 上の postMessage を呼び出し、targetOrigin に event.origin を指定することです。
   // event.source.postMessage('hi!  the secret response ' + 'is: rheeeeet!',event.origin, [],)
 }
-const chatMessageHandler = (data: PostMessageChat) => {
+const chatMessageHandler = (data: PostMessageChat, tyranoName: string) => {
   const [name, face] = data.payload.message.name.split(':')
   const text = data.payload.message.text
+  console.log('tyranoName', tyranoName)
+  if (tyranoName === 'chat_talk') {
+    if (isTagMessage(text)) return
+    sendTyranoChatTalkMessage({ name, face, text })
+    return
+  }
   const msg = createTyranoMessage(name, face || '', text)
-  sendTyranoChatMessage(tyranoSample, msg)
-  sendTyranoChatMessage(tyranoVchat, msg)
-  sendTyranoChatTalkMessage({ name, face, text })
+  sendTyranoChatMessage(tyranoName, msg)
 }
 const tableImageHandler = (data: PostMessageTableImage, dispatch: Dispatch) => {
   dispatch(actions.changeUdonariumBackgroundImage(data.payload.url))
 }
 
-export const useViewModel = () =>
+export const useViewModel = (ctx: { tyrano_name: string }) =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
     const { text, name, face } = state.tyranoudon
@@ -61,10 +69,11 @@ export const useViewModel = () =>
     useEffect(() => {
       window.addEventListener(
         'message',
-        (msg) => receiveUdonMessage(msg, dispatch),
+        (msg) => receiveUdonMessage(msg, ctx.tyrano_name, dispatch),
         false,
       )
-      dispatch(addUdonariumMessage('sample Message:'))
+      // dispatch(addUdonariumMessage('sample Message:'))
+      dispatch(actions.changeTyranoName(ctx.tyrano_name))
     }, [])
 
     return {
@@ -144,7 +153,7 @@ const sendTyranoMessage = (
   const tyrano = document.getElementById(
     `iframe-tyrano-${name}`,
   ) as HTMLIFrameElement
-
+  console.log(name, tyrano)
   tyrano.contentWindow.postMessage(message, process.env.TYRANO_DOMAIN)
 }
 
