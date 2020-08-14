@@ -4,6 +4,9 @@ const TryranoBody: FC<{ name: string; configs: any[] }> = ({
   name,
   configs,
 }) => {
+  const first =
+    'http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58' ||
+    `${name}.ks`
   return (
     <>
       <div
@@ -34,11 +37,7 @@ const TryranoBody: FC<{ name: string; configs: any[] }> = ({
           OK
         </button>
       </div>
-      <input
-        type="hidden"
-        id="first_scenario_file"
-        value={`${name}.ks`}
-      ></input>
+      <input type="hidden" id="first_scenario_file" value={first}></input>
       {configs.map(([key, val]) => (
         <input
           data-tyrano="config"

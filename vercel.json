@@ -44,7 +44,8 @@
       "SESSION_SECRET_PREVIOUS": "@session-secret-previous",
       "UDONARIUM_URL": "@udonarium-url",
       "UDONARIUM_DOMAIN": "@udonarium-domain",
-      "TYRANO_DOMAIN": "@tyrano-domain"
+      "TYRANO_DOMAIN": "@tyrano-domain",
+      "GOOGLE_API_KEY": "@google-api-key"
     }
   }
 }

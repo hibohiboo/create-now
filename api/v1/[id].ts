@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import createPdfBinary from '../../src/lib/pdf/createPdfBinary'
 import login from '../../src/lib/api/login'
 import logout from '../../src/lib/api/logout'
+import * as tyranoudon from '../../src/lib/api/tyranoudon'
 
 const pdf = (req: NextApiRequest, res: NextApiResponse) => {
   const docDefinition = req.body
@@ -12,7 +13,7 @@ const pdf = (req: NextApiRequest, res: NextApiResponse) => {
   })
 }
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.query.id
   if (id === 'pdf') {
     pdf(req, res)
@@ -25,6 +26,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   if (id === 'logout') {
     logout(req, res)
     return
+  }
+  if (id === 'tyranoudon') {
+    const data = await tyranoudon.first(req.query.sheet)
+    return res.status(200).send(data)
   }
   res.status(404)
 }

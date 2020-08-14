@@ -95,6 +95,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       nameList: [
         { name: 'あかね', value: 'akane' },
         { name: 'やまと', value: 'yamato' },
+        { name: 'しょう', value: 'syo' },
       ],
       rubySample: () => {
         dispatch(

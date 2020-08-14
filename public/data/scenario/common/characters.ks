@@ -26,3 +26,6 @@
 
 ;yamato
 [chara_new  name="yamato"  storage="chara/yamato/normal.png" jname="やまと" ]
+
+[chara_new  name="syo"  storage="https://gyazo.com/05b6fea6aa6b0671ab8c041cc2afca69/thumb/1000" jname="しょう" ]
+

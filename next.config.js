@@ -48,6 +48,7 @@ const nextConfig = {
     UDONARIUM_URL: process.env.UDONARIUM_URL,
     UDONARIUM_DOMAIN: process.env.UDONARIUM_DOMAIN,
     TYRANO_DOMAIN: process.env.TYRANO_DOMAIN,
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
   },
 }
 
