@@ -13,6 +13,11 @@ export interface TyranoUdon {
   tyranoFontColor: string
   tyranoFontSize: number
   sceneName: string
+  characters: {
+    name: string
+    jname: string
+    faces: string[]
+  }[]
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
@@ -24,6 +29,19 @@ export const initialState = (): TyranoUdon => ({
   tyranoFontColor: '#ffffff',
   tyranoFontSize: 26,
   sceneName: 'ミドルフェイス / シーン2 【シーンプレイヤー：あかね】',
+  characters: [
+    {
+      jname: 'あかね',
+      name: 'akane',
+      faces: [' ', 'happy', 'doki', 'angry', 'sad'],
+    },
+    {
+      jname: 'やまと',
+      name: 'yamato',
+      faces: [' ', 'happy', 'tohoho', 'angry', 'sad'],
+    },
+    { jname: 'しょう', name: 'syo', faces: [' '] },
+  ],
 })
 
 const reducer = createReducer(initialState(), (builder) =>

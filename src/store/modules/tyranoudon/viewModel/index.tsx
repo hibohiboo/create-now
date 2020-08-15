@@ -76,27 +76,23 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
       )
       // dispatch(addUdonariumMessage('sample Message:'))
     }, [])
-
+    const selectedCharacter = state.tyranoudon.characters.find(
+      (c) => c.name === name,
+    )
+    const faceList = selectedCharacter
+      ? selectedCharacter.faces.map((n) => ({ name: n === 'normal' ? ' ' : n }))
+      : [' ']
+    const nameList = state.tyranoudon.characters.map((c) => ({
+      name: c.jname,
+      value: c.name,
+    }))
     return {
       ...state.tyranoudon,
       tyranoSample,
       tyranoVchat,
-      faceList:
-        name === 'akane'
-          ? [
-              { name: ' ' },
-              { name: 'happy' },
-              { name: 'doki' },
-              { name: 'angry' },
-              { name: 'sad' },
-            ]
-          : [{ name: ' ' }],
+      faceList,
       methodList: constants.bgMethods,
-      nameList: [
-        { name: 'あかね', value: 'akane' },
-        { name: 'やまと', value: 'yamato' },
-        { name: 'しょう', value: 'syo' },
-      ],
+      nameList,
       rubySample: () => {
         dispatch(
           addUdonariumMessage(`${text}

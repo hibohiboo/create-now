@@ -65,7 +65,7 @@ const TryranoHead: FC = () => {
       <script src="/data/system/KeyConfig.js"></script>
 
       <script type="text/javascript" src="/tyrano/lang.js"></script>
-      <script type="text/javascript" src="/tyrano/libs.js"></script>
+      <script type="text/javascript" src="/tyranoudon/js/libs.js"></script>
 
       <script type="text/javascript" src="/tyrano/tyrano.js"></script>
       <script type="text/javascript" src="/tyrano/tyrano.base.js"></script>
@@ -112,7 +112,7 @@ const TryranoHead: FC = () => {
       ></script>
       <script
         type="text/javascript"
-        src="/tyrano/plugins/kag/kag.tag_ext.js"
+        src="/tyranoudon/js/plugins/kag/kag.tag_ext.js"
       ></script>
       <script
         type="text/javascript"

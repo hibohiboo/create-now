@@ -4,8 +4,9 @@ const TryranoBody: FC<{ name: string; configs: any[] }> = ({
   name,
   configs,
 }) => {
+  // next.jsのパーサが最後に自動で付けられる ?ランダム数字 を認識してしまうので、最後に&t=1をつけて対策
   const first =
-    'http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58' ||
+    'http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58&t=1' ||
     `${name}.ks`
   return (
     <>

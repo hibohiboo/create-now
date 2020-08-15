@@ -6,6 +6,7 @@ export const first = async (spreadId) => {
   // const spreadId = req.query.sheet // '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58'
   const sheet = 'characters'
   const range = 'B2:E'
+
   try {
     const res = await fetch(
       `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
@@ -23,6 +24,7 @@ ${tags}
 [s]
 `
   } catch (e) {
+    console.error(e)
     return sample
   }
 }
