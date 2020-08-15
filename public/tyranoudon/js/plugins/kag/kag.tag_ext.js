@@ -1904,7 +1904,9 @@ tyrano.plugin.kag.tag.chara_show = {
             }
             storage_url = "./data/fgimage/" + cpm["map_face"][pm.face];
 
-
+            if ($.isHTTP(cpm["map_face"][pm.face])) {
+              storage_url = cpm["map_face"][pm.face];
+            }
         }else if(pm.storage != "") {
 
             if ($.isHTTP(pm.storage)) {

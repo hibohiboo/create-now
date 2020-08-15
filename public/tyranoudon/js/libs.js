@@ -29,7 +29,7 @@
 
 
     $.isHTTP = function(str) {
-        if (str.substring(0, 4) === "http") {
+        if (str.substring(0, 4) === "http" || str.substring(0, 5) === "https") {
             return true;
         } else {
             return false;
