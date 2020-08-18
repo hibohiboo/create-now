@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
-
+import type { TyranoCharacter } from '../reducer'
 const addUdonariumMessage = createAction(
   'ADD_UDONARIUM_MESSAGE',
   (text: string) => ({ payload: { text } }),
@@ -46,6 +46,12 @@ const changeTyranoFontSize = createAction(
 const changeSceneName = createAction('CHANGE_SCENE_NAME', (text: string) => ({
   payload: { text },
 }))
+const changeCharacters = createAction(
+  'CHANGE_CHARACTERS',
+  (characters: TyranoCharacter[]) => ({
+    payload: { characters },
+  }),
+)
 export default {
   addUdonariumMessage,
   changeName,
@@ -56,4 +62,5 @@ export default {
   changeTyranoFontColor,
   changeTyranoFontSize,
   changeSceneName,
+  changeCharacters,
 }

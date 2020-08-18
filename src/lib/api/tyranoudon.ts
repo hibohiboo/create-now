@@ -1,17 +1,8 @@
 // http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58
 import fetch from 'isomorphic-unfetch'
 export const first = async (spreadId) => {
-  const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
-  const key = process.env.GOOGLE_API_KEY
-  // const spreadId = req.query.sheet // '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58'
-  const sheet = 'characters'
-  const range = 'B2:E'
-
   try {
-    const res = await fetch(
-      `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
-    )
-    const json = await res.json()
+    const json = await getCharacters(spreadId)
     const tags = json.values.map(toTag).join('\n')
     return `
     @call storage="common/common.ks"
@@ -27,6 +18,19 @@ ${tags}
     console.error(e)
     return sample
   }
+}
+
+export const getCharacters = async (spreadId) => {
+  const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
+  const key = process.env.GOOGLE_API_KEY
+  // const spreadId = req.query.sheet // '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58'
+  const sheet = 'characters'
+  const range = 'B2:E'
+  const res = await fetch(
+    `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
+  )
+  const json = (await res.json()) as { values: string[][] }
+  return json
 }
 
 const toTag = ([name, jname, face, url]) => {

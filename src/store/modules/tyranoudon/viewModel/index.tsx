@@ -6,6 +6,7 @@ import { isChatMessage, isTableImageMessage } from '../ports/udon'
 import * as tyranoMessage from '../utils/tyranoMessage'
 import * as constants from '../constants'
 import { initialState } from '../reducer'
+import * as thunk from '../thunk'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
@@ -74,11 +75,15 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
         (msg) => receiveUdonMessage(msg, ctx.tyrano_name, dispatch),
         false,
       )
+      dispatch(
+        thunk.fetchCharacters('1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58'),
+      )
       // dispatch(addUdonariumMessage('sample Message:'))
     }, [])
     const selectedCharacter = state.tyranoudon.characters.find(
       (c) => c.name === name,
     )
+    console.log('selected', selectedCharacter)
     const faceList = selectedCharacter
       ? selectedCharacter.faces.map((n) => ({ name: n === 'normal' ? ' ' : n }))
       : [' ']

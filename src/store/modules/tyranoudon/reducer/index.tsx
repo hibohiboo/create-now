@@ -2,7 +2,11 @@ import { createReducer } from '@reduxjs/toolkit'
 import actions from '../actions'
 import { isBackgroundMethod } from '../constants'
 const { addUdonariumMessage, changeName, changeFace } = actions
-
+export interface TyranoCharacter {
+  name: string
+  jname: string
+  faces: string[]
+}
 export interface TyranoUdon {
   text: string
   name: string
@@ -13,11 +17,7 @@ export interface TyranoUdon {
   tyranoFontColor: string
   tyranoFontSize: number
   sceneName: string
-  characters: {
-    name: string
-    jname: string
-    faces: string[]
-  }[]
+  characters: TyranoCharacter[]
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
@@ -38,9 +38,8 @@ export const initialState = (): TyranoUdon => ({
     {
       jname: 'やまと',
       name: 'yamato',
-      faces: [' ', 'happy', 'tohoho', 'angry', 'sad'],
+      faces: [' '],
     },
-    { jname: 'しょう', name: 'syo', faces: [' '] },
   ],
 })
 
@@ -75,6 +74,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeSceneName, (state, actions) => {
       state.sceneName = actions.payload.text
+    })
+    .addCase(actions.changeCharacters, (state, actions) => {
+      state.characters = actions.payload.characters
     }),
 )
 
