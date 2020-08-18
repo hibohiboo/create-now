@@ -25,7 +25,7 @@ export const initialState = (): TyranoUdon => ({
   face: ' ',
   udonariumBackgroundImage: 'forest.jpg',
   tyranoBackgroundMethod: 'fadeIn',
-  tyranoEffectTime: 1000,
+  tyranoEffectTime: 500,
   tyranoFontColor: '#ffffff',
   tyranoFontSize: 26,
   sceneName: 'ミドルフェイス / シーン2 【シーンプレイヤー：あかね】',

@@ -2549,6 +2549,9 @@ tyrano.plugin.kag.tag.chara_mod = {
                 return;
             }
             storage_url = this.kag.stat.charas[pm.name]["map_face"][pm.face];
+            if ($.isHTTP(this.kag.stat.charas[pm.name]["map_face"][pm.face])) {
+              folder="";
+            }
         } else {
 
             if ($.isHTTP(pm.storage)) {
