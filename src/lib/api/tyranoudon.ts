@@ -5,12 +5,18 @@ export const first = async (spreadId) => {
     const json = await getCharacters(spreadId)
     const tags = json.values.map(toTag).join('\n')
     return `
-    @call storage="common/common.ks"
-    [bg storage="forest.jpg" time="100"]
-    @hidemenubutton
-    [position layer="message0" left=160 top=500 width=1000 height=200 page=fore visible=true]
-    [position layer=message0 page=fore margint="45" marginl="50" marginr="70" marginb="60"]
-    @layopt layer=message0 visible=true
+@call storage="common/common.ks"
+[bg storage="forest.jpg" time="100"]
+@hidemenubutton
+[position layer="message0" left=160 top=500 width=1000 height=200 page=fore visible=true]
+[position layer=message0 page=fore margint="45" marginl="50" marginr="70" marginb="60"]
+@layopt layer=message0 visible=true
+[cm]
+[clearfix]
+[start_keyconfig]
+[ptext name="chara_name_area" layer="message0" color="white" size=28 bold=true x=180 y=510]
+[chara_config ptext="chara_name_area" memory="false" talk_anim="down" pos_mode="true" ]
+[chara_config brightness=40 talk_focus=brightness]
 ${tags}
 [s]
 `

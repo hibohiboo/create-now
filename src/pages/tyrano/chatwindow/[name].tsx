@@ -45,6 +45,7 @@ export default function Home({ setting, name }: Prop) {
           event.data.payload.scenario,
         ).array_s
         console.log('array_s', array_s)
+        console.log('ftag', window.TYRANO.kag.ftag.buildTag)
         window.TYRANO.kag.ftag.buildTag(array_s)
       },
       false,
