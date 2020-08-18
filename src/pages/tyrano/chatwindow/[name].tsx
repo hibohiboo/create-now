@@ -1,6 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { useEffect } from 'react'
 import * as _ from 'lodash'
+import { useRouter } from 'next/router'
 import TyranoHead from '~/components/organisms/tyranoudon/TyranoHead'
 import TyranoBody from '~/components/organisms/tyranoudon/TyranoBody'
 import Layout from '~/components/templates/tyrano/Layout'
@@ -32,6 +33,9 @@ export const isChatMessage = (data: any): data is TyranoChat =>
 // https://kido0617.github.io/tyrano/2018-08-02-make-plugin/
 // https://qiita.com/diyin_near_j/items/7f94c080add33d045654
 export default function Home({ setting, name }: Prop) {
+  const router = useRouter()
+  const sheet = router.query.sheet as string
+
   useEffect(() => {
     if (!window) return
     window.addEventListener(
@@ -50,12 +54,16 @@ export default function Home({ setting, name }: Prop) {
       },
       false,
     )
-  })
+  }, [])
 
   return (
     <>
       <TyranoHead />
-      <TyranoBody configs={setting.configs} name={name} />
+      {sheet ? (
+        <TyranoBody configs={setting.configs} name={name} sheet={sheet} />
+      ) : (
+        <></>
+      )}
     </>
   )
 }

@@ -1,17 +1,19 @@
 import { FC } from 'react'
 
-const TryranoBody: FC<{ name: string; configs: any[] }> = ({
+const TryranoBody: FC<{ name: string; configs: any[]; sheet: string }> = ({
   name,
   configs,
+  sheet,
 }) => {
   // next.jsのパーサが最後に自動で付けられる ?ランダム数字 を認識してしまうので、最後に&t=1をつけて対策
   const domain =
     global && global.window && global.window.location
       ? `${global.window.location.protocol}//${global.window.location.host}`
       : null
-  const first = domain
-    ? `${domain}/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58&t=1`
-    : `${name}.ks`
+  const first =
+    domain && sheet
+      ? `${domain}/api/v1/tyranoudon?sheet=${sheet}&t=1`
+      : `${name}.ks`
   return (
     <>
       <div

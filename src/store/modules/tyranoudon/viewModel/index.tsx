@@ -64,7 +64,10 @@ const tableImageHandler = (data: PostMessageTableImage, dispatch: Dispatch) => {
   dispatch(actions.changeUdonariumBackgroundImage(data.payload.url))
 }
 
-export const useViewModel = (ctx: { tyrano_name: string }) =>
+export const useViewModel = (ctx: {
+  tyrano_name: string
+  tyrano_sheet: string
+}) =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
     const { text, name, face } = state.tyranoudon
@@ -75,9 +78,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
         (msg) => receiveUdonMessage(msg, ctx.tyrano_name, dispatch),
         false,
       )
-      dispatch(
-        thunk.fetchCharacters('1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58'),
-      )
+      dispatch(thunk.fetchCharacters(ctx.tyrano_sheet))
       // dispatch(addUdonariumMessage('sample Message:'))
     }, [])
     const selectedCharacter = state.tyranoudon.characters.find(
@@ -86,7 +87,7 @@ export const useViewModel = (ctx: { tyrano_name: string }) =>
     console.log('selected', selectedCharacter)
     const faceList = selectedCharacter
       ? selectedCharacter.faces.map((n) => ({ name: n === 'normal' ? ' ' : n }))
-      : [' ']
+      : [{ name: ' ' }]
     const nameList = state.tyranoudon.characters.map((c) => ({
       name: c.jname,
       value: c.name,

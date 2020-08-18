@@ -5,7 +5,8 @@ const TryranoPanel: FC<{
   name: string
   defaultWidth: number
   defaultHeight: number
-}> = ({ name, defaultWidth, defaultHeight }) => {
+  sheet: string
+}> = ({ name, defaultWidth, defaultHeight, sheet }) => {
   const [height, setHeight] = useState(defaultHeight)
   const [width, setWidth] = useState(defaultWidth)
   const onResize = (size) => {
@@ -21,7 +22,7 @@ const TryranoPanel: FC<{
     >
       <iframe
         id={`iframe-tyrano-${name}`}
-        src={`/tyrano/chatwindow/${name}`}
+        src={`/tyrano/chatwindow/${name}?sheet=${sheet}`}
         width={`${width}px`}
         height={`${height}px`}
         scrolling="no"

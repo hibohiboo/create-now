@@ -39,7 +39,7 @@ export default function Page(ctx) {
   return (
     <div className={classes.root}>
       <Head>
-        <title>Loading Udonarium</title>
+        <title>TyranoUdon</title>
       </Head>
 
       <UdonariumPanel />
@@ -47,6 +47,7 @@ export default function Page(ctx) {
         name={ctx.tyrano_name}
         defaultHeight={ctx.tyrano_height}
         defaultWidth={ctx.tyrano_width}
+        sheet={ctx.tyrano_sheet}
       />
       <DraggablePanel
         title="チャット"
@@ -210,6 +211,27 @@ export default function Page(ctx) {
             </li>
             <li>{`${vm.udonariumBackgroundImage}`}</li>
             <li>{`${vm.tyranoFontColor}`}</li>
+            <li>
+              <a
+                href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58`}
+              >
+                リンク先例
+              </a>
+            </li>
+            <li>
+              <a
+                href={`https://docs.google.com/spreadsheets/d/${ctx.tyrano_sheet}/edit#gid=0`}
+              >
+                立ち絵シート
+              </a>
+            </li>
+            <li>
+              <a
+                href={`https://scrapbox.io/tyranoudon/%E7%AB%8B%E3%81%A1%E7%B5%B5`}
+              >
+                立ち絵置き場サンプル
+              </a>
+            </li>
           </ul>
         </Box>
       </DraggablePanel>
@@ -217,12 +239,29 @@ export default function Page(ctx) {
   )
 }
 Page.getInitialProps = async ({ query }) => {
-  const tyrano = query.tyrano as string
+  const tyrano = (query.tyrano || 'sample') as string
+  const tyrano_sheet = (query.tyrano_sheet ||
+    '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58') as string
   if (tyrano === 'chat_talk') {
-    return { tyrano_name: tyrano, tyrano_width: 430, tyrano_height: 640 }
+    return {
+      tyrano_name: tyrano,
+      tyrano_width: 430,
+      tyrano_height: 640,
+      tyrano_sheet,
+    }
   }
   if (tyrano === 'vchat') {
-    return { tyrano_name: tyrano, tyrano_width: 640, tyrano_height: 800 }
+    return {
+      tyrano_name: tyrano,
+      tyrano_width: 640,
+      tyrano_height: 800,
+      tyrano_sheet,
+    }
   }
-  return { tyrano_name: 'sample', tyrano_width: 800, tyrano_height: 640 }
+  return {
+    tyrano_name: 'sample',
+    tyrano_width: 800,
+    tyrano_height: 640,
+    tyrano_sheet,
+  }
 }
