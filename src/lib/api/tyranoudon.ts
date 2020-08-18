@@ -1,8 +1,10 @@
 // http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58
 import fetch from 'isomorphic-unfetch'
 export const first = async (spreadId) => {
+  let error_json = null
   try {
     const json = await getCharacters(spreadId)
+    error_json = json
     const tags = json.values.map(toTag).join('\n')
     return `
 @call storage="common/common.ks"
@@ -22,6 +24,9 @@ ${tags}
 `
   } catch (e) {
     console.error(e)
+    console.log('error_spread_id', spreadId)
+    console.log('error_json', error_json)
+
     return sample
   }
 }
@@ -29,7 +34,6 @@ ${tags}
 export const getCharacters = async (spreadId) => {
   const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
   const key = process.env.GOOGLE_API_KEY
-  // const spreadId = req.query.sheet // '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58'
   const sheet = 'characters'
   const range = 'B2:E'
   const res = await fetch(
