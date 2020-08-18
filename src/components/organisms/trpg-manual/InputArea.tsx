@@ -49,6 +49,14 @@ const InputArea: React.FC = () => {
             { name: 'blue' },
             { name: 'navy' },
             { name: 'pink' },
+            { name: 'green' },
+            { name: 'gray' },
+            { name: 'lime' },
+            { name: 'antique' },
+            { name: 'steampank' },
+            { name: 'red-beans' },
+            { name: 'felt-gray' },
+            { name: 'felt-blue' },
           ]}
           unselectedText=""
           value={sheet.theme}
