@@ -185,15 +185,15 @@ const sendUdonMessage = ({
   tyranoFontSize,
 }: TyranoUdon) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
-  let sendText =
+  let textFont =
     tyranoFontColor === init.tyranoFontColor
-      ? text
-      : `[font color="${tyranoFontColor.replace('#', '0x')}"]${text}`
-  sendText =
+      ? ''
+      : `[font color="${tyranoFontColor.replace('#', '0x')}"]`
+  textFont =
     tyranoFontSize === init.tyranoFontSize
-      ? sendText
-      : `[font size="${tyranoFontSize}"]${text}`
-  sendText = text === sendText ? text : `${sendText}[resetfont]`
+      ? textFont
+      : `${textFont}[font size="${tyranoFontSize}"]`
+  const sendText = textFont === '' ? text : `${textFont}${text}[resetfont]`
   const chatMessage = {
     from: '',
     to: '',
