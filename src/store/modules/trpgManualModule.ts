@@ -23,7 +23,7 @@ const initEntrySheet = {
   textWithVoice: false,
   onTheTable: false,
   ccfolia: false,
-  dodontof: false,
+  udonarium: false,
   discord: false,
   skype: false,
   others: '',

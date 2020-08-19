@@ -342,14 +342,14 @@ const InputArea: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={sheet.dodontof}
+              checked={sheet.udonarium}
               onChange={(e) =>
-                dispatch(update({ ...sheet, dodontof: e.target.checked }))
+                dispatch(update({ ...sheet, udonarium: e.target.checked }))
               }
               color="primary"
             />
           }
-          label="どどんとふ"
+          label="ユドナリウム"
         />
         <FormControlLabel
           control={

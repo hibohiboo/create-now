@@ -184,7 +184,7 @@ const ImageArea: React.FC = () => {
             <Check x={593} y={370} size="small" visible={sheet.voice} />
             <Check x={950} y={368} size="small" visible={sheet.ccfolia} />
             <Check x={593} y={425} size="small" visible={sheet.text} />
-            <Check x={950} y={425} size="small" visible={sheet.dodontof} />
+            <Check x={950} y={425} size="small" visible={sheet.udonarium} />
             <Check x={593} y={480} size="small" visible={sheet.textWithVoice} />
             <Check x={950} y={480} size="small" visible={sheet.discord} />
             <Check x={593} y={613} size="small" visible={sheet.onTheTable} />
