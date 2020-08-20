@@ -100,18 +100,19 @@ const settings = {
       ['chSpeed', '0'],
     ],
   },
-  chat_talk: {
-    configs: [
-      ['scWidth', '860'],
-      ['scHeight', '1280'],
-      ['configLeft', '750'],
-      ['configTop', '1170'],
-      ['alreadyReadTextColor', '0x87cefa'],
-      ['defaultFontSize', '26'],
-      ['defaultChColor', '0x000000'],
-      ['chSpeed', '0'],
-    ],
-  },
+  // chat story
+  // chat_talk: {
+  //   configs: [
+  //     ['scWidth', '860'],
+  //     ['scHeight', '1280'],
+  //     ['configLeft', '750'],
+  //     ['configTop', '1170'],
+  //     ['alreadyReadTextColor', '0x87cefa'],
+  //     ['defaultFontSize', '26'],
+  //     ['defaultChColor', '0x000000'],
+  //     ['chSpeed', '0'],
+  //   ],
+  // },
 } as const
 const settingsKeys = _.keys(settings)
 
