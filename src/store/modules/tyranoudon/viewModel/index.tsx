@@ -131,6 +131,7 @@ export const useViewModel = (ctx: {
             state.tyranoudon.name,
             state.tyranoudon.face,
             state.tyranoudon.tyranoEffectTime,
+            state.tyranoudon.characterPositionBottom,
           ),
         })
       },
@@ -175,6 +176,8 @@ export const useViewModel = (ctx: {
       changeFontSize: (t: string) =>
         dispatch(actions.changeTyranoFontSize(Number(t))),
       changeSceneName: (t: string) => dispatch(actions.changeSceneName(t)),
+      changeCharacterPositionBottom: (t: string) =>
+        dispatch(actions.changeCharacterPositionBottom(Number(t))),
     }
   })
 

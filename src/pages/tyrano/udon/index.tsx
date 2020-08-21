@@ -182,6 +182,15 @@ export default function Page(ctx) {
           >
             シーン名表示
           </Button>
+          <InputField
+            model={vm}
+            type="number"
+            prop="characterPositionBottom"
+            labelText={'キャラクター縦位置'}
+            changeHandler={(e) =>
+              vm.changeCharacterPositionBottom(e.target.value)
+            }
+          />
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>

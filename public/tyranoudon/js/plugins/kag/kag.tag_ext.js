@@ -1838,7 +1838,8 @@ tyrano.plugin.kag.tag.chara_new = {
  width="キャラクターの横幅を指定できます。",
  height="キャラクターの縦幅を指定できます。",
  left="キャラクターの横位置を指定できます。指定した場合、自動配置が有効であっても無効になります。",
- top="キャラクターの縦位置を指定できます。指定した場合、自動配置が有効であっても無効になります。"
+ top="キャラクターの縦位置を指定できます。0は指定していないのと同じ扱いになります。"
+ bottom="キャラクターの縦位置を指定できます。topと同時に指定した場合、topの指定が優先されます。"
 
 :demo
  1,kaisetsu/08_character
@@ -1859,6 +1860,7 @@ tyrano.plugin.kag.tag.chara_show = {
         wait : "true", //アニメーションの終了を待ちます
         left : "0", //chara_config でauto になっている場合は、自動的に決まります。指定されている場合はこちらを優先します。
         top : "0",
+        bottom: "0",
         width : "",
         height : "",
         zindex : "1",
@@ -2062,7 +2064,9 @@ tyrano.plugin.kag.tag.chara_show = {
                 //立ち位置自動調整
                 if(pm.top !="0" ){
                     j_chara_root.css("top",parseInt(pm.top));
-                }else{
+                } else if(pm.bottom !== '0') {
+                    j_chara_root.css("bottom", parseInt(pm.bottom));
+                } else {
                     j_chara_root.css("bottom", 0);
                 }
 
@@ -2133,8 +2137,11 @@ tyrano.plugin.kag.tag.chara_show = {
                 });
 
             } else {
-
-                j_chara_root.css("top", pm.top + "px");
+                if(pm.bottom != "0") {
+                  j_chara_root.css("bottom", pm.bottom + "px");
+                } else {
+                  j_chara_root.css("top", pm.top + "px");
+                }
                 j_chara_root.css("left", pm.left + "px");
 
                 //that.kag.ftag.nextOrder();

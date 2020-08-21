@@ -18,6 +18,7 @@ export interface TyranoUdon {
   tyranoFontSize: number
   sceneName: string
   characters: TyranoCharacter[]
+  characterPositionBottom: number
 }
 export const initialState = (): TyranoUdon => ({
   text: '',
@@ -41,6 +42,7 @@ export const initialState = (): TyranoUdon => ({
       faces: [' '],
     },
   ],
+  characterPositionBottom: -100,
 })
 
 const reducer = createReducer(initialState(), (builder) =>
@@ -77,6 +79,9 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeCharacters, (state, actions) => {
       state.characters = actions.payload.characters
+    })
+    .addCase(actions.changeCharacterPositionBottom, (state, actions) => {
+      state.characterPositionBottom = actions.payload.n
     }),
 )
 

@@ -155,12 +155,13 @@ export const createCharacterShowMessage = (
   name: string,
   face: string | undefined,
   time: number,
+  bottom: number,
 ) =>
   hasFace(face)
     ? `[chara_show name="${escape(name)}" face="${escape(
         face,
-      )}" time="${time}"]`
-    : `[chara_show name="${escape(name)}" time="${time}"]`
+      )}" time="${time}" bottom="${bottom}"]`
+    : `[chara_show name="${escape(name)}" time="${time}" bottom="${bottom}"]`
 export const createCharacterHideMessage = (name: string, time: number) =>
   `[chara_hide name="${escape(name)}" time="${time}"]`
 export const createCharacterHideAllMessage = (time: number) =>
