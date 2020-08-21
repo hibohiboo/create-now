@@ -239,7 +239,7 @@ export default function Page(ctx) {
   )
 }
 Page.getInitialProps = async ({ query }) => {
-  const tyrano = (query.tyrano || 'sample') as string
+  const tyrano = (query.tyrano || 'vchat_add') as string
   const tyrano_sheet = (query.tyrano_sheet ||
     '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58') as string
   if (tyrano === 'chat_talk') {
@@ -255,6 +255,14 @@ Page.getInitialProps = async ({ query }) => {
       tyrano_name: tyrano,
       tyrano_width: 640,
       tyrano_height: 800,
+      tyrano_sheet,
+    }
+  }
+  if (tyrano === 'vchat_add') {
+    return {
+      tyrano_name: tyrano,
+      tyrano_width: 480,
+      tyrano_height: 640,
       tyrano_sheet,
     }
   }

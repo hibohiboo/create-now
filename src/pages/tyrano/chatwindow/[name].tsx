@@ -58,11 +58,11 @@ export default function Home({ setting, name }: Prop) {
 
   return (
     <>
-      <TyranoHead />
+      <TyranoHead name={name} />
       {sheet ? (
         <TyranoBody configs={setting.configs} name={name} sheet={sheet} />
       ) : (
-        <></>
+        <TyranoBody configs={setting.configs} name={name} sheet={''} />
       )}
     </>
   )
@@ -98,6 +98,16 @@ const settings = {
       ['defaultFontSize', '26'],
       ['defaultChColor', '0x242424'],
       ['chSpeed', '0'],
+    ],
+  },
+  vchat_add: {
+    configs: [
+      ['alreadyReadTextColor', '0x87cefa'],
+      ['defaultFontSize', '26'],
+      ['defaultChColor', '0x242424'],
+      ['chSpeed', '0'],
+      ['ScreenCentering', 'false'],
+      ['ScreenRatio', 'fix'],
     ],
   },
   // chat story

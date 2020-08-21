@@ -82,22 +82,17 @@ tyrano.base = {
           }
         }
 
-        //vchat形式が有効ならそのエリアも調整する
-        if (
-          that.tyrano.kag.config['vchat'] &&
-          that.tyrano.kag.config['vchat'] == 'true'
-        ) {
-          var base_height = Math.round(
-            parseInt($('#tyrano_base').css('height')) * scale_f,
-          )
+        //vchat形式のエリアも調整する
+        var base_height = Math.round(
+          parseInt($('#tyrano_base').css('height')) * scale_f,
+        )
 
-          var vchat_height = view_height - base_height
+        var vchat_height = view_height - base_height
 
-          $('#vchat_base').css({
-            'margin-top': base_height,
-            height: vchat_height,
-          })
-        }
+        $('#vchat_base').css({
+          'margin-top': base_height,
+          height: vchat_height,
+        })
       }, 100)
     } else if (screen_ratio == 'fit') {
       //スクリーンサイズに合わせて自動的に調整される

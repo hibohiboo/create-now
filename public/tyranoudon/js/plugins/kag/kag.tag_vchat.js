@@ -46,15 +46,6 @@ tyrano.plugin.kag.tag.vchat_in = {
         this.kag.layer.hideEventLayer();
 
         var that = this;
-
-        //レイヤを非表示にする
-        var layer = this.kag.stat.current_layer;
-        var page = this.kag.stat.current_page;
-
-        var j_layer = this.kag.layer.getLayer(layer, page);
-        j_layer.css("display","none");
-        j_layer.css("left",-100000);
-
         var j_area_chat = $("#vchat_base");
 
         j_area_chat.find(".current_vchat").addClass("talked_vchat").removeClass("current_vchat");
@@ -71,10 +62,6 @@ tyrano.plugin.kag.tag.vchat_in = {
         var j_vchat = $(html);
 
         j_vchat.hide();
-
-        //クラス名追加
-        //$.setName(j_vchat,"vchat_story_"+pm.name);
-       // $.setName(j_vchat,pm.id);
 
         //テキスト内部
         var j_vchat_text = j_vchat.find(".vchat-text-inner");
@@ -167,12 +154,6 @@ tyrano.plugin.kag.tag.vchat_chara = {
     },
 
     start : function(pm) {
-
-        //vchatが有効じゃない場合は無視する
-        if(!this.kag.stat.vchat.is_active){
-            this.kag.ftag.nextOrder();
-            return ;
-        }
 
         var charas = this.kag.stat.vchat.charas;
 

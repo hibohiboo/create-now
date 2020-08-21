@@ -148,12 +148,8 @@ tyrano.plugin.kag.ftag = {
 
                     this.kag.ftag.hideNextImg();
 
-                    //vchatの場合タグを入れる
-                    if(that.kag.stat.vchat.is_active){
-                        this.kag.ftag.startTag("vchat_in",{});
-                    }else{
-                        this.kag.getMessageInnerLayer().html("");
-                    }
+                    this.kag.ftag.startTag("vchat_in",{});
+                    this.kag.getMessageInnerLayer().html("");
 
                 }
 
@@ -647,11 +643,8 @@ tyrano.plugin.kag.tag.text = {
 
                 if (current_width > limit_width) {
 
-                    if(this.kag.stat.vchat.is_active){
-                        this.kag.ftag.startTag("vchat_in",{});
-                    }else{
-                        this.kag.getMessageInnerLayer().html("");
-                    }
+                    this.kag.ftag.startTag("vchat_in",{});
+                    this.kag.getMessageInnerLayer().html("");
 
                 }
 
@@ -672,12 +665,8 @@ tyrano.plugin.kag.tag.text = {
                 if (current_height > limit_height) {
 
                     //画面クリア
-                    if(this.kag.stat.vchat.is_active){
-                        this.kag.ftag.startTag("vchat_in",{});
-                    }else{
-                        this.kag.getMessageInnerLayer().html("");
-                    }
-
+                    this.kag.ftag.startTag("vchat_in",{});
+                    this.kag.getMessageInnerLayer().html("");
                 }
 
             }
@@ -735,14 +724,9 @@ tyrano.plugin.kag.tag.text = {
         that.kag.ftag.hideNextImg();
 
         // hidden状態で全部追加する
-        //vchatモードのときはメッセージエリアは無視する
-
         var j_msg_inner = this.kag.getMessageInnerLayer();
-
-        if(this.kag.stat.vchat.is_active){
-            j_msg_inner.show();
-        }
-
+        var j_msg_vchat = $("#vchat_base").find(".current_vchat");
+        j_msg_vchat.show();
 
         (function(jtext) {
 
@@ -767,58 +751,48 @@ tyrano.plugin.kag.tag.text = {
 
             //メッセージ領域を取得
             var j_span = {};
+            j_span = that.kag.getMessageCurrentSpan();
 
-            if(that.kag.stat.vchat.is_active){
+            j_span.css({
+            "color":that.kag.stat.font.color,
+            "font-weight": that.kag.stat.font.bold,
+            "font-size": that.kag.stat.font.size + "px",
+            "font-family": that.kag.stat.font.face,
+            "font-style":that.kag.stat.font.italic
+            });
 
-                j_span = jtext.find(".current_span");
-                if(chara_name==""){
-                    $(".current_vchat").find(".vchat_chara_name").remove();
-                    $(".current_vchat").find(".vchat-text-inner").css("margin-top","0.2em");
-                }else{
-                    $(".current_vchat").find(".vchat_chara_name").html(chara_name);
+            if(that.kag.stat.font.edge !=""){
+                var edge_color = that.kag.stat.font.edge;
+                j_span.css("text-shadow","1px 1px 0 "+edge_color+", -1px 1px 0 "+edge_color+",1px -1px 0 "+edge_color+",-1px -1px 0 "+edge_color+"");
 
-                    //キャラ名欄の色
-                    var vchat_name_color = $.convertColor(that.kag.stat.vchat.chara_name_color);
-
-                    var cpm = that.kag.stat.vchat.charas[chara_name];
-
-                    if (cpm) {
-
-                        //色指定がある場合は、その色を指定する。
-                        if (cpm.color != "") {
-                            vchat_name_color = $.convertColor(cpm.color);
-                        }
-
-                    }
-
-
-                    $(".current_vchat").find(".vchat_chara_name").css("background-color",vchat_name_color);
-
-                    $(".current_vchat").find(".vchat-text-inner").css("margin-top","1.5em");
-                }
-
-            }else{
-                j_span = that.kag.getMessageCurrentSpan();
-
-                j_span.css({
-                "color":that.kag.stat.font.color,
-                "font-weight": that.kag.stat.font.bold,
-                "font-size": that.kag.stat.font.size + "px",
-                "font-family": that.kag.stat.font.face,
-                "font-style":that.kag.stat.font.italic
-                });
-
-                if(that.kag.stat.font.edge !=""){
-                    var edge_color = that.kag.stat.font.edge;
-                    j_span.css("text-shadow","1px 1px 0 "+edge_color+", -1px 1px 0 "+edge_color+",1px -1px 0 "+edge_color+",-1px -1px 0 "+edge_color+"");
-
-                }else if(that.kag.stat.font.shadow != ""){
-                    //j_span.css()
-                    j_span.css("text-shadow","2px 2px 2px "+that.kag.stat.font.shadow);
-                }
-
+            }else if(that.kag.stat.font.shadow != ""){
+                //j_span.css()
+                j_span.css("text-shadow","2px 2px 2px "+that.kag.stat.font.shadow);
             }
 
+            // vchat用設定 -->
+            that.kag.checkMessage(j_msg_vchat);
+            if (j_msg_vchat.html() == "") {
+              //タグ作成
+              j_msg_vchat.append("<p class=''></p>");
+            }
+            j_span_vchat = j_msg_vchat.find(".current_span");
+            if(chara_name==""){
+              $(".current_vchat").find(".vchat_chara_name").remove();
+              $(".current_vchat").find(".vchat-text-inner").css("margin-top","0.2em");
+            }else{
+              $(".current_vchat").find(".vchat_chara_name").html(chara_name);
+              //キャラ名欄の色
+              var vchat_name_color = $.convertColor(that.kag.stat.vchat.chara_name_color);
+              var cpm = that.kag.stat.vchat.charas[chara_name];
+              if (cpm && cpm.color != "") {
+                  //色指定がある場合は、その色を指定する。
+                  vchat_name_color = $.convertColor(cpm.color);
+              }
+              $(".current_vchat").find(".vchat_chara_name").css("background-color",vchat_name_color);
+              $(".current_vchat").find(".vchat-text-inner").css("margin-top","1.5em");
+          }
+           // vchat用設定 <--
 
             //既読管理中の場合、現在の場所が既読済みなら、色を変える
             if(that.kag.config.autoRecordLabel == "true"){
@@ -868,6 +842,10 @@ tyrano.plugin.kag.tag.text = {
             var makeVisibleAll = function() {
                 append_span.children("span").css('visibility', 'visible');
             };
+
+            // vchatに追加
+            that.kag.appendMessage(j_msg_vchat, current_str);
+            j_span_vchat.children('span:last-child').children("span").css('visibility', 'visible');
 
             var pchar = function(index) {
                 // 一文字ずつ表示するか？
@@ -1389,11 +1367,8 @@ tyrano.plugin.kag.tag.cm = {
         //フォントのリセット
         //カレントレイヤだけじゃなくて、全てもメッセージレイヤを消去する必要がある
 
-        if(this.kag.stat.vchat.is_active){
-            this.kag.ftag.startTag("vchat_in",{});
-        }else{
-            this.kag.layer.clearMessageInnerLayerAll();
-        }
+        this.kag.ftag.startTag("vchat_in",{});
+        this.kag.layer.clearMessageInnerLayerAll();
 
         this.kag.stat.log_clear = true;
 

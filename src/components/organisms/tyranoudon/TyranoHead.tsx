@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Head from 'next/head'
-const TryranoHead: FC = () => {
+const TryranoHead: FC<{ name: string }> = ({ name }) => {
   return (
     <Head>
       <title>Loading TyranoScript</title>
@@ -68,7 +68,11 @@ const TryranoHead: FC = () => {
       <script type="text/javascript" src="/tyranoudon/js/libs.js"></script>
 
       <script type="text/javascript" src="/tyrano/tyrano.js"></script>
-      <script type="text/javascript" src="/tyrano/tyrano.base.js"></script>
+      {name === 'vchat_add' ? (
+        <script src="/tyranoudon/js/tyrano.base.js"></script>
+      ) : (
+        <script type="text/javascript" src="/tyrano/tyrano.base.js"></script>
+      )}
 
       <script
         type="text/javascript"
@@ -120,21 +124,30 @@ const TryranoHead: FC = () => {
       ></script>
       <script
         type="text/javascript"
-        src="/tyrano/plugins/kag/kag.tag_vchat.js"
-      ></script>
-      <script
-        type="text/javascript"
         src="/tyrano/plugins/kag/kag.tag_ar.js"
       ></script>
       <script
         type="text/javascript"
         src="/tyrano/plugins/kag/kag.tag_three.js"
       ></script>
-
-      <script
-        type="text/javascript"
-        src="/tyrano/plugins/kag/kag.tag.js"
-      ></script>
+      {name === 'vchat_add' ? (
+        <>
+          <script src="/tyranoudon/js/plugins/kag/kag.tag_vchat.js"></script>
+          <script src="/tyranoudon/js/plugins/kag/kag.tag.js"></script>
+          <script src="/tyranoudon/js/vchat_add.js"></script>
+        </>
+      ) : (
+        <>
+          <script
+            type="text/javascript"
+            src="/tyrano/plugins/kag/kag.tag_vchat.js"
+          ></script>
+          <script
+            type="text/javascript"
+            src="/tyrano/plugins/kag/kag.tag.js"
+          ></script>
+        </>
+      )}
 
       <link
         href="/tyrano/libs/textillate/assets/animate.css"
