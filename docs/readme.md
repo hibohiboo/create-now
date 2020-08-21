@@ -14,7 +14,10 @@
 
 [国際化](https://github.com/hibohiboo/create-now/tree/f4fe39604ab00883220bf72d41656b0c8b639dd7/)
 
-[メモリスト 1 つ完成時点](317205852e77352b9ba6f2a9f26257f9f317025d)
+[メモリスト 1 つ完成時点](https://github.com/hibohiboo/create-now/tree/317205852e77352b9ba6f2a9f26257f9f317025d/)
+
+[tyrano vchat適用時点](https://github.com/hibohiboo/create-now/tree/ca38214a910b383e712082fcddafb4a8c15e70d5/)
+
 
 ## 参考
 

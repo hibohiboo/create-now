@@ -50,7 +50,12 @@ export default function Home({ setting, name }: Prop) {
         ).array_s
         console.log('array_s', array_s)
         console.log('ftag', window.TYRANO.kag.ftag.buildTag)
-        window.TYRANO.kag.ftag.buildTag(array_s)
+        try {
+          window.TYRANO.kag.ftag.buildTag(array_s)
+        } catch (e) {
+          // キャラクター準備前にチャットを送るなどするとエラー発生
+          console.error(e)
+        }
       },
       false,
     )
