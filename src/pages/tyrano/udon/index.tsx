@@ -95,6 +95,16 @@ export default function Page(ctx) {
               changeHandler={(e) => vm.changeFontSize(e.target.value)}
             />
           </div>
+          <div style={{ width: '80px' }}>
+            <SelectField
+              id="face"
+              labelText="アニメ"
+              items={[...vm.characterAnimationList]}
+              unselectedText=""
+              value={vm.characterMessageAnimation}
+              changeHandler={({ name }) => vm.changeCharacterAnimation(name)}
+            />
+          </div>
           <Button
             variant="contained"
             color="primary"

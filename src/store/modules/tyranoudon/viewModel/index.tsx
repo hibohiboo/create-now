@@ -5,13 +5,12 @@ import actions from '../actions'
 import { isChatMessage, isTableImageMessage } from '../ports/udon'
 import * as tyranoMessage from '../utils/tyranoMessage'
 import * as constants from '../constants'
-import { initialState } from '../reducer'
+import { init } from '../reducer'
 import * as thunk from '../thunk'
 import type { TyranoUdon } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
 const { addUdonariumMessage, changeName, changeFace } = actions
-const init = initialState()
 
 interface UdonariumPorts {
   chat: any
@@ -99,6 +98,7 @@ export const useViewModel = (ctx: {
       faceList,
       methodList: constants.bgMethods,
       nameList,
+      characterAnimationList: constants.characterMessageAnimations,
       rubySample: () => {
         dispatch(
           addUdonariumMessage(`${text}
@@ -107,7 +107,10 @@ export const useViewModel = (ctx: {
       },
       sendMessage: () => {
         if (!text) return
-        sendUdonMessage(state.tyranoudon)
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createCharacterMessage(state.tyranoudon),
+        })
         // const msg = createTyranoMessage(name, face, text)
         // sendTyranoChatMessage(tyranoSample, msg)
         // sendTyranoChatMessage(tyranoVchat, msg)
@@ -178,26 +181,13 @@ export const useViewModel = (ctx: {
       changeSceneName: (t: string) => dispatch(actions.changeSceneName(t)),
       changeCharacterPositionBottom: (t: string) =>
         dispatch(actions.changeCharacterPositionBottom(Number(t))),
+      changeCharacterAnimation: (t: string) =>
+        dispatch(actions.changeTyranoCharaMessageAnimation(t)),
     }
   })
 
-const sendUdonMessage = ({
-  name,
-  face,
-  text,
-  tyranoFontColor,
-  tyranoFontSize,
-}: TyranoUdon) => {
+const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
-  let textFont =
-    tyranoFontColor === init.tyranoFontColor
-      ? ''
-      : `[font color="${tyranoFontColor.replace('#', '0x')}"]`
-  textFont =
-    tyranoFontSize === init.tyranoFontSize
-      ? textFont
-      : `${textFont}[font size="${tyranoFontSize}"]`
-  const sendText = textFont === '' ? text : `${textFont}${text}[resetfont]`
   const chatMessage = {
     from: '',
     to: '',
@@ -205,7 +195,7 @@ const sendUdonMessage = ({
     imageIdentifier: '',
     timestamp: Date.now(),
     tag: '', // GameType
-    text: sendText,
+    text,
   }
   const message: PostMessageChat = {
     type: 'chat',

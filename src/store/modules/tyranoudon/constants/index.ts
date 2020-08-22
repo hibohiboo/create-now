@@ -29,6 +29,17 @@ export const bgMethods = [
   { name: 'vanishIn' },
   { name: 'puffIn' },
 ] as const
-export type TyranoMethos = typeof bgMethods[number]['name']
-export const isBackgroundMethod = (m: string): m is TyranoMethos =>
+export type TyranoMethod = typeof bgMethods[number]['name']
+export const isBackgroundMethod = (m: string): m is TyranoMethod =>
   bgMethods.map((item) => item.name as string).includes(m)
+
+export const characterMessageAnimations = [
+  { name: 'down' },
+  { name: 'up' },
+  { name: 'none' },
+] as const
+export type TyranoCharacterMessageAnimation = typeof characterMessageAnimations[number]['name']
+export const isTyranoCharacterMessageAnimation = (
+  m: string,
+): m is TyranoCharacterMessageAnimation =>
+  characterMessageAnimations.map((item) => item.name as string).includes(m)

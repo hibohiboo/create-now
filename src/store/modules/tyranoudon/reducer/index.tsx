@@ -1,26 +1,32 @@
 import { createReducer } from '@reduxjs/toolkit'
 import actions from '../actions'
-import { isBackgroundMethod } from '../constants'
+import * as constants from '../constants'
+import type {
+  TyranoMethod,
+  TyranoCharacterMessageAnimation,
+} from '../constants'
 const { addUdonariumMessage, changeName, changeFace } = actions
 export interface TyranoCharacter {
   name: string
   jname: string
   faces: string[]
 }
+
 export interface TyranoUdon {
   text: string
   name: string
   face: string
   udonariumBackgroundImage: string
-  tyranoBackgroundMethod: string
+  tyranoBackgroundMethod: TyranoMethod
   tyranoEffectTime: number
   tyranoFontColor: string
   tyranoFontSize: number
   sceneName: string
   characters: TyranoCharacter[]
   characterPositionBottom: number
+  characterMessageAnimation: TyranoCharacterMessageAnimation
 }
-export const initialState = (): TyranoUdon => ({
+const initialState = (): TyranoUdon => ({
   text: '',
   name: 'akane',
   face: ' ',
@@ -43,9 +49,11 @@ export const initialState = (): TyranoUdon => ({
     },
   ],
   characterPositionBottom: -100,
+  characterMessageAnimation: 'down',
 })
+export const init = initialState()
 
-const reducer = createReducer(initialState(), (builder) =>
+const reducer = createReducer(init, (builder) =>
   builder
     .addCase(addUdonariumMessage, (state, action) => {
       state.text = action.payload.text
@@ -61,7 +69,7 @@ const reducer = createReducer(initialState(), (builder) =>
       state.udonariumBackgroundImage = actions.payload.text
     })
     .addCase(actions.changeTyranoBackgroundMethod, (state, actions) => {
-      if (isBackgroundMethod(actions.payload.text)) {
+      if (constants.isBackgroundMethod(actions.payload.text)) {
         state.tyranoBackgroundMethod = actions.payload.text
       }
     })
@@ -82,6 +90,10 @@ const reducer = createReducer(initialState(), (builder) =>
     })
     .addCase(actions.changeCharacterPositionBottom, (state, actions) => {
       state.characterPositionBottom = actions.payload.n
+    })
+    .addCase(actions.changeTyranoCharaMessageAnimation, (state, actions) => {
+      if (constants.isTyranoCharacterMessageAnimation(actions.payload.text))
+        state.characterMessageAnimation = actions.payload.text
     }),
 )
 

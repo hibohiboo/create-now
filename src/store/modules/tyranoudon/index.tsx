@@ -1,7 +1,7 @@
 import actions from './actions'
-import reducer, { initialState } from './reducer'
+import reducer, { init as initialState } from './reducer'
 
-export const init = initialState()
+export const init = initialState
 export default {
   actions,
   reducer,

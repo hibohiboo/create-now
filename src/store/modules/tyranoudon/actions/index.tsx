@@ -58,6 +58,12 @@ const changeCharacterPositionBottom = createAction(
     payload: { n },
   }),
 )
+const changeTyranoCharaMessageAnimation = createAction(
+  'CHANGE_TYRANO_MESSAGE_CHAR_ANIMATION',
+  (text: string) => ({
+    payload: { text },
+  }),
+)
 export default {
   addUdonariumMessage,
   changeName,
@@ -70,4 +76,5 @@ export default {
   changeSceneName,
   changeCharacters,
   changeCharacterPositionBottom,
+  changeTyranoCharaMessageAnimation,
 }

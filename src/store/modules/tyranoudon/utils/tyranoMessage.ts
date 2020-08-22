@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
-
+import { init } from '../reducer'
+import type { TyranoUdon } from '../reducer'
 const escape = (str: string) => {
   return (
     str
@@ -39,6 +40,7 @@ export const isTagMessage = (text: string) => {
   if (_.startsWith(text, '[chara_show ')) return true
   if (_.startsWith(text, '[chara_hide ')) return true
   if (_.startsWith(text, '[chara_hide_all ')) return true
+  if (_.startsWith(text, '[chara_config ')) return true
   // if (_.startsWith(text, '[layopt ')) return true
   // if (_.startsWith(text, '[image ')) return true
   // if (_.startsWith(text, '[kanim ')) return true
@@ -153,6 +155,33 @@ export const createBgMessage = (img: string, method: string, time: number) => {
     return `[bg3 storage="${img}" method="${method}" time="${time}"]`
 
   return `[bg storage="${img}" method="${method}" time="${time}"]`
+}
+
+export const createCharacterMessage = ({
+  name,
+  face,
+  text,
+  tyranoFontColor,
+  tyranoFontSize,
+  characterMessageAnimation,
+}: TyranoUdon) => {
+  let textFont =
+    tyranoFontColor === init.tyranoFontColor
+      ? ''
+      : `[font color="${tyranoFontColor.replace('#', '0x')}"]`
+  textFont =
+    tyranoFontSize === init.tyranoFontSize
+      ? textFont
+      : `${textFont}[font size="${tyranoFontSize}"]`
+  const sendText = textFont === '' ? text : `${textFont}${text}[resetfont]`
+  if (characterMessageAnimation === init.characterMessageAnimation)
+    return sendText
+  return `[chara_config ptext="chara_name_area" memory="false" talk_anim="${characterMessageAnimation}" pos_mode="true" ]
+${createTyranoMessage(name, face, sendText)}
+[chara_config ptext="chara_name_area" memory="false" talk_anim="${
+    init.characterMessageAnimation
+  }" pos_mode="true" ]
+`
 }
 
 export const createCharacterShowMessage = (
