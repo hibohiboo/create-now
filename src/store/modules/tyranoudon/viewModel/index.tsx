@@ -167,6 +167,21 @@ export const useViewModel = (ctx: {
           text: tyranoMessage.createMTextMessage(state.tyranoudon.sceneName),
         })
       },
+      sendQuake: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createQuake(state.tyranoudon.tyranoEffectTime),
+        })
+      },
+      sendQuakeHorizon: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: tyranoMessage.createQuake(
+            state.tyranoudon.tyranoEffectTime,
+            true,
+          ),
+        })
+      },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),

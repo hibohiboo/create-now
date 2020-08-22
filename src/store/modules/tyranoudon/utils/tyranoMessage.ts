@@ -41,6 +41,7 @@ export const isTagMessage = (text: string) => {
   if (_.startsWith(text, '[chara_hide ')) return true
   if (_.startsWith(text, '[chara_hide_all ')) return true
   if (_.startsWith(text, '[chara_config ')) return true
+  if (_.startsWith(text, '[quake ')) return true
   // if (_.startsWith(text, '[layopt ')) return true
   // if (_.startsWith(text, '[image ')) return true
   // if (_.startsWith(text, '[kanim ')) return true
@@ -209,4 +210,8 @@ export const createMTextZawaZawaMessage = () => {
 }
 export const createMTextMessage = (text: string) => {
   return `[mtext text="${text}" layer="0" x="5" y="5" size="40" in_effect="fadeInRightBig" time="0" color="0xc0006f" edge="0xffffff" fadeout="false" name="mtext"]`
+}
+export const createQuake = (time: number, isHorizon = false) => {
+  if (isHorizon) return `[quake time=${time} vmax=0 hmax=10 count=8]`
+  return `[quake time=${time}]`
 }

@@ -57,7 +57,14 @@ export default function Page(ctx) {
         onResize={onResize}
       >
         <Box my={2} mx={3} display="flex">
-          <div style={{ width: '200px' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendTyranoCharaShow}
+          >
+            登場
+          </Button>
+          <div style={{ width: '150px' }}>
             <SuggestInputField
               id="name"
               labelText="名前"
@@ -105,13 +112,7 @@ export default function Page(ctx) {
               changeHandler={({ name }) => vm.changeCharacterAnimation(name)}
             />
           </div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={vm.sendTyranoCharaShow}
-          >
-            登場
-          </Button>
+
           <Button
             variant="contained"
             color="primary"
@@ -142,13 +143,27 @@ export default function Page(ctx) {
         height={height}
         onResize={onResize}
       >
-        <Box my={2} style={{ height: `${height - 50}px`, overflowY: 'scroll' }}>
+        <Box
+          my={2}
+          mx={2}
+          style={{ height: `${height - 50}px`, overflowY: 'scroll' }}
+        >
           <Button
             variant="contained"
             color="primary"
             onClick={vm.sendTyranBgImageChange}
           >
             ユドナリウムの背景を適用
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={vm.sendQuakeHorizon}
+          >
+            揺らす（横揺れ）
+          </Button>
+          <Button variant="contained" color="primary" onClick={vm.sendQuake}>
+            揺らす（縦揺れ）
           </Button>
           <SelectField
             id="bg-method"
