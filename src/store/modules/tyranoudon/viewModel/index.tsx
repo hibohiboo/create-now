@@ -190,6 +190,14 @@ export const useViewModel = (ctx: {
           [stop_kanim name=${state.tyranoudon.name}]`,
         })
       },
+      sendMyAnime: () => {
+        sendUdonMessage({
+          ...state.tyranoudon,
+          text: `[kanim name=${state.tyranoudon.name} keyframe=my_anim]
+          [wa]
+          [stop_kanim name=${state.tyranoudon.name}]`,
+        })
+      },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),

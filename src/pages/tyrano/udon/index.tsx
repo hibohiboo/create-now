@@ -219,6 +219,9 @@ export default function Page(ctx) {
           <Button variant="contained" color="primary" onClick={vm.sendSway}>
             キャラクターアニメテスト
           </Button>
+          <Button variant="contained" color="primary" onClick={vm.sendMyAnime}>
+            アニメテスト2
+          </Button>
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>
