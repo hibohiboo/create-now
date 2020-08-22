@@ -29,7 +29,7 @@ export const initialState = (): TyranoUdon => ({
   tyranoEffectTime: 500,
   tyranoFontColor: '#ffffff',
   tyranoFontSize: 26,
-  sceneName: 'ミドルフェイス / シーン2 【シーンプレイヤー：あかね】',
+  sceneName: 'ミドルフェイズ / シーン2 【シーンプレイヤー：あかね】',
   characters: [
     {
       jname: 'あかね',

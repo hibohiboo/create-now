@@ -7,6 +7,7 @@ import UdonariumPanel from '~/components/organisms/tyranoudon/UdonariumPanel'
 import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
 import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
 import SelectField from '~/components/form/SelectField'
+import SuggestInputField from '~/components/form/SuggestInputField'
 import InputField from '~/components/form/InputField'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 import { Box, FormControl, TextareaAutosize, Button } from '@material-ui/core'
@@ -57,14 +58,13 @@ export default function Page(ctx) {
       >
         <Box my={2} mx={3} display="flex">
           <div style={{ width: '200px' }}>
-            <SelectField
+            <SuggestInputField
               id="name"
               labelText="名前"
               items={vm.nameList}
-              unselectedText=""
               value={vm.name}
               valueProp="value"
-              changeHandler={({ name, value }: any) => vm.changeName(value)}
+              changeHandler={vm.changeName}
             />
           </div>
           <div style={{ width: '100px' }}>

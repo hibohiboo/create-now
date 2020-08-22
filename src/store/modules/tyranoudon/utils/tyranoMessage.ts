@@ -35,6 +35,7 @@ ${escape(text)}
 export const isTagMessage = (text: string) => {
   if (!_.startsWith(text, '[')) return false
   if (_.startsWith(text, '[bg3 ')) return true
+  if (_.startsWith(text, '[bg ')) return true
   if (_.startsWith(text, '[chara_show ')) return true
   if (_.startsWith(text, '[chara_hide ')) return true
   if (_.startsWith(text, '[chara_hide_all ')) return true
@@ -148,7 +149,10 @@ export const createBgMessage = (img: string, method: string, time: number) => {
 [layopt layer="fix"      visible="true"]
 `
   }
-  return `[bg3 storage="${img}" method="${method}" time="${time}"]`
+  if (img.substring(0, 4) === 'data')
+    return `[bg3 storage="${img}" method="${method}" time="${time}"]`
+
+  return `[bg storage="${img}" method="${method}" time="${time}"]`
 }
 
 export const createCharacterShowMessage = (

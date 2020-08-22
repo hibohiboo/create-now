@@ -138,3 +138,4 @@ RUN npm i dotenv --save-dev
 
 RUN npm i react-draggable
 RUN npm i react-resizable
+RUN npm i react-select
