@@ -9,3 +9,5 @@
 [layopt layer="0" visible="true"]
 [layopt layer="1" visible="true"]
 [layopt layer="2" visible="true"]
+;アニメーション定義呼出
+@call storage="common/keyframes.ks"

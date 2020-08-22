@@ -44,7 +44,7 @@ export const isTagMessage = (text: string) => {
   if (_.startsWith(text, '[quake ')) return true
   // if (_.startsWith(text, '[layopt ')) return true
   // if (_.startsWith(text, '[image ')) return true
-  // if (_.startsWith(text, '[kanim ')) return true
+  if (_.startsWith(text, '[kanim ')) return true
   // if (_.startsWith(text, '[wa ')) return true
   if (_.startsWith(text, '[keyframe ')) return true
   // if (_.startsWith(text, '[frame ')) return true

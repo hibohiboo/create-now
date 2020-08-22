@@ -216,6 +216,9 @@ export default function Page(ctx) {
               vm.changeCharacterPositionBottom(e.target.value)
             }
           />
+          <Button variant="contained" color="primary" onClick={vm.sendSway}>
+            キャラクターアニメテスト
+          </Button>
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>
