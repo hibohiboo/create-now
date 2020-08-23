@@ -18,6 +18,8 @@ declare global {
           buildTag: (a: any[]) => void
         }
         parser: { parseScenario: (a: string) => { array_s: any[] } }
+        stat: { current_scenario: string }
+        cache_scenario: any
       }
     }
   }
@@ -45,12 +47,18 @@ export default function Home({ setting, name }: Prop) {
         if (event.origin !== process.env.TYRANO_DOMAIN) return
         if (!isChatMessage(event.data)) return
         console.log('received chat message', event.data)
-        const array_s = window.TYRANO.kag.parser.parseScenario(
+        const result_obj = window.TYRANO.kag.parser.parseScenario(
           event.data.payload.scenario,
-        ).array_s
+        )
+        const array_s = result_obj.array_s
         console.log('array_s', array_s)
         console.log('ftag', window.TYRANO.kag.ftag.buildTag)
         try {
+          // マクロで戻って来れるようにキャッシュに入れる
+          window.TYRANO.kag.stat.current_scenario = 'chat'
+          window.TYRANO.kag.cache_scenario[`./data/scenario/chat`] = result_obj
+
+          // マクロを使わなければこれだけでもチャット可能
           window.TYRANO.kag.ftag.buildTag(array_s)
         } catch (e) {
           // キャラクター準備前にチャットを送るなどするとエラー発生

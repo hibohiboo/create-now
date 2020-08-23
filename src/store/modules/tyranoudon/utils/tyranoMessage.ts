@@ -11,9 +11,10 @@ const escape = (str: string) => {
       .replace('［font', '[font')
       .replace('［resetfont', '[resetfont')
       .replace('［ruby', '[ruby')
+      .replace('＠chara_parts_set_', '@chara_parts_set_')
   )
 }
-const hasFace = (face) => face && face.trim() !== ''
+const hasFace = (face) => face && face !== 'normal' && !face.startsWith('set_')
 export const createTyranoMessage = (
   name: string,
   face: string | undefined,
@@ -26,31 +27,58 @@ export const createTyranoMessage = (
   } else if (isTagMessage(text)) {
     return text
   }
+  const macro = _.startsWith(face, 'set_')
+    ? `@chara_parts_set_${name}_${face.replace('set_', '')}`
+    : ''
 
   return `[cm]
+${macro}
 #${fname}
 ${escape(text)}
 `
 }
 
 export const isTagMessage = (text: string) => {
-  if (!_.startsWith(text, '[')) return false
-  if (_.startsWith(text, '[bg3 ')) return true
-  if (_.startsWith(text, '[bg ')) return true
-  if (_.startsWith(text, '[chara_show ')) return true
-  if (_.startsWith(text, '[chara_hide ')) return true
-  if (_.startsWith(text, '[chara_hide_all ')) return true
-  if (_.startsWith(text, '[chara_config ')) return true
-  if (_.startsWith(text, '[quake ')) return true
+  const tags = [
+    'bg',
+    'bg3',
+    'chara_show',
+    'chara_hide',
+    'chara_hide_all',
+    'chara_config',
+    'quake',
+    'keyframe',
+    'mtext',
+  ]
+  const tagsLen = tags.length
+  if (_.startsWith(text, '[')) {
+    for (let i = 0; i < tagsLen; i++) {
+      if (_.startsWith(text, `[${tags[i]} `)) return true
+    }
+    if (_.startsWith(text, '[chara_parts_set_')) return true
+  }
+  if (_.startsWith(text, '@')) {
+    for (let i = 0; i < tagsLen; i++) {
+      if (_.startsWith(text, `@${tags[i]} `)) return true
+    }
+    if (_.startsWith(text, '@chara_parts_set_')) return true
+  }
+  // if (_.startsWith(text, '[bg3 ')) return true
+  // if (_.startsWith(text, '[bg ')) return true
+  // if (_.startsWith(text, '[chara_show ')) return true
+  // if (_.startsWith(text, '[chara_hide ')) return true
+  // if (_.startsWith(text, '[chara_hide_all ')) return true
+  // if (_.startsWith(text, '[chara_config ')) return true
+  // if (_.startsWith(text, '[quake ')) return true
   // if (_.startsWith(text, '[layopt ')) return true
   // if (_.startsWith(text, '[image ')) return true
-  if (_.startsWith(text, '[kanim ')) return true
+  // if (_.startsWith(text, '[kanim ')) return true
   // if (_.startsWith(text, '[wa ')) return true
-  if (_.startsWith(text, '[keyframe ')) return true
+  // if (_.startsWith(text, '[keyframe ')) return true
   // if (_.startsWith(text, '[frame ')) return true
   // if (_.startsWith(text, '[endkeyframe ')) return true
   // if (_.startsWith(text, '[freeimage ')) return true
-  if (_.startsWith(text, '[mtext ')) return true
+  // if (_.startsWith(text, '[mtext ')) return true
   return false
 }
 
@@ -74,7 +102,8 @@ const createBcdiceMessage = (
   const resultRegex = /\[([0-9,]+)\]/
   const [, result] = text.match(resultRegex)
 
-  const fbcname = face ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
+  const fbcname =
+    face !== 'normal' ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
   // #${fbcname} を入れると、nextOrderがバグる
   return `
 #${fbcname}
@@ -193,12 +222,19 @@ export const createCharacterShowMessage = (
   face: string | undefined,
   time: number,
   bottom: number,
-) =>
-  hasFace(face)
+) => {
+  const macro = _.startsWith(face, 'set_')
+    ? `[chara_parts_set_${name}_${face.replace('set_', '')}]`
+    : ''
+  return hasFace(face)
     ? `[chara_show name="${escape(name)}" face="${escape(
         face,
       )}" time="${time}" bottom="${bottom}"]`
-    : `[chara_show name="${escape(name)}" time="${time}" bottom="${bottom}"]`
+    : `${macro}[chara_show name="${escape(
+        name,
+      )}" time="${time}" bottom="${bottom}"]`
+}
+
 export const createCharacterHideMessage = (name: string, time: number) =>
   `[chara_hide name="${escape(name)}" time="${time}"]`
 export const createCharacterHideAllMessage = (time: number) =>

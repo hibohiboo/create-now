@@ -111,7 +111,17 @@ export default function Page(ctx) {
               changeHandler={({ name }) => vm.changeCharacterAnimation(name)}
             />
           </div>
-
+          <div style={{ width: '100px', marginTop: '-10px' }}>
+            <InputField
+              model={vm.characterSettings}
+              type="number"
+              prop="characterPositionBottom"
+              labelText={'キャラ縦位置'}
+              changeHandler={(e) =>
+                vm.changeCharacterPositionBottom(e.target.value)
+              }
+            />
+          </div>
           <Button
             variant="contained"
             color="primary"
@@ -242,15 +252,7 @@ export default function Page(ctx) {
           >
             シーン名表示
           </Button>
-          <InputField
-            model={vm}
-            type="number"
-            prop="characterPositionBottom"
-            labelText={'キャラクター縦位置'}
-            changeHandler={(e) =>
-              vm.changeCharacterPositionBottom(e.target.value)
-            }
-          />
+
           <Button variant="contained" color="primary" onClick={vm.sendSway}>
             キャラクターアニメテスト
           </Button>

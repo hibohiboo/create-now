@@ -34,9 +34,9 @@ const SelectableInputField: React.FC<{
       <label
         id={`${id}-label`}
         style={{
-          transform: 'translate(0, 1.5px) scale(0.75);',
+          transform: 'translate(0, 1.5px) scale(0.75)',
           transformOrigin: 'left top',
-          color: 'rgba(0, 0, 0, 0.54);',
+          color: 'rgba(0, 0, 0, 0.54)',
         }}
       >
         {labelText}

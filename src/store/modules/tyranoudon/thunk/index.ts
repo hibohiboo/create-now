@@ -1,9 +1,9 @@
+import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import * as api from '~/lib/api/tyranoudon'
 import actions from '../actions'
 import type { TyranoCharacter, TyranoPatchObject } from '../reducer'
 import type { SelectItem } from '~/components/form/SelectableInputField'
-
 const defaultPatch = 'normal'
 export const fetchCharacters = (spreadId: string): AppThunk => async (
   dispatch,
@@ -14,15 +14,33 @@ export const fetchCharacters = (spreadId: string): AppThunk => async (
   const characters: TyranoCharacter[] = []
   values.forEach(([name, jname, face]) => {
     if (face === defaultPatch) {
-      characters.push({ name, jname, faces: [' '] })
+      characters.push({ name, jname, faces: ['normal'] })
       return
     }
     const chara = characters.find((c) => c.name === name)
     if (!chara) return
     chara.faces.push(face)
   })
-  console.log('characters', characters)
-  dispatch(actions.changeCharacters(characters))
+  const partsJson = await api.getCharacterParts(spreadId)
+  const partsSetJson = await api.getCharacterPartsSet(spreadId)
+  const parts: TyranoCharacter[] = _.uniqBy(
+    partsJson.values.map(([name, jname]) => ({
+      name,
+      jname,
+    })),
+    (i) => i.name,
+  ).map(({ name, jname }) => ({
+    name,
+    jname,
+    faces: [
+      'set_normal',
+      ...partsSetJson.values
+        .filter(([n]) => n === name)
+        .map(([, setName]) => `set_${setName}`),
+    ],
+  }))
+
+  dispatch(actions.changeCharacters(_.union(characters, parts)))
 }
 export const fetchBackgrounds = (spreadId: string): AppThunk => async (
   dispatch,

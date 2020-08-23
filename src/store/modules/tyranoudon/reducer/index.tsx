@@ -55,7 +55,7 @@ const initialState = (): TyranoUdon => ({
   },
   characterSettings: {
     name: 'akane',
-    face: ' ',
+    face: 'normal',
     characterPositionBottom: -100,
     characterMessageAnimation: 'down',
   },
@@ -74,12 +74,12 @@ const initialState = (): TyranoUdon => ({
     {
       jname: 'あかね',
       name: 'akane',
-      faces: [' ', 'happy', 'doki', 'angry', 'sad'],
+      faces: ['normal', 'happy', 'doki', 'angry', 'sad'],
     },
     {
       jname: 'やまと',
       name: 'yamato',
-      faces: [' '],
+      faces: ['normal'],
     },
   ],
 })
@@ -92,7 +92,8 @@ const reducer = createReducer(init, (builder) =>
     })
     .addCase(changeName, (state, action) => {
       state.characterSettings.name = action.payload.text
-      state.characterSettings.face = ' '
+      const chara = state.characters.find((c) => c.name === action.payload.text)
+      if (chara) state.characterSettings.face = chara.faces[0]
     })
     .addCase(changeFace, (state, action) => {
       state.characterSettings.face = action.payload.text

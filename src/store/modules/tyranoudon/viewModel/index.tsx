@@ -104,10 +104,8 @@ export const useViewModel = (ctx: PageContext) =>
       tyranoSample,
       tyranoVchat,
       faceList: selectedCharacter
-        ? selectedCharacter.faces.map((n) => ({
-            name: n === 'normal' ? ' ' : n,
-          }))
-        : [{ name: ' ' }, { name: 'mask' }],
+        ? selectedCharacter.faces.map((name) => ({ name }))
+        : [{ name: 'normal' }],
       methodList: constants.bgMethods,
       nameList: tuState.characters.map((c) => ({
         name: c.jname,
@@ -287,7 +285,7 @@ const sendUdonMessage = ({
   const chatMessage = {
     from: '',
     to: '',
-    name: face.trim() === '' ? name : `${name}:${face}`,
+    name: face === 'normal' ? name : `${name}:${face}`,
     imageIdentifier: '',
     timestamp: Date.now(),
     tag: '', // GameType
