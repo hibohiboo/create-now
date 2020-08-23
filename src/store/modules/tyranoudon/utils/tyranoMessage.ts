@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import { init } from '../reducer'
-import type { TyranoUdon } from '../reducer'
+import type { Chat, CharacterSettings } from '../reducer'
 const escape = (str: string) => {
   return (
     str
@@ -165,22 +165,25 @@ export const createCharacterMessage = ({
   tyranoFontColor,
   tyranoFontSize,
   characterMessageAnimation,
-}: TyranoUdon) => {
+}: Chat & CharacterSettings) => {
   let textFont =
-    tyranoFontColor === init.tyranoFontColor
+    tyranoFontColor === init.chat.tyranoFontColor
       ? ''
       : `[font color="${tyranoFontColor.replace('#', '0x')}"]`
   textFont =
-    tyranoFontSize === init.tyranoFontSize
+    tyranoFontSize === init.chat.tyranoFontSize
       ? textFont
       : `${textFont}[font size="${tyranoFontSize}"]`
   const sendText = textFont === '' ? text : `${textFont}${text}[resetfont]`
-  if (characterMessageAnimation === init.characterMessageAnimation)
+  if (
+    characterMessageAnimation ===
+    init.characterSettings.characterMessageAnimation
+  )
     return sendText
   return `[chara_config ptext="chara_name_area" memory="false" talk_anim="${characterMessageAnimation}" pos_mode="true" ]
 ${createTyranoMessage(name, face, sendText)}
 [chara_config ptext="chara_name_area" memory="false" talk_anim="${
-    init.characterMessageAnimation
+    init.characterSettings.characterMessageAnimation
   }" pos_mode="true" ]
 `
 }

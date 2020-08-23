@@ -249,8 +249,7 @@ export default function Page(ctx) {
                 参考： ユドナリウム
               </a>
             </li>
-            <li>{`${vm.udonariumBackgroundImage}`}</li>
-            <li>{`${vm.tyranoFontColor}`}</li>
+
             <li>
               <a
                 href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58`}
@@ -272,6 +271,8 @@ export default function Page(ctx) {
                 立ち絵置き場サンプル
               </a>
             </li>
+            <li>{`${vm.udonariumBackgroundImage}`}</li>
+            <li>{`${vm.tyranoFontColor}`}</li>
           </ul>
         </Box>
       </DraggablePanel>

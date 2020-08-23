@@ -7,7 +7,7 @@ import * as tyranoMessage from '../utils/tyranoMessage'
 import * as constants from '../constants'
 import { init } from '../reducer'
 import * as thunk from '../thunk'
-import type { TyranoUdon } from '../reducer'
+import type { TyranoUdon, Chat, CharacterSettings } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
 const { addUdonariumMessage, changeName, changeFace } = actions
@@ -53,7 +53,7 @@ const chatMessageHandler = (data: PostMessageChat, tyranoName: string) => {
   console.log('tyranoName', tyranoName)
   if (tyranoName === 'chat_talk') {
     if (tyranoMessage.isTagMessage(text)) return
-    sendTyranoChatTalkMessage({ name, face, text })
+    sendTyranoChatTalkMessage({ name, text })
     return
   }
   const msg = tyranoMessage.createTyranoMessage(name, face || '', text)
@@ -69,7 +69,7 @@ export const useViewModel = (ctx: {
 }) =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
-    const { text, name, face } = state.tyranoudon
+    const tuState = state.tyranoudon
 
     useEffect(() => {
       window.addEventListener(
@@ -80,19 +80,19 @@ export const useViewModel = (ctx: {
       dispatch(thunk.fetchCharacters(ctx.tyrano_sheet))
       // dispatch(addUdonariumMessage('sample Message:'))
     }, [])
-    const selectedCharacter = state.tyranoudon.characters.find(
-      (c) => c.name === name,
+    const selectedCharacter = tuState.characters.find(
+      (c) => c.name === tuState.characterSettings.name,
     )
     console.log('selected', selectedCharacter)
     const faceList = selectedCharacter
       ? selectedCharacter.faces.map((n) => ({ name: n === 'normal' ? ' ' : n }))
       : [{ name: ' ' }]
-    const nameList = state.tyranoudon.characters.map((c) => ({
+    const nameList = tuState.characters.map((c) => ({
       name: c.jname,
       value: c.name,
     }))
     return {
-      ...state.tyranoudon,
+      ...tuState,
       tyranoSample,
       tyranoVchat,
       faceList,
@@ -101,101 +101,101 @@ export const useViewModel = (ctx: {
       characterAnimationList: constants.characterMessageAnimations,
       rubySample: () => {
         dispatch(
-          addUdonariumMessage(`${text}
+          addUdonariumMessage(`${tuState.chat.text}
 [ruby text="かん"]漢[ruby text="じ"]字`),
         )
       },
       sendMessage: () => {
-        if (!text) return
+        if (!tuState.chat.text) return
         sendUdonMessage({
-          ...state.tyranoudon,
-          text: tyranoMessage.createCharacterMessage(state.tyranoudon),
+          ...tuState.characterSettings,
+          text: tyranoMessage.createCharacterMessage({
+            ...tuState.chat,
+            ...tuState.characterSettings,
+          }),
         })
         // const msg = createTyranoMessage(name, face, text)
         // sendTyranoChatMessage(tyranoSample, msg)
         // sendTyranoChatMessage(tyranoVchat, msg)
-        // sendTyranoChatTalkMessage(state.tyranoudon)
+        // sendTyranoChatTalkMessage(tuState)
         dispatch(addUdonariumMessage(''))
       },
       sendTyranBgImageChange: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
+          ...tuState.characterSettings,
           text: tyranoMessage.createBgMessage(
-            state.tyranoudon.udonariumBackgroundImage,
-            state.tyranoudon.tyranoBackgroundMethod,
-            state.tyranoudon.tyranoEffectTime,
+            tuState.udonariumBackgroundImage,
+            tuState.backgroundSettings.tyranoBackgroundMethod,
+            tuState.tyranoEffectTime,
           ),
         })
       },
       sendTyranoCharaShow: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
+          ...tuState.characterSettings,
           text: tyranoMessage.createCharacterShowMessage(
-            state.tyranoudon.name,
-            state.tyranoudon.face,
-            state.tyranoudon.tyranoEffectTime,
-            state.tyranoudon.characterPositionBottom,
+            tuState.characterSettings.name,
+            tuState.characterSettings.face,
+            tuState.tyranoEffectTime,
+            tuState.characterSettings.characterPositionBottom,
           ),
         })
       },
       sendTyranoCharaHide: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
+          ...tuState.characterSettings,
           text: tyranoMessage.createCharacterHideMessage(
-            state.tyranoudon.name,
-            state.tyranoudon.tyranoEffectTime,
+            tuState.characterSettings.name,
+            tuState.tyranoEffectTime,
           ),
         })
       },
       sendTyranoCharaHideAll: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
+          ...tuState.characterSettings,
           text: tyranoMessage.createCharacterHideAllMessage(
-            state.tyranoudon.tyranoEffectTime,
+            tuState.tyranoEffectTime,
           ),
         })
       },
       sendZawaZawa: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
+          ...tuState.characterSettings,
           text: tyranoMessage.createMTextZawaZawaMessage(),
         })
       },
       sendSceneName: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
-          text: tyranoMessage.createMTextMessage(state.tyranoudon.sceneName),
+          ...tuState.characterSettings,
+          text: tyranoMessage.createMTextMessage(tuState.sceneName),
         })
       },
       sendQuake: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
-          text: tyranoMessage.createQuake(state.tyranoudon.tyranoEffectTime),
+          ...tuState.characterSettings,
+          text: tyranoMessage.createQuake(tuState.tyranoEffectTime),
         })
       },
       sendQuakeHorizon: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
-          text: tyranoMessage.createQuake(
-            state.tyranoudon.tyranoEffectTime,
-            true,
-          ),
+          ...tuState.characterSettings,
+          text: tyranoMessage.createQuake(tuState.tyranoEffectTime, true),
         })
       },
       sendSway: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
-          text: `[kanim name=${state.tyranoudon.name} keyframe=sway time=${state.tyranoudon.tyranoEffectTime} count=3]
+          ...tuState.characterSettings,
+          text: `[kanim name=${tuState.characterSettings.name} keyframe=sway time=${tuState.tyranoEffectTime} count=3]
           [wa]
-          [stop_kanim name=${state.tyranoudon.name}]`,
+          [stop_kanim name=${tuState.characterSettings.name}]`,
         })
       },
       sendMyAnime: () => {
         sendUdonMessage({
-          ...state.tyranoudon,
-          text: `[kanim name=${state.tyranoudon.name} keyframe=my_anim]
+          ...tuState.characterSettings,
+          text: `[kanim name=${tuState.characterSettings.name} keyframe=my_anim]
           [wa]
-          [stop_kanim name=${state.tyranoudon.name}]`,
+          [stop_kanim name=${tuState.characterSettings.name}]`,
         })
       },
       changeName: (name: string) => dispatch(changeName(name)),
@@ -217,7 +217,11 @@ export const useViewModel = (ctx: {
     }
   })
 
-const sendUdonMessage = ({ name, face, text }: TyranoUdon) => {
+const sendUdonMessage = ({
+  name,
+  face,
+  text,
+}: { text: string } & CharacterSettings) => {
   const udon = document.getElementById('iframe-udonarium') as HTMLIFrameElement
   const chatMessage = {
     from: '',
@@ -264,12 +268,10 @@ const sendTyranoMessage = (
 
 const sendTyranoChatTalkMessage = ({
   name,
-  face,
   text,
 }: {
-  name: string
-  face: string
   text: string
+  name: string
 }) => {
   let message = `[chat_talk pos="left" name="${name}" text="${text}"  face="chat/akane/hirameki.png"]`
   if (name === 'やまと')
