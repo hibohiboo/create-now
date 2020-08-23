@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import Layout from '~/components/templates/tyrano/Layout'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import UdonariumPanel from '~/components/organisms/tyranoudon/UdonariumPanel'
 import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
 import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
@@ -12,7 +10,7 @@ import InputField from '~/components/form/InputField'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 import { Box, FormControl, TextareaAutosize, Button } from '@material-ui/core'
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: 'flex',

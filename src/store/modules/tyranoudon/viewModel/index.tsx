@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import type { Dispatch } from 'redux'
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../actions'
 import { isChatMessage, isTableImageMessage } from '../ports/udon'
 import * as tyranoMessage from '../utils/tyranoMessage'
 import * as constants from '../constants'
-import { init } from '../reducer'
 import * as thunk from '../thunk'
-import type { TyranoUdon, Chat, CharacterSettings } from '../reducer'
+import type { TyranoUdon, CharacterSettings } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
 const { addUdonariumMessage, changeName, changeFace } = actions

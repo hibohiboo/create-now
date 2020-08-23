@@ -62,7 +62,7 @@ const createBcdiceMessage = (
   const bcname = name.replace('<BCDice：', '').replace('>', '')
   // ;`(2D6) → 6[2,4] → 6`
   const regex = /\(([0-9]+)[D|d]([0-9]+)\)/
-  const [m, diceNum, diceFace] = text.match(regex) // 一致, ダイスの個数, n面体
+  const [, diceNum, diceFace] = text.match(regex) // 一致, ダイスの個数, n面体
   const dice = _.fill(Array(Number(diceNum)), Number(diceFace)).join(',')
   if (diceNum === '1') {
     const r = text.replace(`DiceBot : (1D${diceFace}) → `, '')
@@ -72,7 +72,7 @@ const createBcdiceMessage = (
 `
   }
   const resultRegex = /\[([0-9,]+)\]/
-  const [m2, result] = text.match(resultRegex)
+  const [, result] = text.match(resultRegex)
 
   const fbcname = face ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
   // #${fbcname} を入れると、nextOrderがバグる
