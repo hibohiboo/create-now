@@ -24,6 +24,7 @@ export interface CharacterSettings {
 }
 interface BackgroundSettings {
   tyranoBackgroundMethod: TyranoMethod
+  imageUrl: string
 }
 export interface TyranoUdon {
   udonariumBackgroundImage: string
@@ -48,6 +49,8 @@ const initialState = (): TyranoUdon => ({
   },
   backgroundSettings: {
     tyranoBackgroundMethod: 'fadeIn',
+    imageUrl:
+      'https://userdisk.webry.biglobe.ne.jp/012/472/52/N000/000/000/127764512779316326375_BG39a.jpg',
   },
   udonariumBackgroundImage: 'forest.jpg',
   tyranoEffectTime: 500,
@@ -108,6 +111,9 @@ const reducer = createReducer(init, (builder) =>
     .addCase(actions.changeTyranoCharaMessageAnimation, (state, actions) => {
       if (constants.isTyranoCharacterMessageAnimation(actions.payload.text))
         state.characterSettings.characterMessageAnimation = actions.payload.text
+    })
+    .addCase(actions.changeTyranoBackgroundImageUrl, (state, actions) => {
+      state.backgroundSettings.imageUrl = actions.payload.text
     }),
 )
 

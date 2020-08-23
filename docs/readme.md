@@ -156,6 +156,9 @@
 [PWA 対応](https://qiita.com/violet2525/items/8a0ee82bda4d64cb4c02)
 [目パチプラグイン](https://github.com/violet2525/tyranoscript-css-animaton-plugins)
 [非公式 wiki](http://tyrano.wiki.fc2.com/wiki/%E3%83%9C%E3%82%BF%E3%83%B3%E8%A1%A8%E7%A4%BA)
+[bgタグの背景切替確認](https://north.undo.jp/text/tyrano_bgetc.html)
+[ティラノ関連](https://scrapbox.io/tyranoudon/tyrano%E9%96%A2%E9%80%A3)
+[ティラノ関連の記事 qiita](https://qiita.com/diyin_near_j/items/a410e52b7b74e272e4b6)
 
 ## tkmr
 

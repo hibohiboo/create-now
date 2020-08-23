@@ -197,6 +197,16 @@ export const useViewModel = (ctx: {
           [stop_kanim name=${tuState.characterSettings.name}]`,
         })
       },
+      sendBackgroundChange: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createBgMessage(
+            tuState.backgroundSettings.imageUrl,
+            tuState.backgroundSettings.tyranoBackgroundMethod,
+            tuState.tyranoEffectTime,
+          ),
+        })
+      },
       changeName: (name: string) => dispatch(changeName(name)),
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
@@ -213,6 +223,8 @@ export const useViewModel = (ctx: {
         dispatch(actions.changeCharacterPositionBottom(Number(t))),
       changeCharacterAnimation: (t: string) =>
         dispatch(actions.changeTyranoCharaMessageAnimation(t)),
+      changeBackgroundUrl: (t: string) =>
+        dispatch(actions.changeTyranoBackgroundImageUrl(t)),
     }
   })
 

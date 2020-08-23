@@ -156,6 +156,13 @@ export default function Page(ctx) {
           <Button
             variant="contained"
             color="primary"
+            onClick={vm.sendBackgroundChange}
+          >
+            URLの背景を適用
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
             onClick={vm.sendQuakeHorizon}
           >
             揺らす（横揺れ）
@@ -163,6 +170,13 @@ export default function Page(ctx) {
           <Button variant="contained" color="primary" onClick={vm.sendQuake}>
             揺らす（縦揺れ）
           </Button>
+          <InputField
+            model={vm.backgroundSettings}
+            type="text"
+            prop="imageUrl"
+            labelText={'背景画像URL'}
+            changeHandler={(e) => vm.changeBackgroundUrl(e.target.value)}
+          />
           <SelectField
             id="bg-method"
             labelText="背景切替演出"
@@ -171,6 +185,7 @@ export default function Page(ctx) {
             value={vm.backgroundSettings.tyranoBackgroundMethod}
             changeHandler={({ name }) => vm.changeBgMethod(name)}
           />
+
           <InputField
             model={vm}
             type="number"

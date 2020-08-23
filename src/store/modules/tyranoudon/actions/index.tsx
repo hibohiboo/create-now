@@ -64,6 +64,12 @@ const changeTyranoCharaMessageAnimation = createAction(
     payload: { text },
   }),
 )
+const changeTyranoBackgroundImageUrl = createAction(
+  'CHANGE_TYRANO_BACKGROUND_IMAGE_URL',
+  (text: string) => ({
+    payload: { text },
+  }),
+)
 export default {
   addUdonariumMessage,
   changeName,
@@ -77,4 +83,5 @@ export default {
   changeCharacters,
   changeCharacterPositionBottom,
   changeTyranoCharaMessageAnimation,
+  changeTyranoBackgroundImageUrl,
 }
