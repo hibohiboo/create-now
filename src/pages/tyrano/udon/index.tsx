@@ -69,7 +69,7 @@ export default function Page(ctx) {
               id="name"
               labelText="名前"
               items={vm.nameList}
-              value={vm.name}
+              value={vm.characterSettings.name}
               valueProp="value"
               changeHandler={vm.changeName}
             />
@@ -80,7 +80,7 @@ export default function Page(ctx) {
               labelText="表情"
               items={vm.faceList}
               unselectedText=""
-              value={vm.face}
+              value={vm.characterSettings.face}
               changeHandler={({ name }) => vm.changeFace(name)}
             />
           </div>
@@ -108,7 +108,7 @@ export default function Page(ctx) {
               labelText="アニメ"
               items={[...vm.characterAnimationList]}
               unselectedText=""
-              value={vm.characterMessageAnimation}
+              value={vm.characterSettings.characterMessageAnimation}
               changeHandler={({ name }) => vm.changeCharacterAnimation(name)}
             />
           </div>
@@ -126,7 +126,7 @@ export default function Page(ctx) {
             <TextareaAutosize
               aria-label={'text'}
               rowsMin={3}
-              value={vm.text}
+              value={vm.chat.text}
               onChange={(e) => vm.changeText(e.target.value)}
             />
           </FormControl>
@@ -170,7 +170,7 @@ export default function Page(ctx) {
             labelText="背景切替演出"
             items={[...vm.methodList]}
             unselectedText=""
-            value={vm.tyranoBackgroundMethod}
+            value={vm.backgroundSettings.tyranoBackgroundMethod}
             changeHandler={({ name }) => vm.changeBgMethod(name)}
           />
           <InputField
@@ -272,7 +272,7 @@ export default function Page(ctx) {
               </a>
             </li>
             <li>{`${vm.udonariumBackgroundImage}`}</li>
-            <li>{`${vm.tyranoFontColor}`}</li>
+            <li>{`${vm.chat.tyranoFontColor}`}</li>
           </ul>
         </Box>
       </DraggablePanel>
