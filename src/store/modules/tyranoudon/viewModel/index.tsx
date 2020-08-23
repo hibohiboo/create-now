@@ -107,7 +107,7 @@ export const useViewModel = (ctx: PageContext) =>
         ? selectedCharacter.faces.map((n) => ({
             name: n === 'normal' ? ' ' : n,
           }))
-        : [{ name: ' ' }],
+        : [{ name: ' ' }, { name: 'mask' }],
       methodList: constants.bgMethods,
       nameList: tuState.characters.map((c) => ({
         name: c.jname,

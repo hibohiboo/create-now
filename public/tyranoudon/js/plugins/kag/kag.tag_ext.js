@@ -1997,7 +1997,9 @@ tyrano.plugin.kag.tag.chara_show = {
                 var part_storage = "./data/fgimage/"+chara_obj["storage"];
 
                 var j_img = $("<img />");
-
+                if ($.isHTTP(chara_obj["storage"])) {
+                  part_storage = chara_obj["storage"];
+                }
                 //noneの場合はimgオブジェクトだけ作っておく
                 if(chara_obj["storage"]=="none"){
                     part_storage ="./tyrano/images/system/transparent.png";
@@ -3117,7 +3119,12 @@ tyrano.plugin.kag.tag.chara_part = {
                     //partの中で指定された画像を表示する
 
                     if(part["storage"] != "none"){
+                      if ($.isHTTP( part["storage"])) {
+                        array_storage.push(part["storage"]);
+                      } else {
                         array_storage.push("./data/fgimage/" + part["storage"]);
+                      }
+
                     }
 
                     //デフォルトのパートを変更する
@@ -3162,7 +3169,11 @@ tyrano.plugin.kag.tag.chara_part = {
                         j_new_img.css("opacity", 0);
 
                         if(part.storage!="none"){
-                            j_new_img.attr("src","./data/fgimage/" + part.storage);
+                            if($.isHTTP(part.storage)){
+                              j_new_img.attr("src", part.storage);
+                            }else{
+                              j_new_img.attr("src","./data/fgimage/" + part.storage);
+                            }
                         }else{
                             j_new_img.attr("src", "./tyrano/images/system/transparent.png");
                         }
@@ -3207,7 +3218,11 @@ tyrano.plugin.kag.tag.chara_part = {
                     var j_img = target_obj.find(".part"+"." + key + "");
 
                     if(part.storage!="none"){
-                        j_img.attr("src","./data/fgimage/" + part.storage);
+                        if($.isHTTP(part.storage)){
+                          j_img.attr("src", part.storage);
+                        }else{
+                          j_img.attr("src","./data/fgimage/" + part.storage);
+                        }
                     }else{
                         j_img.attr("src", "./tyrano/images/system/transparent.png");
                     }
