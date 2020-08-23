@@ -11,6 +11,15 @@ export interface TyranoCharacter {
   jname: string
   faces: string[]
 }
+export interface Patch {
+  patch: string
+  url: string
+}
+export interface TyranoPatchObject {
+  name: string
+  jname: string
+  patches: Patch[]
+}
 export interface Chat {
   text: string
   tyranoFontColor: string
@@ -25,6 +34,9 @@ export interface CharacterSettings {
 interface BackgroundSettings {
   tyranoBackgroundMethod: TyranoMethod
   imageUrl: string
+  backgrounds: TyranoPatchObject[]
+  selectedBackGround?: TyranoPatchObject | null
+  selectedPatch: Patch | null
 }
 export interface TyranoUdon {
   udonariumBackgroundImage: string
@@ -51,6 +63,9 @@ const initialState = (): TyranoUdon => ({
     tyranoBackgroundMethod: 'fadeIn',
     imageUrl:
       'https://userdisk.webry.biglobe.ne.jp/012/472/52/N000/000/000/127764512779316326375_BG39a.jpg',
+    backgrounds: [],
+    selectedBackGround: null,
+    selectedPatch: null,
   },
   udonariumBackgroundImage: 'forest.jpg',
   tyranoEffectTime: 500,
@@ -114,6 +129,20 @@ const reducer = createReducer(init, (builder) =>
     })
     .addCase(actions.changeTyranoBackgroundImageUrl, (state, actions) => {
       state.backgroundSettings.imageUrl = actions.payload.text
+    })
+    .addCase(actions.changeBackgrounds, (state, actions) => {
+      state.backgroundSettings.backgrounds = actions.payload.items
+    })
+    .addCase(actions.changeSelectedBackground, (state, actions) => {
+      state.backgroundSettings.selectedBackGround = actions.payload.item
+      const [patch] = actions.payload.item.patches
+      if (!patch) return
+      state.backgroundSettings.selectedPatch = patch
+      state.backgroundSettings.imageUrl = patch.url
+    })
+    .addCase(actions.changeSelectedBackgroundPatch, (state, actions) => {
+      state.backgroundSettings.selectedPatch = actions.payload.item
+      state.backgroundSettings.imageUrl = actions.payload.item.url
     }),
 )
 

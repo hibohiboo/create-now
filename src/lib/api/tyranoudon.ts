@@ -30,18 +30,17 @@ ${tags}
     return sample
   }
 }
-
-export const getCharacters = async (spreadId) => {
-  const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
-  const key = process.env.GOOGLE_API_KEY
-  const sheet = 'characters'
-  const range = 'B2:E'
+const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
+const key = process.env.GOOGLE_API_KEY
+const getSheetData = async (spreadId: string, sheet: string, range: string) => {
   const res = await fetch(
     `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
   )
-  const json = (await res.json()) as { values: string[][] }
-  return json
+  return (await res.json()) as { values: string[][] }
 }
+
+export const getCharacters = async (spreadId) =>
+  await getSheetData(spreadId, 'characters', 'B2:E')
 
 const toTag = ([name, jname, face, url]) => {
   if (face === 'normal') {
@@ -61,3 +60,6 @@ const sample = `
 [chara_show  name="akane"]
 [s]
 `
+
+export const getBackgrounds = async (spreadId) =>
+  await getSheetData(spreadId, 'backgrounds', 'B2:E')

@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from 'react'
-import { Input, InputLabel, FormControl } from '@material-ui/core'
+import React from 'react'
+import { InputLabel, FormControl } from '@material-ui/core'
 import Select from 'react-select'
 
 type State = {
@@ -9,42 +9,43 @@ type State = {
   isRtl: boolean
   isSearchable: boolean
 }
+const state: State = {
+  isClearable: true,
+  isDisabled: false,
+  isLoading: false,
+  isRtl: false,
+  isSearchable: true,
+}
+export interface SelectItem {
+  value: string
+  label: string
+}
 const SelectableInputField: React.FC<{
   id: string
   labelText: string
-  unselectedText: string
-  items: { value: string; label: string }[]
-  value: string
-  valueProp?: string
-  changeHandler: (val: string) => void
-  type: string
-}> = ({
-  id,
-  labelText,
-  items,
-  changeHandler,
-  value,
-  valueProp = 'name',
-  type = 'text',
-}) => {
-  const { isClearable, isSearchable, isDisabled, isLoading, isRtl } = {
-    isClearable: true,
-    isDisabled: false,
-    isLoading: false,
-    isRtl: false,
-    isSearchable: true,
-  }
-  const handleChange = (selectedOption) => {
-    changeHandler(selectedOption.value)
-  }
-  const valueOption = { value, label: value }
+  items: SelectItem[]
+  value: SelectItem | null
+  changeHandler: (val: SelectItem) => void
+}> = ({ id, labelText, items, changeHandler, value }) => {
+  const { isClearable, isSearchable, isDisabled, isLoading, isRtl } = state
 
   return (
-    <FormControl fullWidth style={{ marginTop: '10px' }}>
-      <InputLabel id={`${id}-label`}>{labelText}</InputLabel>
+    <FormControl fullWidth>
+      <label
+        id={`${id}-label`}
+        style={{
+          transform: 'translate(0, 1.5px) scale(0.75);',
+          transformOrigin: 'left top',
+          color: 'rgba(0, 0, 0, 0.54);',
+        }}
+      >
+        {labelText}
+      </label>
+
       <Select
-        value={valueOption}
-        onChange={handleChange}
+        instanceId={id}
+        value={value}
+        onChange={changeHandler}
         options={items}
         isDisabled={isDisabled}
         isLoading={isLoading}

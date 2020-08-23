@@ -7,6 +7,7 @@ import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
 import SelectField from '~/components/form/SelectField'
 import SuggestInputField from '~/components/form/SuggestInputField'
 import InputField from '~/components/form/InputField'
+import SelectableInputField from '~/components/form/SelectableInputField'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 import { Box, FormControl, TextareaAutosize, Button } from '@material-ui/core'
 
@@ -170,13 +171,34 @@ export default function Page(ctx) {
           <Button variant="contained" color="primary" onClick={vm.sendQuake}>
             揺らす（縦揺れ）
           </Button>
-          <InputField
-            model={vm.backgroundSettings}
-            type="text"
-            prop="imageUrl"
-            labelText={'背景画像URL'}
-            changeHandler={(e) => vm.changeBackgroundUrl(e.target.value)}
-          />
+          <Box display="flex">
+            <div style={{ width: '250px' }}>
+              <SelectableInputField
+                items={vm.backgroundList}
+                value={vm.selectedBackground}
+                id="bg-select"
+                labelText="背景画像"
+                changeHandler={vm.changeSelectedBackground}
+              />
+            </div>
+            <div style={{ width: '250px' }}>
+              <SelectableInputField
+                items={vm.backgroundPatchesList}
+                value={vm.selectedBackGroundPach}
+                id="bg-select-patch"
+                labelText="差分"
+                changeHandler={vm.changeSelectedBackgroundPatch}
+              />
+            </div>
+
+            <InputField
+              model={vm.backgroundSettings}
+              type="text"
+              prop="imageUrl"
+              labelText={'背景画像URL'}
+              changeHandler={(e) => vm.changeBackgroundUrl(e.target.value)}
+            />
+          </Box>
           <SelectField
             id="bg-method"
             labelText="背景切替演出"

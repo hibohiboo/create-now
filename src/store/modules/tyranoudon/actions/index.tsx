@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
-import type { TyranoCharacter } from '../reducer'
+import type { TyranoCharacter, TyranoPatchObject, Patch } from '../reducer'
+
 const addUdonariumMessage = createAction(
   'ADD_UDONARIUM_MESSAGE',
   (text: string) => ({ payload: { text } }),
@@ -52,6 +53,7 @@ const changeCharacters = createAction(
     payload: { characters },
   }),
 )
+
 const changeCharacterPositionBottom = createAction(
   'CHANGE_TYRANO_CHARACTER_POSITION_BOTTOM',
   (n: number) => ({
@@ -70,6 +72,26 @@ const changeTyranoBackgroundImageUrl = createAction(
     payload: { text },
   }),
 )
+
+const changeBackgrounds = createAction(
+  'CHANGE_TYRANO_BACKGROUNDS',
+  (items: TyranoPatchObject[]) => ({
+    payload: { items },
+  }),
+)
+const changeSelectedBackground = createAction(
+  'CHANGE_SELECTED_BACKGROUND',
+  (item: TyranoPatchObject) => ({
+    payload: { item },
+  }),
+)
+const changeSelectedBackgroundPatch = createAction(
+  'CHANGE_SELECTED_BACKGROUND_PATCH',
+  (item: Patch) => ({
+    payload: { item },
+  }),
+)
+
 export default {
   addUdonariumMessage,
   changeName,
@@ -84,4 +106,7 @@ export default {
   changeCharacterPositionBottom,
   changeTyranoCharaMessageAnimation,
   changeTyranoBackgroundImageUrl,
+  changeBackgrounds,
+  changeSelectedBackground,
+  changeSelectedBackgroundPatch,
 }

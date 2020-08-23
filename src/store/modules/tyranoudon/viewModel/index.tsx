@@ -6,7 +6,12 @@ import { isChatMessage, isTableImageMessage } from '../ports/udon'
 import * as tyranoMessage from '../utils/tyranoMessage'
 import * as constants from '../constants'
 import * as thunk from '../thunk'
-import type { TyranoUdon, CharacterSettings } from '../reducer'
+import type {
+  TyranoUdon,
+  CharacterSettings,
+  TyranoPatchObject,
+  Patch,
+} from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
 
 const { addUdonariumMessage, changeName, changeFace } = actions
@@ -61,42 +66,74 @@ const chatMessageHandler = (data: PostMessageChat, tyranoName: string) => {
 const tableImageHandler = (data: PostMessageTableImage, dispatch: Dispatch) => {
   dispatch(actions.changeUdonariumBackgroundImage(data.payload.url))
 }
-
-export const useViewModel = (ctx: {
+interface PageContext {
   tyrano_name: string
   tyrano_sheet: string
-}) =>
+}
+const initPage = (ctx: PageContext, dispatch) => {
+  window.addEventListener(
+    'message',
+    (msg) => receiveUdonMessage(msg, ctx.tyrano_name, dispatch),
+    false,
+  )
+  dispatch(thunk.fetchCharacters(ctx.tyrano_sheet))
+  dispatch(thunk.fetchBackgrounds(ctx.tyrano_sheet))
+}
+const convertTyranoPatchObjectToSelectItem = (item: TyranoPatchObject) => ({
+  value: item.name,
+  label: item.jname,
+})
+const convertTyranoPatchToSelectItem = (item: Patch) => ({
+  value: item.patch,
+  label: item.patch,
+})
+export const useViewModel = (ctx: PageContext) =>
   useSelector((state: { tyranoudon: TyranoUdon }) => {
     const dispatch = useDispatch()
     const tuState = state.tyranoudon
 
     useEffect(() => {
-      window.addEventListener(
-        'message',
-        (msg) => receiveUdonMessage(msg, ctx.tyrano_name, dispatch),
-        false,
-      )
-      dispatch(thunk.fetchCharacters(ctx.tyrano_sheet))
-      // dispatch(addUdonariumMessage('sample Message:'))
+      initPage(ctx, dispatch)
     }, [])
     const selectedCharacter = tuState.characters.find(
       (c) => c.name === tuState.characterSettings.name,
     )
-    console.log('selected', selectedCharacter)
-    const faceList = selectedCharacter
-      ? selectedCharacter.faces.map((n) => ({ name: n === 'normal' ? ' ' : n }))
-      : [{ name: ' ' }]
-    const nameList = tuState.characters.map((c) => ({
-      name: c.jname,
-      value: c.name,
-    }))
+
     return {
       ...tuState,
       tyranoSample,
       tyranoVchat,
-      faceList,
+      faceList: selectedCharacter
+        ? selectedCharacter.faces.map((n) => ({
+            name: n === 'normal' ? ' ' : n,
+          }))
+        : [{ name: ' ' }],
       methodList: constants.bgMethods,
-      nameList,
+      nameList: tuState.characters.map((c) => ({
+        name: c.jname,
+        value: c.name,
+      })),
+      backgroundList: tuState.backgroundSettings.backgrounds.map(
+        convertTyranoPatchObjectToSelectItem,
+      ),
+      selectedBackground:
+        (tuState.backgroundSettings.selectedBackGround &&
+          convertTyranoPatchObjectToSelectItem(
+            tuState.backgroundSettings.selectedBackGround,
+          )) ||
+        null,
+      backgroundPatchesList:
+        (tuState.backgroundSettings.selectedBackGround &&
+          tuState.backgroundSettings.selectedBackGround.patches.map(
+            convertTyranoPatchToSelectItem,
+          )) ||
+        [],
+      selectedBackGroundPach:
+        (tuState.backgroundSettings.selectedPatch &&
+          convertTyranoPatchToSelectItem(
+            tuState.backgroundSettings.selectedPatch,
+          )) ||
+        null,
       characterAnimationList: constants.characterMessageAnimations,
       rubySample: () => {
         dispatch(
@@ -225,6 +262,19 @@ export const useViewModel = (ctx: {
         dispatch(actions.changeTyranoCharaMessageAnimation(t)),
       changeBackgroundUrl: (t: string) =>
         dispatch(actions.changeTyranoBackgroundImageUrl(t)),
+      changeSelectedBackground: (item) => {
+        if (!item || !item.value) return
+        dispatch(thunk.setBackground(item))
+      },
+      changeSelectedBackgroundPatch: (item) => {
+        if (!item || !item.value) return
+        const patch = tuState.backgroundSettings.selectedBackGround.patches.find(
+          (p) => p.patch === item.value,
+        )
+
+        if (!patch) return
+        dispatch(actions.changeSelectedBackgroundPatch(patch))
+      },
     }
   })
 
