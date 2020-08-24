@@ -41,7 +41,8 @@ const SelectableInputField: React.FC<{
   valueProp = 'name',
   type = 'text',
 }) => {
-  const name = getNameFromValue(items, valueProp, value)
+  // const name = getNameFromValue(items, valueProp, value)
+  const name = value
   return (
     <FormControl fullWidth>
       <InputLabel id={`${id}-label`}>{labelText}</InputLabel>
@@ -50,7 +51,8 @@ const SelectableInputField: React.FC<{
         type={type}
         value={name}
         onChange={(event) => {
-          changeHandler(getValueFromName(items, valueProp, event.target.value))
+          // changeHandler(getValueFromName(items, valueProp, event.target.value))
+          changeHandler(event.target.value)
           if (!event.target.value) {
             event.target.blur()
           }
@@ -61,8 +63,11 @@ const SelectableInputField: React.FC<{
         }}
       />
       <datalist id={`${id}-datalist`}>
-        {items.map((item, i) => (
-          <option value={item.name} key={item[valueProp]}></option>
+        {items.map((item) => (
+          // <option value={item.name} key={item[valueProp]}></option>
+          <option value={item[valueProp]} key={item[valueProp]}>
+            {item.name}
+          </option>
         ))}
       </datalist>
     </FormControl>
