@@ -8,7 +8,11 @@ const defaultPatch = 'normal'
 export const fetchCharacters = (spreadId: string): AppThunk => async (
   dispatch,
 ) => {
-  const json = await api.getCharacters(spreadId)
+  const [json, partsJson, partsSetJson] = await Promise.all([
+    api.getCharacters(spreadId),
+    api.getCharacterParts(spreadId),
+    api.getCharacterPartsSet(spreadId),
+  ])
   console.log('fetch', json)
   const values = json.values
   const characters: TyranoCharacter[] = []
@@ -21,8 +25,7 @@ export const fetchCharacters = (spreadId: string): AppThunk => async (
     if (!chara) return
     chara.faces.push(face)
   })
-  const partsJson = await api.getCharacterParts(spreadId)
-  const partsSetJson = await api.getCharacterPartsSet(spreadId)
+
   const parts: TyranoCharacter[] = _.uniqBy(
     partsJson.values.map(([name, jname]) => ({
       name,
