@@ -2,9 +2,13 @@ import * as _ from 'lodash'
 import { AppThunk } from '~/store/rootState'
 import * as api from '~/lib/api/tyranoudon'
 import actions from '../actions'
+import { init } from '../reducer'
+import { partsFilePrefix } from '../utils/tyranoMessage'
 import type { TyranoCharacter, TyranoPatchObject } from '../reducer'
 import type { SelectItem } from '~/components/form/SelectableInputField'
+
 const defaultPatch = 'normal'
+
 export const fetchCharacters = (spreadId: string): AppThunk => async (
   dispatch,
 ) => {
@@ -18,7 +22,7 @@ export const fetchCharacters = (spreadId: string): AppThunk => async (
   const characters: TyranoCharacter[] = []
   values.forEach(([name, jname, face]) => {
     if (face === defaultPatch) {
-      characters.push({ name, jname, faces: ['normal'] })
+      characters.push({ name, jname, faces: [init.characterSettings.face] })
       return
     }
     const chara = characters.find((c) => c.name === name)
@@ -36,10 +40,10 @@ export const fetchCharacters = (spreadId: string): AppThunk => async (
     name,
     jname,
     faces: [
-      'set_normal',
+      `${partsFilePrefix}_${init.characterSettings.face}`,
       ...partsSetJson.values
         .filter(([n]) => n === name)
-        .map(([, setName]) => `set_${setName}`),
+        .map(([, setName]) => `${partsFilePrefix}_${setName}`),
     ],
   }))
   const results = characters.concat(parts)

@@ -1,6 +1,8 @@
 import * as _ from 'lodash'
 import { init } from '../reducer'
 import type { Chat, CharacterSettings } from '../reducer'
+
+export const partsFilePrefix = 'set'
 const escape = (str: string) => {
   return (
     str
@@ -14,7 +16,8 @@ const escape = (str: string) => {
       .replace('＠chara_parts_set_', '@chara_parts_set_')
   )
 }
-const hasFace = (face) => face && face !== 'normal' && !face.startsWith('set_')
+const hasFace = (face) =>
+  face && face !== 'normal' && !face.startsWith(`${partsFilePrefix}_`)
 export const createTyranoMessage = (
   name: string,
   face: string | undefined,
@@ -27,8 +30,8 @@ export const createTyranoMessage = (
   } else if (isTagMessage(text)) {
     return text
   }
-  const macro = _.startsWith(face, 'set_')
-    ? `@chara_parts_set_${name}_${face.replace('set_', '')}`
+  const macro = _.startsWith(face, `${partsFilePrefix}_`)
+    ? `@chara_parts_set_${name}_${face.replace(`${partsFilePrefix}_`, '')}`
     : ''
 
   return `[cm]
@@ -223,8 +226,8 @@ export const createCharacterShowMessage = (
   time: number,
   bottom: number,
 ) => {
-  const macro = _.startsWith(face, 'set_')
-    ? `[chara_parts_set_${name}_${face.replace('set_', '')}]`
+  const macro = _.startsWith(face, `${partsFilePrefix}_`)
+    ? `[chara_parts_set_${name}_${face.replace(`${partsFilePrefix}_`, '')}]`
     : ''
   return hasFace(face)
     ? `[chara_show name="${escape(name)}" face="${escape(
