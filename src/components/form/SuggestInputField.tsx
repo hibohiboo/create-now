@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { Input, InputLabel, FormControl } from '@material-ui/core'
 
 const getValueFromName = (
@@ -50,10 +50,6 @@ const SelectableInputField: React.FC<{
         type={type}
         value={name}
         onChange={(event) => {
-          console.log(
-            event,
-            getValueFromName(items, valueProp, event.target.value),
-          )
           changeHandler(getValueFromName(items, valueProp, event.target.value))
           if (!event.target.value) {
             event.target.blur()
@@ -65,7 +61,7 @@ const SelectableInputField: React.FC<{
         }}
       />
       <datalist id={`${id}-datalist`}>
-        {items.map((item) => (
+        {items.map((item, i) => (
           <option value={item.name} key={item[valueProp]}></option>
         ))}
       </datalist>

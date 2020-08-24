@@ -13,6 +13,7 @@ import type {
   Patch,
 } from '../reducer'
 import type { PostMessageChat, PostMessageTableImage } from '../ports/udon'
+import { init } from '../reducer'
 
 const { addUdonariumMessage, changeName, changeFace } = actions
 
@@ -105,7 +106,7 @@ export const useViewModel = (ctx: PageContext) =>
       tyranoVchat,
       faceList: selectedCharacter
         ? selectedCharacter.faces.map((name) => ({ name }))
-        : [{ name: 'normal' }],
+        : [{ name: init.characterSettings.face }],
       methodList: constants.bgMethods,
       nameList: tuState.characters.map((c) => ({
         name: c.jname,
@@ -242,7 +243,12 @@ export const useViewModel = (ctx: PageContext) =>
           ),
         })
       },
-      changeName: (name: string) => dispatch(changeName(name)),
+      changeName: (name: string) => {
+        const chara = tuState.characters.find((c) => c.name === name)
+        if (chara) dispatch(changeFace(chara.faces[0]))
+        const face = chara ? chara.faces[0] : init.characterSettings.face
+        dispatch(changeName({ name, face }))
+      },
       changeFace: (face: string) => dispatch(changeFace(face)),
       changeText: (t: string) => dispatch(addUdonariumMessage(t)),
       changeBgMethod: (t: string) =>
@@ -285,7 +291,7 @@ const sendUdonMessage = ({
   const chatMessage = {
     from: '',
     to: '',
-    name: face === 'normal' ? name : `${name}:${face}`,
+    name: face === init.characterSettings.face ? name : `${name}:${face}`,
     imageIdentifier: '',
     timestamp: Date.now(),
     tag: '', // GameType

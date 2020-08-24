@@ -91,9 +91,8 @@ const reducer = createReducer(init, (builder) =>
       state.chat.text = action.payload.text
     })
     .addCase(changeName, (state, action) => {
-      state.characterSettings.name = action.payload.text
-      const chara = state.characters.find((c) => c.name === action.payload.text)
-      if (chara) state.characterSettings.face = chara.faces[0]
+      state.characterSettings.name = action.payload.name
+      state.characterSettings.face = action.payload.face
     })
     .addCase(changeFace, (state, action) => {
       state.characterSettings.face = action.payload.text

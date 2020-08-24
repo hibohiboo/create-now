@@ -39,8 +39,8 @@ export const fetchCharacters = (spreadId: string): AppThunk => async (
         .map(([, setName]) => `set_${setName}`),
     ],
   }))
-
-  dispatch(actions.changeCharacters(_.union(characters, parts)))
+  const results = characters.concat(parts)
+  dispatch(actions.changeCharacters(results))
 }
 export const fetchBackgrounds = (spreadId: string): AppThunk => async (
   dispatch,

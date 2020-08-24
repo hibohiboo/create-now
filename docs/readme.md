@@ -18,6 +18,7 @@
 
 [tyrano vchat適用時点](https://github.com/hibohiboo/create-now/tree/ca38214a910b383e712082fcddafb4a8c15e70d5/)
 [tyrano 差分表示実装時点](https://github.com/hibohiboo/create-now/tree/0da48cd273298ef61c6ba2767c5de684a4cbdceb/)
+[tyrano チャットにマクロ実装時点](https://github.com/hibohiboo/create-now/tree/e045baf7cc1ac73c2c9d73e7fe83a7153e99b0f0/)
 
 
 ## 参考
