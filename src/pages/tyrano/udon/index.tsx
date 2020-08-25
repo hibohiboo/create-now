@@ -266,6 +266,28 @@ export default function Page(ctx) {
           >
             無限アニメ
           </Button>
+          <Box my={2}>
+            <Button variant="contained" color="primary" onClick={vm.sendBlur}>
+              ぼかす
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendBrightness}
+            >
+              暗く
+            </Button>
+            <Button variant="contained" color="primary" onClick={vm.sendSepia}>
+              セピア
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendFreeFilter}
+            >
+              背景フィルタ解除
+            </Button>
+          </Box>
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>

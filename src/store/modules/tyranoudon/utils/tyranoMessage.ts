@@ -53,6 +53,8 @@ export const isTagMessage = (text: string) => {
     'keyframe',
     'mtext',
     'kanim',
+    'filter',
+    'free_filter',
   ]
   const tagsLen = tags.length
   if (_.startsWith(text, '[')) {

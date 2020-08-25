@@ -249,6 +249,30 @@ export const useViewModel = (ctx: PageContext) =>
           ),
         })
       },
+      sendBlur: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: `[filter layer=base blur=10]`,
+        })
+      },
+      sendSepia: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: `[filter layer=base sepia=50]`,
+        })
+      },
+      sendBrightness: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: `[filter layer=base brightness=40]`,
+        })
+      },
+      sendFreeFilter: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: `[free_filter layer=base]`,
+        })
+      },
       changeName: (name: string) => {
         const chara = tuState.characters.find((c) => c.name === name)
         if (chara) dispatch(changeFace(chara.faces[0]))
