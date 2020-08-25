@@ -225,6 +225,12 @@ export const useViewModel = (ctx: PageContext) =>
           [stop_kanim name=${tuState.characterSettings.name}]`,
         })
       },
+      sendSwayInfinite: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: `[kanim name=${tuState.characterSettings.name} keyframe=sway time=${tuState.tyranoEffectTime} count=infinite]`,
+        })
+      },
       sendMyAnime: () => {
         sendUdonMessage({
           ...tuState.characterSettings,
