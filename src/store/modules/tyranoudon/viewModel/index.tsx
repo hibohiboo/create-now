@@ -283,7 +283,7 @@ export const useViewModel = (ctx: PageContext) =>
       sendStopYoutube: () => {
         sendUdonMessage({
           ...tuState.characterSettings,
-          text: `[cm]`,
+          text: `[cm ]`,
         })
       },
       changeName: (name: string) => {
