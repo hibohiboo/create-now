@@ -102,3 +102,6 @@ const toCharacterPartsSetTag = ([name, setName, set]) => {
 @chara_part name="${name}" ${set}
 @endmacro`
 }
+
+export const getYoutube = async (spreadId) =>
+  await getSheetData(spreadId, 'youtube', 'B2:C')

@@ -55,6 +55,9 @@ export const isTagMessage = (text: string) => {
     'kanim',
     'filter',
     'free_filter',
+    'html',
+    'endhtml',
+    'cm',
   ]
   const tagsLen = tags.length
   if (_.startsWith(text, '[')) {
@@ -259,4 +262,9 @@ export const createMTextMessage = (text: string) => {
 export const createQuake = (time: number, isHorizon = false) => {
   if (isHorizon) return `[quake time=${time} vmax=0 hmax=10 count=8]`
   return `[quake time=${time}]`
+}
+export const createYoutube = (id: string) => {
+  return `[html left=0 top=0]
+          <iframe width="112" height="63" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          [endhtml]`
 }

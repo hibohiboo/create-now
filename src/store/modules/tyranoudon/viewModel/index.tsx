@@ -79,6 +79,7 @@ const initPage = (ctx: PageContext, dispatch) => {
   )
   dispatch(thunk.fetchCharacters(ctx.tyrano_sheet))
   dispatch(thunk.fetchBackgrounds(ctx.tyrano_sheet))
+  dispatch(thunk.fetchYoutube(ctx.tyrano_sheet))
 }
 const convertTyranoPatchObjectToSelectItem = (item: TyranoPatchObject) => ({
   value: item.name,
@@ -273,6 +274,18 @@ export const useViewModel = (ctx: PageContext) =>
           text: `[free_filter layer=base]`,
         })
       },
+      sendYoutube: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createYoutube(tuState.youtubeSettings.id),
+        })
+      },
+      sendStopYoutube: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: `[cm]`,
+        })
+      },
       changeName: (name: string) => {
         const chara = tuState.characters.find((c) => c.name === name)
         if (chara) dispatch(changeFace(chara.faces[0]))
@@ -308,6 +321,12 @@ export const useViewModel = (ctx: PageContext) =>
 
         if (!patch) return
         dispatch(actions.changeSelectedBackgroundPatch(patch))
+      },
+      changeYoutubeItem: (item) => {
+        dispatch(actions.changeYoutubeID(item.id))
+      },
+      changeYoutubeId: (id: string) => {
+        dispatch(actions.changeYoutubeID(id))
       },
     }
   })

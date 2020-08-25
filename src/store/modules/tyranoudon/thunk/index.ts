@@ -4,7 +4,7 @@ import * as api from '~/lib/api/tyranoudon'
 import actions from '../actions'
 import { init } from '../reducer'
 import { partsFilePrefix } from '../utils/tyranoMessage'
-import type { TyranoCharacter, TyranoPatchObject } from '../reducer'
+import type { TyranoCharacter, TyranoPatchObject, YoutbeItem } from '../reducer'
 import type { SelectItem } from '~/components/form/SelectableInputField'
 
 const defaultPatch = 'normal'
@@ -80,4 +80,13 @@ export const setBackground = (item: SelectItem): AppThunk => async (
   dispatch(actions.changeSelectedBackground(bg))
   // const [patch] = bg.patches
   // if (patch) dispatch(actions.changeSelectedBackgroundPatch(patch))
+}
+export const fetchYoutube = (spreadId: string): AppThunk => async (
+  dispatch,
+) => {
+  const json = await api.getYoutube(spreadId)
+  const values = json.values
+  const items: YoutbeItem[] = values.map(([name, id]) => ({ name, id }))
+
+  dispatch(actions.changeYoutubeItems(items))
 }

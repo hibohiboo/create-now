@@ -38,6 +38,10 @@ interface BackgroundSettings {
   selectedBackGround?: TyranoPatchObject | null
   selectedPatch: Patch | null
 }
+export interface YoutbeItem {
+  name: string
+  id: string
+}
 export interface TyranoUdon {
   udonariumBackgroundImage: string
   tyranoEffectTime: number
@@ -46,6 +50,10 @@ export interface TyranoUdon {
   chat: Chat
   characterSettings: CharacterSettings
   backgroundSettings: BackgroundSettings
+  youtubeSettings: {
+    id: string
+    items: YoutbeItem[]
+  }
 }
 const initialState = (): TyranoUdon => ({
   chat: {
@@ -82,6 +90,7 @@ const initialState = (): TyranoUdon => ({
       faces: ['normal'],
     },
   ],
+  youtubeSettings: { id: '', items: [{ name: '', id: '' }] },
 })
 export const init = initialState()
 
@@ -143,6 +152,12 @@ const reducer = createReducer(init, (builder) =>
     .addCase(actions.changeSelectedBackgroundPatch, (state, actions) => {
       state.backgroundSettings.selectedPatch = actions.payload.item
       state.backgroundSettings.imageUrl = actions.payload.item.url
+    })
+    .addCase(actions.changeYoutubeID, (state, actions) => {
+      state.youtubeSettings.id = actions.payload.id
+    })
+    .addCase(actions.changeYoutubeItems, (state, actions) => {
+      state.youtubeSettings.items = actions.payload.items
     }),
 )
 

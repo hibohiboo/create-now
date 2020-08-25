@@ -1,5 +1,10 @@
 import { createAction } from '@reduxjs/toolkit'
-import type { TyranoCharacter, TyranoPatchObject, Patch } from '../reducer'
+import type {
+  TyranoCharacter,
+  TyranoPatchObject,
+  Patch,
+  YoutbeItem,
+} from '../reducer'
 
 const addUdonariumMessage = createAction(
   'ADD_UDONARIUM_MESSAGE',
@@ -94,6 +99,15 @@ const changeSelectedBackgroundPatch = createAction(
     payload: { item },
   }),
 )
+const changeYoutubeID = createAction('CHANGE_YOUTUBE_ID', (id: string) => ({
+  payload: { id },
+}))
+const changeYoutubeItems = createAction(
+  'CHANGE_YOUTUBE_ITEMS',
+  (items: YoutbeItem[]) => ({
+    payload: { items },
+  }),
+)
 
 export default {
   addUdonariumMessage,
@@ -112,4 +126,6 @@ export default {
   changeBackgrounds,
   changeSelectedBackground,
   changeSelectedBackgroundPatch,
+  changeYoutubeID,
+  changeYoutubeItems,
 }

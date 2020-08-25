@@ -288,6 +288,43 @@ export default function Page(ctx) {
               背景フィルタ解除
             </Button>
           </Box>
+          <Box my={2} display="flex">
+            <div style={{ width: '200px' }}>
+              <SelectField
+                id="youtube-items"
+                labelText="Youtube"
+                items={vm.youtubeSettings.items}
+                unselectedText=""
+                value={vm.youtubeSettings.id}
+                valueProp="id"
+                changeHandler={vm.changeYoutubeItem}
+              />
+            </div>
+            <Box mx={3} style={{ width: '100px' }}>
+              <InputField
+                model={vm.youtubeSettings}
+                type="text"
+                prop="id"
+                labelText={'動画ID'}
+                changeHandler={(e) => vm.changeYoutubeId(e.target.value)}
+              />
+            </Box>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendYoutube}
+            >
+              youtube再生
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendStopYoutube}
+            >
+              youtube止める
+            </Button>
+          </Box>
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>
