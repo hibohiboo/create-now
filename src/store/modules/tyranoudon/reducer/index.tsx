@@ -63,6 +63,7 @@ export interface TyranoUdon {
     bgmUrl: string
     items: BgmItem[]
   }
+  tyranoStatus: boolean
 }
 const initialState = (): TyranoUdon => ({
   chat: {
@@ -104,6 +105,7 @@ const initialState = (): TyranoUdon => ({
     bgmUrl: '',
     items: [],
   },
+  tyranoStatus: false,
 })
 export const init = initialState()
 
@@ -177,6 +179,9 @@ const reducer = createReducer(init, (builder) =>
     })
     .addCase(actions.changeBgmItems, (state, actions) => {
       state.bgmSettings.items = actions.payload.items
+    })
+    .addCase(actions.changeTyranoStatus, (state, actions) => {
+      state.tyranoStatus = actions.payload.status
     }),
 )
 

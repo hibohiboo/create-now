@@ -1,12 +1,14 @@
 import { useState, FC } from 'react'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
+import { CircularProgress } from '@material-ui/core'
 
 const TryranoPanel: FC<{
   name: string
   defaultWidth: number
   defaultHeight: number
   sheet: string
-}> = ({ name, defaultWidth, defaultHeight, sheet }) => {
+  loaded: boolean
+}> = ({ name, defaultWidth, defaultHeight, sheet, loaded = false }) => {
   const [height, setHeight] = useState(defaultHeight)
   const [width, setWidth] = useState(defaultWidth)
   const onResize = (size) => {
@@ -20,6 +22,30 @@ const TryranoPanel: FC<{
       height={height}
       onResize={onResize}
     >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          background: '#000',
+          position: 'absolute',
+          zIndex: 10,
+          display: loaded ? 'none' : 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            color: 'white',
+            position: 'absolute',
+            left: '10px',
+            top: '10px',
+          }}
+        >
+          準備中....
+        </div>
+        <CircularProgress />
+      </div>
       <iframe
         id={`iframe-tyrano-${name}`}
         src={`/tyrano/chatwindow/${name}?sheet=${sheet}`}

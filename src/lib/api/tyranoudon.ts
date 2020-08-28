@@ -30,7 +30,15 @@ export const first = async (spreadId) => {
 ${tags}
 ${partsTags}
 ${setTags}
-[playbgm storage="https://drive.google.com/uc?export=view\&id=15Ga1G481cOr_Ir3F3j0BMTKFVxbwospc\&usp=sharing"]
+[iscript]
+window.parent.postMessage(
+  {
+    type: 'tyrano',
+    payload: { event: 'first_scenario_loaded' }
+  },
+  '*',
+)
+[endscript]
 `
   } catch (e) {
     console.error(e)

@@ -48,6 +48,7 @@ export default function Page(ctx) {
         defaultHeight={ctx.tyrano_height}
         defaultWidth={ctx.tyrano_width}
         sheet={ctx.tyrano_sheet}
+        loaded={vm.tyranoStatus}
       />
       <DraggablePanel
         title="チャット"
@@ -300,7 +301,7 @@ export default function Page(ctx) {
                 changeHandler={vm.changeYoutubeItem}
               />
             </div>
-            <Box mx={3} style={{ width: '100px' }}>
+            <Box mx={3} style={{ width: '100px', marginTop: '-10px' }}>
               <InputField
                 model={vm.youtubeSettings}
                 type="text"

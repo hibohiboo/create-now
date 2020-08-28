@@ -118,6 +118,12 @@ const changeBgmItems = createAction(
     payload: { items },
   }),
 )
+const changeTyranoStatus = createAction(
+  'CHANGE_TYRANO_STATUS',
+  (status: boolean) => ({
+    payload: { status },
+  }),
+)
 
 export default {
   addUdonariumMessage,
@@ -140,4 +146,5 @@ export default {
   changeYoutubeItems,
   changeBgmUrl,
   changeBgmItems,
+  changeTyranoStatus,
 }
