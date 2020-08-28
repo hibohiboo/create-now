@@ -4,6 +4,7 @@ import type {
   TyranoPatchObject,
   Patch,
   YoutbeItem,
+  BgmItem,
 } from '../reducer'
 
 const addUdonariumMessage = createAction(
@@ -108,6 +109,15 @@ const changeYoutubeItems = createAction(
     payload: { items },
   }),
 )
+const changeBgmUrl = createAction('CHANGE_TYRANO_BGM_URL', (id: string) => ({
+  payload: { id },
+}))
+const changeBgmItems = createAction(
+  'CHANGE_TYRANO_BGM_ITEMS',
+  (items: BgmItem[]) => ({
+    payload: { items },
+  }),
+)
 
 export default {
   addUdonariumMessage,
@@ -128,4 +138,6 @@ export default {
   changeSelectedBackgroundPatch,
   changeYoutubeID,
   changeYoutubeItems,
+  changeBgmUrl,
+  changeBgmItems,
 }

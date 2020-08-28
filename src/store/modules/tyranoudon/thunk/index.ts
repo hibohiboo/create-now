@@ -4,7 +4,12 @@ import * as api from '~/lib/api/tyranoudon'
 import actions from '../actions'
 import { init } from '../reducer'
 import { partsFilePrefix } from '../utils/tyranoMessage'
-import type { TyranoCharacter, TyranoPatchObject, YoutbeItem } from '../reducer'
+import type {
+  TyranoCharacter,
+  TyranoPatchObject,
+  YoutbeItem,
+  BgmItem,
+} from '../reducer'
 import type { SelectItem } from '~/components/form/SelectableInputField'
 
 const defaultPatch = 'normal'
@@ -89,4 +94,11 @@ export const fetchYoutube = (spreadId: string): AppThunk => async (
   const items: YoutbeItem[] = values.map(([name, id]) => ({ name, id }))
 
   dispatch(actions.changeYoutubeItems(items))
+}
+export const fetchBgms = (spreadId: string): AppThunk => async (dispatch) => {
+  const json = await api.getBgms(spreadId)
+  const values = json.values
+  const items: BgmItem[] = values.map(([name, url]) => ({ name, url }))
+
+  dispatch(actions.changeBgmItems(items))
 }

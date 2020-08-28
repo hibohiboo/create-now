@@ -102,14 +102,17 @@ tyrano.plugin.kag.tag.playbgm = {
 
             if(this.kag.tmp.ready_audio == false){
 
-                $(".tyrano_base").on("click.bgm", function() {
+                // $(".tyrano_base").on("click.bgm", function() {
+                //         that.kag.readyAudio();
+                //         that.kag.tmp.ready_audio = true;
+                //         that.play(pm);
+                //         $(".tyrano_base").off("click.bgm");
 
-                        that.kag.readyAudio();
-                        that.kag.tmp.ready_audio = true;
-                        that.play(pm);
-                        $(".tyrano_base").off("click.bgm");
-
-                });
+                // });
+                // チャットなので即実行
+                that.kag.readyAudio();
+                that.kag.tmp.ready_audio = true;
+                that.play(pm);
 
             }else{
                 that.play(pm);
@@ -218,12 +221,14 @@ tyrano.plugin.kag.tag.playbgm = {
                 storage_url ="";
             }
         }
-console.log('url_check', storage_url)
+
         //音楽再生
         var audio_obj =null ;
 
         var howl_opt = {
-
+            html5: true, // 拡張子がないからか、google drive に置いたBGMはこれでないと再生できない、、？
+            // autoplay: true,
+            // format: ['dolby', 'webm', 'mp3', 'wav'],
             src: storage_url,
             volume:(volume),
             onend:(e)=>{

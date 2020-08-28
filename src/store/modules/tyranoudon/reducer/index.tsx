@@ -42,6 +42,11 @@ export interface YoutbeItem {
   name: string
   id: string
 }
+export interface BgmItem {
+  name: string
+  url: string
+}
+
 export interface TyranoUdon {
   udonariumBackgroundImage: string
   tyranoEffectTime: number
@@ -53,6 +58,10 @@ export interface TyranoUdon {
   youtubeSettings: {
     id: string
     items: YoutbeItem[]
+  }
+  bgmSettings: {
+    bgmUrl: string
+    items: BgmItem[]
   }
 }
 const initialState = (): TyranoUdon => ({
@@ -91,6 +100,10 @@ const initialState = (): TyranoUdon => ({
     },
   ],
   youtubeSettings: { id: '', items: [{ name: '', id: '' }] },
+  bgmSettings: {
+    bgmUrl: '',
+    items: [],
+  },
 })
 export const init = initialState()
 
@@ -158,6 +171,12 @@ const reducer = createReducer(init, (builder) =>
     })
     .addCase(actions.changeYoutubeItems, (state, actions) => {
       state.youtubeSettings.items = actions.payload.items
+    })
+    .addCase(actions.changeBgmUrl, (state, actions) => {
+      state.bgmSettings.bgmUrl = actions.payload.id
+    })
+    .addCase(actions.changeBgmItems, (state, actions) => {
+      state.bgmSettings.items = actions.payload.items
     }),
 )
 

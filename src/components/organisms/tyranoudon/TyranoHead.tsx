@@ -108,7 +108,7 @@ const TryranoHead: FC<{ name: string }> = ({ name }) => {
       ></script>
       <script
         type="text/javascript"
-        src="/tyrano/plugins/kag/kag.tag_audio.js"
+        src="/tyranoudon/js/plugins/kag/kag.tag_audio.js"
       ></script>
       <script
         type="text/javascript"
@@ -165,7 +165,11 @@ const TryranoHead: FC<{ name: string }> = ({ name }) => {
         type="text/javascript"
         src="/tyrano/libs/jquery.touchSwipe.min.js"
       ></script>
-      <script type="text/javascript" src="/tyrano/libs/howler.js"></script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"
+        integrity="sha512-ALoawPS0JxHQ+8dGL7htZIlVNRaE/SN9gHD4G8pJJTi9H4BQ/3PjdvhggSGR34g00mvTPFkxQuveQUsJA5664Q=="
+        crossOrigin="anonymous"
+      ></script>
       <script type="text/javascript" src="/tyrano/libs/jsQR.js"></script>
 
       <script

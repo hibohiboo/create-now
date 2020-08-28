@@ -58,6 +58,10 @@ export const isTagMessage = (text: string) => {
     'html',
     'endhtml',
     'cm',
+    'playbgm',
+    'stopbgm',
+    'fadeinbgm',
+    'fadeoutbgm',
   ]
   const tagsLen = tags.length
   if (_.startsWith(text, '[')) {
@@ -267,4 +271,19 @@ export const createYoutube = (id: string) => {
   return `[html left=0 top=0]
           <iframe width="112" height="63" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           [endhtml]`
+}
+
+export const createPlayBGM = (url: string, loop = true) => {
+  return `[playbgm storage="${url}" loop=${loop ? 'true' : 'false'}]`
+}
+export const createFadeinBGM = (url: string, time = 3000, loop = true) => {
+  return `[fadeinbgm  storage="${url}" loop=${
+    loop ? 'true' : 'false'
+  } time="${time}"]`
+}
+export const createStopBGM = () => {
+  return `[stopbgm ]`
+}
+export const createFadeoutBGM = (time = 3000) => {
+  return `[fadeoutbgm time="${time}"]`
 }

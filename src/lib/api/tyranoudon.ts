@@ -1,5 +1,7 @@
+import { getSheetData } from './spreadSheet'
+
 // http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58
-import fetch from 'isomorphic-unfetch'
+
 export const first = async (spreadId) => {
   let error_json = null
   try {
@@ -28,7 +30,7 @@ export const first = async (spreadId) => {
 ${tags}
 ${partsTags}
 ${setTags}
-
+[playbgm storage="https://drive.google.com/uc?export=view\&id=15Ga1G481cOr_Ir3F3j0BMTKFVxbwospc\&usp=sharing"]
 `
   } catch (e) {
     console.error(e)
@@ -37,14 +39,6 @@ ${setTags}
 
     return sample
   }
-}
-const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
-const key = process.env.GOOGLE_API_KEY
-const getSheetData = async (spreadId: string, sheet: string, range: string) => {
-  const res = await fetch(
-    `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
-  )
-  return (await res.json()) as { values: string[][] }
 }
 
 export const getCharacters = async (spreadId) =>
@@ -105,3 +99,6 @@ const toCharacterPartsSetTag = ([name, setName, set]) => {
 
 export const getYoutube = async (spreadId) =>
   await getSheetData(spreadId, 'youtube', 'B2:C')
+
+export const getBgms = async (spreadId) =>
+  await getSheetData(spreadId, 'bgms', 'A2:C')

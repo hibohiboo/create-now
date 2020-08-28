@@ -112,7 +112,7 @@
 // Windows・Mac のアプリ形式で動かす場合は ogg を指定する必要があります。mp3は鳴らせません
 // "ogg" もしくは "mp3" を指定します。
 
-;mediaFormatDefault = ogg;
+;mediaFormatDefault = mp3;
 
 // ◆ BGMの音量 0 〜 100 で指定します。
 ;defaultBgmVolume = 100;

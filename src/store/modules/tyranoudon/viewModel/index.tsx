@@ -80,6 +80,7 @@ const initPage = (ctx: PageContext, dispatch) => {
   dispatch(thunk.fetchCharacters(ctx.tyrano_sheet))
   dispatch(thunk.fetchBackgrounds(ctx.tyrano_sheet))
   dispatch(thunk.fetchYoutube(ctx.tyrano_sheet))
+  dispatch(thunk.fetchBgms(ctx.tyrano_sheet))
 }
 const convertTyranoPatchObjectToSelectItem = (item: TyranoPatchObject) => ({
   value: item.name,
@@ -286,6 +287,30 @@ export const useViewModel = (ctx: PageContext) =>
           text: `[cm ]`,
         })
       },
+      sendPlayBGM: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createPlayBGM(tuState.bgmSettings.bgmUrl),
+        })
+      },
+      sendFadeInBGM: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createFadeinBGM(tuState.bgmSettings.bgmUrl),
+        })
+      },
+      sendStopBGM: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createStopBGM(),
+        })
+      },
+      sendFadeOutBGM: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createFadeoutBGM(),
+        })
+      },
       changeName: (name: string) => {
         const chara = tuState.characters.find((c) => c.name === name)
         if (chara) dispatch(changeFace(chara.faces[0]))
@@ -327,6 +352,10 @@ export const useViewModel = (ctx: PageContext) =>
       },
       changeYoutubeId: (id: string) => {
         dispatch(actions.changeYoutubeID(id))
+      },
+      changeBgmItem: (item) => {
+        console.log('changebgm', item)
+        dispatch(actions.changeBgmUrl(item.url))
       },
     }
   })

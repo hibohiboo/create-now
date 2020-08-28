@@ -325,6 +325,49 @@ export default function Page(ctx) {
               youtube止める
             </Button>
           </Box>
+          <Box my={2} display="flex">
+            <div style={{ width: '200px' }}>
+              <SelectField
+                id="bgm-items"
+                labelText="BGM"
+                items={vm.bgmSettings.items}
+                unselectedText=""
+                value={vm.bgmSettings.bgmUrl}
+                valueProp="url"
+                changeHandler={vm.changeBgmItem}
+              />
+            </div>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendPlayBGM}
+            >
+              再生
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendStopBGM}
+            >
+              止める
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendFadeInBGM}
+            >
+              フェードイン
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={vm.sendFadeOutBGM}
+            >
+              フェードアウト
+            </Button>
+          </Box>
           <Box my={2}></Box>
         </Box>
       </DraggablePanel>
