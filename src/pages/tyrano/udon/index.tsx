@@ -42,7 +42,7 @@ export default function Page(ctx) {
         <title>TyranoUdon</title>
       </Head>
 
-      <UdonariumPanel />
+      <UdonariumPanel is2d={ctx.is2d} />
       <TyranoPanel
         name={ctx.tyrano_name}
         defaultHeight={ctx.tyrano_height}
@@ -396,10 +396,13 @@ export default function Page(ctx) {
                 参考： ユドナリウム
               </a>
             </li>
+            <li>
+              <a href="https://yoshis-island.net/">参考： ユドナリウム2d</a>
+            </li>
 
             <li>
               <a
-                href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58`}
+                href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58&is2d=true`}
               >
                 リンク先例
               </a>
@@ -430,6 +433,7 @@ Page.getInitialProps = async ({ query }) => {
   const tyrano = (query.tyrano || 'vchat_add') as string
   const tyrano_sheet = (query.tyrano_sheet ||
     '1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58') as string
+  const is2d = (query.is2d && query.is2d === 'true') || false
   if (tyrano === 'chat_talk') {
     return {
       tyrano_name: tyrano,
@@ -452,6 +456,7 @@ Page.getInitialProps = async ({ query }) => {
       tyrano_width: 480,
       tyrano_height: 640,
       tyrano_sheet,
+      is2d,
     }
   }
   return {
