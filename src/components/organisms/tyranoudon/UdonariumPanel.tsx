@@ -17,6 +17,8 @@ const UdonariumPanel: FC<{ is2d?: boolean }> = ({ is2d }) => {
       width={width}
       height={height}
       onResize={onResize}
+      resizable={true}
+      draggable={true}
     >
       <iframe
         id="iframe-udonarium"

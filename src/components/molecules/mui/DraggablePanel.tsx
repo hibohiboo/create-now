@@ -35,14 +35,25 @@ const DraggablePanel: React.FC<{
   title: string
   height: number
   width: number
+  resizable: boolean
+  draggable: boolean
   onResize: (size: { height: number; width: number }) => void
-}> = ({ children, title, height, width, onResize }) => {
+}> = ({
+  children,
+  title,
+  height,
+  width,
+  onResize,
+  resizable = false,
+  draggable = false,
+}) => {
   const classes = useStyles()
   const onResizeHandler = (event, { element, size, handle }) => {
     onResize(size)
   }
   const wrapperHeight = height
   const wrapperWidht = width
+  const resizeHandles = resizable ? ['se', 'ne', 'e', 'n', 's'] : []
   return (
     <Resizable
       className="box"
@@ -51,19 +62,25 @@ const DraggablePanel: React.FC<{
       onResize={onResizeHandler}
       style={{ overflow: 'hidden' }}
       // resizeHandles={['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']}
-      resizeHandles={['se']}
+      // resizeHandles={['se']}
+      resizeHandles={resizeHandles}
     >
       <PaperComponent
         style={{ width: `${wrapperWidht}px`, height: `${wrapperHeight}px` }}
       >
-        <AppBar position="static" id="draggable-dialog-title">
-          <Toolbar variant="dense">
-            <Typography variant="subtitle2" className={classes.title}>
-              {title}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        {children}
+        {draggable ? (
+          <AppBar position="static" id="draggable-dialog-title">
+            <Toolbar variant="dense">
+              <Typography variant="subtitle2" className={classes.title}>
+                {title}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        ) : (
+          <></>
+        )}
+
+        <Box p={resizable ? 1 : 0}>{children}</Box>
       </PaperComponent>
     </Resizable>
   )

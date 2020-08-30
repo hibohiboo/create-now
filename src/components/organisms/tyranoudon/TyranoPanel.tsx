@@ -21,6 +21,8 @@ const TryranoPanel: FC<{
       width={width}
       height={height}
       onResize={onResize}
+      resizable={true}
+      draggable={true}
     >
       <div
         style={{

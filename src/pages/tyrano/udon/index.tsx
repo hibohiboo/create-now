@@ -55,6 +55,8 @@ export default function Page(ctx) {
         width={width}
         height={height}
         onResize={onResize}
+        resizable={true}
+        draggable={true}
       >
         <Box my={2} mx={3} display="flex">
           <Button
@@ -152,6 +154,8 @@ export default function Page(ctx) {
         width={width}
         height={height}
         onResize={onResize}
+        resizable={true}
+        draggable={true}
       >
         <Box
           my={2}
@@ -377,6 +381,8 @@ export default function Page(ctx) {
         width={width}
         height={height}
         onResize={onResize}
+        resizable={true}
+        draggable={true}
       >
         <Box my={2} mx={3}>
           <ul>
