@@ -35,22 +35,24 @@ export const fetchCharacters = (spreadId: string): AppThunk => async (
     chara.faces.push(face)
   })
 
-  const parts: TyranoCharacter[] = _.uniqBy(
-    partsJson.values.map(([name, jname]) => ({
-      name,
-      jname,
-    })),
-    (i) => i.name,
-  ).map(({ name, jname }) => ({
-    name,
-    jname,
-    faces: [
-      `${partsFilePrefix}_${init.characterSettings.face}`,
-      ...partsSetJson.values
-        .filter(([n]) => n === name)
-        .map(([, setName]) => `${partsFilePrefix}_${setName}`),
-    ],
-  }))
+  const parts: TyranoCharacter[] = partsJson.values
+    ? _.uniqBy(
+        partsJson.values.map(([name, jname]) => ({
+          name,
+          jname,
+        })),
+        (i) => i.name,
+      ).map(({ name, jname }) => ({
+        name,
+        jname,
+        faces: [
+          `${partsFilePrefix}_${init.characterSettings.face}`,
+          ...partsSetJson.values
+            .filter(([n]) => n === name)
+            .map(([, setName]) => `${partsFilePrefix}_${setName}`),
+        ],
+      }))
+    : []
   const results = characters.concat(parts)
   dispatch(actions.changeCharacters(results))
 }

@@ -2,6 +2,16 @@ import { getSheetData } from './spreadSheet'
 
 // http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58
 
+const sendLoaded = `[iscript]
+window.parent.postMessage(
+  {
+    type: 'tyrano',
+    payload: { event: 'first_scenario_loaded' }
+  },
+  '*',
+)
+[endscript]`
+
 export const first = async (spreadId) => {
   let error_json = null
   try {
@@ -10,10 +20,12 @@ export const first = async (spreadId) => {
     error_json = characterJson
     const tags = characterJson.values.map(toCharacterFaceTag).join('\n')
     const partsTags = characterPartsJson.values
-      .map(toCharacterPartsTag)
-      .join('\n')
+      ? characterPartsJson.values.map(toCharacterPartsTag).join('\n')
+      : ''
     const partsSetJson = await getCharacterPartsSet(spreadId)
-    const setTags = partsSetJson.values.map(toCharacterPartsSetTag).join('\n')
+    const setTags = partsSetJson.values
+      ? partsSetJson.values.map(toCharacterPartsSetTag).join('\n')
+      : ''
     return `
 @call storage="common/common.ks"
 @bg storage="forest.jpg" time="100"
@@ -30,15 +42,7 @@ export const first = async (spreadId) => {
 ${tags}
 ${partsTags}
 ${setTags}
-[iscript]
-window.parent.postMessage(
-  {
-    type: 'tyrano',
-    payload: { event: 'first_scenario_loaded' }
-  },
-  '*',
-)
-[endscript]
+${sendLoaded}
 `
   } catch (e) {
     console.error(e)
@@ -68,6 +72,7 @@ const sample = `
 @layopt layer=message0 visible=true
 @call storage="common/characters.ks"
 [chara_show  name="akane"]
+${sendLoaded}
 [s]
 `
 

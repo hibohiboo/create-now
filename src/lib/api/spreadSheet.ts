@@ -9,5 +9,6 @@ export const getSheetData = async (
   const res = await fetch(
     `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
   )
+  // if (res.status >= 400) throw new Error('spread sheet read failed')
   return (await res.json()) as { values: string[][] }
 }
