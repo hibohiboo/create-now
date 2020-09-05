@@ -330,3 +330,5 @@ const sendUdonMessage = ({
   }
   udon.contentWindow.postMessage(message, process.env.UDONARIUM_DOMAIN)
 }
+
+export type TyranoUdonViewModel = ReturnType<typeof useViewModel>

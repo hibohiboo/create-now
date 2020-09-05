@@ -8,7 +8,17 @@ const TryranoPanel: FC<{
   defaultHeight: number
   sheet: string
   loaded: boolean
-}> = ({ name, defaultWidth, defaultHeight, sheet, loaded = false }) => {
+  resizable?: boolean
+  draggable?: boolean
+}> = ({
+  name,
+  defaultWidth,
+  defaultHeight,
+  sheet,
+  loaded = false,
+  resizable = true,
+  draggable = true,
+}) => {
   const [height, setHeight] = useState(defaultHeight)
   const [width, setWidth] = useState(defaultWidth)
   const onResize = (size) => {
@@ -21,8 +31,8 @@ const TryranoPanel: FC<{
       width={width}
       height={height}
       onResize={onResize}
-      resizable={true}
-      draggable={true}
+      resizable={resizable}
+      draggable={draggable}
     >
       <div
         style={{
