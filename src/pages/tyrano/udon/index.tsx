@@ -97,7 +97,7 @@ export default function Page(ctx) {
           </div>
           <div style={{ width: '50px', marginTop: '-10px' }}>
             <InputField
-              model={vm}
+              model={vm.chat}
               type="number"
               prop="tyranoFontSize"
               labelText={'サイズ'}
@@ -387,6 +387,20 @@ export default function Page(ctx) {
         <Box my={2} mx={3}>
           <ul>
             <li>
+              <a
+                href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58&is2d=true`}
+              >
+                2dモード
+              </a>
+            </li>
+            <li>
+              <a
+                href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58`}
+              >
+                3dモード
+              </a>
+            </li>
+            <li>
               <a href="http://www5d.biglobe.ne.jp/~gakai/">
                 背景素材： きまぐれアフター
               </a>
@@ -406,13 +420,6 @@ export default function Page(ctx) {
               <a href="https://yoshis-island.net/">参考： ユドナリウム2d</a>
             </li>
 
-            <li>
-              <a
-                href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58&is2d=true`}
-              >
-                リンク先例
-              </a>
-            </li>
             <li>
               <a
                 href={`https://docs.google.com/spreadsheets/d/${ctx.tyrano_sheet}/edit#gid=0`}

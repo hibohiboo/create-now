@@ -54,6 +54,7 @@ const DraggablePanel: React.FC<{
   const wrapperHeight = height
   const wrapperWidht = width
   const resizeHandles = resizable ? ['se', 'ne', 'e', 'n', 's'] : []
+
   return (
     <Resizable
       className="box"

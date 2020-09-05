@@ -11,6 +11,7 @@ const UdonariumPanel: FC<{ is2d?: boolean }> = ({ is2d }) => {
   const src = is2d
     ? `${process.env.UDONARIUM_URL}?2d=true`
     : process.env.UDONARIUM_URL
+
   return (
     <DraggablePanel
       title="ユドナリウム"
