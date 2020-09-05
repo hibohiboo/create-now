@@ -13,23 +13,71 @@ window.parent.postMessage(
 [endscript]`
 
 export const first = async (spreadId) => {
-  let error_json = null
   try {
-    const characterJson = await getCharacters(spreadId)
-    const characterPartsJson = await getCharacterParts(spreadId)
-    error_json = characterJson
-    const tags = characterJson.values.map(toCharacterFaceTag).join('\n')
+    const [
+      characterJson,
+      characterPartsJson,
+      partsSetJson,
+      scenarioJson,
+    ] = await Promise.all([
+      getCharacters(spreadId),
+      getCharacterParts(spreadId),
+      getCharacterPartsSet(spreadId),
+      getScenario(spreadId),
+    ])
+
+    const characterTags = characterJson.values
+      .map(toCharacterFaceTag)
+      .join('\n')
     const partsTags = characterPartsJson.values
       ? characterPartsJson.values.map(toCharacterPartsTag).join('\n')
       : ''
-    const partsSetJson = await getCharacterPartsSet(spreadId)
+
     const setTags = partsSetJson.values
       ? partsSetJson.values.map(toCharacterPartsSetTag).join('\n')
       : ''
-    return `
+    const scenario = scenarioJson.values
+      .map(toScenarioTag)
+      .filter((s) => !!s)
+      .join('\n')
+    if (scenario) {
+      return `
 @call storage="common/common.ks"
-@bg storage="forest.jpg" time="100"
+${characterTags}
+${partsTags}
+${setTags}
+${sendLoaded}
+${scenario}
+`
+    }
+    return firstDefaultScenario({
+      characterTags,
+      partsTags,
+      setTags,
+      sendLoaded,
+    })
+  } catch (e) {
+    console.error(e)
+    console.log('error_spread_id', spreadId)
+
+    return sample
+  }
+}
+
+const firstDefaultScenario = ({
+  characterTags,
+  partsTags,
+  setTags,
+  sendLoaded,
+}: {
+  characterTags: string
+  partsTags: string
+  setTags: string
+  sendLoaded: string
+}) => `
+@call storage="common/common.ks"
 @hidemenubutton
+@bg storage="forest.jpg" time="100"
 @position layer="message0" left=160 top=500 width=1000 height=200 page=fore visible=true
 @position layer=message0 page=fore margint="45" marginl="50" marginr="70" marginb="60"
 @layopt layer=message0 visible=true
@@ -39,19 +87,11 @@ export const first = async (spreadId) => {
 @ptext name="chara_name_area" layer="message0" color="white" size=28 bold=true x=180 y=510
 @chara_config ptext="chara_name_area" memory="false" talk_anim="down" pos_mode="true"
 @chara_config brightness=40 talk_focus=brightness
-${tags}
+${characterTags}
 ${partsTags}
 ${setTags}
 ${sendLoaded}
 `
-  } catch (e) {
-    console.error(e)
-    console.log('error_spread_id', spreadId)
-    console.log('error_json', error_json)
-
-    return sample
-  }
-}
 
 export const getCharacters = async (spreadId) =>
   await getSheetData(spreadId, 'characters', 'B2:E')
@@ -115,3 +155,16 @@ export const getYoutube = async (spreadId) =>
 
 export const getBgms = async (spreadId) =>
   await getSheetData(spreadId, 'bgms', 'A2:C')
+
+export const getScenario = async (spreadId) =>
+  await getSheetData(spreadId, 'scenario', 'A2:D')
+const toScenarioTag = ([name, face, script, subscript]) => {
+  let ret = ''
+  if (name && name.trim()) ret += `#${name}`
+  if (name && face && face.trim()) ret += `:${face}\n`
+  else if (name) ret += '\n'
+  if (script && script.trim()) ret += `${script}\n`
+  if (subscript && subscript.trim()) ret += `${subscript}\n`
+
+  return ret
+}

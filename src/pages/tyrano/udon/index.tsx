@@ -395,6 +395,13 @@ export default function Page(ctx) {
             </li>
             <li>
               <a
+                href={`/tyrano/udon?tyrano_sheet=15nPd3S39OZZVxHUK0odXxcuDnYT_YIsK1oVP2zcKyd0&is2d=true`}
+              >
+                ティラノ初期ストーリー付きサンプル
+              </a>
+            </li>
+            <li>
+              <a
                 href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58`}
               >
                 3dモード

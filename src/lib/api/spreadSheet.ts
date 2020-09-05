@@ -5,10 +5,16 @@ export const getSheetData = async (
   spreadId: string,
   sheet: string,
   range: string,
-) => {
+): Promise<{ values: string[][] }> => {
   const res = await fetch(
     `${fetchUrl}/${spreadId}/values/${sheet}!${range}?key=${key}`,
   )
-  // if (res.status >= 400) throw new Error('spread sheet read failed')
+  if (res.status >= 400) {
+    // throw new Error('spread sheet read failed')
+    console.error('error', res.url)
+    console.error(res.status, res.statusText)
+
+    return { values: [[]] }
+  }
   return (await res.json()) as { values: string[][] }
 }
