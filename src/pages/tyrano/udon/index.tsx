@@ -1,13 +1,11 @@
-import { useState } from 'react'
 import Head from 'next/head'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
-import { Box } from '@material-ui/core'
 import { useViewModel } from '~/store/modules/tyranoudon/viewModel'
 import UdonariumPanel from '~/components/organisms/tyranoudon/UdonariumPanel'
 import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
 import ChatPanel from '~/components/organisms/tyranoudon/ChatPanel'
 import CommandPanel from '~/components/organisms/tyranoudon/CommandPanel'
-import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
+import OtherPanel from '~/components/organisms/tyranoudon/OtherPanel'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -21,19 +19,9 @@ const useStyles = makeStyles(() =>
 export default function Page(ctx) {
   const classes = useStyles()
   const vm = useViewModel(ctx)
+  const width = 1200
+  const height = 240
 
-  const [chatHeight, setChatHeight] = useState(240)
-  const [chatWidth, setChatWidth] = useState(1200)
-  const [commandHeight, setCommandHeight] = useState(240)
-  const [commandWidth, setCommandWidth] = useState(1200)
-  const onChatResize = (size) => {
-    setChatHeight(size.height)
-    setChatWidth(size.width)
-  }
-  const onCommandResize = (size) => {
-    setCommandHeight(size.height)
-    setCommandWidth(size.width)
-  }
   // const firstTyranoPanelWidth = 800
   // if (global.window && global.window.innerWidth < 1600) {
   //   firstTyranoPanelWidth = global.window.innerWidth - 850
@@ -73,89 +61,14 @@ export default function Page(ctx) {
         <></>
       ) : (
         <>
-          <ChatPanel
+          <ChatPanel vm={vm} width={width} height={height} />
+          <CommandPanel vm={vm} width={width} height={height} />
+          <OtherPanel
             vm={vm}
-            width={chatWidth}
-            height={chatHeight}
-            onResize={onChatResize}
+            width={width}
+            height={height}
+            tyrano_sheet={ctx.tyrano_sheet}
           />
-          <CommandPanel
-            vm={vm}
-            width={commandWidth}
-            height={commandHeight}
-            onResize={onCommandResize}
-          />
-
-          <DraggablePanel
-            title="参考"
-            width={commandWidth}
-            height={commandHeight}
-            onResize={onCommandResize}
-            resizable={true}
-            draggable={true}
-          >
-            <Box my={2} mx={3}>
-              <ul>
-                <li>
-                  <a
-                    href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58&is2d=true`}
-                  >
-                    2dモード
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`/tyrano/udon?tyrano_sheet=15nPd3S39OZZVxHUK0odXxcuDnYT_YIsK1oVP2zcKyd0&is2d=true`}
-                  >
-                    ティラノ初期ストーリー付きサンプル
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`/tyrano/udon?tyrano_sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58`}
-                  >
-                    3dモード
-                  </a>
-                </li>
-                <li>
-                  <a href="http://www5d.biglobe.ne.jp/~gakai/">
-                    背景素材： きまぐれアフター
-                  </a>
-                </li>
-                <li>
-                  <a href="https://tyrano.jp/">参考： ティラノスクリプト</a>
-                </li>
-                <li>
-                  <a href="https://trpg-studio.com/">参考： ＴＲＰＧスタジオ</a>
-                </li>
-                <li>
-                  <a href="https://github.com/TK11235/udonarium">
-                    参考： ユドナリウム
-                  </a>
-                </li>
-                <li>
-                  <a href="https://yoshis-island.net/">参考： ユドナリウム2d</a>
-                </li>
-
-                <li>
-                  <a
-                    href={`https://docs.google.com/spreadsheets/d/${ctx.tyrano_sheet}/edit#gid=0`}
-                  >
-                    立ち絵シート
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`https://scrapbox.io/tyranoudon/%E7%AB%8B%E3%81%A1%E7%B5%B5`}
-                  >
-                    立ち絵置き場サンプル
-                  </a>
-                </li>
-                <li>{`${vm.udonariumBackgroundImage}`}</li>
-                <li>{`${vm.chat.tyranoFontColor}`}</li>
-              </ul>
-            </Box>
-          </DraggablePanel>
         </>
       )}
     </div>
