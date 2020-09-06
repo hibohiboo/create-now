@@ -73,7 +73,7 @@ const initialState = (): TyranoUdon => ({
   },
   characterSettings: {
     name: 'akane',
-    face: 'normal',
+    face: 'default',
     characterPositionBottom: -100,
     characterMessageAnimation: 'down',
   },
@@ -92,12 +92,12 @@ const initialState = (): TyranoUdon => ({
     {
       jname: 'あかね',
       name: 'akane',
-      faces: ['normal', 'happy', 'doki', 'angry', 'sad'],
+      faces: ['default', 'happy', 'doki', 'angry', 'sad'],
     },
     {
       jname: 'やまと',
       name: 'yamato',
-      faces: ['normal'],
+      faces: ['default'],
     },
   ],
   youtubeSettings: { id: '', items: [{ name: '', id: '' }] },

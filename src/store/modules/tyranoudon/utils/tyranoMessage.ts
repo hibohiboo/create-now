@@ -18,7 +18,7 @@ const escape = (str: string) => {
   )
 }
 const hasFace = (face) =>
-  face && face !== 'normal' && !face.startsWith(`${partsFilePrefix}_`)
+  face && face !== 'default' && !face.startsWith(`${partsFilePrefix}_`)
 export const createTyranoMessage = (
   name: string,
   face: string | undefined,
@@ -119,7 +119,7 @@ const createBcdiceMessage = (
   const [, result] = text.match(resultRegex)
 
   const fbcname =
-    face !== 'normal' ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
+    face !== 'default' ? `${escape(bcname)}:${escape(face)}` : escape(bcname)
   // #${fbcname} を入れると、nextOrderがバグる
   return `
 #${fbcname}

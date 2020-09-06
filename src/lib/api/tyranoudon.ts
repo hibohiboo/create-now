@@ -97,7 +97,7 @@ export const getCharacters = async (spreadId) =>
   await getSheetData(spreadId, 'characters', 'B2:E')
 
 const toCharacterFaceTag = ([name, jname, face, url]) => {
-  if (face === 'normal') {
+  if (face === 'default') {
     return `[chara_new  name="${name}" storage="${url}" jname="${jname}"]`
   }
   return `[chara_face name="${name}" face="${face}" storage="${url}"]`
@@ -130,11 +130,11 @@ const toCharacterPartsTag = ([
   url,
 ]) => {
   if (!url) return ''
-  if (partsName === 'base' && partsId.startsWith('normal')) {
-    const [width, height] = partsId.replace('normal_', '').split('x')
+  if (partsName === 'base' && partsId.startsWith('default')) {
+    const [width, height] = partsId.replace('default_', '').split('x')
     return `[chara_new name="${name}" storage="tomei.png" jname="${jname}" width=${width} height=${height}]
 [chara_layer name="${name}" part="${partsName}" id="${partsId}" zindex=${zIndex} storage="${url}"]
-[macro name="chara_parts_set_${name}_normal"]
+[macro name="chara_parts_set_${name}_default"]
 [chara_part_reset name="${name}"]
 [endmacro]
 `

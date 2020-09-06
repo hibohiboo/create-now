@@ -12,7 +12,7 @@ import type {
 } from '../reducer'
 import type { SelectItem } from '~/components/form/SelectableInputField'
 
-const defaultPatch = 'normal'
+const defaultPatch = 'default'
 
 export const fetchCharacters = (spreadId: string): AppThunk => async (
   dispatch,
