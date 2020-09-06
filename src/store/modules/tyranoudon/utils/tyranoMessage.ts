@@ -14,6 +14,7 @@ const escape = (str: string) => {
       .replace('［resetfont', '[resetfont')
       .replace('［ruby', '[ruby')
       .replace('＠chara_parts_set_', '@chara_parts_set_')
+      .replace('［r ]', '[r ]')
   )
 }
 const hasFace = (face) =>
@@ -62,6 +63,8 @@ export const isTagMessage = (text: string) => {
     'stopbgm',
     'fadeinbgm',
     'fadeoutbgm',
+    'r',
+    'l',
   ]
   const tagsLen = tags.length
   if (_.startsWith(text, '[')) {
@@ -208,6 +211,7 @@ export const createCharacterMessage = ({
   tyranoFontSize,
   characterMessageAnimation,
 }: Chat & CharacterSettings) => {
+  const rTagText = text.replace('\n', '\n[r ]\n')
   let textFont =
     tyranoFontColor === init.chat.tyranoFontColor
       ? ''
@@ -216,7 +220,8 @@ export const createCharacterMessage = ({
     tyranoFontSize === init.chat.tyranoFontSize
       ? textFont
       : `${textFont}[font size="${tyranoFontSize}"]`
-  const sendText = textFont === '' ? text : `${textFont}${text}[resetfont]`
+  const sendText =
+    textFont === '' ? rTagText : `${textFont}${rTagText}[resetfont]`
   if (
     characterMessageAnimation ===
     init.characterSettings.characterMessageAnimation
