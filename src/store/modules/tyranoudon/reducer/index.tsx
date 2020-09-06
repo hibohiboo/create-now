@@ -42,7 +42,7 @@ export interface YoutbeItem {
   name: string
   id: string
 }
-export interface BgmItem {
+export interface UrlItem {
   name: string
   url: string
 }
@@ -61,9 +61,11 @@ export interface TyranoUdon {
   }
   bgmSettings: {
     bgmUrl: string
-    items: BgmItem[]
+    items: UrlItem[]
   }
   tyranoStatus: boolean
+  layerMovie: { url: string; mode: string; items: UrlItem[] }
+  soundEffect: { url: string; items: UrlItem[] }
 }
 const initialState = (): TyranoUdon => ({
   chat: {
@@ -106,6 +108,8 @@ const initialState = (): TyranoUdon => ({
     items: [],
   },
   tyranoStatus: false,
+  layerMovie: { url: '', items: [], mode: 'screen' },
+  soundEffect: { url: '', items: [] },
 })
 export const init = initialState()
 
@@ -182,7 +186,18 @@ const reducer = createReducer(init, (builder) =>
     })
     .addCase(actions.changeTyranoStatus, (state, actions) => {
       state.tyranoStatus = actions.payload.status
+    })
+    .addCase(actions.changeLayerMovieUrl, (state, actions) => {
+      state.layerMovie.url = actions.payload.url
+    })
+    .addCase(actions.changeLayerMovieItems, (state, actions) => {
+      state.layerMovie.items = actions.payload.items
+    })
+    .addCase(actions.changeSoundEffectUrl, (state, actions) => {
+      state.soundEffect.url = actions.payload.url
+    })
+    .addCase(actions.changeSoundEffectItems, (state, actions) => {
+      state.soundEffect.items = actions.payload.items
     }),
 )
-
 export default reducer

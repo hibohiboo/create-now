@@ -21,23 +21,32 @@ const MusicCommand: FC<{
         <ListItemText primary="設定スプレッドシート" />
       </ListItemLink>
       <ListItemLink
-        href={`/tyrano/udon?tyrano_sheet=15nPd3S39OZZVxHUK0odXxcuDnYT_YIsK1oVP2zcKyd0&is2d=true&container=true`}
+        href={`/tyrano/udon?tyrano_sheet=${tyrano_sheet}&is2d=true&container=true`}
       >
         <ListItemText primary="ユドナリウム2d" />
       </ListItemLink>
       <ListItemLink
-        href={`/tyrano/udon?tyrano_sheet=15nPd3S39OZZVxHUK0odXxcuDnYT_YIsK1oVP2zcKyd0&container=true`}
+        href={`/tyrano/udon?tyrano_sheet=${tyrano_sheet}&container=true`}
       >
         <ListItemText primary="ユドナリウム3d" />
       </ListItemLink>
       <ListItemLink href={`http://www5d.biglobe.ne.jp/~gakai/`}>
-        <ListItemText primary="背景素材： きまぐれアフター" />
+        <ListItemText primary="素材： きまぐれアフター" />
+      </ListItemLink>
+      <ListItemLink href="https://trpg-studio.com/">
+        <ListItemText primary="参考： ＴＲＰＧスタジオ" />
+      </ListItemLink>
+      <ListItemLink href="https://github.com/TK11235/udonarium">
+        <ListItemText primary="参考： ユドナリウム" />
       </ListItemLink>
       <ListItemLink href={`https://tyrano.jp/`}>
         <ListItemText primary="参考： ティラノスクリプト" />
       </ListItemLink>
-      <ListItemLink href="https://trpg-studio.com/">
-        <ListItemText primary="参考： ＴＲＰＧスタジオ" />
+      <ListItemLink href={`https://tyrano.jp/tag/`}>
+        <ListItemText primary="タグリファレンス" />
+      </ListItemLink>
+      <ListItemLink href={`https://tyrano.jp/sample2/code/siryou/8`}>
+        <ListItemText primary="映像合成" />
       </ListItemLink>
     </List>
   )

@@ -8,7 +8,7 @@ import type {
   TyranoCharacter,
   TyranoPatchObject,
   YoutbeItem,
-  BgmItem,
+  UrlItem,
 } from '../reducer'
 import type { SelectItem } from '~/components/form/SelectableInputField'
 
@@ -100,7 +100,23 @@ export const fetchYoutube = (spreadId: string): AppThunk => async (
 export const fetchBgms = (spreadId: string): AppThunk => async (dispatch) => {
   const json = await api.getBgms(spreadId)
   const values = json.values
-  const items: BgmItem[] = values.map(([name, url]) => ({ name, url }))
+  const items: UrlItem[] = values.map(([name, url]) => ({ name, url }))
 
   dispatch(actions.changeBgmItems(items))
+}
+export const fetchVideos = (spreadId: string): AppThunk => async (dispatch) => {
+  const json = await api.getVideos(spreadId)
+  const values = json.values
+  const items: UrlItem[] = values.map(([name, url]) => ({ name, url }))
+
+  dispatch(actions.changeLayerMovieItems(items))
+}
+export const fetchSoundEffects = (spreadId: string): AppThunk => async (
+  dispatch,
+) => {
+  const json = await api.getSoundEffects(spreadId)
+  const values = json.values
+  const items: UrlItem[] = values.map(([name, url]) => ({ name, url }))
+
+  dispatch(actions.changeSoundEffectItems(items))
 }

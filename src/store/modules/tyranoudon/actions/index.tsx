@@ -4,7 +4,7 @@ import type {
   TyranoPatchObject,
   Patch,
   YoutbeItem,
-  BgmItem,
+  UrlItem,
 } from '../reducer'
 
 const addUdonariumMessage = createAction(
@@ -114,7 +114,7 @@ const changeBgmUrl = createAction('CHANGE_TYRANO_BGM_URL', (id: string) => ({
 }))
 const changeBgmItems = createAction(
   'CHANGE_TYRANO_BGM_ITEMS',
-  (items: BgmItem[]) => ({
+  (items: UrlItem[]) => ({
     payload: { items },
   }),
 )
@@ -122,6 +122,32 @@ const changeTyranoStatus = createAction(
   'CHANGE_TYRANO_STATUS',
   (status: boolean) => ({
     payload: { status },
+  }),
+)
+
+const changeLayerMovieUrl = createAction(
+  'CHANGE_TYRANO_LAYERM_MOVIE_URL',
+  (url: string) => ({
+    payload: { url },
+  }),
+)
+const changeLayerMovieItems = createAction(
+  'CHANGE_TYRANO_LAYERM_MOVIE_ITEMS',
+  (items: UrlItem[]) => ({
+    payload: { items },
+  }),
+)
+
+const changeSoundEffectUrl = createAction(
+  'CHANGE_TYRANO_SOUND_EFFECT_URL',
+  (url: string) => ({
+    payload: { url },
+  }),
+)
+const changeSoundEffectItems = createAction(
+  'CHANGE_TYRANO_SOUND_EFFECT_ITEMS',
+  (items: UrlItem[]) => ({
+    payload: { items },
   }),
 )
 
@@ -147,4 +173,8 @@ export default {
   changeBgmUrl,
   changeBgmItems,
   changeTyranoStatus,
+  changeLayerMovieUrl,
+  changeLayerMovieItems,
+  changeSoundEffectUrl,
+  changeSoundEffectItems,
 }

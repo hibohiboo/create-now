@@ -65,6 +65,10 @@ export const isTagMessage = (text: string) => {
     'fadeoutbgm',
     'r',
     'l',
+    'layermode_movie',
+    'free_layermode',
+    'playse',
+    'stopse',
   ]
   const tagsLen = tags.length
   if (_.startsWith(text, '[')) {
@@ -291,4 +295,24 @@ export const createStopBGM = () => {
 }
 export const createFadeoutBGM = (time = 3000) => {
   return `[fadeoutbgm time="${time}"]`
+}
+export const createLayerModeMovie = ({
+  url,
+  mode,
+}: {
+  url: string
+  mode: string
+}) => {
+  return `@layermode_movie time="0" video="${url}" mode="${mode}"`
+}
+
+export const createFreeLayerModeMovie = () => {
+  return `@free_layermode time="0" `
+}
+export const createPlaySE = (url: string) => {
+  return `@playse  storage="${url}"`
+}
+
+export const createStopSE = () => {
+  return `@stopse `
 }

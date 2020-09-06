@@ -260,6 +260,30 @@ export const useViewModel = (ctx: PageContext) =>
           text: tyranoMessage.createFadeoutBGM(),
         })
       },
+      sendLayerModeMovie: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createLayerModeMovie(tuState.layerMovie),
+        })
+      },
+      sendFreeLayerModeMovie: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createFreeLayerModeMovie(),
+        })
+      },
+      sendPlaySE: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createPlaySE(tuState.soundEffect.url),
+        })
+      },
+      sendStopSE: () => {
+        sendUdonMessage({
+          ...tuState.characterSettings,
+          text: tyranoMessage.createStopSE(),
+        })
+      },
       changeName: (name: string) => {
         const chara = tuState.characters.find((c) => c.name === name)
         if (chara) dispatch(changeFace(chara.faces[0]))
@@ -303,8 +327,13 @@ export const useViewModel = (ctx: PageContext) =>
         dispatch(actions.changeYoutubeID(id))
       },
       changeBgmItem: (item) => {
-        console.log('changebgm', item)
         dispatch(actions.changeBgmUrl(item.url))
+      },
+      changeLayerMovieItem: (item) => {
+        dispatch(actions.changeLayerMovieUrl(item.url))
+      },
+      changeSoundEffectItem: (item) => {
+        dispatch(actions.changeSoundEffectUrl(item.url))
       },
     }
   })

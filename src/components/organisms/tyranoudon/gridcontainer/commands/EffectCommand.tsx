@@ -17,6 +17,25 @@ const EffectCommand: FC<{
       <ListItem button onClick={vm.sendQuake}>
         揺らす（縦揺れ）
       </ListItem>
+
+      <ListItem>
+        <SelectField
+          id="layer-movie-items"
+          labelText="合成映像選択"
+          items={vm.layerMovie.items}
+          unselectedText=""
+          value={vm.layerMovie.url}
+          valueProp="url"
+          changeHandler={vm.changeLayerMovieItem}
+        />
+      </ListItem>
+      <ListItem button onClick={vm.sendLayerModeMovie}>
+        映像合成
+      </ListItem>
+      <ListItem button onClick={vm.sendFreeLayerModeMovie}>
+        映像合成停止
+      </ListItem>
+
       <ListItem button onClick={vm.sendZawaZawa}>
         ざわ……ざわ……
       </ListItem>

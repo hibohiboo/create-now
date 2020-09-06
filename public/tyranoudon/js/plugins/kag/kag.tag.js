@@ -5236,7 +5236,9 @@ tyrano.plugin.kag.tag.layermode_movie = {
         blend_layer = $("<video class='layer_blend_mode blendlayer blendvideo' data-video-name='"+pm.name+"' data-video-pm='' style='display:none;position:absolute;width:100%;height:100%;z-index:99' ></video>");
         var video = blend_layer.get(0);
         var url = "./data/video/" + pm.video;
-
+        if ($.isHTTP(pm.video)) {
+          url = pm.video;
+        }
         video.src = url;
 
         if (pm.volume != "") {

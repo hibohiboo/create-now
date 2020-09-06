@@ -154,7 +154,7 @@ export const getYoutube = async (spreadId) =>
   await getSheetData(spreadId, 'youtube', 'B2:C')
 
 export const getBgms = async (spreadId) =>
-  await getSheetData(spreadId, 'bgms', 'A2:C')
+  await getSheetData(spreadId, 'bgms', 'A2:B')
 
 export const getScenario = async (spreadId) =>
   await getSheetData(spreadId, 'scenario', 'A2:D')
@@ -168,3 +168,7 @@ const toScenarioTag = ([name, face, script, subscript]) => {
 
   return ret
 }
+export const getVideos = async (spreadId) =>
+  await getSheetData(spreadId, 'videos', 'A2:B')
+export const getSoundEffects = async (spreadId) =>
+  await getSheetData(spreadId, 'soundEffects', 'A2:B')

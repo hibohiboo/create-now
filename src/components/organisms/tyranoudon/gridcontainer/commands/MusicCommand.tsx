@@ -61,6 +61,23 @@ const MusicCommand: FC<{
       <ListItem button onClick={vm.sendFadeOutBGM}>
         フェードアウト
       </ListItem>
+      <ListItem>
+        <SelectField
+          id="se-items"
+          labelText="効果音"
+          items={vm.soundEffect.items}
+          unselectedText=""
+          value={vm.soundEffect.url}
+          valueProp="url"
+          changeHandler={vm.changeSoundEffectItem}
+        />
+      </ListItem>
+      <ListItem button onClick={vm.sendPlaySE}>
+        再生
+      </ListItem>
+      <ListItem button onClick={vm.sendStopSE}>
+        止める
+      </ListItem>
     </List>
   )
 }

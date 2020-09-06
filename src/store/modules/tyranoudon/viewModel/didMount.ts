@@ -27,6 +27,8 @@ export const initPage = (ctx: PageContext, dispatch) => {
   dispatch(thunk.fetchBackgrounds(ctx.tyrano_sheet))
   dispatch(thunk.fetchYoutube(ctx.tyrano_sheet))
   dispatch(thunk.fetchBgms(ctx.tyrano_sheet))
+  dispatch(thunk.fetchVideos(ctx.tyrano_sheet))
+  dispatch(thunk.fetchSoundEffects(ctx.tyrano_sheet))
 }
 
 const receiveUdonMessage = (
