@@ -279,7 +279,7 @@ export const createYoutube = (id: string) => {
 }
 
 export const createPlayBGM = (url: string, loop = true) => {
-  return `[playbgm storage="${url}" loop=${loop ? 'true' : 'false'} volume=80]`
+  return `[playbgm storage="${url}" loop=${loop ? 'true' : 'false'}]`
 }
 export const createFadeinBGM = (url: string, time = 3000, loop = true) => {
   return `[fadeinbgm  storage="${url}" loop=${

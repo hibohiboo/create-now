@@ -6,6 +6,7 @@ import TyranoPanel from '~/components/organisms/tyranoudon/TyranoPanel'
 import ChatPanel from '~/components/organisms/tyranoudon/ChatPanel'
 import CommandPanel from '~/components/organisms/tyranoudon/CommandPanel'
 import OtherPanel from '~/components/organisms/tyranoudon/OtherPanel'
+import GridContainer from '~/components/pages/tyranoudon/GridContainer'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -33,42 +34,49 @@ export default function Page(ctx) {
       <Head>
         <title>TyranoUdon</title>
       </Head>
-      {ctx.tyranoOnly ? <></> : <UdonariumPanel is2d={ctx.is2d} />}
-      {ctx.tyranoOnly ? (
-        <div style={{ margin: '0 auto' }}>
-          <TyranoPanel
-            name={ctx.tyrano_name}
-            defaultHeight={ctx.tyrano_height}
-            defaultWidth={ctx.tyrano_width}
-            sheet={ctx.tyrano_sheet}
-            loaded={vm.tyranoStatus}
-            draggable={!ctx.tyranoOnly}
-            resizable={!ctx.tyranoOnly}
-          />
-        </div>
-      ) : (
-        <TyranoPanel
-          name={ctx.tyrano_name}
-          defaultHeight={ctx.tyrano_height}
-          defaultWidth={ctx.tyrano_width}
-          sheet={ctx.tyrano_sheet}
-          loaded={vm.tyranoStatus}
-          draggable={!ctx.tyranoOnly}
-          resizable={!ctx.tyranoOnly}
-        />
-      )}
-      {ctx.tyranoOnly ? (
-        <></>
+      {ctx.container ? (
+        <GridContainer vm={vm} ctx={ctx} />
       ) : (
         <>
-          <ChatPanel vm={vm} width={width} height={height} />
-          <CommandPanel vm={vm} width={width} height={height} />
-          <OtherPanel
-            vm={vm}
-            width={width}
-            height={height}
-            tyrano_sheet={ctx.tyrano_sheet}
-          />
+          {ctx.tyranoOnly ? <></> : <UdonariumPanel is2d={ctx.is2d} />}
+          {ctx.tyranoOnly ? (
+            <div style={{ margin: '0 auto' }}>
+              <TyranoPanel
+                name={ctx.tyrano_name}
+                defaultHeight={ctx.tyrano_height}
+                defaultWidth={ctx.tyrano_width}
+                sheet={ctx.tyrano_sheet}
+                loaded={vm.tyranoStatus}
+                draggable={!ctx.tyranoOnly}
+                resizable={!ctx.tyranoOnly}
+              />
+            </div>
+          ) : (
+            <TyranoPanel
+              name={ctx.tyrano_name}
+              defaultHeight={ctx.tyrano_height}
+              defaultWidth={ctx.tyrano_width}
+              sheet={ctx.tyrano_sheet}
+              loaded={vm.tyranoStatus}
+              draggable={!ctx.tyranoOnly}
+              resizable={!ctx.tyranoOnly}
+            />
+          )}
+
+          {ctx.tyranoOnly ? (
+            <></>
+          ) : (
+            <>
+              <ChatPanel vm={vm} width={width} height={height} />
+              <CommandPanel vm={vm} width={width} height={height} />
+              <OtherPanel
+                vm={vm}
+                width={width}
+                height={height}
+                tyrano_sheet={ctx.tyrano_sheet}
+              />
+            </>
+          )}
         </>
       )}
     </div>
@@ -83,6 +91,7 @@ Page.getInitialProps = async ({ query }) => {
     (query.tyrano_only && query.tyrano_only === 'true') || false
   const width = (query.tyrano_width && Number(query.tyrano_width)) || null
   const height = (query.tyrano_height && Number(query.tyrano_height)) || null
+  const container = (query.container && query.container === 'true') || false
 
   if (tyrano === 'chat_talk') {
     return {
@@ -110,6 +119,7 @@ Page.getInitialProps = async ({ query }) => {
       tyrano_sheet,
       is2d,
       tyranoOnly,
+      container,
     }
   }
   return {
@@ -118,5 +128,6 @@ Page.getInitialProps = async ({ query }) => {
     tyrano_height: height || 640,
     tyrano_sheet,
     tyranoOnly,
+    container,
   }
 }
