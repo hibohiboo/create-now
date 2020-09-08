@@ -1,6 +1,9 @@
 import * as _ from 'lodash'
-import { init } from '../reducer'
-import type { Chat, CharacterSettings } from '../reducer'
+import { init } from '../../store/modules/tyranoudon/reducer'
+import type {
+  Chat,
+  CharacterSettings,
+} from '../../store/modules/tyranoudon/reducer'
 
 export const partsFilePrefix = 'set'
 const escape = (str: string) => {

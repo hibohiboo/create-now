@@ -1,4 +1,6 @@
+import * as _ from 'lodash'
 import { getSheetData } from './spreadSheet'
+import * as tyranoMessage from '../tyrano/tyranoMessage'
 
 // http://192.168.50.10:3000/api/v1/tyranoudon?sheet=1iW0dZFd1AumfqTVnR_UuPmSRJlBK5ibrgYkUC3AXO58
 
@@ -160,6 +162,15 @@ export const getScenario = async (spreadId) =>
   await getSheetData(spreadId, 'scenario', 'A2:D')
 const toScenarioTag = ([name, face, script, subscript]) => {
   let ret = ''
+
+  // 表情の代わりにセットを使う
+  if (_.startsWith(face, `${tyranoMessage.partsFilePrefix}_`)) {
+    return `
+${tyranoMessage.createTyranoMessage(name, face, '')}
+${script}
+${subscript}
+`
+  }
   if (name && name.trim()) ret += `#${name}`
   if (name && face && face.trim()) ret += `:${face}\n`
   else if (name) ret += '\n'

@@ -4,7 +4,7 @@ import * as thunk from '../thunk'
 import actions from '../actions'
 import type { PostMessageTableImage } from '../ports/udon'
 import type { PostMessageChat } from '../ports/udon'
-import * as tyranoMessage from '../utils/tyranoMessage'
+import * as tyranoMessage from '~/lib/tyrano/tyranoMessage'
 
 export interface PageContext {
   tyrano_name: string

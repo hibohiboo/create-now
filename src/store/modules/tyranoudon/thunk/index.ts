@@ -3,7 +3,7 @@ import { AppThunk } from '~/store/rootState'
 import * as api from '~/lib/api/tyranoudon'
 import actions from '../actions'
 import { init } from '../reducer'
-import { partsFilePrefix } from '../utils/tyranoMessage'
+import { partsFilePrefix } from '~/lib/tyrano/tyranoMessage'
 import type {
   TyranoCharacter,
   TyranoPatchObject,

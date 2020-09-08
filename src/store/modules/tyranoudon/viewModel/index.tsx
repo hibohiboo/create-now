@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../actions'
 import * as thunk from '../thunk'
-import * as tyranoMessage from '../utils/tyranoMessage'
+import * as tyranoMessage from '~/lib/tyrano/tyranoMessage'
 import * as constants from '../constants'
 import { initPage } from './didMount'
 import type {
