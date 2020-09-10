@@ -122,7 +122,7 @@ export const getBackgrounds = async (spreadId) =>
   await getSheetData(spreadId, 'backgrounds', 'B2:E')
 
 export const getCharacterParts = async (spreadId) =>
-  await getSheetData(spreadId, 'chara_parts', 'B2:G')
+  await getSheetData(spreadId, 'chara_parts', 'B2:K')
 const toCharacterPartsTag = ([
   name,
   jname,
@@ -130,10 +130,16 @@ const toCharacterPartsTag = ([
   partsId,
   zIndex,
   url,
+  w,
+  h,
+  t,
+  l,
 ]) => {
   if (!url) return ''
   if (partsName === 'base' && partsId.startsWith('default')) {
-    const [width, height] = partsId.replace('default_', '').split('x')
+    const [w2, h2] = partsId.replace('default_', '').split('x')
+    const width = w || w2
+    const height = h || h2
     return `[chara_new name="${name}" storage="tomei.png" jname="${jname}" width=${width} height=${height}]
 [chara_layer name="${name}" part="${partsName}" id="${partsId}" zindex=${zIndex} storage="${url}"]
 [macro name="chara_parts_set_${name}_default"]
@@ -141,7 +147,13 @@ const toCharacterPartsTag = ([
 [endmacro]
 `
   }
-  return `[chara_layer name="${name}" part="${partsName}" id="${partsId}" zindex=${zIndex} storage="${url}"]`
+  let addStatus = ''
+  if (w) addStatus += ` width="${w}"`
+  if (h) addStatus += ` height="${h}"`
+  if (t) addStatus += ` top="${t}"`
+  if (l) addStatus += ` left="${l}"`
+
+  return `[chara_layer name="${name}" part="${partsName}" id="${partsId}" zindex=${zIndex} storage="${url}" ${addStatus}]`
 }
 export const getCharacterPartsSet = async (spreadId) =>
   await getSheetData(spreadId, 'chara_parts_set', 'A2:C')

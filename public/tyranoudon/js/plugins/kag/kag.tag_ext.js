@@ -1880,6 +1880,9 @@ tyrano.plugin.kag.tag.chara_show = {
 
         var array_storage = [];
 
+        var isPartWidthSet = false; // パーツに幅が設定されているか
+        var isPartHeightSet = false; // パーツに高さが設定されているか
+
         if (cpm == null) {
             this.kag.error("指定されたキャラクター「" + pm.name + "」は定義されていません。[chara_new]で定義してください");
             return;
@@ -2011,12 +2014,15 @@ tyrano.plugin.kag.tag.chara_show = {
 
                 j_img.css({
                    position:"absolute",
-                   left:0,
-                   top:0,
-                   width:"100%",
-                   height:"100%",
+                   left:chara_part['left'] ? `${chara_part['left']}px` : 0,
+                   top: chara_part['top'] ? `${chara_part['top']}px` : 0,
+                   width: chara_part['width'] ? `${chara_part['width']}px` : "100%",
+                   height: chara_part['height'] ? `${chara_part['height']}px` : "100%",
                    "z-index":chara_part.zindex
                 });
+
+                if(chara_part['width']) isPartWidthSet = true
+                if(chara_part['height']) isPartHeightSet = false;
 
                 j_img.addClass("part");
                 j_img.addClass(key); //mouse とか head
@@ -2159,10 +2165,8 @@ tyrano.plugin.kag.tag.chara_show = {
                 j_chara_root.css("width",width);
                 j_chara_root.css("height",height);
 
-                j_chara_root.find(".part").css("width",width);
-                j_chara_root.find(".part").css("height",height);
-
-
+                if(!isPartWidthSet) j_chara_root.find(".part").css("width",width);
+                if(!isPartHeightSet) j_chara_root.find(".part").css("height",height);
             },1);
 
             //オブジェクトにクラス名をセットします name属性は一意でなければなりません
@@ -2902,14 +2906,17 @@ tyrano.plugin.kag.tag.chara_face = {
  キャラクターの表情を差分パーツを定義します。
  デフォルトのパーツは一番最初に登録したものになります。
  :sample
- [chara_layer name="yuko" part=mouse id=egao storage="image/egao.png" ]
+ [chara_layer name="yuko" part=mouse id=egao storage="image/egao.png" width="512" height="512" top="120" left="100" ]
  :param
  name=[chara_new]で定義したname属性を指定してください。,
  part=パーツとして登録する名を指定します。例えば「目」というpartを登録しておいて、このpartの中で他の差分をいくつも登録することができます。,
  id=パーツの中で差分にidを登録できます。例えば「目」というpartの中で「笑顔の目」「泣いてる目」のようにidを分けてstorageを登録してください,
  storage=差分として登録する画像を指定します。画像はfgimageフォルダの中に配置します。noneを指定するとデフォルトそのパーツがない状態を表現することができます,
  zindex=数値を指定します。このpartが他のパーツ重なった時にどの位置に表示されるかを指定します。数値が大きい程、前面に表示されます。一度登録しておけば該当するpartに適応されます。
-
+ left=パーツの左端位置を指定します。（ピクセル）,
+ top=パーツの上端位置を指定します。（ピクセル）,
+ width=パーツの幅を指定します。（ピクセル）,
+ height=パーツの高さを指定します。（ピクセル）,
  #[end]
  */
 
@@ -2922,7 +2929,11 @@ tyrano.plugin.kag.tag.chara_layer = {
         part : "",
         id : "",
         storage : "",
-        zindex : ""
+        zindex : "",
+        left: "",
+        top: "",
+        width: "",
+        height: ""
     },
 
     start : function(pm) {
@@ -2956,7 +2967,11 @@ tyrano.plugin.kag.tag.chara_layer = {
             cpm["_layer"][pm.part] = {
                 "default_part_id":pm.id,
                 "current_part_id":pm.id,
-                "zindex":pm.zindex
+                "zindex":pm.zindex,
+                left: pm.left,
+                top: pm.top,
+                width: pm.width,
+                height: pm.height
             };
         }
 
@@ -3178,6 +3193,15 @@ tyrano.plugin.kag.tag.chara_part = {
                             j_new_img.attr("src", "./tyrano/images/system/transparent.png");
                         }
 
+                        const cssOption = {}
+                        if(part['width']) cssOption.width = `${part['width']}px`
+                        if(part['height']) cssOption.height = `${part['height']}px`
+                        if(part['top']) cssOption.top = `${part['top']}px`
+                        if(part['left']) cssOption.left = `${part['left']}px`
+                        if(cssOption) {
+                          j_new_img.css(cssOption);
+                        }
+
                         //zindexの指定があった場合は、変更を行う
                         if(pm[key+"_zindex"]){
                             j_new_img.css("z-index", pm[key+"_zindex"]);
@@ -3216,6 +3240,15 @@ tyrano.plugin.kag.tag.chara_part = {
 
                     var part = map_part[key];
                     var j_img = target_obj.find(".part"+"." + key + "");
+
+                    const cssOption = {}
+                    if(chara_part[key]['width']) cssOption.width = `${chara_part[key]['width']}px`
+                    if(chara_part[key]['height']) cssOption.height = `${chara_part[key]['height']}px`
+                    if(chara_part[key]['top']) cssOption.top = `${chara_part[key]['top']}px`
+                    if(chara_part[key]['left']) cssOption.left = `${chara_part[key]['left']}px`
+                    if(cssOption) {
+                      j_img.css(cssOption);
+                    }
 
                     if(part.storage!="none"){
                         if($.isHTTP(part.storage)){
