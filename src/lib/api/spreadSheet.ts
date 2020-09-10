@@ -16,5 +16,11 @@ export const getSheetData = async (
 
     return { values: [[]] }
   }
-  return (await res.json()) as { values: string[][] }
+  const json = await res.json()
+  if (!json.values) {
+    console.log('can not get values', json)
+    return { values: [[]] }
+  }
+
+  return json as { values: string[][] }
 }
