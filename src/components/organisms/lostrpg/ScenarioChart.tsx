@@ -96,7 +96,7 @@ const createLabels = (scene) => {
 const setScenes = (phase, pi, g, befores) => {
   phase.scenes.forEach((scene, si) => {
     const nodeName = scene.alias || `phase-${pi}-scene-${si}`
-    let labelStyle = `font-family:"Font Awesome 5 Free", "Font Awesome 5 Brands";`
+    const labelStyle = `font-family:"Font Awesome 5 Free", "Font Awesome 5 Brands";`
     g.setNode(nodeName, {
       label: () => createLabels(scene),
       labelStyle,
@@ -167,8 +167,8 @@ const makeChart = (scenario: Scenario) => {
   svg.attr('height', g.graph().height + 40)
 
   // Set up zoom and Drag support
-  var zoom = d3.zoom().on('zoom', function () {
-    svgGroup.attr('transform', d3.event.transform)
+  const zoom = d3.zoom().on('zoom', function ({ transform }) {
+    svgGroup.attr('transform', transform)
   })
   svg.call(zoom)
 }
