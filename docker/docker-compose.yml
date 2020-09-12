@@ -22,7 +22,10 @@ services:
       - ../.prettierrc.js:/app/.prettierrc.js
       - ../.env:/app/.env
       - ../.env.build:/app/.env.build
-
+      - ../elm.json:/app/elm.json
+      # elm packageのキャッシュ
+      - cacheGardenElmStuffStarter:/app/elm-stuff
+      - cacheGardenDotElmStarter:/root/.elm
     ports:
       - 3000:3000
     environment:
@@ -62,3 +65,7 @@ services:
       - CHOKIDAR_USEPOLLING=true # デフォルトの設定の場合、vagrantだとファイルの変更を検知できない。pollingが必要。
     working_dir: /app
     command: [npm, run, storybook]
+volumes:
+  # elmのpackageを毎回ダウンロードしなくてもよいように、キャッシュを行う。2か所のキャッシュが必要。
+  cacheGardenElmStuffStarter:
+  cacheGardenDotElmStarter:

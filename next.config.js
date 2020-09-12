@@ -2,11 +2,42 @@
 const { resolve } = require('path')
 const withOffline = require('next-offline')
 require('dotenv').config()
-
+const MODE =
+  process.env.npm_lifecycle_event === 'prod' ? 'production' : 'development'
+const withDebug = !process.env['npm_config_nodebug'] && MODE == 'development'
 const nextConfig = {
   webpack: (config) => {
     // src ディレクトリをエイリアスのルートに設定
     config.resolve.alias['~'] = resolve(__dirname, 'src')
+    config.resolve.extensions.push('.elm')
+    if (MODE === 'development') {
+      config.module.rules.push({
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        use: [
+          { loader: 'elm-hot-webpack-loader' },
+          {
+            loader: 'elm-webpack-loader',
+            options: {
+              // add Elm's debug overlay to output
+              debug: withDebug,
+            },
+          },
+        ],
+      })
+    } else {
+      config.module.rules.push({
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        use: {
+          loader: 'elm-webpack-loader',
+          options: {
+            optimize: true,
+          },
+        },
+      })
+    }
+
     return config
   },
   // manifest設定

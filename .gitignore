@@ -113,3 +113,6 @@ package-lock.json
 # tyranoscript
 public/tyrano
 public/mygame
+
+# elm
+elm-stuff

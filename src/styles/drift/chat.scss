@@ -1,0 +1,106 @@
+.chat-drift {
+
+  .button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+    background: rgb(66, 184, 221);
+  }
+
+  .page {
+    max-width: 960px;
+    height: 100%;
+    margin: 0 auto; // ブラウザの幅が960px以上の時に中央に揃える
+    padding: 10px;
+    background-color: #fff;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    box-shadow: 0 0 15px #DDDDDD;
+
+    .card {
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+
+      .card-header {
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-bottom: 1px solid #e5e5e5;
+      }
+
+      hr {
+        margin: 0 20px;
+        border: 1px solid #f5f5f5;
+      }
+
+      .media-body {
+        width: 100%;
+        padding: 18px;
+        margin: 0 10px;
+        background-color: #F5F5F5;
+        border-radius: 10px;
+        font-size: 15px;
+        word-break: break-all;
+
+        h4 {
+          margin: 4px;
+
+          .media-heading {
+            color: #999999;
+            font-size: 13px;
+          }
+        }
+      }
+
+      .card-block {
+        padding: 10px;
+      }
+
+      .card-body {
+        .media {
+          display: flex;
+          padding: 20px;
+        }
+      }
+
+      a.icon-rounded {
+        display: block;
+        font-size: 26px;
+        color: #fff;
+        text-align: center;
+        margin: 5px;
+        padding: 5px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        text-decoration: none;
+      }
+
+      .media-left {
+        a.icon-rounded {
+          background-color: #f0ad4e;
+        }
+      }
+
+
+      .media-right {
+        a.icon-rounded {
+          background-color: #5cb85c;
+        }
+      }
+    }
+
+    .chart-form {
+      margin: 20px 0;
+
+      .input-group {
+        display: flex;
+      }
+
+      input {
+        width: 100%;
+      }
+    }
+  }
+}

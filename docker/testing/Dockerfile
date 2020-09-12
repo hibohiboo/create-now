@@ -139,3 +139,14 @@ RUN npm i dotenv --save-dev
 RUN npm i react-draggable
 RUN npm i react-resizable
 RUN npm i react-select
+## elm
+RUN npm i -D elm
+RUN npm i -D elm-format
+RUN npm i -D elm-minify
+RUN npm i -D elm-webpack-loader
+RUN npm i -D elm-hot-webpack-loader
+RUN npm i -D elm-test
+RUN npm i -D elm-verify-examples
+
+# elm-test --watchしたときのpolling設定
+RUN sed -i -e "s/\(cwd: projectRootDir,\)/\1\n    usePolling: true, /g" /app/node_modules/elm-test/lib/elm-test.js
