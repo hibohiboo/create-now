@@ -3,7 +3,7 @@ const { resolve } = require('path')
 const withOffline = require('next-offline')
 require('dotenv').config()
 const MODE =
-  process.env.npm_lifecycle_event === 'prod' ? 'production' : 'development'
+  process.env.npm_lifecycle_event === 'dev' ? 'development' : 'production'
 const withDebug = !process.env['npm_config_nodebug'] && MODE == 'development'
 const nextConfig = {
   webpack: (config) => {

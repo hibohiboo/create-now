@@ -31,8 +31,8 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true # デフォルトの設定の場合、vagrantだとファイルの変更を検知できない。pollingが必要。
     working_dir: /app
-    command: [vercel, dev]
-    # command: [npm, run, dev]
+    # command: [vercel, dev]
+    command: [npm, run, dev]
 
   testing:
     # Dockerfileビルド
@@ -59,6 +59,10 @@ services:
       - ../.storybook:/app/.storybook
       - ../.env:/app/.env
       - ../.env.build:/app/.env.build
+      - ../elm.json:/app/elm.json
+      # elm packageのキャッシュ
+      - cacheGardenElmStuffStarter:/app/elm-stuff
+      - cacheGardenDotElmStarter:/root/.elm
     ports:
       - 6006:6006
     environment:
