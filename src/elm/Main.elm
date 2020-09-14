@@ -53,7 +53,7 @@ init _ =
       , zone =
             Time.utc
       }
-    , Cmd.none
+    , Task.perform AdjustTimeZone Time.here
     )
 
 
@@ -64,7 +64,8 @@ init _ =
 
 
 type Msg
-    = UpdateContent String
+    = AdjustTimeZone Zone
+    | UpdateContent String
     | SendContent
     | AddComment Posix
 
@@ -72,11 +73,14 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ me, content, comments } as model) =
     case msg of
+        AdjustTimeZone zone ->
+            ( { model | zone = zone }, Cmd.none )
+
         UpdateContent c ->
             ( { model | content = c }, Cmd.none )
 
         SendContent ->
-            ( model, Cmd.batch [ Task.perform AddComment Time.now ] )
+            ( model, Task.perform AddComment Time.now )
 
         AddComment postTime ->
             ( updateSendContent postTime model, Cmd.none )
