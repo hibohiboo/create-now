@@ -47,26 +47,22 @@ suite =
                     suzuki =
                         User 2 "Suzuki Taro"
                 in
-                [ test "Tanaka Jiroのイニシャルは「T」だ。" <|
-                    \_ ->
-                        let
-                            actual =
-                                nameInitial tanaka
-
-                            expect =
-                                "T"
-                        in
-                        Expect.equal expect actual
+                [ nameInitialTest tanaka "T"
+                , nameInitialTest suzuki "S"
                 ]
-            , test "Suzuki Taroのイニシャルは「S」だ。" <|
-                \_ ->
-                    let
-                        actual =
-                            nameInitial suzuki
-
-                        expect =
-                            "S"
-                    in
-                    Expect.equal expect actual
             ]
         ]
+
+
+nameInitialTest : User -> String -> Test
+nameInitialTest ({ name } as user) initial =
+    test (name ++ "のイニシャルは「" ++ initial ++ "」だ。") <|
+        \_ ->
+            let
+                actual =
+                    nameInitial user
+
+                expect =
+                    initial
+            in
+            Expect.equal expect actual
