@@ -127,7 +127,7 @@ mediaView : User -> Comment -> Html Msg
 mediaView me { user, content } =
     div [ class "media" ]
         [ div [ class "media-left" ]
-            [ a [ href "#", class "icon-rounded" ] [ text "S" ]
+            [ a [ href "#", class "icon-rounded" ] [ text <| nameInitial user ]
             ]
         , div [ class "media-body" ]
             [ h4 [ class "media-heading" ] [ text <| user.name ++ " Date:2018/12/29" ]
