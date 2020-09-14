@@ -3,6 +3,7 @@ module Main exposing (Model, Msg(..), chatForm, init, main, update, view)
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, type_)
+import Html.Events exposing (onInput)
 
 
 
@@ -91,7 +92,7 @@ chatForm : Html Msg
 chatForm =
     form [ class "chart-form pure-form" ]
         [ div [ class "input-group" ]
-            [ input [ type_ "text", class "", placeholder "Comment" ] []
+            [ input [ type_ "text", class "", placeholder "Comment", onInput UpdateContent ] []
             , button [ class "pure-button button-secondary" ] [ text "SNED" ]
             ]
         ]
