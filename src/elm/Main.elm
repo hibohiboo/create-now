@@ -87,9 +87,71 @@ updateSendContent ({ me, content, comments } as model) =
         }
 
 
-toDate : Time.Zone -> Time.Posix -> String
+toDate : Zone -> Posix -> String
 toDate zone time =
-    ""
+    let
+        padZero2 =
+            String.padLeft 2 '0'
+
+        month =
+            Time.toMonth zone time |> omissionMonth
+
+        day =
+            Time.toDay zone time |> String.fromInt
+
+        year =
+            Time.toYear zone time |> String.fromInt
+
+        hour =
+            Time.toHour zone time |> String.fromInt |> padZero2
+
+        minutes =
+            Time.toMinute zone time |> String.fromInt |> padZero2
+
+        seconds =
+            Time.toSecond zone time |> String.fromInt |> padZero2
+    in
+    month ++ " " ++ day ++ "," ++ year ++ "," ++ hour ++ ":" ++ minutes ++ ":" ++ seconds
+
+
+omissionMonth : Time.Month -> String
+omissionMonth month =
+    case month of
+        Jan ->
+            "Jan"
+
+        Feb ->
+            "Feb"
+
+        Mar ->
+            "Mar"
+
+        Apr ->
+            "Apr"
+
+        May ->
+            "May"
+
+        Jun ->
+            "Jun"
+
+        Jul ->
+            "Jul"
+
+        Aug ->
+            "Aug"
+
+        Sep ->
+            "Sep"
+
+        Oct ->
+            "Oct"
+
+        Nov ->
+            "Nov"
+
+        Dec ->
+            "Dec"
 
 
 
