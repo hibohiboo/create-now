@@ -8,17 +8,38 @@ import Test.Html.Query as Query
 import Test.Html.Selector as Selector
 
 
+nameInitialTest : User -> String -> Test
+nameInitialTest ({ name } as user) initial =
+    test (name ++ "のイニシャルは「" ++ initial ++ "」だ。") <|
+        \_ ->
+            let
+                actual =
+                    nameInitial user
+
+                expect =
+                    initial
+            in
+            Expect.equal expect actual
+
+
 suite : Test
 suite =
     describe "The Main module"
         [ describe "chatForm"
             [ test "フォームに 'abc' と入力したら UpdateContent 'abc' の Msgが発行される" <|
                 \_ ->
-                    chatForm
+                    chatForm ""
                         |> Query.fromHtml
                         |> Query.find [ Selector.tag "input" ]
                         |> Event.simulate (Event.input "abc")
                         |> Event.expect (UpdateContent "abc")
+            , test "SENDボタンを押したら、SendContent Msgが発行される" <|
+                \_ ->
+                    chatForm ""
+                        |> Query.fromHtml
+                        |> Query.find [ Selector.tag "button" ]
+                        |> Event.simulate Event.click
+                        |> Event.expect SendContent
             ]
         , describe "mediaView" <|
             let
@@ -69,18 +90,52 @@ suite =
                         |> Query.index 0
                         |> Query.has [ Selector.class "media-left" ]
             ]
-        ]
-
-
-nameInitialTest : User -> String -> Test
-nameInitialTest ({ name } as user) initial =
-    test (name ++ "のイニシャルは「" ++ initial ++ "」だ。") <|
-        \_ ->
+        , describe "nameInitial" <|
             let
-                actual =
-                    nameInitial user
+                tanaka =
+                    User 1 "Tanaka Jiro"
 
-                expect =
-                    initial
+                suzuki =
+                    User 2 "Suzuki Taro"
             in
-            Expect.equal expect actual
+            [ nameInitialTest tanaka "T"
+            , nameInitialTest suzuki "S"
+            ]
+        , describe "updateSendContent" <|
+            let
+                tanaka =
+                    User 1 "Tanaka Jiro"
+
+                suzuki =
+                    User 2 "Suzuki Taro"
+            in
+            [ test "打たれている内容が空の場合、コメント反映はされない。" <|
+                \_ ->
+                    let
+                        actual =
+                            updateSendContent <| Model tanaka "" []
+
+                        expect =
+                            Model tanaka "" []
+                    in
+                    Expect.equal expect actual
+            , test "打たれている内容が空ではない場合、コメントはリストの先頭に追加され、内容は空になる。" <|
+                \_ ->
+                    let
+                        actual =
+                            updateSendContent <|
+                                Model tanaka
+                                    "second"
+                                    [ Comment suzuki "first"
+                                    ]
+
+                        expect =
+                            Model tanaka
+                                ""
+                                [ Comment tanaka "second"
+                                , Comment suzuki "first"
+                                ]
+                    in
+                    Expect.equal expect actual
+            ]
+        ]

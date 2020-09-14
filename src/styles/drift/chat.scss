@@ -12,12 +12,15 @@
     max-width: 960px;
     height: 100%;
     margin: 0 auto; // ブラウザの幅が960px以上の時に中央に揃える
-    padding: 10px;
+    padding: 10px 0;
     background-color: #fff;
     border-left: 1px solid #DDDDDD;
     border-right: 1px solid #DDDDDD;
     box-shadow: 0 0 15px #DDDDDD;
-
+    overflow: scroll;
+    section {
+      margin: 0 10px 30px;
+    }
     .card {
       border: 1px solid #e5e5e5;
       border-radius: 4px;
@@ -101,6 +104,18 @@
       input {
         width: 100%;
       }
+    }
+    .page-footer {
+      margin: 20px 0;	    display: block;
+      position: fixed;
+      margin: 0;
+      padding: 10px;
+      bottom: 0;
+      height: 55px;
+      width: 100%;
+      max-width: 958px;
+      background-color: #fff;
+      border-top: 1px solid #DDDDDD;
     }
   }
 }

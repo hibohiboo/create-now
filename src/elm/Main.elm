@@ -2,8 +2,8 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (..)
-import Html.Attributes exposing (class, href, placeholder, type_)
-import Html.Events exposing (onInput)
+import Html.Attributes exposing (class, href, placeholder, type_, value)
+import Html.Events exposing (onClick, onInput)
 
 
 
@@ -13,7 +13,7 @@ import Html.Events exposing (onInput)
 
 
 type alias Model =
-    { content : String, comments : List Comment }
+    { me : User, content : String, comments : List Comment }
 
 
 type alias Comment =
@@ -39,12 +39,14 @@ suzuki =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { content = ""
+    ( { me = tanaka
+      , content = ""
       , comments =
-            [ Comment suzuki "1つ目のコメントです。"
-            , Comment suzuki "2つ目のコメントです。"
-            , Comment tanaka "1つ目のコメントです。"
-            , Comment suzuki "3つ目のコメントです。"
+            [ Comment tanaka "Tanakaの2つ目のコメントです。"
+            , Comment suzuki "Suzukiの3つ目のコメントです。"
+            , Comment tanaka "Tanakaの1つ目のコメントです。"
+            , Comment suzuki "Suzukiの2つ目のコメントです。"
+            , Comment suzuki "Suzukiの1つ目のコメントです。"
             ]
       }
     , Cmd.none
@@ -59,14 +61,29 @@ init _ =
 
 type Msg
     = UpdateContent String
+    | SendContent
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update msg ({ me, content, comments } as model) =
     case msg of
-        -- イベントで受け取った値でモデルを更新
         UpdateContent c ->
             ( { model | content = c }, Cmd.none )
+
+        SendContent ->
+            ( updateSendContent model, Cmd.none )
+
+
+updateSendContent : Model -> Model
+updateSendContent ({ me, content, comments } as model) =
+    if String.isEmpty (String.trim content) then
+        model
+
+    else
+        { model
+            | comments = Comment me content :: comments
+            , content = ""
+        }
 
 
 
@@ -86,39 +103,27 @@ main =
 
 
 view : Model -> Html Msg
-view { content, comments } =
+view { me, content, comments } =
     div [ class "page" ]
         [ section [ class "card" ]
             [ div [ class "card-header" ]
                 [ text "Elm Chat"
                 ]
             , div [ class "card-body" ] <|
-                List.map (mediaView tanaka) comments
-                    ++ [ hr [] []
-                       , div
-                            [ class "media" ]
-                            [ div [ class "media-body" ]
-                                [ h4 [ class "media-heading" ] [ text "Tanaka Jiro Date:2016/09/01" ]
-                                , div [] [ text content ]
-                                ]
-                            , div
-                                [ class "media-right" ]
-                                [ a [ href "#", class "icon-rounded" ] [ text "T" ]
-                                ]
-                            ]
-                       ]
+                (comments |> List.reverse |> List.map (mediaView me) |> List.intersperse (hr [] []))
             ]
-        , section []
-            [ chatForm ]
+        , section [ class "page-footer" ]
+            [ chatForm content
+            ]
         ]
 
 
-chatForm : Html Msg
-chatForm =
-    form [ class "chart-form pure-form" ]
+chatForm : String -> Html Msg
+chatForm content =
+    div [ class "chart-form pure-form" ]
         [ div [ class "input-group" ]
-            [ input [ type_ "text", class "", placeholder "Comment", onInput UpdateContent ] []
-            , button [ class "pure-button button-secondary" ] [ text "SNED" ]
+            [ input [ type_ "text", value content, placeholder "Comment", onInput UpdateContent ] []
+            , button [ class "pure-button button-secondary", onClick SendContent ] [ text "SNED" ]
             ]
         ]
 
