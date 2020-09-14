@@ -4,6 +4,7 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
+import Time exposing (Month(..), Posix, Weekday(..), Zone)
 
 
 
@@ -84,6 +85,11 @@ updateSendContent ({ me, content, comments } as model) =
             | comments = Comment me content :: comments
             , content = ""
         }
+
+
+toDate : Time.Zone -> Time.Posix -> String
+toDate zone time =
+    ""
 
 
 

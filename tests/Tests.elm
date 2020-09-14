@@ -6,6 +6,7 @@ import Test exposing (..)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
+import Time exposing (utc)
 
 
 nameInitialTest : User -> String -> Test
@@ -135,6 +136,18 @@ suite =
                                 [ Comment tanaka "second"
                                 , Comment suzuki "first"
                                 ]
+                    in
+                    Expect.equal expect actual
+            ]
+        , describe "toDate" <|
+            [ test "Posixから Jan 1,2019,00:00:00" <|
+                \_ ->
+                    let
+                        actual =
+                            toDate utc (Time.millisToPosix 1546300800000)
+
+                        expect =
+                            "Jan 1,2019,00:00:00"
                     in
                     Expect.equal expect actual
             ]
