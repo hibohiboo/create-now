@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), init, main, update, view)
+module Main exposing (Model, Msg(..), chatForm, init, main, update, view)
 
 import Browser
 import Html exposing (..)
@@ -27,7 +27,7 @@ init _ =
 
 
 type Msg
-    = NoOp
+    = UpdateContent String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -83,11 +83,15 @@ view model =
                 ]
             ]
         , section []
-            [ form [ class "chart-form pure-form" ]
-                [ div [ class "input-group" ]
-                    [ input [ type_ "text", class "", placeholder "Comment" ] []
-                    , button [ class "pure-button button-secondary" ] [ text "SNED" ]
-                    ]
-                ]
+            [ chatForm ]
+        ]
+
+
+chatForm : Html Msg
+chatForm =
+    form [ class "chart-form pure-form" ]
+        [ div [ class "input-group" ]
+            [ input [ type_ "text", class "", placeholder "Comment" ] []
+            , button [ class "pure-button button-secondary" ] [ text "SNED" ]
             ]
         ]

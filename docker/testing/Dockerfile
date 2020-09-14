@@ -150,3 +150,4 @@ RUN npm i -D elm-verify-examples
 
 # elm-test --watchしたときのpolling設定
 RUN sed -i -e "s/\(cwd: projectRootDir,\)/\1\n    usePolling: true, /g" /app/node_modules/elm-test/lib/elm-test.js
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"elm-test\": \"elm-test --watch\", /g" /app/package.json
