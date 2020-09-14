@@ -20,4 +20,24 @@ suite =
                         |> Event.simulate (Event.input "abc")
                         |> Event.expect (UpdateContent "abc")
             ]
+        , describe "mediaView" <|
+            let
+                suzukiComment =
+                    mediaView (Comment "Suzuki Taro" "コメントです。")
+            in
+            [ test "コメントしたのは、「Suzuki Taro」だ。" <|
+                \_ ->
+                    suzukiComment
+                        |> Query.fromHtml
+                        |> Query.find [ Selector.class "media-body" ]
+                        |> Query.find [ Selector.tag "h4" ]
+                        |> Query.has [ Selector.text "Suzuki Taro Date:2018/12/29" ]
+            , test "コメント内容は、「コメントです。」だ。" <|
+                \_ ->
+                    suzukiComment
+                        |> Query.fromHtml
+                        |> Query.find [ Selector.class "media-body" ]
+                        |> Query.find [ Selector.tag "div" ]
+                        |> Query.has [ Selector.text "コメントです。" ]
+            ]
         ]

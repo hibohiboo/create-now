@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), chatForm, init, main, update, view)
+module Main exposing (..)
 
 import Browser
 import Html exposing (..)
@@ -13,12 +13,29 @@ import Html.Events exposing (onInput)
 
 
 type alias Model =
-    {}
+    { content : String }
+
+
+type alias Comment =
+    { name : String, content : String }
+
+
+mediaView : Comment -> Html Msg
+mediaView comment =
+    div [ class "media" ]
+        [ div [ class "media-left" ]
+            [ a [ href "#", class "icon-rounded" ] [ text "S" ]
+            ]
+        , div [ class "media-body" ]
+            [ h4 [ class "media-heading" ] [ text " Date:2018/12/29" ]
+            , div [] [ text "" ]
+            ]
+        ]
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( {}, Cmd.none )
+    ( { content = "" }, Cmd.none )
 
 
 
@@ -33,7 +50,10 @@ type Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        -- イベントで受け取った値でモデルを更新
+        UpdateContent c ->
+            ( { model | content = c }, Cmd.none )
 
 
 
@@ -53,7 +73,7 @@ main =
 
 
 view : Model -> Html Msg
-view model =
+view { content } =
     div [ class "page" ]
         [ section [ class "card" ]
             [ div [ class "card-header" ]
@@ -74,7 +94,7 @@ view model =
                     [ class "media" ]
                     [ div [ class "media-body" ]
                         [ h4 [ class "media-heading" ] [ text "Tanaka Jiro Date:2016/09/01" ]
-                        , div [] [ text "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています!" ]
+                        , div [] [ text content ]
                         ]
                     , div
                         [ class "media-right" ]
