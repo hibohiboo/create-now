@@ -61,6 +61,13 @@ suite =
                         |> Query.children [ Selector.class "media-part" ]
                         |> Query.index 1
                         |> Query.has [ Selector.class "media-right" ]
+            , test "自分以外のアイコンは左側に「media-left」のクラスが付くはずだ。" <|
+                \_ ->
+                    otherComment
+                        |> Query.fromHtml
+                        |> Query.children [ Selector.class "media-part" ]
+                        |> Query.index 0
+                        |> Query.has [ Selector.class "media-left" ]
             ]
         ]
 
