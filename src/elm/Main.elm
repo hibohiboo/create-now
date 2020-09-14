@@ -13,29 +13,24 @@ import Html.Events exposing (onInput)
 
 
 type alias Model =
-    { content : String }
+    { content : String, comments : List Comment }
 
 
 type alias Comment =
     { name : String, content : String }
 
 
-mediaView : Comment -> Html Msg
-mediaView comment =
-    div [ class "media" ]
-        [ div [ class "media-left" ]
-            [ a [ href "#", class "icon-rounded" ] [ text "S" ]
-            ]
-        , div [ class "media-body" ]
-            [ h4 [ class "media-heading" ] [ text " Date:2018/12/29" ]
-            , div [] [ text "" ]
-            ]
-        ]
-
-
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { content = "" }, Cmd.none )
+    ( { content = ""
+      , comments =
+            [ Comment "Suzuki Taro" "1つ目のコメントです。"
+            , Comment "Suzuki Taro" "2つ目のコメントです。"
+            , Comment "Suzuki Taro" "3つ目のコメントです。"
+            ]
+      }
+    , Cmd.none
+    )
 
 
 
@@ -73,35 +68,27 @@ main =
 
 
 view : Model -> Html Msg
-view { content } =
+view { content, comments } =
     div [ class "page" ]
         [ section [ class "card" ]
             [ div [ class "card-header" ]
                 [ text "Elm Chat"
                 ]
-            , div [ class "card-body" ]
-                [ div [ class "media" ]
-                    [ div [ class "media-left" ]
-                        [ a [ href "#", class "icon-rounded" ] [ text "S" ]
-                        ]
-                    , div [ class "media-body" ]
-                        [ h4 [ class "media-heading" ] [ text "Suzuki Taro Date:2016/09/01" ]
-                        , div [] [ text "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。" ]
-                        ]
-                    ]
-                , hr [] []
-                , div
-                    [ class "media" ]
-                    [ div [ class "media-body" ]
-                        [ h4 [ class "media-heading" ] [ text "Tanaka Jiro Date:2016/09/01" ]
-                        , div [] [ text content ]
-                        ]
-                    , div
-                        [ class "media-right" ]
-                        [ a [ href "#", class "icon-rounded" ] [ text "T" ]
-                        ]
-                    ]
-                ]
+            , div [ class "card-body" ] <|
+                List.map mediaView comments
+                    ++ [ hr [] []
+                       , div
+                            [ class "media" ]
+                            [ div [ class "media-body" ]
+                                [ h4 [ class "media-heading" ] [ text "Tanaka Jiro Date:2016/09/01" ]
+                                , div [] [ text content ]
+                                ]
+                            , div
+                                [ class "media-right" ]
+                                [ a [ href "#", class "icon-rounded" ] [ text "T" ]
+                                ]
+                            ]
+                       ]
             ]
         , section []
             [ chatForm ]
@@ -114,5 +101,18 @@ chatForm =
         [ div [ class "input-group" ]
             [ input [ type_ "text", class "", placeholder "Comment", onInput UpdateContent ] []
             , button [ class "pure-button button-secondary" ] [ text "SNED" ]
+            ]
+        ]
+
+
+mediaView : Comment -> Html Msg
+mediaView { name, content } =
+    div [ class "media" ]
+        [ div [ class "media-left" ]
+            [ a [ href "#", class "icon-rounded" ] [ text "S" ]
+            ]
+        , div [ class "media-body" ]
+            [ h4 [ class "media-heading" ] [ text <| name ++ " Date:2018/12/29" ]
+            , div [] [ text content ]
             ]
         ]
