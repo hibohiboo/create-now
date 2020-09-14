@@ -23,7 +23,7 @@ suite =
         , describe "mediaView" <|
             let
                 suzukiComment =
-                    mediaView (Comment "Suzuki Taro" "コメントです。")
+                    mediaView (Comment (User 1 "Suzuki Taro") "コメントです。")
             in
             [ test "コメントしたのは、「Suzuki Taro」だ。" <|
                 \_ ->
@@ -39,5 +39,24 @@ suite =
                         |> Query.find [ Selector.class "media-body" ]
                         |> Query.find [ Selector.tag "div" ]
                         |> Query.has [ Selector.text "コメントです。" ]
+            ]
+        , describe "nameInitial" <|
+            let
+                tanaka =
+                    User 1 "Tanaka Jiro"
+
+                suzuki =
+                    User 2 "Suzuki Taro"
+            in
+            [ test "Tanaka Jiroのイニシャルは「T」だ。" <|
+                \_ ->
+                    let
+                        actual =
+                            nameInitial tanaka
+
+                        expect =
+                            "T"
+                    in
+                    Expect.equal expect actual
             ]
         ]

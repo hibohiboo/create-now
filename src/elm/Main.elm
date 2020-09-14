@@ -17,16 +17,34 @@ type alias Model =
 
 
 type alias Comment =
-    { name : String, content : String }
+    { user : User, content : String }
+
+
+type alias User =
+    { uid : Int, name : String }
+
+
+nameInitial : User -> String
+nameInitial { name } =
+    ""
+
+
+tanaka =
+    User 1 "Tanaka Jiro"
+
+
+suzuki =
+    User 2 "Suzuki Taro"
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { content = ""
       , comments =
-            [ Comment "Suzuki Taro" "1つ目のコメントです。"
-            , Comment "Suzuki Taro" "2つ目のコメントです。"
-            , Comment "Suzuki Taro" "3つ目のコメントです。"
+            [ Comment suzuki "1つ目のコメントです。"
+            , Comment suzuki "2つ目のコメントです。"
+            , Comment tanaka "1つ目のコメントです。"
+            , Comment suzuki "3つ目のコメントです。"
             ]
       }
     , Cmd.none
@@ -106,13 +124,13 @@ chatForm =
 
 
 mediaView : Comment -> Html Msg
-mediaView { name, content } =
+mediaView { user, content } =
     div [ class "media" ]
         [ div [ class "media-left" ]
             [ a [ href "#", class "icon-rounded" ] [ text "S" ]
             ]
         , div [ class "media-body" ]
-            [ h4 [ class "media-heading" ] [ text <| name ++ " Date:2018/12/29" ]
+            [ h4 [ class "media-heading" ] [ text <| user.name ++ " Date:2018/12/29" ]
             , div [] [ text content ]
             ]
         ]
