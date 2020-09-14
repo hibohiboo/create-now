@@ -54,6 +54,13 @@ suite =
                         |> Query.fromHtml
                         |> Query.find [ Selector.class "icon-rounded" ]
                         |> Query.has [ Selector.text "T" ]
+            , test "自身のアイコンは右側に「media-right」のクラスが付くはずだ。" <|
+                \_ ->
+                    meComment
+                        |> Query.fromHtml
+                        |> Query.children [ Selector.class "media-part" ]
+                        |> Query.index 1
+                        |> Query.has [ Selector.class "media-right" ]
             ]
         ]
 

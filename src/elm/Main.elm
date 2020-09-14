@@ -126,10 +126,10 @@ chatForm =
 mediaView : User -> Comment -> Html Msg
 mediaView me { user, content } =
     div [ class "media" ]
-        [ div [ class "media-left" ]
+        [ div [ class "media-right media-part" ]
             [ a [ href "#", class "icon-rounded" ] [ text <| nameInitial user ]
             ]
-        , div [ class "media-body" ]
+        , div [ class "media-body media-part" ]
             [ h4 [ class "media-heading" ] [ text <| user.name ++ " Date:2018/12/29" ]
             , div [] [ text content ]
             ]
