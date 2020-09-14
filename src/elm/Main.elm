@@ -94,7 +94,7 @@ toDate zone time =
             String.padLeft 2 '0'
 
         month =
-            Time.toMonth zone time |> omissionMonth
+            Time.toMonth zone time |> toMonthNumber
 
         day =
             Time.toDay zone time |> String.fromInt
@@ -108,50 +108,75 @@ toDate zone time =
         minutes =
             Time.toMinute zone time |> String.fromInt |> padZero2
 
-        seconds =
-            Time.toSecond zone time |> String.fromInt |> padZero2
+        week =
+            Time.toWeekday zone time |> toJapaneseWeekday
     in
-    month ++ " " ++ day ++ "," ++ year ++ "," ++ hour ++ ":" ++ minutes ++ ":" ++ seconds
+    year ++ "年" ++ month ++ "月" ++ day ++ "日 " ++ hour ++ ":" ++ minutes ++ " " ++ week ++ "曜日"
 
 
-omissionMonth : Time.Month -> String
-omissionMonth month =
+toMonthNumber : Time.Month -> String
+toMonthNumber month =
     case month of
         Jan ->
-            "Jan"
+            "1"
 
         Feb ->
-            "Feb"
+            "2"
 
         Mar ->
-            "Mar"
+            "3"
 
         Apr ->
-            "Apr"
+            "4"
 
         May ->
-            "May"
+            "5"
 
         Jun ->
-            "Jun"
+            "6"
 
         Jul ->
-            "Jul"
+            "7"
 
         Aug ->
-            "Aug"
+            "8"
 
         Sep ->
-            "Sep"
+            "9"
 
         Oct ->
-            "Oct"
+            "10"
 
         Nov ->
-            "Nov"
+            "11"
 
         Dec ->
-            "Dec"
+            "12"
+
+
+toJapaneseWeekday : Weekday -> String
+toJapaneseWeekday weekday =
+    case weekday of
+        Mon ->
+            "月"
+
+        Tue ->
+            "火"
+
+        Wed ->
+            "水"
+
+        Thu ->
+            "木"
+
+        Fri ->
+            "金"
+
+        Sat ->
+            "土"
+
+        Sun ->
+            "日"
 
 
 
