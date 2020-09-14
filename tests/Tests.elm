@@ -51,18 +51,18 @@ suite =
                     User 2 "Suzuki Taro"
 
                 meComment =
-                    mediaView tanaka (Comment tanaka "田中のコメントです。")
+                    mediaView tanaka Time.utc (Comment tanaka "田中のコメントです。" newYear2019)
 
                 otherComment =
-                    mediaView tanaka (Comment suzuki "鈴木のコメントです。")
+                    mediaView tanaka Time.utc (Comment suzuki "鈴木のコメントです。" newYear2019)
             in
-            [ test "コメントしたのは、「Suzuki Taro」だ。" <|
+            [ test "コメントしたのは、「Tanaka Jiro」で、現在時刻が表示されるはずだ。" <|
                 \_ ->
                     meComment
                         |> Query.fromHtml
                         |> Query.find [ Selector.class "media-body" ]
                         |> Query.find [ Selector.tag "h4" ]
-                        |> Query.has [ Selector.text "Tanaka Jiro Date:2018/12/29" ]
+                        |> Query.has [ Selector.text "Tanaka Jiro Date: 2019年1月1日 00:00 火曜日" ]
             , test "コメント内容は、「コメントです。」だ。" <|
                 \_ ->
                     meComment
@@ -114,28 +114,30 @@ suite =
                 \_ ->
                     let
                         actual =
-                            updateSendContent <| Model tanaka "" []
+                            updateSendContent newYear2019 <| Model tanaka "" [] Time.utc
 
                         expect =
-                            Model tanaka "" []
+                            Model tanaka "" [] Time.utc
                     in
                     Expect.equal expect actual
             , test "打たれている内容が空ではない場合、コメントはリストの先頭に追加され、内容は空になる。" <|
                 \_ ->
                     let
                         actual =
-                            updateSendContent <|
+                            updateSendContent newYear2019 <|
                                 Model tanaka
                                     "second"
-                                    [ Comment suzuki "first"
+                                    [ Comment suzuki "first" newYear2019
                                     ]
+                                    Time.utc
 
                         expect =
                             Model tanaka
                                 ""
-                                [ Comment tanaka "second"
-                                , Comment suzuki "first"
+                                [ Comment tanaka "second" newYear2019
+                                , Comment suzuki "first" newYear2019
                                 ]
+                                Time.utc
                     in
                     Expect.equal expect actual
             ]
@@ -152,3 +154,7 @@ suite =
                     Expect.equal expect actual
             ]
         ]
+
+
+newYear2019 =
+    Time.millisToPosix 1546300800000

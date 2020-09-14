@@ -4,6 +4,7 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
+import Task
 import Time exposing (Month(..), Posix, Weekday(..), Zone)
 
 
@@ -14,11 +15,15 @@ import Time exposing (Month(..), Posix, Weekday(..), Zone)
 
 
 type alias Model =
-    { me : User, content : String, comments : List Comment }
+    { me : User
+    , content : String
+    , comments : List Comment
+    , zone : Zone
+    }
 
 
 type alias Comment =
-    { user : User, content : String }
+    { user : User, content : String, postTime : Posix }
 
 
 type alias User =
@@ -43,12 +48,10 @@ init _ =
     ( { me = tanaka
       , content = ""
       , comments =
-            [ Comment tanaka "Tanakaの2つ目のコメントです。"
-            , Comment suzuki "Suzukiの3つ目のコメントです。"
-            , Comment tanaka "Tanakaの1つ目のコメントです。"
-            , Comment suzuki "Suzukiの2つ目のコメントです。"
-            , Comment suzuki "Suzukiの1つ目のコメントです。"
+            [ Comment suzuki "新年明けましておめでとうございます。" (Time.millisToPosix 1546300800000)
             ]
+      , zone =
+            Time.utc
       }
     , Cmd.none
     )
@@ -63,6 +66,7 @@ init _ =
 type Msg
     = UpdateContent String
     | SendContent
+    | AddComment Posix
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -72,17 +76,20 @@ update msg ({ me, content, comments } as model) =
             ( { model | content = c }, Cmd.none )
 
         SendContent ->
-            ( updateSendContent model, Cmd.none )
+            ( model, Cmd.batch [ Task.perform AddComment Time.now ] )
+
+        AddComment postTime ->
+            ( updateSendContent postTime model, Cmd.none )
 
 
-updateSendContent : Model -> Model
-updateSendContent ({ me, content, comments } as model) =
+updateSendContent : Posix -> Model -> Model
+updateSendContent postTime ({ me, content, comments } as model) =
     if String.isEmpty (String.trim content) then
         model
 
     else
         { model
-            | comments = Comment me content :: comments
+            | comments = Comment me content postTime :: comments
             , content = ""
         }
 
@@ -196,14 +203,14 @@ main =
 
 
 view : Model -> Html Msg
-view { me, content, comments } =
+view { me, content, comments, zone } =
     div [ class "page" ]
         [ section [ class "card" ]
             [ div [ class "card-header" ]
                 [ text "Elm Chat"
                 ]
             , div [ class "card-body" ] <|
-                (comments |> List.reverse |> List.map (mediaView me) |> List.intersperse (hr [] []))
+                (comments |> List.reverse |> List.map (mediaView me zone) |> List.intersperse (hr [] []))
             ]
         , section [ class "page-footer" ]
             [ chatForm content
@@ -221,12 +228,12 @@ chatForm content =
         ]
 
 
-mediaView : User -> Comment -> Html Msg
-mediaView me { user, content } =
+mediaView : User -> Zone -> Comment -> Html Msg
+mediaView me zone { user, content, postTime } =
     let
         mediaBody =
             div [ class "media-body media-part" ]
-                [ h4 [ class "media-heading" ] [ text <| user.name ++ " Date:2018/12/29" ]
+                [ h4 [ class "media-heading" ] [ text <| user.name ++ " Date: " ++ toDate zone postTime ]
                 , div [] [ text content ]
                 ]
 
