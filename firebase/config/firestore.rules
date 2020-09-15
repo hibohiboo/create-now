@@ -17,6 +17,11 @@ service cloud.firestore {
       allow create: if isSignedIn()
       allow delete, update: if isOwner(resource)
     }
+    match /systems/drift/{documents=**} {
+      allow read
+      allow create: if isSignedIn()
+      allow delete, update: if isOwner(resource)
+    }
     match /others/memolist/{documents=**} {
       allow read, create, update
       allow delete: if isOwner(resource)

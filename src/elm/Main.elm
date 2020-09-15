@@ -1,11 +1,57 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
+import Json.Decode as D
+import Json.Decode.Pipeline as Pipeline
+import Json.Encode as E exposing (Value)
 import Task
 import Time exposing (Month(..), Posix, Weekday(..), Zone)
+
+
+
+-- ---------------------------
+-- Ports
+-- ---------------------------
+
+
+port addCollection : Value -> Cmd msg
+
+
+port readComments : () -> Cmd msg
+
+
+port readedComments : (Value -> msg) -> Sub msg
+
+
+
+-- ==============================================================================================
+-- エンコーダ
+-- ==============================================================================================
+
+
+encodeUser : User -> Value
+encodeUser user =
+    E.object
+        [ ( "uid", E.int <| user.uid )
+        , ( "name", E.string <| user.name )
+        ]
+
+
+encodeComment : Comment -> Value
+encodeComment comment =
+    E.object
+        [ ( "user", encodeUser comment.user )
+        , ( "content", E.string <| comment.content )
+        , ( "postTime", E.int <| Time.posixToMillis comment.postTime )
+        ]
+
+
+encode : Comment -> Value
+encode comment =
+    E.object [ ( "collection", E.string <| "comments" ), ( "payload", encodeComment comment ) ]
 
 
 
@@ -23,11 +69,16 @@ type alias Model =
 
 
 type alias Comment =
-    { user : User, content : String, postTime : Posix }
+    { user : User
+    , content : String
+    , postTime : Posix
+    }
 
 
 type alias User =
-    { uid : Int, name : String }
+    { uid : Int
+    , name : String
+    }
 
 
 nameInitial : User -> String
@@ -83,7 +134,7 @@ update msg ({ me, content, comments } as model) =
             ( model, Task.perform AddComment Time.now )
 
         AddComment postTime ->
-            ( updateSendContent postTime model, Cmd.none )
+            ( updateSendContent postTime model, addCollection <| encode <| Comment model.me model.content postTime )
 
 
 updateSendContent : Posix -> Model -> Model
