@@ -204,3 +204,4 @@ select
 [Elmでビュー(チャット画面)を作る](https://qiita.com/ababup1192/items/ed3be0b0d7b2d1b42a44)
 [github.com simonh1000 elm-webpack-starter](https://github.com/simonh1000/elm-webpack-starter)
 [関数型言語Elmでテスト駆動開発(第1~4章)](https://qiita.com/ababup1192/items/d6ca1af6efcbac8d550f)
+[Angular+Firebaseでチャットアプリを作る](https://qiita.com/Yamamoto0525/items/a76ea4b3924eeb82b0f9)

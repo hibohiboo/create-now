@@ -24,6 +24,11 @@ const Created: React.FC = () => {
         <li>
           <Link href="/memoList"> 卓メモ </Link>
         </li>
+        <li>
+          <Link href="/tyrano/udon?tyrano_sheet=15nPd3S39OZZVxHUK0odXxcuDnYT_YIsK1oVP2zcKyd0&is2d=true&container=true">
+            ティラノウドン
+          </Link>
+        </li>
       </ul>
     </>
   )

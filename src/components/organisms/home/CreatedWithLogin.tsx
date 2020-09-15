@@ -9,8 +9,11 @@ const CreatedWithLogin: React.FC<{ authUser: any }> = ({ authUser }) => {
         <>
           <div>ログインをすると表示されます。</div>
           <div>
-            <Link href={'/auth/login'}>ログイン</Link>
+            <Link href={'/auth/login-ja.html'}>ログイン</Link>
           </div>
+          {/* <div>
+            <Link href={'/auth/login'}>Login</Link>
+          </div> */}
         </>
       ) : (
         <>
