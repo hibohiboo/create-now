@@ -1,7 +1,7 @@
 module Tests exposing (suite)
 
+import Chat exposing (..)
 import Expect exposing (Expectation)
-import Main exposing (..)
 import Test exposing (..)
 import Test.Html.Event as Event
 import Test.Html.Query as Query

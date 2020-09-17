@@ -17,6 +17,7 @@ export default function Home({
         <title>{vm.title}</title>
       </Head>
       <div id="elm-node"></div>
+      <div id="elm-node-chat"></div>
     </div>
   )
 }
