@@ -9,32 +9,32 @@ WORKDIR /app
 COPY .npmrc /app/.npmrc
 RUN npm init -y
 
-# RUN npm i --no-optional next react react-dom ... 速度早くならず
-RUN npm i next react react-dom
+# RUN npm i --no-optional --no-optional next react react-dom ... 速度早くならず
+RUN npm i --no-optional next react react-dom
 
 # TypeScript追加
-RUN npm i -D typescript @types/react @types/react-dom @types/node
+RUN npm i --no-optional -D typescript @types/react @types/react-dom @types/node
 
 # resetcss
-RUN npm i -D sanitize.css
+RUN npm i --no-optional -D sanitize.css
 
 # Progressive Web Apps (PWA) 対応
-RUN npm i -D next-offline
+RUN npm i --no-optional -D next-offline
 
 # スタイリング
-RUN npm i -D styled-components styled-media-query
+RUN npm i --no-optional -D styled-components styled-media-query
 
 # 状態管理
-RUN npm i -D @reduxjs/toolkit react-redux redux-logger
+RUN npm i --no-optional -D @reduxjs/toolkit react-redux redux-logger
 
 # linter formatter
-RUN npm i -D eslint eslint-plugin-react prettier eslint-config-prettier eslint-plugin-prettier
-RUN npm i -D @typescript-eslint/parser @typescript-eslint/eslint-plugin
+RUN npm i --no-optional -D eslint eslint-plugin-react prettier eslint-config-prettier eslint-plugin-prettier
+RUN npm i --no-optional -D @typescript-eslint/parser @typescript-eslint/eslint-plugin
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"lint\": \"eslint --ext .ts,.tsx --ignore-path .gitignore .\", /g" /app/package.json
 
 # TODO: vercel@19.0.0以上 にアップデート
 # https://github.com/zeit/now/releases
-RUN npm i -g vercel@latest
+RUN npm i --no-optional -g vercel@latest
 
 # vercel loginで出来た認証トークンを保存.一度コンテナを作成した後に追加。
 COPY ./com.vercel.cli /root/.local/share/com.vercel.cli/
@@ -43,75 +43,75 @@ RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"build\": \"next build\", /g" /app/
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"start\": \"next start\", /g" /app/package.json
 
 ## canvas library
-RUN npm i react-konva konva --save
+RUN npm i --no-optional react-konva konva --save
 
 ## pdf
 
-RUN npm i pdfmake
+RUN npm i --no-optional pdfmake
 
-RUN npm i @material-ui/core
+RUN npm i --no-optional @material-ui/core
 
 ## 認証
 ### 便利ツール lodash
-RUN npm i lodash
+RUN npm i --no-optional lodash
 
 ### session
-RUN npm i cookie-session
+RUN npm i --no-optional cookie-session
 
 ### fetch
-RUN npm i isomorphic-unfetch
+RUN npm i --no-optional isomorphic-unfetch
 
 ### firebase
-RUN npm i firebase
-RUN npm i react-firebaseui
-RUN npm i firebase-admin
+RUN npm i --no-optional firebase
+RUN npm i --no-optional react-firebaseui
+RUN npm i --no-optional firebase-admin
 
 ## react redux firestore
 
-RUN npm i @material-ui/icons
+RUN npm i --no-optional @material-ui/icons
 
 # next-js tutorial
-RUN npm i gray-matter
-RUN npm i sass --save-dev
-RUN npm i remark remark-html
-RUN npm i date-fns
+RUN npm i --no-optional gray-matter
+RUN npm i --no-optional sass --save-dev
+RUN npm i --no-optional remark remark-html
+RUN npm i --no-optional date-fns
 
 # material-ui tables
-RUN npm i material-table
+RUN npm i --no-optional material-table
 
 # i18n
-RUN npm i rosetta
+RUN npm i --no-optional rosetta
 
 # drop file
-RUN npm i react-dropzone
+RUN npm i --no-optional react-dropzone
 
 # classname切替
-RUN npm i classnames
+RUN npm i --no-optional classnames
 
 # @testing-library/jest-dom
-RUN npm i sanitize-html
+RUN npm i --no-optional sanitize-html
 
 # visualization
-RUN npm i dagre-d3 d3
+RUN npm i --no-optional dagre-d3 d3
 
 # file save
-RUN npm i file-saver
-RUN npm i jszip
-RUN npm i crypto-js
-RUN npm i dotenv --save-dev
+RUN npm i --no-optional file-saver
+RUN npm i --no-optional jszip
+RUN npm i --no-optional crypto-js
+RUN npm i --no-optional dotenv --save-dev
 
-RUN npm i react-draggable
-RUN npm i react-resizable
-RUN npm i react-select
+RUN npm i --no-optional react-draggable
+RUN npm i --no-optional react-resizable
+RUN npm i --no-optional react-select
 
 ## elm
 RUN npm i -D elm
-RUN npm i -D elm-format
-RUN npm i -D elm-minify
-RUN npm i -D elm-webpack-loader
-RUN npm i -D elm-hot-webpack-loader
-RUN npm i -D elm-test
-RUN npm i -D elm-verify-examples
+RUN npm i --no-optional -D elm-format
+RUN npm i --no-optional -D elm-minify
+RUN npm i --no-optional -D elm-webpack-loader
+RUN npm i --no-optional -D elm-hot-webpack-loader
+RUN npm i --no-optional -D elm-test
+RUN npm i --no-optional -D elm-verify-examples
 
 # elm-test --watchしたときのpolling設定
 RUN sed -i -e "s/\(cwd: projectRootDir,\)/\1\n    usePolling: true, /g" /app/node_modules/elm-test/lib/elm-test.js
