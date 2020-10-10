@@ -155,6 +155,6 @@ suite =
             ]
         ]
 
-
+newYear2019: TIme.Posix
 newYear2019 =
     Time.millisToPosix 1546300800000

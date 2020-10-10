@@ -85,11 +85,11 @@ nameInitial : User -> String
 nameInitial { name } =
     String.slice 0 1 name
 
-
+tanaka: User
 tanaka =
     User 1 "Tanaka Jiro"
 
-
+suzuki: User
 suzuki =
     User 2 "Suzuki Taro"
 
