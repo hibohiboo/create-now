@@ -33,13 +33,16 @@ export class FileArchiver {
     saveAs(file)
   }
 }
+
 export const createDoc = () =>
   document.implementation.createDocument('', '', null)
+
 const setAttributes = (e: Element, attributes: [string, string][]) => {
   attributes.forEach(([attr, val]) => {
     e.setAttribute(attr, val)
   })
 }
+
 export const createElement = (
   doc: Document,
   elm: string,

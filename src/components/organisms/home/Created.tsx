@@ -29,6 +29,16 @@ const Created: React.FC = () => {
             ティラノウドン
           </Link>
         </li>
+        <li>
+          <Link href="/rooper/card-maker">
+            惨劇RoopeR オリジナルカードメイカー
+          </Link>
+        </li>
+        <li>
+          <Link href="/rooper/card-maker-list">
+            惨劇RoopeR オリジナルカードセット一覧
+          </Link>
+        </li>
       </ul>
     </>
   )
