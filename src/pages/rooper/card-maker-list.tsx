@@ -46,10 +46,6 @@ const Home: NextPage = () => {
     }
 
     setList([...exportList, { name, canvas }])
-    console.log(exportList)
-    // canvas.toBlob((blob) => {
-    //   onFileChange(blob)
-    // })
   }
   const downloadZip = () => {
     createZip(exportList)
@@ -106,15 +102,7 @@ const Home: NextPage = () => {
               key={name}
               defChara={name}
               onFileChange={(canvas) => {
-                // console.log(blob)
-                // const identifier = await calcSHA256Async(blob)
                 addList(name, canvas)
-
-                // files.push(
-                //   new File([blob], identifier + '.' + MimeType.extension(blob.type), {
-                //     type: blob.type,
-                //   }),
-                // )
               }}
             />
           ))}

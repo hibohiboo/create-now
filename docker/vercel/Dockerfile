@@ -32,7 +32,6 @@ RUN npm i --no-optional -D eslint eslint-plugin-react prettier eslint-config-pre
 RUN npm i --no-optional -D @typescript-eslint/parser @typescript-eslint/eslint-plugin
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"lint\": \"eslint --ext .ts,.tsx --ignore-path .gitignore .\", /g" /app/package.json
 
-# TODO: vercel@19.0.0以上 にアップデート
 # https://github.com/zeit/now/releases
 RUN npm i --no-optional -g vercel@latest
 

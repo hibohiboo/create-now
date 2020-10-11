@@ -9,7 +9,7 @@ import {
 type Character = { name: CharacterName; canvas: any }
 type CharacterName =
   | 'boy' //  男子学生
-  | 'gir' //  女子学生
+  | 'girl' //  女子学生
   | 'rmd' //  お嬢様
   | 'shr' //  巫女
   | 'kg' //  刑事
@@ -67,7 +67,7 @@ const characterFactory = (identifier: string, c: Character) => {
   switch (c.name) {
     case 'boy':
       return createCharacter(identifier, '男子学生', '学校', '01')
-    case 'gir':
+    case 'girl':
       return createCharacter(identifier, '女子学生', '学校', '02')
     case 'rmd':
       return createCharacter(identifier, 'お嬢様', '学校', '03')
