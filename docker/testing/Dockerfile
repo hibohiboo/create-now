@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:14.13.1
+FROM node:14.14.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -13,7 +13,7 @@ RUN npm init -y
 RUN npm i --no-optional -D jest @testing-library/jest-dom jest-css-modules
 RUN npm i --no-optional -D ts-jest @types/jest
 RUN npm i --no-optional -D @testing-library/react
-RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tests\": \"jest tests\/__tests__\/.*\/*.spec.tsx?$\", /g" /app/package.json
+RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"tests\": \"jest tests\/__tests__\/.*\/*.spec.tsx?$\",/g" /app/package.json
 
 # Story Book
 RUN npx -p @storybook/cli sb init --type react
