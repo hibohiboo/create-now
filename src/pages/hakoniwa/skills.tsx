@@ -2,7 +2,7 @@ import Head from 'next/head'
 import * as React from 'react'
 import { NextPage } from 'next'
 import Footer from '~/components/organisms/common/Footer'
-import SkillCard from '~/components/organisms/hakoniwa/SkillCard'
+import SkillList from '~/components/organisms/hakoniwa/SkillList'
 import { useViewModel } from '~/store/modules/hakoniwaModule/viewModel/skills'
 const Page: NextPage = (ctx: any) => {
   const cardData = {
@@ -48,9 +48,7 @@ const Page: NextPage = (ctx: any) => {
       </Head>
       <main>
         <h1>カードリスト</h1>
-        {vm.cards.map((card, index) => (
-          <SkillCard cardData={card} key={index} />
-        ))}
+        <SkillList width={600} height={800} vm={vm} />
 
         <Footer />
       </main>

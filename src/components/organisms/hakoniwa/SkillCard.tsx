@@ -190,7 +190,7 @@ const SkillCard: React.FC<{
           </div>
         </div>
       </div>
-      <button onClick={() => onClickExport()}>PNG出力</button>
+      {/* <button onClick={() => onClickExport()}>PNG出力</button> */}
     </>
   )
 }

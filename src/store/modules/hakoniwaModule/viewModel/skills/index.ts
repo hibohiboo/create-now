@@ -16,3 +16,5 @@ export const useViewModel = (ctx: PageContext) =>
       ...hState,
     }
   })
+
+export type ViewModel = ReturnType<typeof useViewModel>
