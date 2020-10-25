@@ -163,7 +163,10 @@ const SkillCard: React.FC = () => {
                   <></>
                 )}
                 <div className="effect">{cardData.effect}</div>
-                <div className="description">{cardData.description}</div>
+                <div className={['description', 'link2'].join(' ')}>
+                  {cardData.description}
+                </div>
+                <div className={['description', 'link'].join(' ')}></div>
               </div>
               <div className="bottomContent">
                 {/* <div className="cardId">{cardData.id}</div> */}

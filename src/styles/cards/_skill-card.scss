@@ -212,6 +212,60 @@
             padding-left: $mainContentLeftPadding;
 
             font-size: 0.8em;
+            position: relative;
+          }
+          %triangle-base {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0px;
+            left: 0;
+            width: 0px;
+            height: 0px;
+            margin: auto;
+            border-style: solid;
+            border-color: #eeff00 transparent transparent transparent;
+            border-width: 20px 20px 0 20px;
+          }
+          .description.link:before{
+            @extend %triangle-base;
+            bottom: auto;
+            left: auto;
+            right: -10px;
+            top: 50px;
+
+            border-color: #eeff00 transparent  transparent  transparent ;
+            border-width: 20px 20px 0 20px;
+            opacity: 0.5;
+            transform: rotateZ(-90deg);
+          }
+
+          .description.link:after{
+            @extend %triangle-base;
+            bottom: auto;
+            left: auto;
+            right: 0px;
+            top: 55px;
+
+            border-color: rgb(25, 105, 0) transparent  transparent  transparent ;
+            border-width: 10px 10px 0 10px;
+            opacity: 0.5;
+            transform: rotateZ(-90deg);
+          }
+
+          .description.link2:before{
+            @extend %triangle-base;
+            bottom: 0px;
+            border-color: #eeff00 transparent transparent transparent;
+            border-width: 20px 20px 0 20px;
+            opacity: 0.5;
+          }
+          .description.link2:after{
+            @extend %triangle-base;
+            bottom: 5px;
+            border-color: rgb(25, 105, 0) transparent transparent transparent;
+            border-width: 10px 10px 0 10px;
+            opacity: 0.5;
           }
         }
         .bottomContent {
