@@ -89,6 +89,7 @@
     "konva": "^7.1.4",
     "lodash": "^4.17.20",
     "material-table": "^1.69.1",
+    "moment": "^2.29.1",
     "next": "^9.5.5",
     "pdfmake": "^0.1.68",
     "react": "^17.0.1",

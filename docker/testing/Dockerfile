@@ -153,3 +153,4 @@ RUN sed -i -e "s/\(cwd: projectRootDir,\)/\1\n    usePolling: true, /g" /app/nod
 RUN sed -i -e "s/\(\"scripts\": {\)/\1\n    \"elm-test\": \"elm-test --watch\", /g" /app/package.json
 
 RUN npm i --no-optional html2canvas
+RUN npm i --no-optional moment
