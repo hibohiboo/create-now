@@ -24,7 +24,14 @@ const CardList: FC<{
       resizable={true}
       draggable={true}
     >
-      <div style={{ display: 'flex' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          height: '600px',
+          overflow: 'scroll',
+        }}
+      >
         {vm.cards.map((card, index) => (
           <SkillCard
             cardData={card}

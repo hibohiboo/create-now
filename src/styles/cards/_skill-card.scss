@@ -51,6 +51,11 @@
           border-top-style: none;
           border-right-style: none;
         }
+        .border-tr {
+          @extend %border;
+          border-bottom-style: none;
+          border-left-style: none;
+        }
         .border-blr {
           @extend %border;
           border-top-style: none;
@@ -59,7 +64,10 @@
           @extend %border;
           border-left-style: none;
         }
-
+        .border-tlr {
+          @extend %border;
+          border-bottom-style: none;
+        }
         .image {
           grid-column: innerLeft; // 左端
           grid-row: pictTop/exp; // 画像行の頭

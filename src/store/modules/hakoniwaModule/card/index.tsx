@@ -1,9 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 export type Card = {
   type: string
+  kind: string
   name: string
   timing: string
-  count: number
+  count: string
   target: string
   range: string
   tags: string[]
@@ -14,6 +15,7 @@ export type Card = {
   maxLevel: null | number
   level: null | number
   link: 0 | 1 | 2
+  exp: null | string
 }
 export type SelectedCard = Card & { uid: string; identifier: string }
 export const init = {

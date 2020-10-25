@@ -11,8 +11,9 @@ const csvToCard: (items: any[]) => Card = (items) => {
     name,
     type,
     kind,
+    exp,
     timing,
-    strCount,
+    count,
     range,
     target,
     strMaxLevel,
@@ -28,10 +29,11 @@ const csvToCard: (items: any[]) => Card = (items) => {
 
   const tags = strTags.split(',')
   const image = !url ? null : { text: siteName, url }
-  const count = Number(strCount)
+  // const count = Number(strCount)
   const maxLevel = strMaxLevel ? Number(strMaxLevel) : null
   const level = maxLevel ? 1 : null
   const link: Card['link'] = strLink ? (Number(strLink) as Card['link']) : 0
+  // const exp = strExp ? (Number(strExp) as Card['exp']) : null
   return {
     id,
     name,
@@ -47,6 +49,8 @@ const csvToCard: (items: any[]) => Card = (items) => {
     description,
     tags,
     image,
+    kind,
+    exp,
   }
 }
 

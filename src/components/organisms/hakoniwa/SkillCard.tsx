@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import html2canvas from 'html2canvas'
-import Hidden from '@material-ui/core/Hidden'
-import { Box } from '@material-ui/core'
-import { Stage, Layer } from 'react-konva'
-import Dropzone from 'react-dropzone'
-import URLImage from '~/components/atoms/URLImage'
-import SelectField from '~/components/form/SelectField'
-import { createSetImageFile } from '~/utils/formHelper'
 
+import { createSetImageFile } from '~/utils/formHelper'
+import type { Card } from '~/store/modules/hakoniwaModule/card'
 // html2canvas で得られる URI を用いてダウンロードさせる関数
 // Ref: https://stackoverflow.com/questions/31656689/how-to-save-img-to-users-local-computer-using-html2canvas
 const saveAsImage = (uri) => {
@@ -33,22 +28,7 @@ const saveAsImage = (uri) => {
 }
 
 const SkillCard: React.FC<{
-  cardData: {
-    type: string
-    name: string
-    timing: string
-    count: number
-    target: string
-    range: number
-    tags: string[]
-    effect: string
-    description: string
-    id: string
-    image: any
-    maxLevel: any
-    level: any
-    link: number
-  }
+  cardData: Card
   onClick: (card: any) => void
 }> = ({ cardData, onClick }) => {
   const canvasWidth = 252
@@ -96,6 +76,7 @@ const SkillCard: React.FC<{
     target: '対象',
     maxLevel: '最大Lv',
     level: 'Lv',
+    exp: 'EXP',
   }
 
   return (
@@ -108,7 +89,7 @@ const SkillCard: React.FC<{
         <div className="skill-card">
           <div className="wrapper">
             <div className="base">
-              <div className="skillLabel">{cardData.type}</div>
+              <div className="skillLabel">{`${cardData.type}/${cardData.kind}`}</div>
               <div className="image">
                 {cardData.image ? (
                   <img
@@ -120,10 +101,18 @@ const SkillCard: React.FC<{
                 )}
               </div>
               <div className="cardName">{cardData.name}</div>
-              {/* <div className="attrTimingLabel attrLabel border">
-                {labelData.timing}
-              </div>
-              <div className="attrTimingValue border">{cardData.timing}</div> */}
+              {cardData.timing ? (
+                <>
+                  <div className="attrTimingLabel attrLabel border-tlr">
+                    {labelData.timing}
+                  </div>
+                  <div className="attrTimingValue border-tr">
+                    {cardData.timing}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
               <div className="attrCostLabel attrLabel border">
                 {labelData.count}
               </div>
@@ -136,10 +125,16 @@ const SkillCard: React.FC<{
                 {labelData.target}
               </div>
               <div className="attrTargetValue border-br">{cardData.target}</div>
-              {/* <div className="attrExpLabel attrLabel border">
-                {labelData.exp}
-              </div>
-              <div className="attrExpValue border">{cardData.exp}</div> */}
+              {cardData.exp ? (
+                <>
+                  <div className="attrExpLabel attrLabel border-blr">
+                    {labelData.exp}
+                  </div>
+                  <div className="attrExpValue border-br">{cardData.exp}</div>{' '}
+                </>
+              ) : (
+                <></>
+              )}
               <div className="tags">
                 {cardData.tags.map((tag) => (
                   <span className="tag" key={tag}>

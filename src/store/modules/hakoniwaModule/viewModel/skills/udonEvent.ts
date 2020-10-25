@@ -1,4 +1,5 @@
 import html2canvas from 'html2canvas'
+import moment from 'moment'
 import { calcSHA256Async } from '~/lib/udonarium/FileReaderUtil'
 import { MimeType } from '~/lib/udonarium/mimeType'
 import {
@@ -40,7 +41,7 @@ const createZip = async (cards: SelectedCard[]) => {
   )
   files.push(createCardStack('山札', mappedList))
 
-  FileArchiver.instance.save(files, 'scenario')
+  FileArchiver.instance.save(files, moment().format('YYYYMMDD_HHmmss'))
 }
 const createCardStack = (stackName: string, cards: SelectedCard[]) => {
   const doc = createDoc()
@@ -128,7 +129,7 @@ const createCard = (doc: Document, card: SelectedCard) => {
   image.appendChild(back)
   const common = createElement(doc, 'data', [['name', 'common']])
   const name = createElement(doc, 'data', [['name', 'name']], card.name)
-  const size = createElement(doc, 'data', [['name', 'size']], '3')
+  const size = createElement(doc, 'data', [['name', 'size']], '2')
   const detail = createElement(doc, 'data', [['name', 'detail']])
   image.appendChild(imageIdentifier)
   common.appendChild(name)
