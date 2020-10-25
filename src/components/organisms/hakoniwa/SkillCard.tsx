@@ -49,7 +49,8 @@ const SkillCard: React.FC<{
     level: any
     link: number
   }
-}> = ({ cardData }) => {
+  onClick: (card: any) => void
+}> = ({ cardData, onClick }) => {
   const canvasWidth = 252
   const canvasHight = 352
 
@@ -102,6 +103,7 @@ const SkillCard: React.FC<{
       <div
         id="target-component"
         style={{ padding: '0px', width: '252px', backgroundColor: '#fff' }}
+        onClick={onClick}
       >
         <div className="skill-card">
           <div className="wrapper">

@@ -3,7 +3,7 @@ import { Box, FormControl, TextareaAutosize, Button } from '@material-ui/core'
 import DraggablePanel from '~/components/molecules/mui/DraggablePanel'
 import type { ViewModel } from '~/store/modules/hakoniwaModule/viewModel/skills'
 import SkillCard from '~/components/organisms/hakoniwa/SkillCard'
-const ChatPanel: FC<{
+const CardList: FC<{
   width: number
   height: number
   vm: ViewModel
@@ -24,10 +24,16 @@ const ChatPanel: FC<{
       resizable={true}
       draggable={true}
     >
-      {vm.cards.map((card, index) => (
-        <SkillCard cardData={card} key={index} />
-      ))}
+      <div style={{ display: 'flex' }}>
+        {vm.cards.map((card, index) => (
+          <SkillCard
+            cardData={card}
+            key={index}
+            onClick={() => vm.addSelectCard(card)}
+          />
+        ))}
+      </div>
     </DraggablePanel>
   )
 }
-export default ChatPanel
+export default CardList

@@ -15,9 +15,20 @@ export type Card = {
   level: null | number
   link: 0 | 1 | 2
 }
-export const init = { cards: [] as Card[] }
+type SelectedCard = Card & { uid: string }
+export const init = {
+  cards: [] as Card[],
+  selectedCards: [] as SelectedCard[],
+}
+type CardState = typeof init
 export const reducers = {
-  setCards: (state, action: PayloadAction<Card[]>) => {
+  setCards: (state: CardState, action: PayloadAction<Card[]>) => {
     state.cards = action.payload
+  },
+  setSelectedCards: (
+    state: CardState,
+    action: PayloadAction<SelectedCard[]>,
+  ) => {
+    state.selectedCards = action.payload
   },
 }

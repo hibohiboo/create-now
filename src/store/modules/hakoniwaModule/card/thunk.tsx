@@ -25,12 +25,12 @@ const csvToCard: (items: any[]) => Card = (items) => {
     siteName,
     delFlg,
   ] = items
-  console.log('items', items)
+
   const tags = strTags.split(',')
   const image = !url ? null : { text: siteName, url }
   const count = Number(strCount)
   const maxLevel = strMaxLevel ? Number(strMaxLevel) : null
-  const level = maxLevel ? null : 1
+  const level = maxLevel ? 1 : null
   const link: Card['link'] = strLink ? (Number(strLink) as Card['link']) : 0
   return {
     id,
