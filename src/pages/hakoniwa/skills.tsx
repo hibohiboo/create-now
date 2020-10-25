@@ -48,7 +48,10 @@ const Page: NextPage = (ctx: any) => {
       </Head>
       <main>
         <h1>カードリスト</h1>
-        <SkillCard cardData={cardData} />
+        {vm.cards.map((card, index) => (
+          <SkillCard cardData={card} key={index} />
+        ))}
+
         <Footer />
       </main>
     </div>
