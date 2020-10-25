@@ -10,8 +10,7 @@ import {
 } from '~/lib/fileArchiver'
 import type { SelectedCard } from '~/store/modules/hakoniwaModule/card'
 import type { HakoniwaState } from '../../index'
-const CARD_BACK =
-  '/third/udonarium/assets/images/trump/./assets/images/trump/z02.gif'
+const CARD_BACK = './assets/images/trump/z02.gif'
 
 const getCanvasBlob = (canvas): Promise<Blob> =>
   new Promise((resolve, reject) => canvas.toBlob((blob) => resolve(blob)))
