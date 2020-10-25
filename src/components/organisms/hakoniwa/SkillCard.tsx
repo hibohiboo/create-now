@@ -88,8 +88,14 @@ const SkillCard: React.FC = () => {
     range: 0,
     tags: ['攻撃', '剣'],
     effect: `剣のダメージ+[Lv]。
-リンク1。`,
-    description: '気合の声を上げ、全力で相手を叩き伏せる。',
+リンク1。
+
+リンク3。
+`,
+    description: `気合の声を上げ、全力で相手を叩き伏せる。あるいはいろいろする
+    気合の声を上げ、全力で相手を叩き伏せる。
+    気合の声を上げ、全力で相手を叩き伏せる。
+    `,
     id: 'b-1',
     image: null,
     maxLevel: null,

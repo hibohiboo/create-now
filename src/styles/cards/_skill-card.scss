@@ -202,6 +202,7 @@
 
             padding-top: $mainContentTopPadding;
             padding-left: $mainContentLeftPadding;
+            white-space: pre-line; // 折り返し反映。行末空白削除
           }
           .description {
             grid-column: 1/-1;
@@ -213,6 +214,7 @@
 
             font-size: 0.8em;
             position: relative;
+            white-space: pre-line; // 折り返し反映。行末空白削除
           }
           %triangle-base {
             content: "";
@@ -229,24 +231,24 @@
           }
           $link-opacity: 0.5;
           $link-trinangle-size-mini: 10px 10px 0 10px;
-          $border-color-mini: rgb(25, 105, 0) transparent  transparent  transparent;
+          $border-color-mini: rgb(25, 105, 0,0) transparent  transparent  transparent; // 文字が重なったときに読めなくなるので一旦消しておく。重ねる線とかを考えたほうがよいかも。。
 
           .description.link:before{
             @extend %triangle-base;
-            bottom: auto;
+            top: auto;
             left: auto;
-            right: -10px;
-            top: 50px;
+            right: -5px;
+            bottom: 10px;
             opacity: $link-opacity;
             transform: rotateZ(-90deg);
           }
 
           .description.link:after{
             @extend %triangle-base;
-            bottom: auto;
+            top: auto;
             left: auto;
-            right: 0px;
-            top: 55px;
+            right: 5px;
+            bottom: 15px;
 
             border-color: $border-color-mini;
             border-width: $link-trinangle-size-mini;
