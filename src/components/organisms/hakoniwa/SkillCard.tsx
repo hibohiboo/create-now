@@ -32,7 +32,24 @@ const saveAsImage = (uri) => {
   }
 }
 
-const SkillCard: React.FC = () => {
+const SkillCard: React.FC<{
+  cardData: {
+    type: string
+    name: string
+    timing: string
+    count: number
+    target: string
+    range: number
+    tags: string[]
+    effect: string
+    description: string
+    id: string
+    image: any
+    maxLevel: any
+    level: any
+    link: number
+  }
+}> = ({ cardData }) => {
   const canvasWidth = 252
   const canvasHight = 352
 
@@ -78,33 +95,6 @@ const SkillCard: React.FC = () => {
     target: '対象',
     maxLevel: '最大Lv',
     level: 'Lv',
-  }
-  const cardData = {
-    type: 'スキル',
-    name: '強打',
-    timing: 'アクション',
-    count: 4,
-    target: '自身',
-    range: 0,
-    tags: ['攻撃', '剣'],
-    effect: `剣のダメージ+[Lv]。
-リンク1。
-
-リンク3。
-`,
-    description: `気合の声を上げ、全力で相手を叩き伏せる。あるいはいろいろする
-    気合の声を上げ、全力で相手を叩き伏せる。
-    気合の声を上げ、全力で相手を叩き伏せる。
-    `,
-    id: 'b-1',
-    image: null,
-    maxLevel: null,
-    level: null,
-    link: 2,
-    // image: {
-    //   text: '自作',
-    //   url: '/images/icons/icon-72x72.png',
-    // },
   }
 
   return (
