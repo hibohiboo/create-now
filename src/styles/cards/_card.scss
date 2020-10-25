@@ -1,0 +1,79 @@
+.hakoniwa {
+  //#######################################################
+  // タグ
+  //#######################################################
+  .tag {
+    background-color: teal;
+    color: #fff;
+    padding: 0 3px;
+    margin-bottom: 3px;
+    margin-left: 5px;
+    font-size: 0.6rem;
+    white-space: nowrap;
+    line-height: 2;
+    height: 18px;
+    display: inline-block;
+    width: fit-content;
+    border-radius: 5px;
+  }
+
+  //#######################################################
+  // カード
+  //#######################################################
+  .card-list {
+    display: flex;
+    flex-wrap: wrap; // 折り返す
+  }
+
+  // 継承元の設定
+  %card-wrapper {
+      // マジックのカードが8.8cm * 6.3cm なので、その比率に合わせてみる
+      width: 252px;
+      height: 352px;
+      display: grid;
+      border: #fff solid 1px;
+      flex-direction: column; // 子要素をflexboxにより縦方向に揃える
+      justify-content: center; // 子要素をflexboxにより中央に配置する
+      align-items: center; // 子要素をflexboxにより中央に配置する
+      box-sizing: border-box; // ボックスの幅・高さにborderを含める
+  }
+
+  %card-base {
+    width: 242px;
+    height: 342px;
+    border: #000 solid 1px;
+    border-radius: 0.8em; // 角を丸める
+    padding: 5px;
+
+    // materializeのカードと同じく影を入れる -> html2canvasを行ったときに灰色になってしまうのでコメントアウト 2020.10.24
+    // box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+    // フォントサイズ設定
+    font-size: 14px;
+
+    // グリッドレイアウトを適用
+    display: grid;
+  }
+
+  // キャラクター/エネミーのカードとスキルのカードの組
+  .card-set {
+    display: flex;
+    flex-wrap: wrap;
+    &.skills-hide {
+      .skills-card {
+        display: none;
+      }
+    }
+  }
+
+}
+@import "skill-card";
+@import "character-card";
+@media (max-width: 799px) {
+  .enemy-card, .skills-card {
+    margin: 0 auto; // スマホでは中央にカードを寄せる。
+    .wrapper {
+      margin: 0 auto; // スマホでは中央にカードを寄せる。
+    }
+  }
+}
