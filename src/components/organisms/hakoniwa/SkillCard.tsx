@@ -87,12 +87,14 @@ const SkillCard: React.FC = () => {
     target: '自身',
     range: 0,
     tags: ['攻撃', '剣'],
-    effect: '剣のダメージ+[Lv]',
+    effect: `剣のダメージ+[Lv]。
+リンク1。`,
     description: '気合の声を上げ、全力で相手を叩き伏せる。',
     id: 'b-1',
     image: null,
     maxLevel: null,
     level: null,
+    link: 2,
     // image: {
     //   text: '自作',
     //   url: '/images/icons/icon-72x72.png',
@@ -163,10 +165,18 @@ const SkillCard: React.FC = () => {
                   <></>
                 )}
                 <div className="effect">{cardData.effect}</div>
-                <div className={['description', 'link2'].join(' ')}>
-                  {cardData.description}
-                </div>
-                <div className={['description', 'link'].join(' ')}></div>
+                <div className="description">{cardData.description}</div>
+
+                {cardData.link > 0 ? (
+                  <div className={['description', 'link'].join(' ')}></div>
+                ) : (
+                  <></>
+                )}
+                {cardData.link > 1 ? (
+                  <div className={['description', 'link2'].join(' ')}></div>
+                ) : (
+                  <></>
+                )}
               </div>
               <div className="bottomContent">
                 {/* <div className="cardId">{cardData.id}</div> */}

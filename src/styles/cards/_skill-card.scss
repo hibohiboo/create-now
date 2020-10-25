@@ -227,16 +227,17 @@
             border-color: #eeff00 transparent transparent transparent;
             border-width: 20px 20px 0 20px;
           }
+          $link-opacity: 0.5;
+          $link-trinangle-size-mini: 10px 10px 0 10px;
+          $border-color-mini: rgb(25, 105, 0) transparent  transparent  transparent;
+
           .description.link:before{
             @extend %triangle-base;
             bottom: auto;
             left: auto;
             right: -10px;
             top: 50px;
-
-            border-color: #eeff00 transparent  transparent  transparent ;
-            border-width: 20px 20px 0 20px;
-            opacity: 0.5;
+            opacity: $link-opacity;
             transform: rotateZ(-90deg);
           }
 
@@ -247,25 +248,23 @@
             right: 0px;
             top: 55px;
 
-            border-color: rgb(25, 105, 0) transparent  transparent  transparent ;
-            border-width: 10px 10px 0 10px;
-            opacity: 0.5;
+            border-color: $border-color-mini;
+            border-width: $link-trinangle-size-mini;
+            opacity: $link-opacity;
             transform: rotateZ(-90deg);
           }
 
           .description.link2:before{
             @extend %triangle-base;
             bottom: 0px;
-            border-color: #eeff00 transparent transparent transparent;
-            border-width: 20px 20px 0 20px;
-            opacity: 0.5;
+            opacity: $link-opacity;
           }
           .description.link2:after{
             @extend %triangle-base;
             bottom: 5px;
-            border-color: rgb(25, 105, 0) transparent transparent transparent;
-            border-width: 10px 10px 0 10px;
-            opacity: 0.5;
+            border-color: $border-color-mini;
+            border-width: $link-trinangle-size-mini;
+            opacity: $link-opacity;
           }
         }
         .bottomContent {
