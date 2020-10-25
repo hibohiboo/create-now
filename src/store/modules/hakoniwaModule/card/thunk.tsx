@@ -27,7 +27,7 @@ const csvToCard: (items: any[]) => Card = (items) => {
     delFlg,
   ] = items
 
-  const tags = strTags.split(',')
+  const tags = strTags ? strTags.split(',') : []
   const image = !url ? null : { text: siteName, url }
   // const count = Number(strCount)
   const maxLevel = strMaxLevel ? Number(strMaxLevel) : null

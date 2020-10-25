@@ -39,7 +39,17 @@ const createZip = async (cards: SelectedCard[]) => {
       return { ...c, identifier }
     }),
   )
-  files.push(createCardStack('山札', mappedList))
+  const listA = mappedList.filter(
+    (c) => c.tags.includes('常時') && c.type !== 'アイテム',
+  )
+  files.push(createCardStack('常時スキル山札', listA))
+  const listB = mappedList.filter((c) => c.type === 'アイテム')
+  files.push(createCardStack('アイテム山札', listB))
+  const listC = mappedList.filter(
+    (c) => c.type !== 'アイテム' && !c.tags.includes('常時'),
+  )
+  files.push(createCardStack('スキル山札', listC))
+  // files.push(createCardStack('山札', mappedList))
 
   FileArchiver.instance.save(files, moment().format('YYYYMMDD_HHmmss'))
 }
