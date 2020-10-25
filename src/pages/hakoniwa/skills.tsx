@@ -21,6 +21,7 @@ const Page: NextPage = (ctx: any) => {
       </Head>
       <main>
         <h1>カードリスト</h1>
+        <button onClick={vm.createZip}>zip出力</button>
         <div style={{ display: 'flex' }}>
           <SelectedCardList width={250} height={800} vm={vm} />
           <CardList width={600} height={800} vm={vm} />

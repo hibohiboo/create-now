@@ -101,7 +101,7 @@ const SkillCard: React.FC<{
   return (
     <>
       <div
-        id="target-component"
+        id={`card-${cardData.id}`}
         style={{ padding: '0px', width: '252px', backgroundColor: '#fff' }}
         onClick={onClick}
       >

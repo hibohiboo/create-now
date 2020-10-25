@@ -1,5 +1,5 @@
-import type { HakoniwaState } from '../../index'
 import { actions } from '../../index'
+import type { HakoniwaState } from '../../index'
 
 export default (dispatch, state: HakoniwaState) => ({
   addSelectCard: (card) => {

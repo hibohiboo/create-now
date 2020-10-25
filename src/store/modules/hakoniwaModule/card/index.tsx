@@ -15,7 +15,7 @@ export type Card = {
   level: null | number
   link: 0 | 1 | 2
 }
-type SelectedCard = Card & { uid: string }
+export type SelectedCard = Card & { uid: string; identifier: string }
 export const init = {
   cards: [] as Card[],
   selectedCards: [] as SelectedCard[],
