@@ -18,13 +18,6 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <h1>カードリスト</h1>
-        <div className="skill-card">
-          <div className="wrapper">
-            <div className="base">
-              <div className="skillLabel">ラベル</div>
-            </div>
-          </div>
-        </div>
         <SkillCard />
         <Footer />
       </main>

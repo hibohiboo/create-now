@@ -75,35 +75,49 @@ const SkillCard: React.FC = () => {
     timing: 'タイミング',
     count: 'カウント',
     range: '射程',
+    target: '対象',
+    maxLevel: '最大Lv',
+    level: 'Lv',
   }
   const cardData = {
     type: 'スキル',
-    name: '居合切り',
+    name: '強打',
     timing: 'アクション',
     count: 4,
+    target: '自身',
     range: 0,
     tags: ['攻撃', '剣'],
-    effect: '攻撃： 1d6ダメージ',
-    description: '気合を入れた一閃を繰り出す',
+    effect: '剣のダメージ+[Lv]',
+    description: '気合の声を上げ、全力で相手を叩き伏せる。',
     id: 'b-1',
-    image: {
-      text: '自作',
-      url:
-        'https://drive.google.com/uc?export=view&id=11sGd0fb1kteXpT6nuk_Nbv-KHfxOlVVd&usp=sharing',
-    },
+    image: null,
+    maxLevel: null,
+    level: null,
+    // image: {
+    //   text: '自作',
+    //   url: '/images/icons/icon-72x72.png',
+    // },
   }
+
   return (
     <>
       <div
         id="target-component"
-        style={{ padding: '1px', width: '252px', backgroundColor: '#fff' }}
+        style={{ padding: '0px', width: '252px', backgroundColor: '#fff' }}
       >
         <div className="skill-card">
           <div className="wrapper">
             <div className="base">
               <div className="skillLabel">{cardData.type}</div>
               <div className="image">
-                {cardData.image ? <img src={cardData.image.url}></img> : <></>}
+                {cardData.image ? (
+                  <img
+                    src={cardData.image.url}
+                    crossOrigin="use-credentials"
+                  ></img>
+                ) : (
+                  <></>
+                )}
               </div>
               <div className="cardName">{cardData.name}</div>
               {/* <div className="attrTimingLabel attrLabel border">
@@ -113,15 +127,19 @@ const SkillCard: React.FC = () => {
               <div className="attrCostLabel attrLabel border">
                 {labelData.count}
               </div>
-              <div className="attrCostValue border">{cardData.count}</div>
-              <div className="attrRangeLabel attrLabel border">
+              <div className="attrCostValue border-trb">{cardData.count}</div>
+              <div className="attrRangeLabel attrLabel border-blr">
                 {labelData.range}
               </div>
-              <div className="attrRangeValue border">{cardData.range}</div>
-              {/* <div className="attrExpLabel attrLabel border">
-                {cardData.range}
+              <div className="attrRangeValue border-br">{cardData.range}</div>
+              <div className="attrTargetLabel attrLabel border-blr">
+                {labelData.target}
               </div>
-              <div className="attrExpValue border">{cardData.range}</div> */}
+              <div className="attrTargetValue border-br">{cardData.target}</div>
+              {/* <div className="attrExpLabel attrLabel border">
+                {labelData.exp}
+              </div>
+              <div className="attrExpValue border">{cardData.exp}</div> */}
               <div className="tags">
                 {cardData.tags.map((tag) => (
                   <span className="tag" key={tag}>
@@ -130,15 +148,25 @@ const SkillCard: React.FC = () => {
                 ))}
               </div>
               <div className="mainContent border">
-                {/* <div className="maxLevelLabel border">a</div>
-                <div className="maxLevel border">b</div>
-                <div className="lvLavel border">a</div>
-                <div className="level border">1</div> */}
+                {cardData.level ? (
+                  <>
+                    <div className="maxLevelLabel border-br">
+                      {labelData.maxLevel}
+                    </div>
+                    <div className="maxLevel border-br">
+                      {cardData.maxLevel}
+                    </div>
+                    <div className="lvLavel border-br">{labelData.level}</div>
+                    <div className="level border-br">{cardData.level}</div>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <div className="effect">{cardData.effect}</div>
                 <div className="description">{cardData.description}</div>
               </div>
               <div className="bottomContent">
-                <div className="cardId">{cardData.id}</div>
+                {/* <div className="cardId">{cardData.id}</div> */}
                 {cardData.image ? (
                   <div className="illustedBy">
                     <a

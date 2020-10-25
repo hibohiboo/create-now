@@ -19,8 +19,8 @@
 
         grid-template-rows: [topGap]1px // 上部余白～
           [innerTop]20px // 上部情報
-          [cardName] 30px //  カード名
-          [tags] 20px //  タグ
+          [cardName] 28px //  カード名
+          [tags] 22px //  タグ
           [pictTop]20px // 画像開始 / タイミング
           [cost]20px // コスト
           [range_] 20px // 射程
@@ -29,26 +29,50 @@
           [mainContent] $mainContentHeight // カード説明
           [bottomContent] 1fr // カード番号など
           2px;
-        .border {
-          border: #000 solid 1px;
+        %border {
           box-sizing: border-box;
           padding: 2px;
           padding-left: 5px;
           font-size: 12px;
+          border-color: #000;
+          border-style: solid;
+          border-width: 1px;
+        }
+        .border {
+          @extend %border;
+        }
+        .border-br {
+          @extend %border;
+          border-top-style: none;
+          border-left-style: none;
+        }
+        .border-bl {
+          @extend %border;
+          border-top-style: none;
+          border-right-style: none;
+        }
+        .border-blr {
+          @extend %border;
+          border-top-style: none;
+        }
+        .border-trb {
+          @extend %border;
+          border-left-style: none;
         }
 
         .image {
           grid-column: innerLeft; // 左端
           grid-row: pictTop/exp; // 画像行の頭
-          border: #000 solid 1px;
+          border:none; // #000 solid 1px;
           width: 74px;
           height: 94px;
-          outline: solid 1px #000;
+          outline: solid 2px #000;
           overflow: hidden;
           img {
             position: absolute;
             max-width: 74px;
             max-height: 94px;
+            overflow: hidden;
           }
         }
         // 右上カード情報
@@ -125,7 +149,6 @@
           justify-self: left;
           display: flex;
           flex-wrap: wrap; // 折り返す
-
         }
         .mainContent {
           grid-column: innerLeft/innerRight;
@@ -149,7 +172,8 @@
             [description] 1fr;
 
           .maxLevelLabel {
-            grid-column: maxLevelLabel;
+            grid-column-start: leftGap;
+            grid-column-end: maxLevel;
             grid-row: innerTop;
           }
           .maxLevel {
