@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as _ from 'lodash'
 import { initPage } from './didMount'
 import { actions } from '../../index'
+import cardEvent from './cardEvent'
 import type { HakoniwaState } from '../../index'
 import type { PageContext } from './didMount'
 
@@ -17,21 +18,7 @@ export const useViewModel = (ctx: PageContext) =>
 
     return {
       ...hState,
-      addSelectCard: (card) => {
-        dispatch(
-          actions.setSelectedCards([
-            ...hState.selectedCards,
-            { ...card, uid: _.uniqueId(card.id) },
-          ]),
-        )
-      },
-      deleteSelectedCard: (uid) => {
-        dispatch(
-          actions.setSelectedCards(
-            hState.selectedCards.filter((c) => c.uid !== uid),
-          ),
-        )
-      },
+      ...cardEvent(dispatch, hState),
     }
   })
 
