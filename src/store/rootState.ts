@@ -10,6 +10,7 @@ import trpgManualModule, {
 } from './modules/trpgManualModule'
 import gameModule, { init as gameInit } from './modules/gameModule'
 import tyranoudonModule, { init as tyranoudonInit } from './modules/tyranoudon'
+import hakoniwaModule, { init as hakoniwaInit } from './modules/hakoniwaModule'
 
 const rootReducer = combineReducers({
   scenario: scenarioModule.reducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   trpgManual: trpgManualModule.reducer,
   game: gameModule.reducer,
   tyranoudon: tyranoudonModule.reducer,
+  hakoniwa: hakoniwaModule.reducer,
 })
 export default rootReducer
 
@@ -32,6 +34,7 @@ const rootPreloadedState = {
   trpgManual: trpgManualInit,
   game: gameInit,
   tyranoudon: tyranoudonInit,
+  hakoniwa: hakoniwaInit,
 }
 
 export type RootState = typeof rootPreloadedState

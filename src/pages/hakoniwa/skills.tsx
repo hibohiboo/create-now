@@ -2,9 +2,9 @@ import Head from 'next/head'
 import * as React from 'react'
 import { NextPage } from 'next'
 import Footer from '~/components/organisms/common/Footer'
-import { MyJSX, MyGlobalJSX } from '../trpg-manual'
 import SkillCard from '~/components/organisms/hakoniwa/SkillCard'
-const Home: NextPage = () => {
+import { useViewModel } from '~/store/modules/hakoniwaModule/viewModel/skills'
+const Page: NextPage = (ctx: any) => {
   const cardData = {
     type: 'スキル',
     name: '強打',
@@ -33,6 +33,8 @@ const Home: NextPage = () => {
     // },
   }
 
+  const vm = useViewModel(ctx)
+
   return (
     <div className="container hakoniwa">
       <Head>
@@ -53,4 +55,13 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Page
+
+Page.getInitialProps = async ({ query }) => {
+  const sheet = (query.sheet ||
+    '1Cp0_Kp1Du7p2PmBD2VH4S2fkTt8ciWkjg8lj2hLIIYs') as string
+
+  return {
+    sheet,
+  }
+}
