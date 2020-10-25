@@ -32,7 +32,7 @@ const CardList: FC<{
           overflow: 'scroll',
         }}
       >
-        {vm.cards.map((card, index) => (
+        {vm.filteredCards.map((card, index) => (
           <SkillCard
             cardData={card}
             key={index}

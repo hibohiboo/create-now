@@ -15,9 +15,19 @@ export const useViewModel = (ctx: PageContext) =>
     useEffect(() => {
       initPage(ctx, dispatch)
     }, [])
-
+    let filteredCards = hState.cards
+    filteredCards = hState.filterType
+      ? hState.cards.filter((card) => card.type === hState.filterType)
+      : filteredCards
+    filteredCards = hState.filterKind
+      ? hState.cards.filter((card) => card.kind === hState.filterKind)
+      : filteredCards
+    filteredCards = hState.filterTag
+      ? hState.cards.filter((card) => card.tags.includes(hState.filterTag))
+      : filteredCards
     return {
       ...hState,
+      filteredCards,
       ...cardEvent(dispatch, hState),
       ...udonEvent(hState),
     }

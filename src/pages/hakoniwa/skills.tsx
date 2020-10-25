@@ -22,6 +22,27 @@ const Page: NextPage = (ctx: any) => {
       <main>
         <h1>カードリスト</h1>
         <button onClick={vm.createZip}>zip出力</button>
+        <div>
+          絞り込み:タイプ
+          <input
+            type="text"
+            onChange={(e) => vm.changeFilterType(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          絞り込み:種別
+          <input
+            type="text"
+            onChange={(e) => vm.changeFilterKind(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          絞り込み:タグ
+          <input
+            type="text"
+            onChange={(e) => vm.changeFilterTag(e.target.value)}
+          ></input>
+        </div>
         <div style={{ display: 'flex' }}>
           <SelectedCardList width={250} height={800} vm={vm} />
           <CardList width={600} height={800} vm={vm} />

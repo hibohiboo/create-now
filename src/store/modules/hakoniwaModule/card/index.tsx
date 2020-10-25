@@ -21,6 +21,9 @@ export type SelectedCard = Card & { uid: string; identifier: string }
 export const init = {
   cards: [] as Card[],
   selectedCards: [] as SelectedCard[],
+  filterType: '',
+  filterTag: '',
+  filterKind: '',
 }
 type CardState = typeof init
 export const reducers = {
@@ -32,5 +35,14 @@ export const reducers = {
     action: PayloadAction<SelectedCard[]>,
   ) => {
     state.selectedCards = action.payload
+  },
+  setFilterType: (state: CardState, action: PayloadAction<string>) => {
+    state.filterType = action.payload
+  },
+  setFilterKind: (state: CardState, action: PayloadAction<string>) => {
+    state.filterKind = action.payload
+  },
+  setFilterTag: (state: CardState, action: PayloadAction<string>) => {
+    state.filterTag = action.payload
   },
 }
