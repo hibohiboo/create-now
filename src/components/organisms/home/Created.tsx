@@ -49,7 +49,7 @@ const Created: React.FC = () => {
         </li>
         <li>
           <Link href="/third/udonarium/index.html?is2d=true">
-            ユドナリウムリリィ
+            ユドナリウムリリィ2d
           </Link>
         </li>
       </ul>
