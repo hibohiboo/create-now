@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:14.15.0
+FROM node:15.2.1
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
@@ -48,7 +48,13 @@ RUN npm i --no-optional react-konva konva --save
 
 RUN npm i --no-optional pdfmake
 
-RUN npm i --no-optional @material-ui/core
+# material-ui v4は正式にはreact 17に対応していない
+# https://github.com/mui-org/material-ui/issues/23306
+# https://blog.watilde.com/2020/10/14/npm-v7%E3%81%AE%E4%B8%BB%E3%81%AA%E5%A4%89%E6%9B%B4%E7%82%B9%E3%81%BE%E3%81%A8%E3%82%81/
+RUN npm i --no-optional --legacy-peer-deps @material-ui/core
+RUN npm i --no-optional --legacy-peer-deps @material-ui/icons
+# material-ui tables
+RUN npm i --no-optional --legacy-peer-deps material-table
 
 ## 認証
 ### 便利ツール lodash
@@ -62,12 +68,12 @@ RUN npm i --no-optional isomorphic-unfetch
 
 ### firebase
 RUN npm i --no-optional firebase
-RUN npm i --no-optional react-firebaseui
 RUN npm i --no-optional firebase-admin
+RUN npm i --no-optional --legacy-peer-deps react-firebaseui
 
 ## react redux firestore
 
-RUN npm i --no-optional @material-ui/icons
+
 
 # next-js tutorial
 RUN npm i --no-optional gray-matter
@@ -75,8 +81,7 @@ RUN npm i --no-optional sass --save-dev
 RUN npm i --no-optional remark remark-html
 RUN npm i --no-optional date-fns
 
-# material-ui tables
-RUN npm i --no-optional material-table
+
 
 # i18n
 RUN npm i --no-optional rosetta
@@ -100,17 +105,17 @@ RUN npm i --no-optional crypto-js
 RUN npm i --no-optional dotenv --save-dev
 
 RUN npm i --no-optional react-draggable
-RUN npm i --no-optional react-resizable
-RUN npm i --no-optional react-select
+RUN npm i --no-optional --force react-resizable
+RUN npm i --no-optional --legacy-peer-deps react-select
 
 ## elm
 RUN npm i -D elm
 RUN npm i --no-optional -D elm-format
 RUN npm i --no-optional -D elm-minify
 RUN npm i --no-optional -D elm-webpack-loader
-RUN npm i --no-optional -D elm-hot-webpack-loader
+RUN npm i --no-optional -D --legacy-peer-deps elm-hot-webpack-loader
 RUN npm i --no-optional -D elm-test
-RUN npm i --no-optional -D elm-verify-examples
+# RUN npm i --no-optional -D elm-verify-examples
 
 # elm-test --watchしたときのpolling設定
 RUN sed -i -e "s/\(cwd: projectRootDir,\)/\1\n    usePolling: true, /g" /app/node_modules/elm-test/lib/elm-test.js
