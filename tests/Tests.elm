@@ -6,7 +6,7 @@ import Test exposing (..)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
-import Time exposing (utc)
+import Time exposing (Posix, utc)
 
 
 nameInitialTest : User -> String -> Test
@@ -155,6 +155,7 @@ suite =
             ]
         ]
 
-newYear2019: TIme.Posix
+
+newYear2019 : TIme.Posix
 newYear2019 =
     Time.millisToPosix 1546300800000
