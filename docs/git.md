@@ -70,4 +70,11 @@ appendMsgTo1stLine()
 }
 ```
 
+## github actions
+
+### 参考
+[prごとに](https://qiita.com/resessh/items/38ef6492d0cf21facec8)
+[storycap reg-suit](https://qiita.com/eretica/items/080cf75f8b9d2d928799)
+[github actions](https://qiita.com/bigwheel/items/2ab7deb237122db2fb8d)
+[ms learn GitHub Actions を使用して継続的インテグレーション (CI) ワークフローを作成する](https://docs.microsoft.com/ja-jp/learn/modules/github-actions-ci/)
 
