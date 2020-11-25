@@ -3,7 +3,20 @@
 ### git Hooks
 
 コミットメッセージにブランチ名からissueの番号を取得して、メッセージに付与するスクリプトをhooksに追加。
+ブランチ名は`feature/issue番号`とする。(ex. feature/3)
 
+コミットの`#番号`は自動で付与されるので、コミットメッセージの最後に以下を入力で操作可能。
+
+フォーマット一覧	記載方法
+--|--
+fix	|fix #8
+fixes|	This commit fixes #8
+fixed|	We have finally fixed #8
+close||	close #8
+closes|	This closes #8
+resolve|	resolve #8
+resolves|	resolves #8
+resolved|	resolved #8
 
 ```bash:.git/hooks/commit-msg
 #!/bin/sh
@@ -36,8 +49,8 @@ extractTicketId()
 {
     echo "$(getGitBranchName)" \
     | awk 'BEGIN{ FS="[/]"}
-           $1 == "feature" || $1 == "id" { printf "issue #%s", $2, $3 }
-           $2 == "feature" || $2 == "id" { printf "issue #%s", $3, $4 }
+           $1 == "feature" || $1 == "id" { printf "#%s", $2, $3 }
+           $2 == "feature" || $2 == "id" { printf "#%s", $3, $4 }
            '
 }
 
