@@ -16,11 +16,13 @@ export interface AuthUserInfo {
   token?: string
 }
 interface ServerSidePayload {
-  firebaseUser: firebase.User | null
+  firebaseUser: firebase.default.User | null
   token: string | null
 }
 
-const createAuthUser = (firebaseUser: firebase.User | null): AuthUser => {
+const createAuthUser = (
+  firebaseUser: firebase.default.User | null,
+): AuthUser => {
   if (!firebaseUser || !firebaseUser.uid) {
     return null
   }

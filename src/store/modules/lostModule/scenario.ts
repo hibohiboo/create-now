@@ -110,7 +110,7 @@ interface ScenarioPayload {
 interface AstNode {
   type: string
   children: AstNode[]
-  position: Position
+  position: any
   depth?: number
   value?: string
 }

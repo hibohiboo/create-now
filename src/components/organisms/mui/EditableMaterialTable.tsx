@@ -59,14 +59,14 @@ const editableTable = ({
       data={data}
       editable={{
         onRowAdd: (newData) =>
-          new Promise((resolve) => {
+          new Promise<void>((resolve) => {
             setTimeout(() => {
               resolve()
               rowAddHandler(newData)
             }, waitTime)
           }),
         onRowUpdate: (newData, oldData) =>
-          new Promise((resolve) => {
+          new Promise<void>((resolve) => {
             setTimeout(() => {
               resolve()
               if (oldData) {
@@ -75,7 +75,7 @@ const editableTable = ({
             }, waitTime)
           }),
         onRowDelete: (oldData) =>
-          new Promise((resolve) => {
+          new Promise<void>((resolve) => {
             setTimeout(() => {
               resolve()
               rowDeleteHandler(oldData)

@@ -212,7 +212,7 @@ export const useViewModel = () => {
             },
             onRowUpdate: async (newData, oldData) => {
               dispatch(updateMemoItem(memoList.current, newData))
-              return new Promise((resolve) => {
+              return new Promise<void>((resolve) => {
                 setTimeout(() => {
                   resolve()
                 }, 300)
@@ -220,7 +220,7 @@ export const useViewModel = () => {
             },
             onRowDelete: (oldData) => {
               dispatch(deleteMemoItem(memoList.current, oldData))
-              return new Promise((resolve) => {
+              return new Promise<void>((resolve) => {
                 setTimeout(() => {
                   resolve()
                 }, 300)

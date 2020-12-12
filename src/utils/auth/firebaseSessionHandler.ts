@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch'
 
-export const setSession = (user: firebase.User | null) => {
+export const setSession = (user: firebase.default.User | null) => {
   // Log in.
   if (user) {
     return user.getIdToken().then((token: any) => {
