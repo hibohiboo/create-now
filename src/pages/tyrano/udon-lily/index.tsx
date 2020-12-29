@@ -36,14 +36,13 @@ const Page: NextPage = () => {
         : ''
     }${config.hideSample ? '&hide_sample=true' : ''}${
       config.useLilyCutin ? '&lily_cutin=true' : ''
-    }
-    ${config.useLilyStand ? '&lily_stand=true' : ''}
-    ${config.useLilyDiceTable ? '&lily_dacetable=true' : ''}
-    ${config.useLilyFile ? '&lily_file=true' : ''}
-    ${config.useLilyBuff ? '&lily_buff=true' : ''}
-    ${config.useLilyRemocon ? '&lily_remocon=true' : ''}
-    ${config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''}
-    ${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}`
+    }${config.useLilyStand ? '&lily_stand=true' : ''}${
+      config.useLilyDiceTable ? '&lily_dacetable=true' : ''
+    }${config.useLilyFile ? '&lily_file=true' : ''}${
+      config.useLilyBuff ? '&lily_buff=true' : ''
+    }${config.useLilyRemocon ? '&lily_remocon=true' : ''}${
+      config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''
+    }${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}`
   return (
     <div className="container">
       <Head>
@@ -52,8 +51,13 @@ const Page: NextPage = () => {
       <main style={{ paddingLeft: '10px' }}>
         <h1>ユドナリウム設定ページ</h1>
         <p>
-          <a href="https://cylinder-lily.com/">ユドナリウム リリィ</a>
+          <a href="https://cylinder-lily.com/" target="_blank" rel="noreferrer">
+            ユドナリウム リリィ
+          </a>
           を改造してます。
+        </p>
+        <p>
+          機能を選択して使用できます。リリィから未移植の機能もあるので、そちらが使いたい場合は本家リリィをご利用ください。
         </p>
         <p>
           バグ方向・ご要望は
@@ -183,6 +187,18 @@ const Page: NextPage = () => {
                 <td>
                   <input
                     type="checkbox"
+                    checked={config.useLilyRemocon}
+                    onChange={(e) =>
+                      setConfig({ ...config, useLilyRemocon: e.target.checked })
+                    }
+                  ></input>
+                </td>
+                <td>カウンターリモコン</td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
                     checked={config.useLilyBuff}
                     onChange={(e) =>
                       setConfig({ ...config, useLilyBuff: e.target.checked })
@@ -202,18 +218,6 @@ const Page: NextPage = () => {
                   ></input>
                 </td>
                 <td>カットイン</td>
-              </tr>
-              <tr>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={config.useLilyRemocon}
-                    onChange={(e) =>
-                      setConfig({ ...config, useLilyRemocon: e.target.checked })
-                    }
-                  ></input>
-                </td>
-                <td>カウンターリモコン</td>
               </tr>
               <tr>
                 <td>
@@ -281,12 +285,106 @@ const Page: NextPage = () => {
                 </td>
                 <td>インベントリ非表示フラグ</td>
               </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true} />
+                </td>
+                <td>キャラシート詳細横幅調整機能※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true} />
+                </td>
+                <td>共有メモ高さ調整機能※未移植</td>
+              </tr>
             </tbody>
           </table>
           <div>
             <p>
               <a href={customUrl()}>設定を反映してユドナリウムに移動する</a>
             </p>
+          </div>
+          <div>
+            <h2>設定補足</h2>
+            <h3 id="is2d">2D表示</h3>
+            <img src="/images/udon/2d.png" width="400px" />
+            <h3 id="keyboard-help">キーボードヘルプを表示</h3>
+            <p>「ctrl+?」キーでヘルプを表示します</p>
+            <img src="/images/udon/keyboard-help.png" width="400px" />
+            <h3 id="catd-tap">カードタップ</h3>
+            <p>
+              カードの上で「t」キーでカードを横に倒します。「u」キーでカードを縦にします。
+            </p>
+            <h3 id="keyboard-help">スプレッドシートにログを記録</h3>
+            <p>
+              スプレッドシート連携ボタンを押して、認証を行う必要があります。入力したIDのシートにログが保存されます。
+            </p>
+            <img src="/images/udon/spread-sheet-login.png" width="400px" />
+            <p>スプレッドシートIDは、URLの以下の部分で取得できます。</p>
+            <p>
+              <a
+                href="https://docs.google.com/spreadsheets/d/1JVa25s339f4kNXhdgHXI4dVq3FGMHrT8x7ZvhXKRDMY/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                ログ保存サンプルシート
+              </a>
+            </p>
+            <img src="/images/udon/spread-sheet-id.png" width="600px" />
+            <h3 id="keyboard-help"> スプレッドシートからカードデッキを記録</h3>
+            <p>
+              スプレッドシートにカード情報を記述して、デッキを作ることができます。
+              デッキは右クリックからトランプのように配置できます。
+            </p>
+            <p>
+              <a
+                href="https://docs.google.com/spreadsheets/d/1sOYvbR4SXlw3H3a2tL2A8Q8PJqad0hbRV6QpwSa-wIg/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                カードデッキサンプルシート
+              </a>
+            </p>
+            <img src="/images/udon/spread-sheet-deck.png" width="400px" />
+            <h3 id="conter-remocon">カウンターリモコン</h3>
+            <p>キャラクターを右クリックして、リモコンを選択できます。</p>
+            <img src="/images/udon/lily-remocon-menu.png" width="300px" />
+            <p>
+              右側のリストから選択したキャラに対して、一括でHPの操作などができます。
+              「リモコン操作」ボタンで実行します。
+            </p>
+            <img src="/images/udon/lily-remocon-sample.png" width="600px" />
+            <h3 id="lily-buff">バフ表示</h3>
+            <p>リモコンからバフを設定できます。</p>
+            <img src="/images/udon/lily-remocon-buff.png" width="600px" />
+            <h3 id="lily-cutin">カットイン</h3>
+            <p>カットインを設定できます。</p>
+            <img src="/images/udon/lily-cutin.png" width="600px" />
+            <h3 id="lily-dicetable">ダイス表</h3>
+            <p>
+              ダイス表を設定できます。ダイス表の「コマンド」をチャットに入れることで、表を振ることができます。
+            </p>
+            <p>
+              以下の画像の例だと、「SAMPLE」がチャット欄に打ち込む文字列になります。
+            </p>
+            <img src="/images/udon/lily-dicetable.png" width="600px" />
+            <h3 id="lily-tag">画像タグ</h3>
+            <p>
+              画像にタグを設定できます。タグを打ち込んで、チェックを入れて「タグを変更」ボタンです。
+            </p>
+            <img src="/images/udon/lily-tag.png" width="400px" />
+            <p>タグで検索をすることができます。</p>
+            <img src="/images/udon/lily-tag-search.png" width="400px" />
+            <h3 id="lily-talk-flg">会話非表示フラグ</h3>
+            <p>
+              「発言をしない」にチェックを入れると、チャット欄に名前が表示されなくなります。{' '}
+            </p>
+            <img src="/images/udon/lily-talk-flg.png" width="600px" />
+            <h3 id="lily-hide-inventory">インベントリ非表示フラグ</h3>
+            <p>
+              「テーブルインベントリ非表示」にチェックを入れると、インベントリに表示されなくなります。{' '}
+            </p>
+            <img src="/images/udon/lily-hide-inventory.png" width="600px" />
           </div>
         </div>
       </main>
