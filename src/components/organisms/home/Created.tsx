@@ -52,6 +52,9 @@ const Created: React.FC = () => {
             ユドナリウムリリィ2d
           </Link>
         </li>
+        <li>
+          <Link href="/tyrano/udon-lily/">改造ユドナリウム設定ページ</Link>
+        </li>
       </ul>
     </>
   )

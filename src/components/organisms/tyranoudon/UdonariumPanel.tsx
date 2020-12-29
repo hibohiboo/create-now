@@ -9,8 +9,8 @@ const UdonariumPanel: FC<{ is2d?: boolean }> = ({ is2d }) => {
     setWidth(size.width)
   }
   const src = is2d
-    ? `${process.env.UDONARIUM_URL}?2d=true`
-    : process.env.UDONARIUM_URL
+    ? `${process.env.UDONARIUM_URL}?2d=true&usePostMessage=true`
+    : `${process.env.UDONARIUM_URL}?usePostMessage=true`
 
   return (
     <DraggablePanel
