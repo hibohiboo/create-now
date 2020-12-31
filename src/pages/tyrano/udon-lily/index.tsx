@@ -13,6 +13,7 @@ const Page: NextPage = () => {
     spreadSheetId: '1JVa25s339f4kNXhdgHXI4dVq3FGMHrT8x7ZvhXKRDMY',
     deckSheetId: '1sOYvbR4SXlw3H3a2tL2A8Q8PJqad0hbRV6QpwSa-wIg',
     hideSample: false,
+    useShortcut: true,
 
     useLilyBuff: true,
     useLilyCutin: true,
@@ -35,14 +36,16 @@ const Page: NextPage = () => {
         ? '&decksheet=' + config.deckSheetId
         : ''
     }${config.hideSample ? '&hide_sample=true' : ''}${
-      config.useLilyCutin ? '&lily_cutin=true' : ''
-    }${config.useLilyStand ? '&lily_stand=true' : ''}${
-      config.useLilyDiceTable ? '&lily_dacetable=true' : ''
-    }${config.useLilyFile ? '&lily_file=true' : ''}${
-      config.useLilyBuff ? '&lily_buff=true' : ''
-    }${config.useLilyRemocon ? '&lily_remocon=true' : ''}${
-      config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''
-    }${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}`
+      config.useShortcut ? '&keyboard_shortcut=true' : ''
+    }${config.useLilyCutin ? '&lily_cutin=true' : ''}${
+      config.useLilyStand ? '&lily_stand=true' : ''
+    }${config.useLilyDiceTable ? '&lily_dacetable=true' : ''}${
+      config.useLilyFile ? '&lily_file=true' : ''
+    }${config.useLilyBuff ? '&lily_buff=true' : ''}${
+      config.useLilyRemocon ? '&lily_remocon=true' : ''
+    }${config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''}${
+      config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''
+    }`
   return (
     <div className="container">
       <Head>
@@ -125,6 +128,18 @@ const Page: NextPage = () => {
                   ></input>
                 </td>
                 <td>サンプル非表示</td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useShortcut}
+                    onChange={(e) =>
+                      setConfig({ ...config, useShortcut: e.target.checked })
+                    }
+                  ></input>
+                </td>
+                <td>キーボードショートカット追加</td>
               </tr>
               <tr>
                 <td>
@@ -315,6 +330,11 @@ const Page: NextPage = () => {
             <p>
               カードの上で「t」キーでカードを横に倒します。「u」キーでカードを縦にします。
             </p>
+            <h3 id="keyboard-shortcut">キーボードショートカット追加</h3>
+            <p>
+              キャラクターをクリックした後に[c]キーでコピーなどできます。詳細はキーボードヘルプを表示してご確認お願いします。
+            </p>
+
             <h3 id="keyboard-help">スプレッドシートにログを記録</h3>
             <p>
               スプレッドシート連携ボタンを押して、認証を行う必要があります。入力したIDのシートにログが保存されます。
