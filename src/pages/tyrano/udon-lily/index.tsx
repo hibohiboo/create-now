@@ -24,6 +24,8 @@ const Page: NextPage = () => {
     useLilyStand: true,
     useLilyTalkFlg: true,
     useLilyHideInventoryFlg: true,
+
+    useWithFlyPlayerColor: true,
   })
   const customUrl = () =>
     `${url}?q=1${config.is2d ? '&2d=true' : ''}${
@@ -46,7 +48,9 @@ const Page: NextPage = () => {
       config.useLilyBuff ? '&lily_buff=true' : ''
     }${config.useLilyRemocon ? '&lily_remocon=true' : ''}${
       config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''
-    }${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}`
+    }${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}${
+      config.useWithFlyPlayerColor ? 'withfly_player_color=true' : ''
+    }`
   return (
     <div className="container">
       <Head>
@@ -58,8 +62,17 @@ const Page: NextPage = () => {
           <a href="https://cylinder-lily.com/" target="_blank" rel="noreferrer">
             ユドナリウム リリィ
           </a>
+          と
+          <a
+            href="https://github.com/NanasuNANA/UdonariumWithFly"
+            target="_blank"
+            rel="noreferrer"
+          >
+            ユドナリウム with Fly
+          </a>
           を改造してます。
         </p>
+
         <p>
           機能を選択して使用できます。リリィから未移植の機能もあるので、そちらが使いたい場合は本家リリィをご利用ください。
         </p>
@@ -330,6 +343,143 @@ const Page: NextPage = () => {
               </tr>
             </tbody>
           </table>
+
+          <h3>Udonarium with Fly</h3>
+          <table>
+            <thead>
+              <tr>
+                <td>設定</td>
+                <td>説明</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyPlayerColor}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyPlayerColor: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>プレイヤーカラー</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>ダイス一斉公開※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>視点リセット※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>参照URLを開く※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>カードをn枚引く※未移植</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>高さのグリッド※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>スタンド※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>顔アイコン※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>画像切替※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>画像の影切替※未移植</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>画像効果・逆※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>画像効果・ぼかし※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>画像効果・黒塗り※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>高度・共有メモ※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>高度・キャラクター※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>高度・地形※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>高度・ダイス※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>影を落とす※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>地形・傾斜※未移植</td>
+              </tr>
+            </tbody>
+          </table>
           <div>
             <p>
               <a href={customUrl()}>設定を反映してユドナリウムに移動する</a>
@@ -424,6 +574,11 @@ const Page: NextPage = () => {
               「テーブルインベントリ非表示」にチェックを入れると、インベントリに表示されなくなります。{' '}
             </p>
             <img src="/images/udon/lily-hide-inventory.png" width="600px" />
+            <h3 id="with-fly-player-coloer">プレイヤーカラー</h3>
+            <p>
+              プレイヤーの色を設定できます。色は自分のチャットの名前、手札にしたカード、自分のダイスに反映されます。
+            </p>
+            <img src="/images/udon/with-fly-player-color.png" width="600px" />
           </div>
         </div>
       </main>
