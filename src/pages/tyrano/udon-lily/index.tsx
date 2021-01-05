@@ -1,32 +1,41 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState } from 'react'
+const defaultConfig = {
+  is2d: true,
+  useKeyboardHelp: true,
+  useCardTap: true,
+  useSpreadsheet: true,
+  useDecksheet: true,
+  spreadSheetId: '1JVa25s339f4kNXhdgHXI4dVq3FGMHrT8x7ZvhXKRDMY',
+  deckSheetId: '1sOYvbR4SXlw3H3a2tL2A8Q8PJqad0hbRV6QpwSa-wIg',
+  hideSample: false,
+  useShortcut: true,
+  useCardOnTopMove: true,
+  useHandStorage: true,
 
+  useLilyBuff: true,
+  useLilyCutin: true,
+  useLilyRemocon: true,
+  useLilyFile: true,
+  useLilyDiceTable: true,
+  useLilyStand: true,
+  useLilyTalkFlg: true,
+  useLilyHideInventoryFlg: true,
+
+  useWithFlyPlayerColor: true,
+}
+const allFalse = (() => {
+  const tmp = { ...defaultConfig }
+  for (const i in tmp) {
+    if (tmp[i] === true) tmp[i] = false
+  }
+  return tmp
+})()
 const Page: NextPage = () => {
   const url = '/third/udonarium/index.html'
-  const [config, setConfig] = useState({
-    is2d: true,
-    useKeyboardHelp: true,
-    useCardTap: true,
-    useSpreadsheet: true,
-    useDecksheet: true,
-    spreadSheetId: '1JVa25s339f4kNXhdgHXI4dVq3FGMHrT8x7ZvhXKRDMY',
-    deckSheetId: '1sOYvbR4SXlw3H3a2tL2A8Q8PJqad0hbRV6QpwSa-wIg',
-    hideSample: false,
-    useShortcut: true,
-    useCardOnTopMove: true,
+  const [config, setConfig] = useState(defaultConfig)
 
-    useLilyBuff: true,
-    useLilyCutin: true,
-    useLilyRemocon: true,
-    useLilyFile: true,
-    useLilyDiceTable: true,
-    useLilyStand: true,
-    useLilyTalkFlg: true,
-    useLilyHideInventoryFlg: true,
-
-    useWithFlyPlayerColor: true,
-  })
   const customUrl = () =>
     `${url}?q=1${config.is2d ? '&2d=true' : ''}${
       config.useKeyboardHelp ? '&keyboardHelp=true' : ''
@@ -49,8 +58,8 @@ const Page: NextPage = () => {
     }${config.useLilyRemocon ? '&lily_remocon=true' : ''}${
       config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''
     }${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}${
-      config.useWithFlyPlayerColor ? 'withfly_player_color=true' : ''
-    }`
+      config.useWithFlyPlayerColor ? '&withfly_player_color=true' : ''
+    }${config.useHandStorage ? '&hand_storage=true' : ''}`
   return (
     <div className="container">
       <Head>
@@ -74,7 +83,7 @@ const Page: NextPage = () => {
         </p>
 
         <p>
-          機能を選択して使用できます。リリィから未移植の機能もあるので、そちらが使いたい場合は本家リリィをご利用ください。
+          機能を選択して使用できます。未移植の機能もあるので、そちらが使いたい場合は本家をご利用ください。
         </p>
         <p>
           バグ方向・ご要望は
@@ -83,6 +92,13 @@ const Page: NextPage = () => {
         </p>
         <div>
           <h3>ユドナリウム 機能追加</h3>
+          <button
+            onClick={() => {
+              setConfig(allFalse)
+            }}
+          >
+            チェックを全て外す
+          </button>
           <table>
             <thead>
               <tr>
@@ -169,6 +185,21 @@ const Page: NextPage = () => {
                   ></input>
                 </td>
                 <td>重ねカード移動機能追加</td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useHandStorage}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useHandStorage: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>手札置き場追加</td>
               </tr>
               <tr>
                 <td>
