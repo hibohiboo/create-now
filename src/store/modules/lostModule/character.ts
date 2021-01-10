@@ -973,7 +973,9 @@ export const useCharacterEditViewModel = () =>
       [equipmentTableEditCount, character.equipments.length],
     )
     const totalValue = itemsValue + bagsValue + equipmentValue
-
+    const equipmentsList = useMemo(() => equipments(character, i18n), [
+      equipmentTableEditCount,
+    ])
     return {
       classList: useMemo(() => {
         return mergedClassList.filter(
@@ -1012,9 +1014,27 @@ export const useCharacterEditViewModel = () =>
       itemsColumns,
       items: useMemo(() => mergedItemList, [mergedItemList.length]),
       equipmentColumns,
-      equipments: useMemo(() => equipments(character, i18n), [
-        equipmentTableEditCount,
-      ]),
+      equipments: equipmentsList,
+      equipmentMap: useMemo(() => {
+        const m = new Map<string, Item[]>()
+        for (const rowData of equipmentsList) {
+          const area = rowData['equipedArea']
+          const items = mergedItemList.filter(
+            (i) =>
+              i.area === area ||
+              ([
+                t('lostrpg_character_common_rightHand'),
+                t('lostrpg_character_common_leftHand'),
+              ].includes(area) &&
+                [
+                  t('lostrpg_character_common_oneHand'),
+                  t('lostrpg_character_common_twoHand'),
+                ].includes(i.area)),
+          )
+          m.set(area, items)
+        }
+        return m
+      }, [mergedItemList.length]),
       statusAilments: makedStatusAilments,
       totalWeight: useMemo(
         () =>

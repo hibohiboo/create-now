@@ -36,6 +36,7 @@ import {
   Bag,
 } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
+import EquipmentsTable from '~/components/organisms/mui/memo/EquipmentsTable'
 
 const Page: NextPage = () => {
   let t0 = null
@@ -290,11 +291,23 @@ const Page: NextPage = () => {
           />
         </Box>
         <Box my={2}>
-          <Equipments
+          {/* <Equipments
             t={t}
             vmItems={vm.items}
             equipmentColumns={vm.equipmentColumns}
             equipments={vm.equipments}
+            equipmentChangeHandler={vm.equipmentChangeHandler}
+            equipmentMap={vm.equipmentMap}
+          /> */}
+          <EquipmentsTable
+            title={t('lostrpg_character_common_equipment')}
+            unselectedText={t('common_unselected')}
+            labelText={`${t('lostrpg_character_common_equipment')}${t(
+              'common_add',
+            )}`}
+            columns={vm.equipmentColumns}
+            data={vm.equipments}
+            equipmentMap={vm.equipmentMap}
             equipmentChangeHandler={vm.equipmentChangeHandler}
           />
         </Box>
@@ -596,57 +609,55 @@ const Equipments = React.memo<{
   equipments: any
   equipmentChangeHandler: any
   equipmentColumns: any
-}>(({ t, vmItems, equipmentColumns, equipments, equipmentChangeHandler }) => {
-  console.log('render equipment')
-  return (
-    <MaterialTable
-      title={t('lostrpg_character_common_equipment')}
-      options={tableConfig.viewTable}
-      columns={[
-        {
-          title: t('lostrpg_character_common_area'),
-          field: 'equipedArea',
-        },
-        {
-          title: t('common_name'),
-          field: 'name',
-          render: (rowData) => {
-            const items = vmItems.filter(
-              (i) =>
-                i.area === rowData['equipedArea'] ||
-                ([
-                  t('lostrpg_character_common_rightHand'),
-                  t('lostrpg_character_common_leftHand'),
-                ].includes(rowData['equipedArea']) &&
-                  [
-                    t('lostrpg_character_common_oneHand'),
-                    t('lostrpg_character_common_twoHand'),
-                  ].includes(i.area)),
-            )
-            return (
-              <Box style={{ minWidth: '100px' }}>
-                <SelectField
-                  id={`${rowData['equipedArea']}-equip-items-select`}
-                  items={items}
-                  value={rowData['name']}
-                  unselectedText={t('common_unselected')}
-                  labelText={`${t('lostrpg_character_common_equipment')}${t(
-                    'common_add',
-                  )}`}
-                  changeHandler={(item: Item | null) =>
-                    equipmentChangeHandler(item, rowData)
-                  }
-                />
-              </Box>
-            )
+  equipmentMap: any
+}>(
+  ({
+    t,
+    equipmentColumns,
+    equipments,
+    equipmentChangeHandler,
+    equipmentMap,
+  }) => {
+    console.log('render equipment')
+    return (
+      <MaterialTable
+        title={t('lostrpg_character_common_equipment')}
+        options={tableConfig.viewTable}
+        columns={[
+          {
+            title: t('lostrpg_character_common_area'),
+            field: 'equipedArea',
           },
-        },
-        ...equipmentColumns,
-      ]}
-      data={equipments}
-    />
-  )
-})
+          {
+            title: t('common_name'),
+            field: 'name',
+            render: (rowData) => {
+              const items = equipmentMap.get(rowData['equipedArea'])
+              return (
+                <Box style={{ minWidth: '100px' }}>
+                  <SelectField
+                    id={`${rowData['equipedArea']}-equip-items-select`}
+                    items={items}
+                    value={rowData['name']}
+                    unselectedText={t('common_unselected')}
+                    labelText={`${t('lostrpg_character_common_equipment')}${t(
+                      'common_add',
+                    )}`}
+                    changeHandler={(item: Item | null) =>
+                      equipmentChangeHandler(item, rowData)
+                    }
+                  />
+                </Box>
+              )
+            },
+          },
+          ...equipmentColumns,
+        ]}
+        data={equipments}
+      />
+    )
+  },
+)
 
 const Title = React.memo<{ title: string; titleSuffix: string }>(
   ({ title, titleSuffix }) => {
