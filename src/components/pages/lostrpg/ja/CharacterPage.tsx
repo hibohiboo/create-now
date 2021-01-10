@@ -343,7 +343,7 @@ const Page: React.FC<{
           )}
         </Box>
       )}
-      <Box my={2}>
+      {/* <Box my={2}>
         <Button
           variant="contained"
           color="primary"
@@ -360,7 +360,7 @@ const Page: React.FC<{
         >
           TRPGスタジオ用テキスト出力
         </Button>
-      </Box>
+      </Box> */}
       <Box my={2}>
         レコードシート
         {!canEdit(authUser, character) ? (

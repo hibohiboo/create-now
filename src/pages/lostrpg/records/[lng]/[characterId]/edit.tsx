@@ -254,8 +254,10 @@ const Page: NextPage = () => {
 
           <Link
             href={{
-              pathname: '/lostrpg/public/[lng]/[view]',
-              query: { id: vm.record.characterId, lng: vm.i18n.activeLocale },
+              pathname: `/lostrpg/public/ja/character?id=${vm.record.characterId}`,
+              query: {
+                id: vm.record.characterId,
+              },
             }}
             as={vm.beforePage}
           >

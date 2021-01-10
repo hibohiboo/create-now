@@ -36,7 +36,6 @@ Page.getInitialProps = async ({ query }) => {
   const character = await getCharacter(id)
   const records = await readCharactersRecords(id)
   const { specialtiesTableColumns, bodyParts, specialties, abilitiesColumns, itemsColumns, equipmentColumns, statusAilments, backboneColumns, recordsColumns } = lostData
-
   const itemsValue = character.items.reduce((sum, { j, number }) => sum + j * number, 0)
   const bagsValue =
       character.bags
@@ -62,54 +61,55 @@ Page.getInitialProps = async ({ query }) => {
     backboneColumns,
     recordsColumns,
     records,
-    exportXml: async () => {
-      console.log('exportXml', character)
-      let identifier = ''
-      const files: File[] = []
-      if (character.imageUrl) {
-        const response = await fetch(character.imageUrl, { method: 'GET' })
-        const blob = await response.blob()
-        identifier = await calcSHA256Async(blob)
+    // viewで反応しないのでコメントアウト
+    // exportXml: async () => {
+    //   console.log('exportXml', character)
+    //   let identifier = ''
+    //   const files: File[] = []
+    //   if (character.imageUrl) {
+    //     const response = await fetch(character.imageUrl, { method: 'GET' })
+    //     const blob = await response.blob()
+    //     identifier = await calcSHA256Async(blob)
 
-        files.push(
-          new File([blob], identifier + '.' + MimeType.extension(blob.type), {
-            type: blob.type,
-          }),
-        )
-      }
-      const doc = characterToDoc(
-        character,
-        damagedParts,
-        makedStatusAilments,
-        i18n,
-        identifier,
-      )
-      const sXML = convertDocToXML(doc)
+    //     files.push(
+    //       new File([blob], identifier + '.' + MimeType.extension(blob.type), {
+    //         type: blob.type,
+    //       }),
+    //     )
+    //   }
+    //   const doc = characterToDoc(
+    //     character,
+    //     damagedParts,
+    //     makedStatusAilments,
+    //     i18n,
+    //     identifier,
+    //   )
+    //   const sXML = convertDocToXML(doc)
 
-      files.push(new File([sXML], 'data.xml', { type: 'text/plain' }))
-      FileArchiver.instance.save(files, character.name)
-    },
-    exportJson: async () => {
-      // const identifier = ''
+    //   files.push(new File([sXML], 'data.xml', { type: 'text/plain' }))
+    //   FileArchiver.instance.save(files, character.name)
+    // },
+    // exportJson: async () => {
+    //   // const identifier = ''
 
-      const json = characterToTRPGStudioDoc(
-        character,
-        damagedParts,
-        makedStatusAilments,
-        i18n,
-        specialtiesTableColumns,
-        specialties,
-        abilitiesColumns.map((a) => a.title),
-        equipmentColumns.map((e) => e.title),
-        itemsColumns.map((i) => i.title),
-      )
+    //   const json = characterToTRPGStudioDoc(
+    //     character,
+    //     damagedParts,
+    //     makedStatusAilments,
+    //     i18n,
+    //     specialtiesTableColumns,
+    //     specialties,
+    //     abilitiesColumns.map((a) => a.title),
+    //     equipmentColumns.map((e) => e.title),
+    //     itemsColumns.map((i) => i.title),
+    //   )
 
-      const file = new File([json], `${character.name}.txt`, {
-        type: 'text/plain',
-      })
+    //   const file = new File([json], `${character.name}.txt`, {
+    //     type: 'text/plain',
+    //   })
 
-      FileArchiver.instance.saveText(file)
-    },
+    //   FileArchiver.instance.saveText(file)
+    // },
   }
   return { character, lng: 'ja', lngDict, vm, id }
 }
