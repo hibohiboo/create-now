@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Router, { useRouter } from 'next/router'
-import * as _ from 'lodash'
+import range from 'lodash/range'
+import uniq from 'lodash/uniq'
+import uniqueId from 'lodash/uniqueId'
+import union from 'lodash/union'
 import { AppThunk } from '~/store/rootState'
 import { readCharacters, readCampsCharacters } from '~/firestore/character'
 import { readCharactersRecords } from '~/firestore/record'
@@ -28,7 +31,7 @@ import {
   setCharactersRecords,
 } from './index'
 import { getIdFromQuery } from '~/utils/urlHelper'
-import {
+import lostModule, {
   setCharacter,
   toggleCharacterDamage,
   setCharacterBag,
@@ -73,11 +76,11 @@ export interface Bag {
   id: string // テーブルで編集するとき用のユニークなID
 }
 
-interface Backbone {
+export interface Backbone {
   name: string
   type: string
   effect: string
-  id: string // テーブルで編集するとき用のユニークなID
+  // id: string // テーブルで編集するとき用のユニークなID
 }
 export interface Ability {
   name: string
@@ -122,6 +125,7 @@ export interface Character {
   backbones: Backbone[]
   useDragonPlain?: boolean
 }
+
 export const initBag = {
   id: 'bag',
   name: '新しい袋',
@@ -205,7 +209,7 @@ export interface CampsCharacters {
 }
 
 // state
-export const useCharacter = () =>
+export const useCharacter = (): Character =>
   useSelector((state: { lost: LostModule }) => state.lost.character)
 export const useCharacters = () =>
   useSelector((state: { lost: LostModule }) => state.lost.characters)
@@ -248,7 +252,7 @@ export const specialtiesTableRows = (
     }
   }
 
-  return _.range(11).map((y) => ({
+  return range(11).map((y) => ({
     number: y + 2,
     talent: makeData(specialties[y]),
     a: makeData('', 'A'),
@@ -558,8 +562,8 @@ const characterToTRPGStudioDoc = (
     c: character.specialties.includes(t),
     k: 1,
   })
-  const specialityList = _.range(11).map((y) =>
-    _.range(6).map((x) => makeData(specialties[y + 11 * x])),
+  const specialityList = range(11).map((y) =>
+    range(6).map((x) => makeData(specialties[y + 11 * x])),
   )
   const result = {
     info: {
@@ -779,9 +783,17 @@ export const useCharacterEditViewModel = () =>
     const [prevUrl, setPrevUrl] = useState('')
     const [file, setFile] = useState<File>(null)
     const setImageFile = createSetImageFile(setFile, setPrevUrl)
-    const handleOnDrop = (files: File[]) => {
-      setImageFile(files[0])
-    }
+    const handleOnDrop = useCallback(
+      (files: File[]) => {
+        setImageFile(files[0])
+      },
+      [file],
+    )
+    // editable table
+    const [abilityTableCount, setAbilityTableCount] = useState(0)
+    const [itemTableEditCount, setItemTableEditCount] = useState(0)
+    const [bagTableEditCount, setBagTableEditCount] = useState(0)
+    const [equipmentTableEditCount, setEquipmentTableEditCount] = useState(0)
 
     const editHandler = async () => {
       if (!character.name) {
@@ -828,8 +840,19 @@ export const useCharacterEditViewModel = () =>
       // /lostrpg/public/[lng]/[view] では編集機能がない
 
       if (router.pathname.includes('view')) return
-      if (!authUser || (id && !canEdit(authUser, character))) {
+      if (id && !canEdit(authUser, character)) {
+        Router.push(
+          {
+            pathname: `/lostrpg/public/[lng]/[view]`,
+            query: { id },
+          },
+          `/lostrpg/public/${i18n.activeLocale}/character?id=${id}`,
+        )
+        return
+      }
+      if (!authUser) {
         Router.push(beforePage)
+        return
       }
       dispatch(setLocale(i18n.activeLocale))
       dispatch(fetchCamps(campLimit))
@@ -872,76 +895,136 @@ export const useCharacterEditViewModel = () =>
       dragonPlainItemList,
       dragonPlainAbilityList,
       dragonPlainGreaterItemList,
-    } = i18n.activeLocale === defaultLanguage ? lostData : lostDataEn
-    let mergedClassList = classList
-    let mergedAbilities = abilityList
-    let mergedItemList = items
-    // サプリメント： 終末列島百景
-    if (character.useStrangeField) {
-      mergedItemList = _.union(mergedItemList, strangeFieldsItemList)
-      mergedClassList = _.union(mergedClassList, strangeFieldsClassList)
-      mergedAbilities = _.union(
-        mergedAbilities,
-        strangeFieldsAbilityList,
-        trophyAbilityList,
-      )
-    }
-    // サプリメント： 関ヶ原暴竜平原
-    if (character.useDragonPlain) {
-      mergedItemList = _.union(
-        mergedItemList,
-        dragonPlainItemList,
-        dragonPlainGreaterItemList,
-      )
-      mergedAbilities = _.union(mergedAbilities, dragonPlainAbilityList)
-    }
-    const trophies = _.uniq(state.lost.records.map((i) => i.trophy))
-    const damagedParts = damageBodyParts(bodyParts, character)
-    const makedStatusAilments = makeStatusAilments(character, statusAilments)
-    const imgId = 'character-image'
-    const makedSpecialtiesRows = specialtiesTableRows(
-      bodyParts,
-      specialties,
-      character,
+    } = useMemo(
+      () => (i18n.activeLocale === defaultLanguage ? lostData : lostDataEn),
+      [],
     )
+    const mergedClassList = useMemo(() => {
+      if (character.useStrangeField) {
+        return union(classList, strangeFieldsClassList)
+      }
+      return classList
+    }, [character.useStrangeField])
+    const mergedAbilities = useMemo(() => {
+      if (character.useStrangeField && character.useDragonPlain) {
+        return union(
+          abilityList,
+          strangeFieldsAbilityList,
+          trophyAbilityList,
+          dragonPlainAbilityList,
+        )
+      }
+      if (character.useStrangeField) {
+        return union(abilityList, strangeFieldsAbilityList, trophyAbilityList)
+      }
+      if (character.useDragonPlain) {
+        return union(abilityList, dragonPlainAbilityList)
+      }
+      return abilityList
+    }, [character.useStrangeField, character.useDragonPlain])
+    const mergedItemList = useMemo(() => {
+      if (character.useStrangeField && character.useDragonPlain) {
+        return union(
+          items,
+          strangeFieldsItemList,
+          dragonPlainItemList,
+          dragonPlainGreaterItemList,
+        )
+      }
+      if (character.useStrangeField) {
+        return union(items, strangeFieldsItemList)
+      }
+      if (character.useDragonPlain) {
+        return union(items, dragonPlainItemList, dragonPlainGreaterItemList)
+      }
+      return items
+    }, [character.useStrangeField, character.useDragonPlain])
+
+    const trophies = useMemo(
+      () => uniq(state.lost.records.map((i) => i.trophy)),
+      [state.lost.records.length],
+    )
+    const damagedParts = useMemo(() => damageBodyParts(bodyParts, character), [
+      character.damagedSpecialties.length,
+    ])
+    const makedStatusAilments = useMemo(
+      () => makeStatusAilments(character, statusAilments),
+      [character.statusAilments.length],
+    )
+    const imgId = 'character-image'
+    const makedSpecialtiesRows = useMemo(
+      () => specialtiesTableRows(bodyParts, specialties, character),
+      [character.specialties, character.gaps, character.damagedSpecialties],
+    )
+    const itemsValue = useMemo(
+      () => character.items.reduce((sum, { j, number }) => sum + j * number, 0),
+      [itemTableEditCount],
+    )
+    const bagsValue = useMemo(
+      () =>
+        character.bags
+          .map((bag) => bag.items)
+          .flat()
+          .reduce((sum, { j, number }) => sum + j * number, 0),
+      [bagTableEditCount],
+    )
+    const equipmentValue = useMemo(
+      () => character.equipments.reduce((sum, { j }) => sum + j, 0),
+      [equipmentTableEditCount, character.equipments.length],
+    )
+    const totalValue = itemsValue + bagsValue + equipmentValue
 
     return {
-      classList: mergedClassList.filter(
-        (item) => !character.classes.includes(item),
-      ),
-      abilitiesColumns,
-      abilityList: mergedAbilities
-        .filter(
-          (item) =>
-            item.id === 'general' ||
-            character.classes.findIndex((c) => c.id === item.id) !== -1 ||
-            trophies.includes(item.name),
+      classList: useMemo(() => {
+        return mergedClassList.filter(
+          (item) => character.classes.findIndex((i) => i.id === item.id) === -1,
         )
-        .map((item) => item.list)
-        .flat()
-        .filter((item) => !character.abilities.includes(item)),
-      specialtiesTableColumns: makeSpecialtiesTableColumns(
-        specialtiesTableColumns,
-        character,
+      }, [character.classes.length]),
+      abilitiesColumns,
+      abilityList: useMemo(
+        () =>
+          mergedAbilities
+            .filter(
+              (item) =>
+                item.id === 'general' ||
+                character.classes.findIndex((c) => c.id === item.id) !== -1 ||
+                trophies.includes(item.name),
+            )
+            .map((item) => item.list)
+            .flat()
+            .filter(
+              (item) =>
+                character.abilities.findIndex((i) => i.name === item.name) ===
+                -1,
+            ),
+        [
+          character.abilities.length,
+          character.classes.length,
+          mergedAbilities.length,
+        ],
+      ),
+      specialtiesTableColumns: useMemo(
+        () => makeSpecialtiesTableColumns(specialtiesTableColumns, character),
+        [character.gaps],
       ),
       specialtiesTableRows: makedSpecialtiesRows,
       damageBodyParts: damagedParts,
       itemsColumns,
-      items: mergedItemList,
+      items: useMemo(() => mergedItemList, [mergedItemList.length]),
       equipmentColumns,
-      equipments: equipments(character, i18n),
+      equipments: useMemo(() => equipments(character, i18n), [
+        equipmentTableEditCount,
+      ]),
       statusAilments: makedStatusAilments,
-      totalWeight: character.items.reduce(
-        (sum, { weight, number }) => sum + weight * number,
-        0,
+      totalWeight: useMemo(
+        () =>
+          character.items.reduce(
+            (sum, { weight, number }) => sum + weight * number,
+            0,
+          ),
+        [itemTableEditCount],
       ),
-      totalValue:
-        character.items.reduce((sum, { j, number }) => sum + j * number, 0) +
-        character.bags
-          .map((bag) => bag.items)
-          .flat()
-          .reduce((sum, { j, number }) => sum + j * number, 0) +
-        character.equipments.reduce((sum, { j }) => sum + j, 0),
+      totalValue,
       backboneList,
       backboneColumns,
       records: state.lost.records,
@@ -1007,243 +1090,208 @@ export const useCharacterEditViewModel = () =>
         character.name || !isValidError ? '' : t('message_required'),
       prevUrl,
       beforePage,
-      playerNameHandler: (e) =>
-        dispatch(setCharacter({ ...character, playerName: e.target.value })),
-      useStrangeFieldHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            useStrangeField: e.target.checked,
-          }),
-        ),
-      useDragonPlainHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            useDragonPlain: e.target.checked,
-          }),
-        ),
-      campHandler: (item: { id: string; name: string } | null) => {
+      abilityTableCount,
+      itemTableEditCount,
+      playerNameHandler: useCallback(
+        (e) => dispatch(lostModule.actions.setPlayerName(e.target.value)),
+        [],
+      ),
+      useStrangeFieldHandler: useCallback(
+        (e) =>
+          dispatch(lostModule.actions.setUseStrangeField(e.target.checked)),
+        [],
+      ),
+      useDragonPlainHandler: useCallback(
+        (e) => dispatch(lostModule.actions.setUseDragonPlain(e.target.checked)),
+        [],
+      ),
+      campHandler: useCallback((item: { id: string; name: string } | null) => {
         if (item) {
-          dispatch(
-            setCharacter({
-              ...character,
-              campName: item.name,
-              campId: item.id,
-            }),
-          )
+          dispatch(lostModule.actions.setCharacterCamp(item))
           return
         }
         dispatch(
-          setCharacter({
-            ...character,
-            campName: '',
-            campId: '',
+          lostModule.actions.setCharacterCamp({
+            name: '',
+            id: '',
           }),
         )
-      },
-      characterNameHandler: (e) =>
-        dispatch(setCharacter({ ...character, name: e.target.value })),
+      }, []),
+      characterNameHandler: useCallback(
+        (e) => dispatch(lostModule.actions.setCharacterName(e.target.value)),
+        [character.name],
+      ),
       handleOnDrop,
-      classHandler: (item: CharacterClass | null) => {
-        item &&
-          dispatch(
-            setCharacter({
-              ...character,
-              classes: [...character.classes, item],
-            }),
-          )
-      },
-      classItemHandler: (item) => {
-        dispatch(
-          setCharacter({
-            ...character,
-            classes: character.classes.filter((i) => i.name !== item.name),
-          }),
-        )
-      },
+      classHandler: useCallback((item: CharacterClass | null) => {
+        item && dispatch(lostModule.actions.setCharacterClass(item))
+      }, []),
+      classItemHandler: useCallback((item) => {
+        dispatch(lostModule.actions.deleteCharacterClass(item))
+      }, []),
       specialtiesHandler: () =>
         dispatch(setCharacter({ ...character, damagedSpecialties: [] })),
-      gapHandler: (name) => {
-        const gaps = character.gaps.includes(name)
-          ? character.gaps.filter((item) => item !== name)
-          : [...character.gaps, name]
-        dispatch(
-          setCharacter({
-            ...character,
-            gaps,
-          }),
-        )
-      },
-      specialtyHandler: (name) => {
-        const specialties = character.specialties.includes(name)
-          ? character.specialties.filter((item) => item !== name)
-          : [...character.specialties, name]
-        dispatch(
-          setCharacter({
-            ...character,
-            specialties,
-          }),
-        )
-      },
-      damageHandler: (name) => dispatch(toggleCharacterDamage(name)),
-      abilitySelectHandler: (item: Ability | null) => {
-        item &&
+      gapHandler: useCallback((name) => {
+        dispatch(lostModule.actions.toggleCharacterGap(name))
+      }, []),
+      specialtyHandler: useCallback((name) => {
+        dispatch(lostModule.actions.toggleCharacterSpecial(name))
+      }, []),
+      damageHandler: useCallback(
+        (name) => dispatch(toggleCharacterDamage(name)),
+        [],
+      ),
+      abilitySelectHandler: useCallback((item: Ability | null) => {
+        item && dispatch(lostModule.actions.addAbility(item))
+      }, []),
+      abilityAddhandler: useCallback((item: Ability | null) => {
+        item && dispatch(lostModule.actions.addAbility(item))
+      }, []),
+      abilityUpdateHandler: useCallback(
+        (newData, oldData) => {
+          dispatch(lostModule.actions.updateAbility({ newData, oldData }))
+          setAbilityTableCount(abilityTableCount + 1)
+        },
+        [abilityTableCount],
+      ),
+      abilityDeleteHandler: useCallback((oldData) => {
+        dispatch(lostModule.actions.deleteAbility(oldData))
+      }, []),
+      staminaBaseHandler: useCallback(
+        (e) =>
+          dispatch(lostModule.actions.setStaminaBase(Number(e.target.value))),
+        [],
+      ),
+      staminaHandler: useCallback(
+        (e) => dispatch(lostModule.actions.setStamina(Number(e.target.value))),
+        [],
+      ),
+      willPowerBaseHandler: useCallback(
+        (e) =>
+          dispatch(lostModule.actions.setWillPowerBase(Number(e.target.value))),
+        [],
+      ),
+      willPowerHandler: useCallback(
+        (e) =>
+          dispatch(lostModule.actions.setWillPower(Number(e.target.value))),
+        [],
+      ),
+      carryingCapacityHandler: useCallback(
+        (e) =>
           dispatch(
-            setCharacter({
-              ...character,
-              abilities: [...character.abilities, item],
+            lostModule.actions.setCarryingCapacity(Number(e.target.value)),
+          ),
+        [],
+      ),
+      itemSelectHandler: useCallback(
+        (item: Item | null) => {
+          setItemTableEditCount(itemTableEditCount + 1)
+          item &&
+            dispatch(
+              lostModule.actions.addItem({
+                ...item,
+                id: uniqueId(item.name),
+                number: 1,
+              }),
+            )
+        },
+        [itemTableEditCount],
+      ),
+      addItemHandler: useCallback(
+        (newData) => {
+          setItemTableEditCount(itemTableEditCount + 1)
+          dispatch(
+            lostModule.actions.addItem({
+              ...newData,
+              id: uniqueId(newData.name),
             }),
           )
-      },
-      abilityAddhandler: (newData) => {
-        updateRowData('abilities', (d) => [...d, newData])
-      },
-      abilityUpdateHandler: (newData, oldData) => {
-        updateRowData('abilities', (d) => {
-          d[d.findIndex((i) => i.name === oldData.name)] = newData
-          return d
-        })
-      },
-      abilityDeleteHandler: (oldData) => {
-        updateRowData('abilities', (d) => {
-          d.splice(
-            d.findIndex((i) => i.name === oldData.name),
-            1,
-          )
-          return d
-        })
-      },
-      staminaBaseHandler: (e) =>
+        },
+        [itemTableEditCount],
+      ),
+      updateItemHandler: useCallback(
+        (newData, oldData) => {
+          dispatch(lostModule.actions.updateItem({ newData, oldData }))
+          setItemTableEditCount(itemTableEditCount + 1)
+        },
+        [itemTableEditCount],
+      ),
+      deleteItemHandler: useCallback(
+        (oldData) => {
+          setItemTableEditCount(itemTableEditCount + 1)
+          dispatch(lostModule.actions.deleteItem(oldData))
+        },
+        [itemTableEditCount],
+      ),
+      addBagHandler: useCallback(() => {
+        setBagTableEditCount(bagTableEditCount + 1)
         dispatch(
-          setCharacter({
-            ...character,
-            staminaBase: Number(e.target.value),
-          }),
-        ),
-      staminaHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            stamina: Number(e.target.value),
-          }),
-        ),
-      willPowerBaseHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            willPowerBase: Number(e.target.value),
-          }),
-        ),
-      willPowerHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            willPower: Number(e.target.value),
-          }),
-        ),
-      carryingCapacityHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            carryingCapacity: Number(e.target.value),
-          }),
-        ),
-      itemSelectHandler: (item: Item | null) => {
-        item &&
-          dispatch(
-            setCharacter({
-              ...character,
-              items: [
-                ...character.items,
-                { ...item, id: _.uniqueId(item.name), number: 1 },
-              ],
-            }),
-          )
-      },
-      addItemHandler: (newData) => {
-        updateRowData('items', (d) => [
-          ...d,
-          { ...newData, id: _.uniqueId(newData.name) },
-        ])
-      },
-      updateItemHandler: (newData, oldData) => {
-        updateRowData('items', (d) => {
-          d[d.findIndex((i) => i.id === oldData.id)] = newData
-          return d
-        })
-      },
-      deleteItemHandler: (oldData) => {
-        updateRowData('items', (d) => {
-          d.splice(
-            d.findIndex((i) => i.id === oldData.id),
-            1,
-          )
-          return d
-        })
-      },
-      addBagHandler: () =>
-        dispatch(
-          setCharacter({
-            ...character,
-            bags: [
-              ...character.bags,
-              { ...initBag, id: _.uniqueId(initBag.id) },
-            ],
-          }),
-        ),
-      bagChangeHandler: (e, bag) =>
-        dispatch(
-          setCharacterBag({
-            ...bag,
-            name: e.target.value,
-          }),
-        ),
-      bagRemoveHandler: (bag) => {
-        if (!confirm(t('message_are_you_sure_remove'))) return
-        dispatch(
-          setCharacter({
-            ...character,
-            bags: character.bags.filter((b) => b.id !== bag.id),
+          lostModule.actions.addCharacterBag({
+            ...initBag,
+            id: uniqueId(initBag.id),
           }),
         )
-      },
-      bagCapacityHandler: (e, bag) =>
-        dispatch(
-          setCharacterBag({
-            ...bag,
-            capacity: Number(e.target.value),
-          }),
-        ),
-      bagItemSelectHandler: (item: Item | null, bag) => {
-        item &&
+      }, [bagTableEditCount]),
+      bagChangeHandler: useCallback(
+        (e, bag) =>
           dispatch(
             setCharacterBag({
               ...bag,
-              items: [
-                ...bag.items,
-                {
-                  ...item,
-                  id: _.uniqueId(item.name),
-                  number: 1,
-                },
-              ],
+              name: e.target.value,
             }),
-          )
-      },
-      addBagItemHandler: (newData, bag) => {
-        updateRowDataBags(bag, (d) => [
-          ...d,
-          { ...newData, id: _.uniqueId(newData.name) },
-        ])
-      },
-      updateBagItemHandler: (newData, oldData, bag) => {
+          ),
+        [],
+      ),
+      bagRemoveHandler: useCallback((bag) => {
+        if (!confirm(t('message_are_you_sure_remove'))) return
+        dispatch(lostModule.actions.removeCharacterBag(bag))
+      }, []),
+      bagCapacityHandler: useCallback(
+        (e, bag) =>
+          dispatch(
+            setCharacterBag({
+              ...bag,
+              capacity: Number(e.target.value),
+            }),
+          ),
+        [],
+      ),
+      bagItemSelectHandler: useCallback(
+        (item: Item | null, bag) => {
+          setItemTableEditCount(itemTableEditCount + 1)
+          item &&
+            dispatch(
+              setCharacterBag({
+                ...bag,
+                items: [
+                  ...bag.items,
+                  {
+                    ...item,
+                    id: uniqueId(item.name),
+                    number: 1,
+                  },
+                ],
+              }),
+            )
+        },
+        [itemTableEditCount],
+      ),
+      addBagItemHandler: useCallback(
+        (newData, bag) => {
+          setBagTableEditCount(bagTableEditCount + 1)
+          updateRowDataBags(bag, (d) => [
+            ...d,
+            { ...newData, id: uniqueId(newData.name) },
+          ])
+        },
+        [bagTableEditCount],
+      ),
+      updateBagItemHandler: useCallback((newData, oldData, bag) => {
         updateRowDataBags(bag, (d) => {
           d[d.findIndex((i) => i.id === oldData.id)] = newData
           return d
         })
-      },
-      deleteBagItemHandler: (oldData, bag) => {
+      }, []),
+      deleteBagItemHandler: useCallback((oldData, bag) => {
         updateRowDataBags(bag, (d) => {
           d.splice(
             d.findIndex((i) => i.id === oldData.id),
@@ -1251,90 +1299,61 @@ export const useCharacterEditViewModel = () =>
           )
           return d
         })
-      },
-      equipmentChangeHandler: (item: Item | null, rowData) => {
-        let data = {
-          ...character,
-          equipments: character.equipments.filter(
-            (i) => i.equipedArea !== rowData['equipedArea'],
-          ),
-        }
-        if (item) {
-          data = {
-            ...character,
-            equipments: [
-              ...data.equipments,
-              {
+      }, []),
+      equipmentChangeHandler: useCallback(
+        (item: Item | null, rowData) => {
+          setEquipmentTableEditCount(equipmentTableEditCount + 1)
+          if (item) {
+            dispatch(
+              lostModule.actions.addCharacterEquipment({
                 ...item,
-                id: _.uniqueId(item.name),
+                id: uniqueId(item.name),
                 equipedArea: rowData['equipedArea'],
-              },
-            ],
+              }),
+            )
+            return
           }
-        }
-
-        dispatch(setCharacter(data))
-      },
-      statusAilmentsHandler: (rowData) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            statusAilments: rowData['isChecked']
-              ? character.statusAilments.filter(
-                  (name) => name !== rowData['name'],
-                )
-              : [...character.statusAilments, rowData['name']],
-          }),
-        ),
-      backboneHandler: (item: any) => {
-        item &&
           dispatch(
-            setCharacter({
-              ...character,
-              backbones: [...character.backbones, item],
-            }),
+            lostModule.actions.removeCharacterEquipment(rowData['equipedArea']),
           )
-      },
-      addBackBoneHandler: (newData) => {
-        updateRowData('backbones', (d) => [...d, newData])
-      },
-      updateBackboneHandler: (newData, oldData) => {
-        updateRowData('backbones', (d) => {
-          d[d.findIndex((i) => i.name === oldData.name)] = newData
-          return d
-        })
-      },
-      deleteBackboneHandler: (oldData) => {
-        updateRowData('backbones', (d) => {
-          d.splice(
-            d.findIndex((i) => i.name === oldData.name),
-            1,
-          )
-          return d
-        })
-      },
-      unUsedExperienceHandler: (e) =>
+        },
+        [equipmentTableEditCount],
+      ),
+      statusAilmentsHandler: useCallback((rowData) => {
+        if (rowData['isChecked']) {
+          dispatch(lostModule.actions.removeStatusAilment(rowData['name']))
+          return
+        }
+        dispatch(lostModule.actions.addStatusAilment(rowData['name']))
+      }, []),
+      backboneHandler: useCallback((item: Backbone | null) => {
+        item && dispatch(lostModule.actions.addCharacterBackbone(item))
+      }, []),
+      addBackBoneHandler: useCallback((newData: Backbone) => {
+        dispatch(lostModule.actions.addCharacterBackbone(newData))
+      }, []),
+      updateBackboneHandler: useCallback((newData, oldData) => {
         dispatch(
-          setCharacter({
-            ...character,
-            unusedExperience: Number(e.target.value),
-          }),
-        ),
-      totalExperienceHandler: (e) =>
-        dispatch(
-          setCharacter({
-            ...character,
-            totalExperience: Number(e.target.value),
-          }),
-        ),
+          lostModule.actions.updateCharacterBackbone({ newData, oldData }),
+        )
+      }, []),
+      deleteBackboneHandler: useCallback((oldData) => {
+        dispatch(lostModule.actions.deleteCharacterBackbone(oldData))
+      }, []),
+      unUsedExperienceHandler: useCallback((e) => {
+        dispatch(lostModule.actions.setUnUsedExperience(Number(e.target.value)))
+      }, []),
+      totalExperienceHandler: useCallback((e) => {
+        dispatch(lostModule.actions.setTotalExperience(Number(e.target.value)))
+      }, []),
       summaryHandler: (v) =>
-        dispatch(setCharacter({ ...character, summary: v })),
+        dispatch(lostModule.actions.setCharacterSummary(v)),
       appearanceHandler: (v) =>
-        dispatch(setCharacter({ ...character, appearance: v })),
+        dispatch(lostModule.actions.setCharacterAppearance(v)),
       freeWritingHandler: (v) =>
-        dispatch(setCharacter({ ...character, freeWriting: v })),
+        dispatch(lostModule.actions.setCharacterFreeWriting(v)),
       quoteHandler: (e) =>
-        dispatch(setCharacter({ ...character, quote: e.target.value })),
+        dispatch(lostModule.actions.setCharacterQuote(e.target.value)),
       editHandler,
       deleteHandler,
     }

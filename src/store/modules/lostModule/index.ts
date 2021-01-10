@@ -11,6 +11,7 @@ import type {
   Ability,
   Bag,
   Item,
+  Backbone,
 } from './character'
 import type { Record, Member } from './record'
 import type { Boss } from './boss'
@@ -49,6 +50,7 @@ import {
   mdToScenario,
   useScenariosViewModel,
 } from './scenario'
+import { stringToArray } from 'konva/types/shapes/Text'
 export type {
   Camp,
   Character,
@@ -184,6 +186,7 @@ const lostModule = createSlice({
     ) => {
       state.characters = state.characters.concat(action.payload)
     },
+    // start character
     setCharacter: (state, action: PayloadAction<Character>) => {
       state.character = action.payload
 
@@ -219,6 +222,169 @@ const lostModule = createSlice({
       }
       state.character.bags[index] = action.payload
     },
+    setPlayerName: (state, action: PayloadAction<string>) => {
+      state.character.playerName = action.payload
+    },
+    setUseDragonPlain: (state, action: PayloadAction<boolean>) => {
+      state.character.useDragonPlain = action.payload
+    },
+    setUseStrangeField: (state, action: PayloadAction<boolean>) => {
+      state.character.useStrangeField = action.payload
+    },
+    setCharacterCamp: (
+      state,
+      action: PayloadAction<{ id: string; name: string }>,
+    ) => {
+      state.character.campId = action.payload.id
+      state.character.campName = action.payload.name
+    },
+    setCharacterName: (state, action: PayloadAction<string>) => {
+      state.character.name = action.payload
+    },
+    setCharacterClass: (state, action: PayloadAction<CharacterClass>) => {
+      state.character.classes.push(action.payload)
+    },
+    deleteCharacterClass: (state, action: PayloadAction<CharacterClass>) => {
+      state.character.classes = state.character.classes.filter(
+        (i) => i.name !== action.payload.name,
+      )
+    },
+    toggleCharacterGap: (
+      state,
+      action: PayloadAction<'A' | 'B' | 'C' | 'D' | 'E'>,
+    ) => {
+      state.character.gaps = state.character.gaps.includes(action.payload)
+        ? state.character.gaps.filter((item) => item !== action.payload)
+        : [...state.character.gaps, action.payload]
+    },
+    toggleCharacterSpecial: (state, action: PayloadAction<string>) => {
+      state.character.specialties = state.character.specialties.includes(
+        action.payload,
+      )
+        ? state.character.specialties.filter((item) => item !== action.payload)
+        : [...state.character.specialties, action.payload]
+    },
+    addAbility: (state, action: PayloadAction<Ability>) => {
+      state.character.abilities.push(action.payload)
+    },
+    updateAbility: (
+      state,
+      action: PayloadAction<{ oldData: Ability; newData: Ability }>,
+    ) => {
+      const { oldData, newData } = action.payload
+      state.character.abilities[
+        state.character.abilities.findIndex((i) => i.name === oldData.name)
+      ] = newData
+    },
+    deleteAbility: (state, action: PayloadAction<Ability>) => {
+      state.character.abilities.splice(
+        state.character.abilities.findIndex(
+          (i) => i.name === action.payload.name,
+        ),
+        1,
+      )
+    },
+    setStaminaBase: (state, action: PayloadAction<number>) => {
+      state.character.staminaBase = action.payload
+    },
+    setStamina: (state, action: PayloadAction<number>) => {
+      state.character.stamina = action.payload
+    },
+    setWillPowerBase: (state, action: PayloadAction<number>) => {
+      state.character.willPowerBase = action.payload
+    },
+    setWillPower: (state, action: PayloadAction<number>) => {
+      state.character.willPower = action.payload
+    },
+    setCarryingCapacity: (state, action: PayloadAction<number>) => {
+      state.character.carryingCapacity = action.payload
+    },
+    addItem: (state, action: PayloadAction<Item>) => {
+      state.character.items.push(action.payload)
+    },
+    updateItem: (
+      state,
+      action: PayloadAction<{ oldData: Item; newData: Item }>,
+    ) => {
+      const { oldData, newData } = action.payload
+      state.character.items[
+        state.character.items.findIndex((i) => i.id === oldData.id)
+      ] = newData
+    },
+    deleteItem: (state, action: PayloadAction<Item>) => {
+      state.character.items.splice(
+        state.character.items.findIndex((i) => i.id === action.payload.id),
+        1,
+      )
+    },
+    addCharacterBag: (state, action: PayloadAction<Bag>) => {
+      state.character.bags.push(action.payload)
+    },
+    removeCharacterBag: (state, action: PayloadAction<Bag>) => {
+      state.character.bags = state.character.bags.filter(
+        (b) => b.id !== action.payload.id,
+      )
+    },
+    removeCharacterEquipment: (state, action: PayloadAction<string>) => {
+      const equipments = state.character.equipments.filter(
+        (i) => i.equipedArea !== action.payload,
+      )
+      state.character.equipments = equipments
+    },
+    addCharacterEquipment: (state, action: PayloadAction<Item>) => {
+      const equipments = state.character.equipments.filter(
+        (i) => i.equipedArea !== action.payload.equipedArea,
+      )
+      equipments.push(action.payload)
+      state.character.equipments = equipments
+    },
+    removeStatusAilment: (state, action: PayloadAction<string>) => {
+      state.character.statusAilments = state.character.statusAilments.filter(
+        (name) => name !== action.payload,
+      )
+    },
+    addStatusAilment: (state, action: PayloadAction<string>) => {
+      state.character.statusAilments.push(action.payload)
+    },
+    addCharacterBackbone: (state, action: PayloadAction<Backbone>) => {
+      state.character.backbones.push(action.payload)
+    },
+    updateCharacterBackbone: (
+      state,
+      action: PayloadAction<{ newData: Backbone; oldData: Backbone }>,
+    ) => {
+      const { oldData, newData } = action.payload
+      state.character.backbones[
+        state.character.backbones.findIndex((i) => i.name === oldData.name)
+      ] = newData
+    },
+    deleteCharacterBackbone: (state, action: PayloadAction<Backbone>) => {
+      state.character.backbones.splice(
+        state.character.backbones.findIndex(
+          (i) => i.name === action.payload.name,
+        ),
+        1,
+      )
+    },
+    setUnUsedExperience: (state, action: PayloadAction<number>) => {
+      state.character.unusedExperience = action.payload
+    },
+    setTotalExperience: (state, action: PayloadAction<number>) => {
+      state.character.totalExperience = action.payload
+    },
+    setCharacterSummary: (state, action: PayloadAction<string>) => {
+      state.character.summary = action.payload
+    },
+    setCharacterAppearance: (state, action: PayloadAction<string>) => {
+      state.character.appearance = action.payload
+    },
+    setCharacterFreeWriting: (state, action: PayloadAction<string>) => {
+      state.character.freeWriting = action.payload
+    },
+    setCharacterQuote: (state, action: PayloadAction<string>) => {
+      state.character.quote = action.payload
+    },
+    // end character
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload
       state.camps = []
