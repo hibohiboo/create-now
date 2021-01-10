@@ -28,15 +28,10 @@ const Page: React.FC<{
   character: Character
   id: string
   authUser: AuthUser
+  vm: any
 }> = (ctx) => {
-  const dispatch = useDispatch()
-  const vm = useCharacterEditViewModel()
-  const { character, id, authUser } = ctx
+  const { character, id, authUser, vm } = ctx
   const beforePage = `/lostrpg/characters/ja/list`
-  useEffect(() => {
-    dispatch(setCharacter(character))
-    dispatch(fetchCharactersRecords(id))
-  }, [])
   const canedit = canEdit(authUser, character)
 
   return (
@@ -80,7 +75,7 @@ const Page: React.FC<{
               minWidth: '320px',
             }}
           >
-            <img alt="画像" src={character.imageUrl} id={vm.imgId} />
+            <img alt="画像" src={character.imageUrl} id={'character-image'} />
           </Box>
         ) : (
           <></>

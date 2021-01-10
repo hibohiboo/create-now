@@ -268,7 +268,7 @@ export const specialtiesTableRows = (
   }))
 }
 
-const characterToDoc = (
+export const characterToDoc = (
   character: Character,
   parts: {
     name: string
@@ -538,7 +538,7 @@ const characterToDoc = (
   return doc
 }
 
-const characterToTRPGStudioDoc = (
+export const characterToTRPGStudioDoc = (
   character: Character,
   parts: {
     name: string
@@ -746,7 +746,7 @@ const equipments = (character: Character, i18n) => {
   return areas.map(makeData)
 }
 
-const makeStatusAilments = (
+export const makeStatusAilments = (
   character: Character,
   ailments: { name: string; effect: string }[],
 ) =>
