@@ -709,7 +709,7 @@ export const damageBodyParts = (
   return bodyParts.map(makeData)
 }
 
-const equipments = (character: Character, i18n) => {
+export const equipments = (character: Character, i18n) => {
   const areas = [
     i18n.t('lostrpg_character_common_rightHand'),
     i18n.t('lostrpg_character_common_leftHand'),

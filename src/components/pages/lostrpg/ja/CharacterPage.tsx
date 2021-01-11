@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import * as _ from 'lodash'
-import React, { useEffect } from 'react'
+import cloneDeep from 'lodash/cloneDeep'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Head from 'next/head'
 import { Box, Chip, Checkbox, Button } from '@material-ui/core'
@@ -23,6 +23,9 @@ import { canEdit } from '~/firestore/character'
 import * as tableConfig from '~/lib/constants'
 import SocialMeta from '~/components/SocialMeta'
 import styles from '../common.module.css'
+import { readCharactersRecords } from '~/firestore/record'
+import MyMuiTable from '~/components/organisms/mui/MyMuiTable'
+import MyMuiRecordTable from '~/components/organisms/mui/MyMuiRecordTable'
 
 const Page: React.FC<{
   character: Character
@@ -30,10 +33,19 @@ const Page: React.FC<{
   authUser: AuthUser
   vm: any
 }> = (ctx) => {
+  const dispatch = useDispatch()
   const { character, id, authUser, vm } = ctx
   const beforePage = `/lostrpg/characters/ja/list`
   const canedit = canEdit(authUser, character)
-
+  const [records, setRecords] = useState([])
+  // const vm = useCharacterEditViewModel()
+  useEffect(() => {
+    // dispatch(setCharacter(character))
+    // dispatch(fetchCharactersRecords(id))
+    ;(async () => {
+      setRecords(await readCharactersRecords(id))
+    })()
+  }, [])
   return (
     <Container>
       <Head>
@@ -51,7 +63,49 @@ const Page: React.FC<{
       </Box>
       <CampName campId={character.campId} campName={character.campName} />
       <EditButton canedit={canedit} text="編集" id={id} />
+      <Main vm={vm} character={character} />
+      {/*
+      <Box my={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.exportXml}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+        >
+          ユドナリウムコマ出力
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.exportJson}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+        >
+          TRPGスタジオ用テキスト出力
+        </Button>
+      </Box> */}
+      <Box my={2}>
+        <MyMuiRecordTable
+          title="レコードシート"
+          columns={vm.recordsColumns}
+          data={records}
+          id={id}
+          canEdit={canEdit(authUser, character)}
+        />
+      </Box>
 
+      <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
+        戻る
+      </Link>
+    </Container>
+  )
+}
+
+export default Page
+
+const Main = React.memo<{ vm: any; character: any }>(({ vm, character }) => {
+  console.log('render main')
+  return (
+    <>
       <Box my={4}>
         {character.quote ? (
           <q style={{ fontSize: '1.5rem' }}>{character.quote}</q>
@@ -111,9 +165,8 @@ const Page: React.FC<{
         </Box>
       </Box>
       <Box my={4}>
-        <MaterialTable
+        <MyMuiTable
           title="アビリティ"
-          options={tableConfig.viewTable}
           columns={vm.abilitiesColumns}
           data={character.abilities}
         />
@@ -177,9 +230,8 @@ const Page: React.FC<{
         </Box>
       </Box>
       <Box my={4}>
-        <MaterialTable
+        <MyMuiTable
           title="アイテム"
-          options={tableConfig.viewTable}
           columns={vm.itemsColumns}
           data={character.items}
         />
@@ -224,9 +276,8 @@ const Page: React.FC<{
                   readonly={true}
                 />
               </Box>
-              <MaterialTable
+              <MyMuiTable
                 title="アイテム"
-                options={tableConfig.viewTable}
                 columns={vm.itemsColumns}
                 data={bag.items}
               />
@@ -235,9 +286,8 @@ const Page: React.FC<{
         })}
       </Box>
       <Box my={2}>
-        <MaterialTable
+        <MyMuiTable
           title="装備"
-          options={tableConfig.viewTable}
           columns={[
             { title: '部位', field: 'equipedArea' },
             { title: '名前', field: 'name' },
@@ -272,9 +322,8 @@ const Page: React.FC<{
         <></>
       ) : (
         <Box my={4}>
-          <MaterialTable
+          <MyMuiTable
             title="背景"
-            options={tableConfig.viewTable}
             columns={vm.backboneColumns}
             data={character.backbones}
           />
@@ -343,107 +392,9 @@ const Page: React.FC<{
           )}
         </Box>
       )}
-      {/* <Box my={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={vm.exportXml}
-          style={{ marginRight: '1rem', marginBottom: '1rem' }}
-        >
-          ユドナリウムコマ出力
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={vm.exportJson}
-          style={{ marginRight: '1rem', marginBottom: '1rem' }}
-        >
-          TRPGスタジオ用テキスト出力
-        </Button>
-      </Box> */}
-      <Box my={2}>
-        レコードシート
-        {!canEdit(authUser, character) ? (
-          <></>
-        ) : (
-          <Box my={1}>
-            <Link
-              href={{
-                pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
-                query: {
-                  lng: 'ja',
-                  characterId: id,
-                },
-              }}
-              as={`/lostrpg/records/ja/${id}/edit`}
-            >
-              新規作成
-            </Link>
-            {vm.records.length === 0 ? (
-              <></>
-            ) : (
-              <MaterialTable
-                title="レコードシート"
-                options={tableConfig.viewTable}
-                columns={[
-                  {
-                    title: 'シナリオ名',
-                    // eslint-disable-next-line react/display-name
-                    render: (rowData) => (
-                      <Link
-                        href={{
-                          pathname: `/lostrpg/public/[lng]/[view]`,
-                          query: {
-                            lng: 'ja',
-                            id: rowData['recordId'],
-                          },
-                        }}
-                        as={`/lostrpg/public/ja/record?id=${rowData['recordId']}`}
-                      >
-                        {rowData['scenarioTitle']}
-                      </Link>
-                    ),
-                  },
-                  ...vm.recordsColumns,
-                  {
-                    title: '',
-                    // eslint-disable-next-line react/display-name
-                    render: (rowData) => {
-                      if (!authUser) return <></>
-                      if (authUser.uid !== rowData['uid']) return <></>
-                      return (
-                        <Link
-                          href={{
-                            pathname: `/lostrpg/records/[lng]/[characterId]/edit`,
-                            query: {
-                              lng: 'ja',
-                              characterId: rowData['characterId'],
-                              id: rowData['recordId'],
-                            },
-                          }}
-                          as={`/lostrpg/records/ja/${id}/edit?id=${rowData['recordId']}`}
-                        >
-                          編集
-                        </Link>
-                      )
-                    },
-                  },
-                ]}
-                data={_.cloneDeep(vm.records)}
-              />
-            )}
-          </Box>
-        )}
-      </Box>
-
-      <Link href={`/lostrpg/characters/[lng]/list`} as={beforePage}>
-        戻る
-      </Link>
-    </Container>
+    </>
   )
-}
-
-export default Page
+})
 
 // eslint-disable-next-line react/display-name
 const CampName = React.memo<{ campId: string; campName: string }>(

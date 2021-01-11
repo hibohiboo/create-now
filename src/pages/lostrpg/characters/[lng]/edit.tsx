@@ -383,6 +383,24 @@ const Page: NextPage = () => {
         <DeleteButton vm={vm} t={t} />
         <RecordSheets vm={vm} t={t} />
       </Box>
+      <Box my={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.exportXml}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+        >
+          ユドナリウムコマ出力
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.exportJson}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+        >
+          TRPGスタジオ用テキスト出力
+        </Button>
+      </Box>
       <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>
         {t('common_back')}
       </Link>

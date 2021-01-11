@@ -252,6 +252,7 @@ const Page: NextPage = () => {
             )}
           </Box>
 
+          {/*  何故か遅すぎる。。
           <Link
             href={{
               pathname: `/lostrpg/public/ja/character?id=${vm.record.characterId}`,
@@ -262,7 +263,10 @@ const Page: NextPage = () => {
             as={vm.beforePage}
           >
             {t('common_back')}
-          </Link>
+          </Link> */}
+          <a href={`/lostrpg/public/ja/character?id=${vm.record.characterId}`}>
+            {t('common_back')}
+          </a>
         </Container>
       )}
     </>

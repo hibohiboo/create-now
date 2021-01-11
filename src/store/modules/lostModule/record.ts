@@ -128,12 +128,11 @@ export const useRecordViewModel = (recordId?: string, cid?: string) =>
     }, [])
 
     useEffect(() => {
-      if (!characterId || !authUser) {
+      if (!id) {
         dispatch(setRecord({ ...initRecord }))
         return
       }
-      if (!id) {
-        dispatch(setRecord({ ...initRecord }))
+      if (!characterId) {
         return
       }
       dispatch(fetchData(characterId, id))
