@@ -22,6 +22,7 @@ const defaultConfig = {
   useLilyStand: true,
   useLilyTalkFlg: true,
   useLilyHideInventoryFlg: true,
+  useLilyMessgeColor: true,
 
   useWithFlyPlayerColor: true,
 }
@@ -59,7 +60,9 @@ const Page: NextPage = () => {
       config.useLilyTalkFlg ? '&lily_talk_flg=true' : ''
     }${config.useLilyHideInventoryFlg ? '&lily_hide_inventory_flg=true' : ''}${
       config.useWithFlyPlayerColor ? '&withfly_player_color=true' : ''
-    }${config.useHandStorage ? '&hand_storage=true' : ''}`
+    }${config.useHandStorage ? '&hand_storage=true' : ''}${
+      config.useLilyMessgeColor ? '&lily_message_color=true' : ''
+    }`
   return (
     <div className="container">
       <Head>
@@ -360,6 +363,22 @@ const Page: NextPage = () => {
                 </td>
                 <td>インベントリ非表示フラグ</td>
               </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useLilyMessgeColor}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useLilyMessgeColor: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>チャットメッセージ色設定</td>
+              </tr>
+
               <tr>
                 <td>
                   <input type="checkbox" disabled={true} />
