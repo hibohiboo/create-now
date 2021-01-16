@@ -112,20 +112,30 @@ const HomePage = () => {
             className={classes.root}
           ></List>
         )}
-        {items.map((item) => (
-          <ListItemLink
-            // オブジェクトだとListItemLinkでエラー
-            // href={{
-            //   pathname: '/lostrpg/public/[lng]/[view]',
-            //   query: { id: item.id },
-            // }}
-            href={`/lostrpg/public/[lng]/[view]?id=${item.id}`}
-            key={item.id}
-            as={`/lostrpg/public/${i18n.activeLocale}/character?id=${item.id}`}
-          >
-            <ListItemText primary={item.name} />
-          </ListItemLink>
-        ))}
+        {items.map((item) =>
+          i18n.activeLocale === 'ja' ? (
+            <ListItemLink
+              href={`/lostrpg/public/ja/characters/[id]`}
+              key={item.id}
+              as={`/lostrpg/public/ja/characters/${item.id}`}
+            >
+              <ListItemText primary={item.name} />
+            </ListItemLink>
+          ) : (
+            <ListItemLink
+              // オブジェクトだとListItemLinkでエラー
+              // href={{
+              //   pathname: '/lostrpg/public/[lng]/[view]',
+              //   query: { id: item.id },
+              // }}
+              href={`/lostrpg/public/[lng]/[view]?id=${item.id}`}
+              key={item.id}
+              as={`/lostrpg/public/${i18n.activeLocale}/character?id=${item.id}`}
+            >
+              <ListItemText primary={item.name} />
+            </ListItemLink>
+          ),
+        )}
         {pagenation.hasMore && !pagenation.loading && !search.name && (
           <Button onClick={loadMore}>次の{pagenation.limit}件</Button>
         )}

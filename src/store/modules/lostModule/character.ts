@@ -39,7 +39,7 @@ import lostModule, {
   fetchCamps,
   useCamps,
 } from '~/store/modules/lostModule'
-import { useAuth } from '~/store/modules/authModule'
+import { createAuthClientSide, useAuth } from '~/store/modules/authModule'
 import { createSetImageFile } from '~/utils/formHelper'
 import {
   createCharacter,
@@ -819,6 +819,14 @@ export const useCharacterEditViewModel = () =>
           file,
         )
       }
+      if (i18n.activeLocale === 'ja') {
+        setTimeout(
+          () =>
+            (window.location.href = `/lostrpg/public/ja/characters/${retId}`),
+          2000,
+        )
+        return
+      }
 
       Router.push(
         {
@@ -840,19 +848,19 @@ export const useCharacterEditViewModel = () =>
       // /lostrpg/public/[lng]/[view] では編集機能がない
 
       if (router.pathname.includes('view')) return
-      if (id && !canEdit(authUser, character)) {
-        Router.push(
-          {
-            pathname: `/lostrpg/public/[lng]/[view]`,
-            query: { id },
-          },
-          `/lostrpg/public/${i18n.activeLocale}/character?id=${id}`,
-        )
+      if (!authUser) {
+        // return Router.push(beforePage)
+        dispatch(createAuthClientSide())
         return
       }
-      if (!authUser) {
-        Router.push(beforePage)
-        return
+      if (id && !canEdit(authUser, character)) {
+        // return Router.push(
+        //   {
+        //     pathname: `/lostrpg/public/[lng]/[view]`,
+        //     query: { id },
+        //   },
+        //   `/lostrpg/public/${i18n.activeLocale}/character?id=${id}`,
+        // )
       }
       dispatch(setLocale(i18n.activeLocale))
       dispatch(fetchCamps(campLimit))
@@ -872,7 +880,7 @@ export const useCharacterEditViewModel = () =>
           if (data.imageUrl) setPrevUrl(data.imageUrl)
         }
       })()
-    }, [])
+    }, [authUser?.uid])
 
     const {
       abilitiesColumns,
@@ -904,7 +912,7 @@ export const useCharacterEditViewModel = () =>
         return union(classList, strangeFieldsClassList)
       }
       return classList
-    }, [character.useStrangeField])
+    }, [character?.useStrangeField])
     const mergedAbilities = useMemo(() => {
       if (character.useStrangeField && character.useDragonPlain) {
         return union(
@@ -921,7 +929,7 @@ export const useCharacterEditViewModel = () =>
         return union(abilityList, dragonPlainAbilityList)
       }
       return abilityList
-    }, [character.useStrangeField, character.useDragonPlain])
+    }, [character?.useStrangeField, character.useDragonPlain])
     const mergedItemList = useMemo(() => {
       if (character.useStrangeField && character.useDragonPlain) {
         return union(
@@ -938,7 +946,7 @@ export const useCharacterEditViewModel = () =>
         return union(items, dragonPlainItemList, dragonPlainGreaterItemList)
       }
       return items
-    }, [character.useStrangeField, character.useDragonPlain])
+    }, [character?.useStrangeField, character.useDragonPlain])
 
     const trophies = useMemo(
       () => uniq(state.lost.records.map((i) => i.trophy)),
@@ -949,12 +957,12 @@ export const useCharacterEditViewModel = () =>
     ])
     const makedStatusAilments = useMemo(
       () => makeStatusAilments(character, statusAilments),
-      [character.statusAilments.length],
+      [character?.statusAilments.length],
     )
     const imgId = 'character-image'
     const makedSpecialtiesRows = useMemo(
       () => specialtiesTableRows(bodyParts, specialties, character),
-      [character.specialties, character.gaps, character.damagedSpecialties],
+      [character?.specialties, character.gaps, character.damagedSpecialties],
     )
     const itemsValue = useMemo(
       () => character.items.reduce((sum, { j, number }) => sum + j * number, 0),
@@ -981,7 +989,7 @@ export const useCharacterEditViewModel = () =>
         return mergedClassList.filter(
           (item) => character.classes.findIndex((i) => i.id === item.id) === -1,
         )
-      }, [character.classes.length]),
+      }, [character?.classes.length]),
       abilitiesColumns,
       abilityList: useMemo(
         () =>
@@ -1007,7 +1015,7 @@ export const useCharacterEditViewModel = () =>
       ),
       specialtiesTableColumns: useMemo(
         () => makeSpecialtiesTableColumns(specialtiesTableColumns, character),
-        [character.gaps],
+        [character?.gaps],
       ),
       specialtiesTableRows: makedSpecialtiesRows,
       damageBodyParts: damagedParts,
@@ -1139,7 +1147,7 @@ export const useCharacterEditViewModel = () =>
       }, []),
       characterNameHandler: useCallback(
         (e) => dispatch(lostModule.actions.setCharacterName(e.target.value)),
-        [character.name],
+        [character?.name],
       ),
       handleOnDrop,
       classHandler: useCallback((item: CharacterClass | null) => {

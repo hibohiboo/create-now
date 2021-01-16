@@ -616,6 +616,8 @@ const Page: NextPage = () => {
               </a>
             </p>
             <img src="/images/udon/spread-sheet-deck.png" width="400px" />
+            <h3 id="use-dicebot">既定のダイスボットを指定</h3>
+            <img src="/images/udon/use-dicebot.jpg" width="600px" />
             <h3 id="conter-remocon">カウンターリモコン</h3>
             <p>キャラクターを右クリックして、リモコンを選択できます。</p>
             <img src="/images/udon/lily-remocon-menu.png" width="300px" />
@@ -655,6 +657,11 @@ const Page: NextPage = () => {
               「テーブルインベントリ非表示」にチェックを入れると、インベントリに表示されなくなります。{' '}
             </p>
             <img src="/images/udon/lily-hide-inventory.png" width="600px" />
+            <h3 id="with-fly-player-coloer">チャットメッセージ色設定</h3>
+            <p>
+              メッセージの色を設定できます。丸くなっているのが選択中の色です。3色まで設定して切り替えられrます。
+            </p>
+            <img src="/images/udon/lily-chatcolor.png" width="400px" />
             <h3 id="with-fly-player-coloer">プレイヤーカラー</h3>
             <p>
               プレイヤーの色を設定できます。色は自分のチャットの名前、手札にしたカード、自分のダイスに反映されます。

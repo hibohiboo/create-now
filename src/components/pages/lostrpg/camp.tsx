@@ -86,19 +86,33 @@ const Page: React.FC<{ camp: Camp; id: string; authUser: AuthUser }> = (
       </Box>
       <Box my={2}>
         <InputLabel>メンバー</InputLabel>
-        {campsCharacters.map((c) => (
-          <Link
-            href={{
-              pathname: `/lostrpg/public/[lng]/[view]`,
-              query: { id: c.characterId },
-            }}
-            as={`/lostrpg/public/${i18n.activeLocale}/character?id=${c.characterId}`}
-            key={c.characterId}
-            style={{ margin: '15px' }}
-          >
-            {c.characterName}
-          </Link>
-        ))}
+        {campsCharacters.map((c) =>
+          i18n.activeLocale === 'ja' ? (
+            <Link
+              href={{
+                pathname: `/lostrpg/public/ja/characters/[id]`,
+                query: { id: c.characterId },
+              }}
+              as={`/lostrpg/public/ja/characters/${c.characterId}`}
+              key={c.characterId}
+              style={{ margin: '15px' }}
+            >
+              {c.characterName}
+            </Link>
+          ) : (
+            <Link
+              href={{
+                pathname: `/lostrpg/public/[lng]/[view]`,
+                query: { id: c.characterId },
+              }}
+              as={`/lostrpg/public/${i18n.activeLocale}/character?id=${c.characterId}`}
+              key={c.characterId}
+              style={{ margin: '15px' }}
+            >
+              {c.characterName}
+            </Link>
+          ),
+        )}
       </Box>
 
       <Box my={4}>

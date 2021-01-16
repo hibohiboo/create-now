@@ -37,6 +37,7 @@ import {
 } from '~/store/modules/lostModule'
 import * as tableConfig from '~/lib/constants'
 import EquipmentsTable from '~/components/organisms/mui/memo/EquipmentsTable'
+import LanguageSelector from '~/components/organisms/i18n/LanguageSelector'
 
 const Page: NextPage = () => {
   let t0 = null
@@ -46,7 +47,7 @@ const Page: NextPage = () => {
   if (globalThis.performance) t1 = globalThis.performance.now()
   console.log('Call to doSomething took ' + (t1 - t0) + ' milliseconds.')
   const t = vm.i18n.t
-  if (!vm.authUser) return <></>
+  // if (!vm.authUser) return <></>
   const titleSuffix = vm.id ? t('common_edit') : t('common_create')
 
   return (
@@ -58,6 +59,9 @@ const Page: NextPage = () => {
         />
         <title>{t('lostrpg_index_title')}</title>
       </Head>
+      <div style={{ display: 'none' }}>
+        <LanguageSelector i18n={vm.i18n} />
+      </div>
       <Box my={4} style={{ maxWidth: '800px', minWidth: '200px' }}>
         <Title
           title={t('lostrpg_character_edit_title')}
