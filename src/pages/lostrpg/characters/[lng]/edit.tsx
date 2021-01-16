@@ -383,6 +383,11 @@ const Page: NextPage = () => {
           >
             {t('common_save')}
           </Button>
+          <Box my={1}>
+            ※軽量化のため、保存直後は更新前のキャラクターシートが見えてしまいます。
+            <br />
+            更新の反映を確認するためには、ページの更新をするか、もう一度アクセスしてください。
+          </Box>
         </Box>
         <DeleteButton vm={vm} t={t} />
         <RecordSheets vm={vm} t={t} />

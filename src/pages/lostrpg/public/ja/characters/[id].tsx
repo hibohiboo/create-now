@@ -9,6 +9,7 @@ import CharacterPage from '~/components/pages/lostrpg/ja/CharacterPage'
 import {  equipments, makeSpecialtiesTableColumns, makeStatusAilments, specialtiesTableRows } from '~/store/modules/lostModule/character'
 import * as lostData from '~/data/lostrpg'
 import { useRouter } from 'next/router'
+import { readCharacters } from '~/firestore/character'
 
 const Page: NextPage<{
   id: string
@@ -73,5 +74,10 @@ export const getStaticProps = async ({ params }) => {
   return {props, revalidate:1}
 }
 
-export const getStaticPaths = async () => ({ paths: [{ params: { id: '9zhaBaPGJ3U78MFIXKxz'}}], fallback: true,})
+export const getStaticPaths = async () => {
+  const result = await readCharacters(null, 1000)
+  return ({ paths: result.characters.map(({id})=>({params:{id}}))
+  // [{ params: { id: '9zhaBaPGJ3U78MFIXKxz'}}]
+, fallback: true,})}
+
 export default Page

@@ -820,11 +820,8 @@ export const useCharacterEditViewModel = () =>
         )
       }
       if (i18n.activeLocale === 'ja') {
-        setTimeout(
-          () =>
-            (window.location.href = `/lostrpg/public/ja/characters/${retId}`),
-          2000,
-        )
+        window.location.href = `/lostrpg/public/ja/characters/${retId}`
+
         return
       }
 
