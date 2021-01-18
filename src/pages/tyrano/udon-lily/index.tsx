@@ -27,6 +27,7 @@ const defaultConfig = {
   useLilyMessgeColor: true,
 
   useWithFlyPlayerColor: true,
+  useWithFlyResetPoint: true,
 }
 const allFalse = (() => {
   const tmp = { ...defaultConfig }
@@ -64,7 +65,9 @@ const Page: NextPage = () => {
       config.useWithFlyPlayerColor ? '&withfly_player_color=true' : ''
     }${config.useHandStorage ? '&hand_storage=true' : ''}${
       config.useLilyMessgeColor ? '&lily_message_color=true' : ''
-    }${config.useDicebot ? `&use_dicebot=${config.diceBotId}` : ''}`
+    }${config.useDicebot ? `&use_dicebot=${config.diceBotId}` : ''}${
+      config.useWithFlyResetPoint ? '&withfly_reset_point=true' : ''
+    }`
   return (
     <div className="container">
       <Head>
@@ -451,16 +454,26 @@ const Page: NextPage = () => {
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" disabled={true}></input>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyResetPoint}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyResetPoint: e.target.checked,
+                      })
+                    }
+                  ></input>
                 </td>
-                <td>ダイス一斉公開※未移植</td>
+                <td>視点リセット</td>
               </tr>
               <tr>
                 <td>
                   <input type="checkbox" disabled={true}></input>
                 </td>
-                <td>視点リセット※未移植</td>
+                <td>ダイス一斉公開※未移植</td>
               </tr>
+
               <tr>
                 <td>
                   <input type="checkbox" disabled={true}></input>
