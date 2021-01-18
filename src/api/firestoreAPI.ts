@@ -17,7 +17,7 @@ const getInt = (obj) =>
     : obj && obj.stringValue && !isNaN(Number(obj.stringValue))
     ? Number(obj.stringValue)
     : 0
-const getBool = (obj): boolean | undefined => obj && obj.booleanValue === true
+const getBool = (obj): boolean => !!obj && obj.booleanValue === true
 const getTimestamp = (obj) => (obj ? obj.timestampValue : null)
 const getArray = (obj, decoder) =>
   obj && obj.arrayValue && obj.arrayValue.values

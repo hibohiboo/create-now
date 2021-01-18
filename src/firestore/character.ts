@@ -208,6 +208,20 @@ export const readCharacters = async (
   }
 }
 
+export const readCharacterIds = async (limit = 1000) => {
+  let query = getCharacterNames(db).orderBy('createdAt', 'desc')
+  query = query.limit(limit)
+  const querySnapshot = await query.get()
+  const characters: any[] = []
+  querySnapshot.forEach((doc) => {
+    characters.push({ id: doc.id })
+  })
+
+  return {
+    characters,
+  }
+}
+
 export const readCampsCharacters = async (id: string) => {
   const querySnapshot = await getCampsCharacters(db)
     .where('campId', '==', id)

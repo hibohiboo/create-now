@@ -9,7 +9,7 @@ import CharacterPage from '~/components/pages/lostrpg/ja/CharacterPage'
 import {  equipments, makeSpecialtiesTableColumns, makeStatusAilments, specialtiesTableRows } from '~/store/modules/lostModule/character'
 import * as lostData from '~/data/lostrpg'
 import { useRouter } from 'next/router'
-import { readCharacters } from '~/firestore/character'
+import { readCharacterIds, readCharacters } from '~/firestore/character'
 
 const Page: NextPage<{
   id: string
@@ -35,7 +35,6 @@ export const getStaticProps = async ({ params }) => {
   const id = params.id as string
   console.log('static', id)
   const { lngDict } = await getLocaleProps({ params: { lng: 'ja' } })
-
   const character = await getCharacter(id)
 
   // 本番で実行時エラーが出る。vercelのFunctionsがタイムアウト?
@@ -75,9 +74,9 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const result = await readCharacters(null, 1000)
+  const result = await readCharacterIds(1000)
   return ({ paths: result.characters.map(({id})=>({params:{id}}))
   // [{ params: { id: '9zhaBaPGJ3U78MFIXKxz'}}]
-, fallback: true,})}
+  , fallback: true,})}
 
 export default Page
