@@ -5,8 +5,8 @@ const defaultConfig = {
   is2d: true,
   useKeyboardHelp: true,
   useCardTap: true,
-  useSpreadsheet: true,
-  useDecksheet: true,
+  useSpreadsheet: false,
+  useDecksheet: false,
   spreadSheetId: '1JVa25s339f4kNXhdgHXI4dVq3FGMHrT8x7ZvhXKRDMY',
   deckSheetId: '1sOYvbR4SXlw3H3a2tL2A8Q8PJqad0hbRV6QpwSa-wIg',
   hideSample: false,
@@ -28,6 +28,8 @@ const defaultConfig = {
 
   useWithFlyPlayerColor: true,
   useWithFlyResetPoint: true,
+  useWithFlyDiceAllOpen: true,
+  useWithFlyCardNdraw: true,
 }
 const allFalse = (() => {
   const tmp = { ...defaultConfig }
@@ -67,6 +69,8 @@ const Page: NextPage = () => {
       config.useLilyMessgeColor ? '&lily_message_color=true' : ''
     }${config.useDicebot ? `&use_dicebot=${config.diceBotId}` : ''}${
       config.useWithFlyResetPoint ? '&withfly_reset_point=true' : ''
+    }${config.useWithFlyDiceAllOpen ? '&withfly_dice_all_open=true' : ''}${
+      config.useWithFlyCardNdraw ? '&withfly_card_n_draw=true' : ''
     }`
   return (
     <div className="container">
@@ -469,22 +473,39 @@ const Page: NextPage = () => {
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" disabled={true}></input>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyDiceAllOpen}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyDiceAllOpen: e.target.checked,
+                      })
+                    }
+                  ></input>
                 </td>
-                <td>ダイス一斉公開※未移植</td>
+                <td>ダイス一斉公開</td>
               </tr>
-
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyCardNdraw}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyCardNdraw: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>カードをn枚引く</td>
+              </tr>
               <tr>
                 <td>
                   <input type="checkbox" disabled={true}></input>
                 </td>
                 <td>参照URLを開く※未移植</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" disabled={true}></input>
-                </td>
-                <td>カードをn枚引く※未移植</td>
               </tr>
 
               <tr>
