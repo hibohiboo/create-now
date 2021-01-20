@@ -30,6 +30,7 @@ const defaultConfig = {
   useWithFlyResetPoint: true,
   useWithFlyDiceAllOpen: true,
   useWithFlyCardNdraw: true,
+  useWithFlyGridHeight: true,
 }
 const allFalse = (() => {
   const tmp = { ...defaultConfig }
@@ -71,7 +72,7 @@ const Page: NextPage = () => {
       config.useWithFlyResetPoint ? '&withfly_reset_point=true' : ''
     }${config.useWithFlyDiceAllOpen ? '&withfly_dice_all_open=true' : ''}${
       config.useWithFlyCardNdraw ? '&withfly_card_n_draw=true' : ''
-    }`
+    }${config.useWithFlyGridHeight ? '&withfly_grid_height=true' : ''}`
   return (
     <div className="container">
       <Head>
@@ -503,17 +504,26 @@ const Page: NextPage = () => {
               </tr>
               <tr>
                 <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyGridHeight}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyGridHeight: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>高さのグリッド</td>
+              </tr>
+              <tr>
+                <td>
                   <input type="checkbox" disabled={true}></input>
                 </td>
                 <td>参照URLを開く※未移植</td>
               </tr>
 
-              <tr>
-                <td>
-                  <input type="checkbox" disabled={true}></input>
-                </td>
-                <td>高さのグリッド※未移植</td>
-              </tr>
               <tr>
                 <td>
                   <input type="checkbox" disabled={true}></input>
