@@ -31,6 +31,7 @@ const defaultConfig = {
   useWithFlyDiceAllOpen: true,
   useWithFlyCardNdraw: true,
   useWithFlyGridHeight: true,
+  useWithFlyOpenUrl: true,
 }
 const allFalse = (() => {
   const tmp = { ...defaultConfig }
@@ -72,7 +73,9 @@ const Page: NextPage = () => {
       config.useWithFlyResetPoint ? '&withfly_reset_point=true' : ''
     }${config.useWithFlyDiceAllOpen ? '&withfly_dice_all_open=true' : ''}${
       config.useWithFlyCardNdraw ? '&withfly_card_n_draw=true' : ''
-    }${config.useWithFlyGridHeight ? '&withfly_grid_height=true' : ''}`
+    }${config.useWithFlyGridHeight ? '&withfly_grid_height=true' : ''}${
+      config.useWithFlyOpenUrl ? '&withfly_open_url=true' : ''
+    }`
   return (
     <div className="container">
       <Head>
@@ -519,9 +522,18 @@ const Page: NextPage = () => {
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" disabled={true}></input>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyOpenUrl}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyOpenUrl: e.target.checked,
+                      })
+                    }
+                  ></input>
                 </td>
-                <td>参照URLを開く※未移植</td>
+                <td>参照URLを開く(キャラクターのみ移植)</td>
               </tr>
 
               <tr>
@@ -535,6 +547,18 @@ const Page: NextPage = () => {
                   <input type="checkbox" disabled={true}></input>
                 </td>
                 <td>顔アイコン※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>キャラクター吹き出し※未移植</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" disabled={true}></input>
+                </td>
+                <td>エモートチャットバルーン※未移植</td>
               </tr>
               <tr>
                 <td>
@@ -711,6 +735,20 @@ const Page: NextPage = () => {
               プレイヤーの色を設定できます。色は自分のチャットの名前、手札にしたカード、自分のダイスに反映されます。
             </p>
             <img src="/images/udon/with-fly-player-color.png" width="600px" />
+            <h3 id="with-fly-open-url">参照URLを開く</h3>
+            <p>
+              <a
+                href="https://udontools.netlify.app/#/charazip"
+                target="_blank"
+                rel="noreferrer"
+              >
+                ユドナリウムのキャラコマを作るやつ
+              </a>
+              で作ったコマの右クリックメニューにキャラクターシートへのリンクを設定します。
+            </p>
+            <img src="/images/udon/with-fly-open-url-menu.png" width="400px" />
+            <p>URLをクリックすると、確認モーダルが表示されます。</p>
+            <img src="/images/udon/with-fly-open-url-modal.png" width="600px" />
           </div>
         </div>
       </main>
