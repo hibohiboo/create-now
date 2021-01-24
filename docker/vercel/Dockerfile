@@ -121,4 +121,4 @@ RUN npm i --no-optional -D elm-test
 RUN sed -i -e "s/\(cwd: projectRootDir,\)/\1\n    usePolling: true, /g" /app/node_modules/elm-test/lib/elm-test.js
 RUN npm i --no-optional html2canvas
 RUN npm i --no-optional moment
-RUN npm i --no-optional material-table/jspdf
+# RUN npm i --no-optional material-table/jspdf

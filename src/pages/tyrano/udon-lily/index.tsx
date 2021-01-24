@@ -32,7 +32,9 @@ const defaultConfig = {
   useWithFlyCardNdraw: true,
   useWithFlyGridHeight: true,
   useWithFlyOpenUrl: true,
+  useWithFlyContextMenuHeightTerrain: true,
 }
+
 const allFalse = (() => {
   const tmp = { ...defaultConfig }
   for (const i in tmp) {
@@ -75,6 +77,10 @@ const Page: NextPage = () => {
       config.useWithFlyCardNdraw ? '&withfly_card_n_draw=true' : ''
     }${config.useWithFlyGridHeight ? '&withfly_grid_height=true' : ''}${
       config.useWithFlyOpenUrl ? '&withfly_open_url=true' : ''
+    }${
+      config.useWithFlyContextMenuHeightTerrain
+        ? '&withfly_context_menu_height=true'
+        : ''
     }`
   return (
     <div className="container">
@@ -535,7 +541,21 @@ const Page: NextPage = () => {
                 </td>
                 <td>参照URLを開く(キャラクターのみ移植)</td>
               </tr>
-
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useWithFlyContextMenuHeightTerrain}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useWithFlyContextMenuHeightTerrain: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>高度・地形</td>
+              </tr>
               <tr>
                 <td>
                   <input type="checkbox" disabled={true}></input>
@@ -603,12 +623,7 @@ const Page: NextPage = () => {
                 </td>
                 <td>高度・キャラクター※未移植</td>
               </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" disabled={true}></input>
-                </td>
-                <td>高度・地形※未移植</td>
-              </tr>
+
               <tr>
                 <td>
                   <input type="checkbox" disabled={true}></input>
