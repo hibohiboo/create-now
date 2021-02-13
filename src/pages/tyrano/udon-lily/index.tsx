@@ -139,18 +139,22 @@ const Page: NextPage = () => {
                   <input
                     type="checkbox"
                     checked={config.is2d}
+                    id="is2d"
                     onChange={(e) =>
                       setConfig({ ...config, is2d: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>2D表示</td>
+                <td>
+                  <label htmlFor="is2d">2D表示</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useKeyboardHelp}
+                    id="useKeyboardHelp"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -159,49 +163,65 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>キーボードヘルプを表示</td>
+                <td>
+                  <label htmlFor="useKeyboardHelp">
+                    キーボードヘルプを表示
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useCardTap}
+                    id="useCardTap"
                     onChange={(e) =>
                       setConfig({ ...config, useCardTap: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>カードタップ機能追加</td>
+                <td>
+                  <label htmlFor="useCardTap">カードタップ機能追加</label>{' '}
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.hideSample}
+                    id="hideSample"
                     onChange={(e) =>
                       setConfig({ ...config, hideSample: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>サンプル非表示</td>
+                <td>
+                  <label htmlFor="hideSample">サンプル非表示</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useShortcut}
+                    id="useShortcut"
                     onChange={(e) =>
                       setConfig({ ...config, useShortcut: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>キーボードショートカット追加</td>
+                <td>
+                  <label htmlFor="useShortcut">
+                    キーボードショートカット追加
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useCardOnTopMove}
+                    id="useCardOnTopMove"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -210,13 +230,18 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>重ねカード移動機能追加</td>
+                <td>
+                  <label htmlFor="useCardOnTopMove">
+                    重ねカード移動機能追加
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useHandStorage}
+                    id="useHandStorage"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -225,13 +250,16 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>手札置き場追加</td>
+                <td>
+                  <label htmlFor="useHandStorage">手札置き場追加</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useSpreadsheet}
+                    id="useSpreadsheet"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -240,7 +268,11 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>スプレッドシートにログを記録</td>
+                <td>
+                  <label htmlFor="useSpreadsheet">
+                    スプレッドシートにログを記録
+                  </label>
+                </td>
                 <td>
                   <input
                     value={config.spreadSheetId}
@@ -255,6 +287,7 @@ const Page: NextPage = () => {
                   <input
                     type="checkbox"
                     checked={config.useDecksheet}
+                    id="useDecksheet"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -263,7 +296,11 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>スプレッドシートからカードデッキを記録</td>
+                <td>
+                  <label htmlFor="useDecksheet">
+                    スプレッドシートからカードデッキを記録
+                  </label>
+                </td>
                 <td>
                   <input
                     value={config.deckSheetId}
@@ -278,6 +315,7 @@ const Page: NextPage = () => {
                   <input
                     type="checkbox"
                     checked={config.useDicebot}
+                    id="useDicebot"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -286,7 +324,9 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>既定のダイスボットを指定</td>
+                <td>
+                  <label htmlFor="useDicebot">既定のダイスボットを指定</label>
+                </td>
                 <td>
                   <select
                     value={config.diceBotId}
@@ -307,6 +347,7 @@ const Page: NextPage = () => {
                   <input
                     type="checkbox"
                     checked={config.useCardOnlySelfHide}
+                    id="useCardOnlySelfHide"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -315,13 +356,18 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>裏カードのメニューに「自分だけ隠す」を追加</td>
+                <td>
+                  <label htmlFor="useCardOnlySelfHide">
+                    裏カードのメニューに「自分だけ隠す」を追加
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useCardGMView}
+                    id="useCardGMView"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -330,7 +376,11 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>カードのメニューに「全ての裏カードを見る」を追加</td>
+                <td>
+                  <label htmlFor="useCardGMView">
+                    カードのメニューに「全ての裏カードを見る」を追加
+                  </label>{' '}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -348,54 +398,67 @@ const Page: NextPage = () => {
                   <input
                     type="checkbox"
                     checked={config.useLilyRemocon}
+                    id="useLilyRemocon"
                     onChange={(e) =>
                       setConfig({ ...config, useLilyRemocon: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>カウンターリモコン</td>
+                <td>
+                  <label htmlFor="useLilyRemocon">カウンターリモコン</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyBuff}
+                    id="useLilyBuff"
                     onChange={(e) =>
                       setConfig({ ...config, useLilyBuff: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>バフ表示</td>
+                <td>
+                  <label htmlFor="useLilyBuff">バフ表示</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyCutin}
+                    id="useLilyCutin"
                     onChange={(e) =>
                       setConfig({ ...config, useLilyCutin: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>カットイン</td>
+                <td>
+                  <label htmlFor="useLilyCutin">カットイン</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyFile}
+                    id="useLilyFile"
                     onChange={(e) =>
                       setConfig({ ...config, useLilyFile: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>画像タグ</td>
+                <td>
+                  <label htmlFor="useLilyFile">画像タグ</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyDiceTable}
+                    id="useLilyDiceTable"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -404,37 +467,46 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>ダイス表</td>
+                <td>
+                  <label htmlFor="useLilyDiceTable">ダイス表</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyStand}
+                    id="useLilyStand"
                     onChange={(e) =>
                       setConfig({ ...config, useLilyStand: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>立ち絵</td>
+                <td>
+                  <label htmlFor="useLilyStand">立ち絵</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyTalkFlg}
+                    id="useLilyTalkFlg"
                     onChange={(e) =>
                       setConfig({ ...config, useLilyTalkFlg: e.target.checked })
                     }
                   ></input>
                 </td>
-                <td>会話非表示フラグ</td>
+                <td>
+                  <label htmlFor="useLilyTalkFlg">会話非表示フラグ</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyHideInventoryFlg}
+                    id="useLilyHideInventoryFlg"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -443,13 +515,18 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>インベントリ非表示フラグ</td>
+                <td>
+                  <label htmlFor="useLilyHideInventoryFlg">
+                    インベントリ非表示フラグ
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useLilyMessgeColor}
+                    id="useLilyMessgeColor"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -458,7 +535,11 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>チャットメッセージ色設定</td>
+                <td>
+                  <label htmlFor="useLilyMessgeColor">
+                    チャットメッセージ色設定
+                  </label>
+                </td>
               </tr>
 
               <tr>
@@ -490,6 +571,7 @@ const Page: NextPage = () => {
                   <input
                     type="checkbox"
                     checked={config.useWithFlyPlayerColor}
+                    id="useWithFlyPlayerColor"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -498,13 +580,18 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>プレイヤーカラー</td>
+                <td>
+                  <label htmlFor="useWithFlyPlayerColor">
+                    プレイヤーカラー
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useWithFlyResetPoint}
+                    id="useWithFlyResetPoint"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -513,13 +600,16 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>視点リセット</td>
+                <td>
+                  <label htmlFor="useWithFlyResetPoint">視点リセット</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useWithFlyDiceAllOpen}
+                    id="useWithFlyDiceAllOpen"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -528,13 +618,16 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>ダイス一斉公開</td>
+                <td>
+                  <label htmlFor="useWithFlyDiceAllOpen">ダイス一斉公開</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useWithFlyCardNdraw}
+                    id="useWithFlyCardNdraw"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -543,13 +636,16 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>カードをn枚引く</td>
+                <td>
+                  <label htmlFor="useWithFlyCardNdraw">カードをn枚引く</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useWithFlyGridHeight}
+                    id="useWithFlyGridHeight"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -558,13 +654,16 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>高さのグリッド</td>
+                <td>
+                  <label htmlFor="useWithFlyGridHeight">高さのグリッド</label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useWithFlyOpenUrl}
+                    id="useWithFlyOpenUrl"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -573,13 +672,18 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>参照URLを開く(キャラクターのみ移植)</td>
+                <td>
+                  <label htmlFor="useWithFlyOpenUrl">
+                    参照URLを開く(キャラクターのみ移植)
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
                   <input
                     type="checkbox"
                     checked={config.useWithFlyContextMenuHeightTerrain}
+                    id="useWithFlyContextMenuHeightTerrain"
                     onChange={(e) =>
                       setConfig({
                         ...config,
@@ -588,7 +692,11 @@ const Page: NextPage = () => {
                     }
                   ></input>
                 </td>
-                <td>高度・地形</td>
+                <td>
+                  <label htmlFor="useWithFlyContextMenuHeightTerrain">
+                    高度・地形
+                  </label>
+                </td>
               </tr>
               <tr>
                 <td>
