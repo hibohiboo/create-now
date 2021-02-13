@@ -23,6 +23,9 @@ services:
       - ../.env:/app/.env
       - ../.env.build:/app/.env.build
       - ../elm.json:/app/elm.json
+      # vercelのキャッシュ
+      - cacheVercelConfig:/root/.config/configstore
+      - cacheVercelLocalData:/root/.local
       # elm packageのキャッシュ
       - cacheGardenElmStuffStarter:/app/elm-stuff
       - cacheGardenDotElmStarter:/root/.elm
@@ -34,42 +37,45 @@ services:
     # command: [vercel, dev]
     command: [npm, run, dev]
 
-  testing:
-    # Dockerfileビルド
-    build: ./testing
-    # ディレクトリを共有する。
-    volumes:
-      - ../src:/app/src
-      - ../tests:/app/tests
-      - ../public:/app/public
-      - ../fonts:/app/fonts
-      - ../posts:/app/posts
-      - ../data:/app/data
-      - ../api:/app/api
-      - ../.vercel:/app/.vercel
-      - ../vercel.json:/app/vercel.json
-      - ../next.config.js:/app/next.config.js
-      - ../.vercelignore:/app/.vercelignore
-      - ../tsconfig.json:/app/tsconfig.json
-      - ../.eslintrc.js:/app/.eslintrc.js
-      - ../.gitignore:/app/.gitignore
-      - ../.babelrc.js:/app/.babelrc.js
-      - ../.prettierrc.js:/app/.prettierrc.js
-      - ../jest.config.js:/app/jest.config.js
-      - ../.storybook:/app/.storybook
-      - ../.env:/app/.env
-      - ../.env.build:/app/.env.build
-      - ../elm.json:/app/elm.json
-      # elm packageのキャッシュ
-      - cacheGardenElmStuffStarter:/app/elm-stuff
-      - cacheGardenDotElmStarter:/root/.elm
-    ports:
-      - 6006:6006
-    environment:
-      - CHOKIDAR_USEPOLLING=true # デフォルトの設定の場合、vagrantだとファイルの変更を検知できない。pollingが必要。
-    working_dir: /app
-    command: [npm, run, storybook]
+  # testing:
+  #   # Dockerfileビルド
+  #   build: ./testing
+  #   # ディレクトリを共有する。
+  #   volumes:
+  #     - ../src:/app/src
+  #     - ../tests:/app/tests
+  #     - ../public:/app/public
+  #     - ../fonts:/app/fonts
+  #     - ../posts:/app/posts
+  #     - ../data:/app/data
+  #     - ../api:/app/api
+  #     - ../.vercel:/app/.vercel
+  #     - ../vercel.json:/app/vercel.json
+  #     - ../next.config.js:/app/next.config.js
+  #     - ../.vercelignore:/app/.vercelignore
+  #     - ../tsconfig.json:/app/tsconfig.json
+  #     - ../.eslintrc.js:/app/.eslintrc.js
+  #     - ../.gitignore:/app/.gitignore
+  #     - ../.babelrc.js:/app/.babelrc.js
+  #     - ../.prettierrc.js:/app/.prettierrc.js
+  #     - ../jest.config.js:/app/jest.config.js
+  #     - ../.storybook:/app/.storybook
+  #     - ../.env:/app/.env
+  #     - ../.env.build:/app/.env.build
+  #     - ../elm.json:/app/elm.json
+
+  #     # elm packageのキャッシュ
+  #     - cacheGardenElmStuffStarter:/app/elm-stuff
+  #     - cacheGardenDotElmStarter:/root/.elm
+  #   ports:
+  #     - 6006:6006
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true # デフォルトの設定の場合、vagrantだとファイルの変更を検知できない。pollingが必要。
+  #   working_dir: /app
+  #   command: [npm, run, storybook]
 volumes:
   # elmのpackageを毎回ダウンロードしなくてもよいように、キャッシュを行う。2か所のキャッシュが必要。
   cacheGardenElmStuffStarter:
   cacheGardenDotElmStarter:
+  cacheVercelConfig:
+  cacheVercelLocalData:

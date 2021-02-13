@@ -15,6 +15,8 @@ const defaultConfig = {
   useHandStorage: true,
   useDicebot: true,
   diceBotId: 'DoubleCross',
+  useCardOnlySelfHide: true,
+  useCardGMView: true,
 
   useLilyBuff: true,
   useLilyCutin: true,
@@ -81,6 +83,8 @@ const Page: NextPage = () => {
       config.useWithFlyContextMenuHeightTerrain
         ? '&withfly_context_menu_height=true'
         : ''
+    }${config.useCardOnlySelfHide ? '&use_card_only_self_hide=true' : ''}${
+      config.useCardGMView ? '&use_card_gm_view=true' : ''
     }`
   return (
     <div className="container">
@@ -297,6 +301,36 @@ const Page: NextPage = () => {
                     ))}
                   </select>
                 </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useCardOnlySelfHide}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useCardOnlySelfHide: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>裏カードのメニューに「自分だけ隠す」を追加</td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useCardGMView}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useCardGMView: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>カードのメニューに「全ての裏カードを見る」を追加</td>
               </tr>
             </tbody>
           </table>
@@ -701,6 +735,20 @@ const Page: NextPage = () => {
             <img src="/images/udon/spread-sheet-deck.png" width="400px" />
             <h3 id="use-dicebot">既定のダイスボットを指定</h3>
             <img src="/images/udon/use-dicebot.jpg" width="600px" />
+
+            <h3 id="use-dicebot">裏カードのメニューに「自分だけ隠す」を追加</h3>
+            <p>インディアンポーカーができます。</p>
+            <img src="/images/udon/hide-only-self.png" width="600px" />
+            <h3 id="use-dicebot">
+              カードのメニューに「全ての裏カードを見る」を追加
+            </h3>
+            <p>インセインでGMが全ての狂気カードを把握しておきたい時などに。</p>
+            <p>
+              設定の反映に10秒くらいかかることがあります。他のカードを動かしたりして、少しまったりしていてください。
+            </p>
+
+            <img src="/images/udon/card-gm-view.png" width="600px" />
+
             <h3 id="conter-remocon">カウンターリモコン</h3>
             <p>キャラクターを右クリックして、リモコンを選択できます。</p>
             <img src="/images/udon/lily-remocon-menu.png" width="300px" />
