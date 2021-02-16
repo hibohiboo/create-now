@@ -35,6 +35,8 @@ const defaultConfig = {
   useWithFlyGridHeight: true,
   useWithFlyOpenUrl: true,
   useWithFlyContextMenuHeightTerrain: true,
+  useLilyUdonariumLog: true,
+  useLilyDeleteLog: true,
 }
 
 const allFalse = (() => {
@@ -85,6 +87,8 @@ const Page: NextPage = () => {
         : ''
     }${config.useCardOnlySelfHide ? '&use_card_only_self_hide=true' : ''}${
       config.useCardGMView ? '&use_card_gm_view=true' : ''
+    }${config.useLilyUdonariumLog ? '&lily_udonarium_log=true' : ''}${
+      config.useLilyDeleteLog ? '&lily_delete_log=true' : ''
     }`
   return (
     <div className="container">
@@ -525,6 +529,44 @@ const Page: NextPage = () => {
                 <td>
                   <input
                     type="checkbox"
+                    checked={config.useLilyUdonariumLog}
+                    id="useLilyUdonariumLog"
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useLilyUdonariumLog: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>
+                  <label htmlFor="useLilyUdonariumLog">
+                    どどんとふ風ログ出力
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useLilyDeleteLog}
+                    id="useLilyDeleteLog"
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useLilyDeleteLog: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>
+                  <label htmlFor="useLilyDeleteLog">ログ削除</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
                     checked={config.useLilyMessgeColor}
                     id="useLilyMessgeColor"
                     onChange={(e) =>
@@ -871,6 +913,11 @@ const Page: NextPage = () => {
             <h3 id="lily-cutin">カットイン</h3>
             <p>カットインを設定できます。</p>
             <img src="/images/udon/lily-cutin.png" width="600px" />
+            <h3 id="lily-stand">立ち絵</h3>
+            <p>
+              立ち絵を設定できます。複数設定して切り替えることができます。キャラコマを右クリックして「詳細を表示」「編集切替」imageの左の「＋」ボタンで追加できます。
+            </p>
+            <img src="/images/udon/lily-stand.gif" width="600px" />
             <h3 id="lily-dicetable">ダイス表</h3>
             <p>
               ダイス表を設定できます。ダイス表の「コマンド」をチャットに入れることで、表を振ることができます。
@@ -896,11 +943,19 @@ const Page: NextPage = () => {
               「テーブルインベントリ非表示」にチェックを入れると、インベントリに表示されなくなります。{' '}
             </p>
             <img src="/images/udon/lily-hide-inventory.png" width="600px" />
+            <h3 id="lily-dodontof-log">どどんとふ風ログ出力</h3>
+            <p>どどんとふ風ログとしてHTMLファイルを出力します。</p>
+            <img src="/images/udon/lily-dodontof-log.png" width="600px" />
+            <h3 id="lily-log-delete">ログ削除</h3>
+            <p>ログの削除を行います。</p>
+            <img src="/images/udon/lily-log-delete.png" width="600px" />
+
             <h3 id="with-fly-player-coloer">チャットメッセージ色設定</h3>
             <p>
               メッセージの色を設定できます。丸くなっているのが選択中の色です。3色まで設定して切り替えられrます。
             </p>
             <img src="/images/udon/lily-chatcolor.png" width="400px" />
+
             <h3 id="with-fly-player-coloer">プレイヤーカラー</h3>
             <p>
               プレイヤーの色を設定できます。色は自分のチャットの名前、手札にしたカード、自分のダイスに反映されます。

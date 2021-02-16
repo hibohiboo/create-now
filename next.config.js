@@ -50,7 +50,7 @@ const nextConfig = {
     swDest: 'static/service-worker.js',
     runtimeCaching: [
       {
-        urlPattern: /^https?.*/,
+        urlPattern: /^https:\/\/create-now.now.sh\/third\/.*/,
         handler: 'NetworkFirst',
         options: {
           cacheName: 'https-calls',
