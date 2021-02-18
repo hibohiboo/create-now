@@ -3,6 +3,7 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 const defaultConfig = {
   is2d: true,
+  useRotateOff: true,
   useKeyboardHelp: true,
   useCardTap: true,
   useSpreadsheet: false,
@@ -89,7 +90,7 @@ const Page: NextPage = () => {
       config.useCardGMView ? '&use_card_gm_view=true' : ''
     }${config.useLilyUdonariumLog ? '&lily_udonarium_log=true' : ''}${
       config.useLilyDeleteLog ? '&lily_delete_log=true' : ''
-    }`
+    }${config.useRotateOff ? '&use_lotate_off=true' : ''}`
   return (
     <div className="container">
       <Head>
@@ -151,6 +152,21 @@ const Page: NextPage = () => {
                 </td>
                 <td>
                   <label htmlFor="is2d">2D表示</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useRotateOff}
+                    id="useRotateOff"
+                    onChange={(e) =>
+                      setConfig({ ...config, useRotateOff: e.target.checked })
+                    }
+                  ></input>
+                </td>
+                <td>
+                  <label htmlFor="useRotateOff">回転機能オフ</label>
                 </td>
               </tr>
               <tr>
