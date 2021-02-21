@@ -18,6 +18,7 @@ const defaultConfig = {
   diceBotId: 'DoubleCross',
   useCardOnlySelfHide: true,
   useCardGMView: true,
+  useSpeechStatus: true,
 
   useLilyBuff: true,
   useLilyCutin: true,
@@ -90,7 +91,9 @@ const Page: NextPage = () => {
       config.useCardGMView ? '&use_card_gm_view=true' : ''
     }${config.useLilyUdonariumLog ? '&lily_udonarium_log=true' : ''}${
       config.useLilyDeleteLog ? '&lily_delete_log=true' : ''
-    }${config.useRotateOff ? '&use_lotate_off=true' : ''}`
+    }${config.useRotateOff ? '&use_lotate_off=true' : ''}${
+      config.useSpeechStatus ? '&use_user_status=true' : ''
+    }`
   return (
     <div className="container">
       <Head>
@@ -400,6 +403,24 @@ const Page: NextPage = () => {
                   <label htmlFor="useCardGMView">
                     カードのメニューに「全ての裏カードを見る」を追加
                   </label>{' '}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={config.useSpeechStatus}
+                    id="useSpeechStatus"
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        useSpeechStatus: e.target.checked,
+                      })
+                    }
+                  ></input>
+                </td>
+                <td>
+                  <label htmlFor="useSpeechStatus">発言中パネルを追加</label>{' '}
                 </td>
               </tr>
             </tbody>
@@ -914,6 +935,17 @@ const Page: NextPage = () => {
             </p>
 
             <img src="/images/udon/card-gm-view.png" width="600px" />
+            <h3 id="use-speech-status">発言中パネルを追加</h3>
+            <p>
+              キャラクターに複数画像の設定時、画像の名前を「発言中」にすることで、発言中に表示する画像を設定できます。
+            </p>
+            <p>
+              発言中という名前で口を開けている画像と閉じている画像を使って口パクを再現できます。
+            </p>
+            <p>
+              「閾値(しきいち）」は、この設定より音量が大きいときに「発言中」と認識する値です。
+            </p>
+            <img src="/images/udon/use-speech.png" width="1000px" />
 
             <h3 id="conter-remocon">カウンターリモコン</h3>
             <p>キャラクターを右クリックして、リモコンを選択できます。</p>
@@ -932,6 +964,10 @@ const Page: NextPage = () => {
             <h3 id="lily-stand">立ち絵</h3>
             <p>
               立ち絵を設定できます。複数設定して切り替えることができます。キャラコマを右クリックして「詳細を表示」「編集切替」imageの左の「＋」ボタンで追加できます。
+            </p>
+            <p>
+              複数設定時、テキスト投稿に@コマンドを追加することで立ち絵を切り替えることができます。「発言@立ち絵名」です。
+              (例:ごんぎつねに「はっ」という立ち絵を追加しているとき、「ええっ@はっ」と入力して発言。)
             </p>
             <img src="/images/udon/lily-stand.gif" width="600px" />
             <h3 id="lily-dicetable">ダイス表</h3>
