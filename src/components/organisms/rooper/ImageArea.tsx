@@ -73,6 +73,10 @@ const ImageArea: React.FC = () => {
                 { name: '軍人', value: 'mil' },
                 { name: '黒猫', value: 'cat' },
                 { name: '女の子', value: 'lit' },
+                { name: 'コピーキャット', value: 'copy' },
+                { name: '教祖', value: 'hier' },
+                { name: 'ご神木', value: 'tree' },
+                { name: '妹', value: 'sis' },
               ] as any
             }
             unselectedText=""

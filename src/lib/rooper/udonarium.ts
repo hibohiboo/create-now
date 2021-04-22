@@ -35,10 +35,10 @@ type CharacterName =
   | 'mil' //  軍人
   | 'cat' //  黒猫
   | 'lit' //  女の子
-  | 'Sister' //  妹
-  | 'CopyCat' //  コピーキャット
-  | 'Guru' //  教祖
-  | 'SacredTree' //  ご神木
+  | 'sis' //  妹
+  | 'copy' //  コピーキャット
+  | 'hier' //  教祖
+  | 'tree' //  ご神木
 
 export const createZip = async (characters: Character[]) => {
   const files: File[] = []
@@ -119,7 +119,14 @@ const characterFactory = (identifier: string, c: Character) => {
       return createCharacter(identifier, '黒猫', '神社', '26')
     case 'lit':
       return createCharacter(identifier, '女の子', '学校', '27')
-    // 未実装キャラはとりあえず男子学生にする
+    case 'copy':
+      return createCharacter(identifier, 'コピーキャット', '都市', '28')
+    case 'hier':
+      return createCharacter(identifier, '教祖', '神社', '29')
+    case 'tree':
+      return createCharacter(identifier, 'ご神木', '神社', '30')
+    case 'sis':
+      return createCharacter(identifier, '妹', '神社', '31')
   }
 }
 

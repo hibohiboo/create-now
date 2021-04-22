@@ -36,6 +36,10 @@ const characters = [
   'mil',
   'cat',
   'lit',
+  'copy',
+  'hier',
+  'tree',
+  'sis',
 ]
 
 const Home: NextPage = () => {
@@ -74,7 +78,9 @@ const Home: NextPage = () => {
           >
             惨劇Udonarium
           </a>
-          にお使いください。<br></br>画像を設定したカードのみzipに保存されます。
+          にお使いください。
+          <br />
+          画像を設定したカードのみzipに保存されます。
         </p>
         <p>
           <Button variant="contained" color="primary" onClick={downloadZip}>
