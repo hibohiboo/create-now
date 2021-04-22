@@ -1,6 +1,6 @@
 # docker-hubからnode入りコンテナを取得
 # https://hub.docker.com/_/node/
-FROM node:14.15.4
+FROM node:14.16.0
 
 # コンテナ上の作業ディレクトリ作成
 WORKDIR /app
