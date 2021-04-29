@@ -29,7 +29,7 @@ const createEvent = (event, ei) => (
       {event.items.map((item, i) => (
         <li key={`${item.name}-${i}`}>
           {item.type === 'item' ? (
-            <i className="fas fa-shopping-bag"></i>
+            <i className="fas fa-flask"></i>
           ) : item.type === 'roll' ? (
             <i className="fas fa-dice"></i>
           ) : item.type === 'path' ? (

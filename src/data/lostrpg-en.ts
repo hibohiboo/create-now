@@ -326,7 +326,7 @@ export const abilityList = [
         recoil: '-',
         specialty: '-',
         target: '自身',
-        effect: 'あなたの【体力】の「基準値」を2点増加する。',
+        effect: 'あなたの【生命力】にプラス2点する。',
       },
       {
         name: '馬鹿力',
@@ -526,7 +526,7 @@ export const abilityList = [
         specialty: '-',
         target: '自身',
         effect:
-          'ムシ、ケモノ、ミュータントのグループアビリティからランダムに１つアビリティを習得できる。ただし、その反動が1増加する。常駐タイプのアビリティを習得した場合、【気力】の「基準値」が2点減少する。',
+          'ムシ、ケモノ、ミュータントのグループアビリティからランダムに１つアビリティを習得できる。ただし、その反動が1増加する。常駐タイプのアビリティを習得した場合、【精神力】が2点減少する。',
       },
       {
         name: '瞬間移動',
@@ -941,7 +941,7 @@ export const abilityList = [
         recoil: '-',
         specialty: '-',
         target: '自身',
-        effect: 'あなたの【気力】の「基準値」にプラス3する。',
+        effect: 'あなたの【精神力】にプラス3する。',
       },
       {
         name: '希望の光',
@@ -1081,7 +1081,7 @@ export const items = [
     target: '自身',
     trait: '食料',
     effect:
-      '缶詰1つ。文明の味。【気力】が「基準値」点増加する。通貨単位10J=1C。',
+      '缶詰1つ。文明の味。【気力】が「【精神力】」点増加する。通貨単位10J=1C。',
   },
   {
     name: 'ベルトポーチ',
@@ -1693,7 +1693,7 @@ export const strangeFieldsAbilityList = [
         specialty: '《休む》',
         target: '自身',
         effect:
-          '指定特技の判定に成功すると、自身の【気力】を[気力基準値÷2]点回復する。',
+          '指定特技の判定に成功すると、自身の【気力】を[精神力÷2]点回復する。',
       },
     ],
   },
@@ -2679,8 +2679,7 @@ export const trophyAbilityList = [
         recoil: '-',
         specialty: '-',
         target: '自身',
-        effect:
-          '【気力】が【気力基準値】以上の場合、与えるダメージにプラス1点する',
+        effect: '【気力】が【精神力】以上の場合、与えるダメージにプラス1点する',
       },
       {
         name: '後の先',
@@ -3886,7 +3885,7 @@ export const dragonPlainItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【体力基準値】をプラス1する。',
+    effect: '【生命力】をプラス1する。',
   },
   {
     name: '快適な下着',
@@ -3897,7 +3896,7 @@ export const dragonPlainItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【気力基準値】をプラス1する。',
+    effect: '【精神力】をプラス1する。',
   },
   {
     name: 'もふもふコート',
@@ -4433,7 +4432,7 @@ export const dragonPlainGreaterItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【体力基準値】をプラス3する。',
+    effect: '【生命力】をプラス3する。',
   },
   {
     name: '☾快適な下着',
@@ -4444,7 +4443,7 @@ export const dragonPlainGreaterItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【気力基準値】をプラス5する。',
+    effect: '【精神力】をプラス5する。',
   },
   {
     name: '☾もふもふコート',

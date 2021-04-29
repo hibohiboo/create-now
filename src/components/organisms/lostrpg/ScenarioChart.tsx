@@ -54,7 +54,7 @@ const createLabel = (name, type) => {
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'item') {
-    const dom = textDom(`\uf290 ${name}`)
+    const dom = textDom(`\uf0c3 ${name}`)
     dom.style.fontWeight = faWeight.solid
     return dom
   } else if (type === 'roll') {

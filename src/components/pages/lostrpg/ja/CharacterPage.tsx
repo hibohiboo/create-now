@@ -178,7 +178,7 @@ const Main = React.memo<{ vm: any; character: any }>(({ vm, character }) => {
             model={character}
             type="number"
             prop="staminaBase"
-            labelText="体力基準値"
+            labelText="生命力"
             readonly={true}
           />
           <InputField
@@ -193,7 +193,7 @@ const Main = React.memo<{ vm: any; character: any }>(({ vm, character }) => {
             model={character}
             type="number"
             prop="willPowerBase"
-            labelText="気力基準値"
+            labelText="精神力"
             readonly={true}
           />
           <InputField

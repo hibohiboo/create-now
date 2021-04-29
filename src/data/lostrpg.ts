@@ -108,28 +108,28 @@ export const defaultFacilities = [
     type: '常駐',
     specialty: '-',
     level: 1,
-    effect: '全員の【気力基準値】をプラス1する。雨漏りしている。',
+    effect: '全員の【精神力】をプラス1する。雨漏りしている。',
   },
   {
     name: '壁',
     type: '常駐',
     specialty: '-',
     level: 1,
-    effect: '全員の【気力基準値】をプラス1する。隙間風が吹く。',
+    effect: '全員の【精神力】をプラス1する。隙間風が吹く。',
   },
   {
     name: '寝床',
     type: '常駐',
     specialty: '-',
     level: 1,
-    effect: '全員の【気力基準値】にプラス2する。',
+    effect: '全員の【精神力】にプラス2する。',
   },
   {
     name: '水場',
     type: '常駐',
     specialty: '-',
     level: 1,
-    effect: '全員の【気力基準値】をプラス3する。水を汲める川が近くにある。',
+    effect: '全員の【精神力】をプラス3する。水を汲める川が近くにある。',
   },
   {
     name: '倉庫',
@@ -144,7 +144,7 @@ export const defaultFacilities = [
     type: '常駐',
     specialty: '-',
     level: 1,
-    effect: '全員の【体力基準値】をプラス２する。',
+    effect: '全員の【生命力】をプラス２する。',
   },
 ]
 export const facilitiesColumns = [
@@ -167,7 +167,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '1',
     precondition: '水場',
-    effect: '全員の【気力基準値】をプラス2する。川からキャンプまで水を引く。',
+    effect: '全員の【精神力】をプラス2する。川からキャンプまで水を引く。',
   },
   {
     name: '井戸',
@@ -176,8 +176,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '1',
     precondition: '',
-    effect:
-      '全員の【気力基準値】をプラス3する。水を汲める井戸がキャンプにある。',
+    effect: '全員の【精神力】をプラス3する。水を汲める井戸がキャンプにある。',
   },
   {
     name: '物見やぐら',
@@ -186,7 +185,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '1',
     precondition: '',
-    effect: '全員の【気力基準値】をプラス1する。',
+    effect: '全員の【精神力】をプラス1する。',
   },
 
   {
@@ -205,7 +204,7 @@ export const equipmentList = [
     specialty: 'なし',
     maxLv: '3',
     precondition: '水場、ドラムカン',
-    effect: 'あなたの【気力基準値】が[レベル]点増加する。',
+    effect: 'あなたの【精神力】が[レベル]点増加する。',
   },
   {
     name: '温泉',
@@ -214,7 +213,7 @@ export const equipmentList = [
     specialty: 'なし',
     maxLv: '3',
     precondition: '',
-    effect: 'あなたの【気力基準値】と【体力基準値】が[レベル]点増加する。',
+    effect: 'あなたの【精神力】と【生命力】が[レベル]点増加する。',
   },
   {
     name: '畑',
@@ -233,7 +232,7 @@ export const equipmentList = [
     specialty: '《料理》',
     maxLv: '1',
     precondition: '料理人',
-    effect: 'あなたの【体力基準値】をプラス1する。',
+    effect: 'あなたの【生命力】をプラス1する。',
   },
   {
     name: '牧場',
@@ -329,8 +328,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '2',
     precondition: '',
-    effect:
-      '全員の【気力基準値】をプラス[レベル]する。1レベルでは雨漏りしている。',
+    effect: '全員の【精神力】をプラス[レベル]する。1レベルでは雨漏りしている。',
   },
   {
     name: '壁',
@@ -339,8 +337,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '2',
     precondition: '',
-    effect:
-      '全員の【気力基準値】をプラス[レベル]する。1レベルでは隙間風が吹く。',
+    effect: '全員の【精神力】をプラス[レベル]する。1レベルでは隙間風が吹く。',
   },
   {
     name: '寝床',
@@ -349,7 +346,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '3',
     precondition: '',
-    effect: '全員の【気力基準値】をプラス[レベル×2]する。',
+    effect: '全員の【精神力】をプラス[レベル×2]する。',
   },
   {
     name: '水場',
@@ -358,7 +355,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '1',
     precondition: '',
-    effect: '全員の【気力基準値】をプラス3する。水を汲める川が近くにある。',
+    effect: '全員の【精神力】をプラス3する。水を汲める川が近くにある。',
   },
   {
     name: '倉庫',
@@ -377,7 +374,7 @@ export const equipmentList = [
     specialty: '-',
     maxLv: '1',
     precondition: '',
-    effect: '全員の【体力基準値】をプラス２する。',
+    effect: '全員の【生命力】をプラス２する。',
   },
 ]
 
@@ -687,7 +684,7 @@ export const abilityList = [
         recoil: '-',
         specialty: '-',
         target: '自身',
-        effect: 'あなたの【体力】の「基準値」を2点増加する。',
+        effect: 'あなたの【生命力】にプラス2点する。',
       },
       {
         name: '馬鹿力',
@@ -887,7 +884,7 @@ export const abilityList = [
         specialty: '-',
         target: '自身',
         effect:
-          'ムシ、ケモノ、ミュータントのグループアビリティからランダムに１つアビリティを習得できる。ただし、その反動が1増加する。常駐タイプのアビリティを習得した場合、【気力】の「基準値」が2点減少する。',
+          'ムシ、ケモノ、ミュータントのグループアビリティからランダムに１つアビリティを習得できる。ただし、その反動が1増加する。常駐タイプのアビリティを習得した場合、【精神力】が2点減少する。',
       },
       {
         name: '瞬間移動',
@@ -1302,7 +1299,7 @@ export const abilityList = [
         recoil: '-',
         specialty: '-',
         target: '自身',
-        effect: 'あなたの【気力】の「基準値」にプラス3する。',
+        effect: 'あなたの【精神力】にプラス3する。',
       },
       {
         name: '希望の光',
@@ -1463,7 +1460,7 @@ export const items = [
     target: '自身',
     trait: '食料',
     effect:
-      '缶詰1つ。文明の味。【気力】が「基準値」点増加する。通貨単位10J=1C。',
+      '缶詰1つ。文明の味。【気力】が「【精神力】」点増加する。通貨単位10J=1C。',
   },
   {
     name: 'ベルトポーチ',
@@ -2109,7 +2106,7 @@ export const strangeFieldsAbilityList = [
         specialty: '《休む》',
         target: '自身',
         effect:
-          '指定特技の判定に成功すると、自身の【気力】を[気力基準値÷2]点回復する。',
+          '指定特技の判定に成功すると、自身の【気力】を[精神力÷2]点回復する。',
       },
     ],
   },
@@ -3124,8 +3121,7 @@ export const trophyAbilityList = [
         recoil: '-',
         specialty: '-',
         target: '自身',
-        effect:
-          '【気力】が【気力基準値】以上の場合、与えるダメージにプラス1点する',
+        effect: '【気力】が【精神力】以上の場合、与えるダメージにプラス1点する',
       },
       {
         name: '後の先',
@@ -4365,7 +4361,7 @@ export const dragonPlainItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【体力基準値】をプラス1する。',
+    effect: '【生命力】をプラス1する。',
   },
   {
     name: '快適な下着',
@@ -4376,7 +4372,7 @@ export const dragonPlainItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【気力基準値】をプラス1する。',
+    effect: '【精神力】をプラス1する。',
   },
   {
     name: 'もふもふコート',
@@ -4944,7 +4940,7 @@ export const dragonPlainGreaterItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【体力基準値】をプラス3する。',
+    effect: '【生命力】をプラス3する。',
   },
   {
     name: '☾快適な下着',
@@ -4955,7 +4951,7 @@ export const dragonPlainGreaterItemList = [
     specialty: '-',
     target: '自身',
     trait: '',
-    effect: '【気力基準値】をプラス5する。',
+    effect: '【精神力】をプラス5する。',
   },
   {
     name: '☾もふもふコート',
