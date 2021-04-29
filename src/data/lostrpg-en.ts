@@ -1435,7 +1435,7 @@ export const items = [
     name: '矢筒',
     j: 1,
     weight: 1,
-    type: '装備',
+    type: '道具',
     area: '-',
     specialty: '-',
     target: '-',
@@ -3562,7 +3562,7 @@ export const sampleTable = {
       cells: [
         'アイテム',
         '##### アイテム {.item}',
-        '<i class="fas fa-shopping-bag"></i>アイテム',
+        '<i class="fas fa-flask"></i>アイテム',
       ],
     },
     {
