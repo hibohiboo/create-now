@@ -14,7 +14,7 @@ import InputField from '~/components/form/InputField'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import {
   setCharacter,
-  useCharacterEditViewModel,
+  useCharacterEditViewModel,]
   setLocale,
   Character,
   fetchCharactersRecords,
