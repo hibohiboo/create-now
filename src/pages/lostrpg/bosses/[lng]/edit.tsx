@@ -9,13 +9,13 @@ import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
 import { DeleteOutline, Save } from '@material-ui/icons'
 import MaterialTable from 'material-table'
-import EditableMaterialTable from '~/components/organisms/mui/EditableMaterialTable'
+import EditableMaterialTable from '~/components/organisms/mui/memo/EditableMaterialTable'
 import DamageTable from '~/components/organisms/lostrpg/DamageTable'
 import ImageZone from '~/components/organisms/lostrpg/ImageZone'
 import Link from '~/components/atoms/mui/Link'
-import InputField from '~/components/form/InputField'
-import TextAreaField from '~/components/form/TextAreaField'
-import SelectField from '~/components/form/SelectField'
+import InputField from '~/components/form/memo/InputField'
+import TextAreaField from '~/components/form/memo/TextAreaField'
+import SelectField from '~/components/form/memo/SelectField'
 import Container from '~/components/organisms/lostrpg/LostrpgContainer'
 import SpecialtiesTable from '~/components/organisms/lostrpg/SpecialtiesTable'
 import { contentLanguageMap } from '~/lib/i18n'
@@ -234,10 +234,6 @@ const Page: NextPage = () => {
               </Button>
             </Box>
           )}
-
-          <Link href={`/lostrpg/bosses/[lng]/list`} as={vm.beforePage}>
-            {t('common_back')}
-          </Link>
         </Container>
       )}
     </>

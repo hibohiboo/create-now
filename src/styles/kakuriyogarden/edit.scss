@@ -1,0 +1,32 @@
+.kg-wrapper {
+  min-height: 100vh;
+  color: $fontColor;
+  background-color: $mainColor;
+  position: relative;
+
+  .kg- {
+    // レイアウト・ヘッダ部分
+    &header {
+      @extend .flex-centering;
+
+      overflow: hidden;
+      height: 20px;
+      background-color: $headerColor;
+      font-size: 0.75rem;
+    }
+    &main {
+      background-color: $mainColor;
+      padding: 10px;
+    }
+    &footer {
+      @extend .flex-centering;
+
+      overflow: hidden;
+      height: 100px;
+      width: 100%;
+      background-color: $footerColor;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
