@@ -1,9 +1,16 @@
 .kg-wrapper {
+  @extend .yu-font;
   min-height: 100vh;
   color: $fontColor;
   background-color: $mainColor;
   position: relative;
+  line-height: 1.5;
 
+  b,
+  strong,
+  .bold {
+    @extend .bold;
+  }
   .kg- {
     // レイアウト・ヘッダ部分
     &header {
@@ -16,7 +23,7 @@
     }
     &main {
       background-color: $mainColor;
-      padding: 10px;
+      padding: 5px;
     }
     &footer {
       @extend .flex-centering;
@@ -27,6 +34,24 @@
       background-color: $footerColor;
       position: absolute;
       bottom: 0;
+      display: none;
+    }
+    &subpage {
+      width: 200px;
+      min-height: 100%;
+      padding: 5px;
+      &.kg-cloth {
+        background-color: #911;
+      }
+      &.kg-girl {
+        background-color: #191;
+      }
+      &.kg-preview {
+        background-color: #119;
+      }
+      &.kg-garden {
+        background-color: #991;
+      }
     }
   }
 }

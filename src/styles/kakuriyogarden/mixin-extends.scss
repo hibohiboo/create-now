@@ -6,3 +6,15 @@
   justify-content: center; /* 子要素をflexboxにより中央に配置する */
   align-items: center; /* 子要素をflexboxにより中央に配置する */
 }
+
+.yu-font {
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI',
+    'Helvetica Neue', HelveticaNeue, YuGothic, 'Yu Gothic Medium', 'Yu Gothic',
+    Verdana, Meiryo, sans-serif;
+}
+
+.bold {
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI semibold',
+    'Helvetica Neue', HelveticaNeue, YuGothic, 'Yu Gothic', 'Segoe UI', Verdana,
+    Meiryo, sans-serif;
+}
