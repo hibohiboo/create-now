@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
 import { getCharacter } from '~/api/firestoreAPI'
-import Edit from '~/components/pages/kakuriyogarden/character/edit'
+import Edit from '~/domain/kakuriyogarden/components/character/edit'
 
 const Page: NextPage<{
   id: string

@@ -1,3 +1,5 @@
+@import './edit/index.scss';
+@import './edit/decoration.scss';
 .kg-wrapper {
   @extend .yu-font;
   min-height: 100vh;
@@ -23,21 +25,14 @@
     }
     &main {
       background-color: $mainColor;
-      padding: 5px;
     }
-    &footer {
-      @extend .flex-centering;
 
-      overflow: hidden;
-      height: 100px;
-      width: 100%;
-      background-color: $footerColor;
-      position: absolute;
-      bottom: 0;
-      display: none;
-    }
     &subpage {
-      width: 200px;
+      // レイアウト
+      margin: 0 auto;
+
+      // 要素
+      width: 350px;
       min-height: 100%;
       padding: 5px;
       &.kg-cloth {
@@ -52,6 +47,18 @@
       &.kg-garden {
         background-color: #991;
       }
+    }
+
+    &footer {
+      @extend .flex-centering;
+
+      overflow: hidden;
+      height: 100px;
+      width: 100%;
+      background-color: $footerColor;
+      position: absolute;
+      bottom: 0;
+      display: none;
     }
   }
 }
