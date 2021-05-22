@@ -6,7 +6,7 @@ import MainArea from './layout/MainArea'
 import SubPage from './layout/SubPage'
 import { useCharacterViewModel } from '~/domain/kakuriyogarden/store/character'
 import MagicalName from './atoms/MagicalName'
-
+import InputModal from './molecules/InputModal'
 const Edit: FC<{}> = ({ children }) => {
   const vm = useCharacterViewModel()
   return (
@@ -17,10 +17,14 @@ const Edit: FC<{}> = ({ children }) => {
           <MagicalName
             symbolName={vm.symbolName}
             magicalName={vm.magicalName}
+            setSymbolName={vm.setSymbolName}
+            setMagicalName={vm.setMagicalName}
+            openInputModal={vm.openInputModal}
           />
         </SubPage>
       </MainArea>
       <Footer>フッタ</Footer>
+      <InputModal {...vm.inputModal} />
     </Wrapper>
   )
 }
