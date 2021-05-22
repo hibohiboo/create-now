@@ -12,7 +12,7 @@ const modal: FC<InputModal> = (ctx) => {
 
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
-      <div>
+      <div className="kg-input-modal">
         <div>{ctx.title}</div>
         <div>
           <input
@@ -21,7 +21,7 @@ const modal: FC<InputModal> = (ctx) => {
             value={value}
           />
         </div>
-        <div>
+        <div className="kg-button-wrapper">
           <button onClick={ctx.closeHandler}>確定</button>
         </div>
       </div>
