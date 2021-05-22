@@ -18,6 +18,12 @@ const modal: FC<InputModal> = (ctx) => {
           <input
             onChange={ctx.changeHandler}
             onInput={(e) => setValue(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                ctx.closeHandler()
+              }
+            }}
             value={value}
           />
         </div>
