@@ -24,7 +24,7 @@ const Footer: FC<{
         <div
           className="kg-magical-name-kana kg-editable"
           onClick={() =>
-            openInputModal('シンボル', symbolNameKana, setSymbolNameKana)
+            openInputModal('読み仮名', symbolNameKana, setSymbolNameKana)
           }
         >
           {symbolNameKana}

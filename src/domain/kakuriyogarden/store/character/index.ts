@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent } from 'react'
+import { loadData, saveData } from '../save-data';
 
 const sampleCharacter = {
   symbolName: '灰花',
@@ -29,6 +30,16 @@ export const useCharacterViewModel = ()=>{
     symbolNameKana,
     magicalName,
   }
+  useEffect(()=>{
+    const loadedData = loadData()
+    if(!loadedData) return
+    setSymbolName(loadedData.symbolName)
+    setSymbolNameKana(loadedData.symbolNameKana)
+    setMagicalName(loadedData.magicalName)
+  },[])
+  useEffect(()=>{
+    saveData(character)
+  }, [character])
   return {
     character,
     inputModal,
