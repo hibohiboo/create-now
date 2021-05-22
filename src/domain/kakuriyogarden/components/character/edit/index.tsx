@@ -15,9 +15,11 @@ const Edit: FC<{}> = ({ children }) => {
       <MainArea>
         <SubPage id="cloth">
           <MagicalName
-            symbolName={vm.symbolName}
-            magicalName={vm.magicalName}
+            symbolName={vm.character.symbolName}
+            magicalName={vm.character.magicalName}
+            symbolNameKana={vm.character.symbolNameKana}
             setSymbolName={vm.setSymbolName}
+            setSymbolNameKana={vm.setSymbolNameKana}
             setMagicalName={vm.setMagicalName}
             openInputModal={vm.openInputModal}
           />

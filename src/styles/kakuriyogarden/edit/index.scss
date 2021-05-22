@@ -2,11 +2,13 @@
   &magical-name {
     // レイアウト
     display: flex;
-    justify-content: center;
-    vertical-align: center;
 
     // 要素
     font-size: 1.25rem;
+  }
+  &magical-name-kana {
+    font-size: 0.8rem;
+    margin-left: -5px;
   }
   &magicalgirl {
     font-size: 0.9rem;

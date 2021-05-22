@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo, ChangeEvent } from 'react'
 
 const sampleCharacter = {
   symbolName: '灰花',
+  symbolNameKana: 'かいか',
   magicalName: 'ユキスミレ'
 }
 
@@ -19,14 +20,20 @@ export type OpenInputModal = (title: string, value: string, handler: InputHandle
 
 export const useCharacterViewModel = ()=>{
   const [symbolName, setSymbolName] = useState(sampleCharacter.symbolName)
+  const [symbolNameKana, setSymbolNameKana] = useState(sampleCharacter.symbolNameKana)
+
   const [magicalName, setMagicalName] = useState(sampleCharacter.magicalName)
   const [inputModal, setInputModal] = useState(inputModalBase)
-
-  return {
+  const character = {
     symbolName,
+    symbolNameKana,
     magicalName,
+  }
+  return {
+    character,
     inputModal,
     setSymbolName,
+    setSymbolNameKana,
     setMagicalName,
     openInputModal: (title: string, value: string, handler: InputHandler)=>{
       setInputModal(
