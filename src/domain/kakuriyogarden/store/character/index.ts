@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent } from 'react'
 import { loadData, saveData } from '../save-data';
+import { useCharacterImage } from './image';
 
 const sampleCharacter = {
   symbolName: '灰花',
@@ -22,20 +23,23 @@ export type OpenInputModal = (title: string, value: string, handler: InputHandle
 export const useCharacterViewModel = ()=>{
   const [symbolName, setSymbolName] = useState(sampleCharacter.symbolName)
   const [symbolNameKana, setSymbolNameKana] = useState(sampleCharacter.symbolNameKana)
-
   const [magicalName, setMagicalName] = useState(sampleCharacter.magicalName)
   const [inputModal, setInputModal] = useState(inputModalBase)
+  const [prevUrl, handleOnDrop, setPrevUrl] = useCharacterImage()
   const character = {
     symbolName,
     symbolNameKana,
     magicalName,
+    prevUrl
   }
+
   useEffect(()=>{
     const loadedData = loadData()
     if(!loadedData) return
     setSymbolName(loadedData.symbolName)
     setSymbolNameKana(loadedData.symbolNameKana)
     setMagicalName(loadedData.magicalName)
+    setPrevUrl(loadedData.prevUrl)
   },[])
   useEffect(()=>{
     saveData(character)
@@ -43,6 +47,7 @@ export const useCharacterViewModel = ()=>{
   return {
     character,
     inputModal,
+    handleOnDrop,
     setSymbolName,
     setSymbolNameKana,
     setMagicalName,
@@ -60,3 +65,5 @@ export const useCharacterViewModel = ()=>{
     },
   }
 }
+
+export type CharacterViewModel = ReturnType<typeof useCharacterViewModel>
