@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { OpenInputModal } from '~/domain/kakuriyogarden/store/character'
+import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 
 const Footer: FC<{
   symbolName: string

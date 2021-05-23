@@ -17,6 +17,14 @@
   &modal-content {
     padding: 1rem;
     border: solid #fff 2px;
+
+    .kg-button-wrapper {
+      margin: 1rem;
+
+      button {
+        font-size: 1.1rem;
+      }
+    }
   }
   &input-modal {
     input {
@@ -24,13 +32,6 @@
       font-size: 1.15rem;
       border-radius: 3px;
       box-sizing: border-box;
-    }
-    .kg-button-wrapper {
-      margin: 1rem;
-
-      button {
-        font-size: 1.1rem;
-      }
     }
   }
 }

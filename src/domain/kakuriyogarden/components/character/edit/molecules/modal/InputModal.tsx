@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import Modal from './Modal'
-import type { InputModal } from '~/domain/kakuriyogarden/store/character'
+import type { InputModal } from '~/domain/kakuriyogarden/store/character/modal'
 
 const modal: FC<InputModal> = (ctx) => {
   const [value, setValue] = useState('')

@@ -15,4 +15,31 @@
     align-self: flex-end;
     padding-right: 5px;
   }
+  &profile {
+    display: flex;
+    margin-top: 5px;
+    padding: 5px;
+    align-items: flex-start;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    // 画像
+    div:nth-child(1) {
+      border-left: solid $fontColor 1px;
+      border-top: solid $fontColor 1px;
+      border-bottom: solid $fontColor 1px;
+    }
+    // 詳細
+    div:nth-child(2) {
+      min-height: 50px;
+      width: 100%;
+      border: solid $fontColor 1px;
+      padding: 5px;
+      white-space: pre-wrap;
+      color: $mainColor;
+      background-color: $fontColor;
+    }
+  }
 }
