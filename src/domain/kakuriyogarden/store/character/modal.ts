@@ -1,13 +1,14 @@
 import { ChangeEvent, useState } from "react"
 
-type InputHandler = (a:string)=>{}
+type InputHandler = (a:string)=>void
 
 const inputModalBase = {
   title: '',
   value: '',
-  changeHandler: (event:ChangeEvent<HTMLInputElement>)=>{},
+  changeHandler: (value:string)=>{},
   show: false,
-  closeHandler: ()=>{}
+  closeHandler: ()=>{},
+  isTextArea: false
 }
 export type InputModal = typeof inputModalBase;
 export type OpenInputModal = (title: string, value: string, handler: InputHandler)=>void
@@ -17,16 +18,17 @@ export const useInputModal = ()=>{
   const [inputModal, setInputModal] = useState(inputModalBase)
   return {
     inputModal,
-    openInputModal: (title: string, value: string, handler: InputHandler)=>{
+    openInputModal: (title: string, value: string, handler: InputHandler, isTextArea = false)=>{
       setInputModal(
         {
           title, value,
           show: true,
-          changeHandler: (event: ChangeEvent<HTMLInputElement>) => {
-            handler(event.target.value)
+          changeHandler: (value: string) => {
+            handler(value)
           },
           closeHandler: () =>
-            setInputModal(inputModalBase)
+            setInputModal(inputModalBase),
+          isTextArea,
       })
     },
   }

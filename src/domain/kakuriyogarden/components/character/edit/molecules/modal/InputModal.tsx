@@ -9,23 +9,32 @@ const modal: FC<InputModal> = (ctx) => {
   useEffect(() => {
     setValue(ctx.value)
   }, [ctx.title])
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      ctx.closeHandler()
+    }
+  }
 
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
       <div className="kg-input-modal">
         <div>{ctx.title}</div>
         <div>
-          <input
-            onChange={ctx.changeHandler}
-            onInput={(e) => setValue(e.currentTarget.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                ctx.closeHandler()
-              }
-            }}
-            value={value}
-          />
+          {ctx.isTextArea ? (
+            <textarea
+              onChange={(event) => ctx.changeHandler(event.target.value)}
+              onInput={(e) => setValue(e.currentTarget.value)}
+              value={value}
+            />
+          ) : (
+            <input
+              onChange={(event) => ctx.changeHandler(event.target.value)}
+              onInput={(e) => setValue(e.currentTarget.value)}
+              onKeyDown={onKeyDown}
+              value={value}
+            />
+          )}
         </div>
         <div className="kg-button-wrapper">
           <button onClick={ctx.closeHandler}>確定</button>

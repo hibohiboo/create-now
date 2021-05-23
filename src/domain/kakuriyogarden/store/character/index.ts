@@ -54,6 +54,7 @@ export const useCharacterViewModel = ()=>{
     setSymbolName,
     setSymbolNameKana,
     setMagicalName,
+    setProfile,
     openInputModal,
     openImageEditModal
   }

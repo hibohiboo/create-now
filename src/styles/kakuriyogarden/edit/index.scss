@@ -34,7 +34,7 @@
     // 詳細
     div:nth-child(2) {
       min-height: 50px;
-      width: 100%;
+      width: calc(100% - 50px);
       border: solid $fontColor 1px;
       padding: 5px;
       white-space: pre-wrap;
