@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { CharacterViewModel } from '~/domain/kakuriyogarden/store/character'
 import SubPage from '../layout/SubPage'
-import MagicalName from '../atoms/MagicalName'
+import MagicalName from './character/MagicalName'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
