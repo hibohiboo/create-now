@@ -17,6 +17,7 @@
   &modal-content {
     padding: 1rem;
     border: solid #fff 2px;
+    background-color: $mainColor;
 
     .kg-button-wrapper {
       margin: 1rem;
@@ -32,6 +33,10 @@
       font-size: 1.15rem;
       border-radius: 3px;
       box-sizing: border-box;
+    }
+    textarea {
+      min-width: 290px;
+      padding: 5px 10px;
     }
   }
 }

@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react'
+import { TextareaAutosize } from '@material-ui/core'
 import Modal from './Modal'
 import type { InputModal } from '~/domain/kakuriyogarden/store/character/modal'
 
@@ -22,10 +23,11 @@ const modal: FC<InputModal> = (ctx) => {
         <div>{ctx.title}</div>
         <div>
           {ctx.isTextArea ? (
-            <textarea
-              onChange={(event) => ctx.changeHandler(event.target.value)}
-              onInput={(e) => setValue(e.currentTarget.value)}
+            <TextareaAutosize
+              rowsMin={3}
               value={value}
+              onChange={(e) => ctx.changeHandler(e.target.value)}
+              onInput={(e) => setValue(e.currentTarget.value)}
             />
           ) : (
             <input
