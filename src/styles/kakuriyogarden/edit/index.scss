@@ -15,10 +15,16 @@
     align-self: flex-end;
     padding-right: 5px;
   }
+  &detail-area {
+    border: solid $fontColor 1px;
+    padding: 5px;
+    white-space: pre-wrap;
+    color: $mainColor;
+    background-color: $fontColor;
+  }
   &profile {
     display: flex;
     margin-top: 5px;
-    padding: 5px;
     align-items: flex-start;
 
     img {
@@ -30,16 +36,32 @@
       border-left: solid $fontColor 1px;
       border-top: solid $fontColor 1px;
       border-bottom: solid $fontColor 1px;
+      border-right: solid $fontColor 1px;
     }
     // 詳細
     div:nth-child(2) {
       min-height: 50px;
       width: calc(100% - 50px);
       border: solid $fontColor 1px;
+      @extend .kg-detail-area;
+    }
+  }
+  &negai {
+    margin-top: 5px;
+    padding: 5px;
+    border: solid 1px #fff;
+    display: flex;
+    position: relative;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+
+    &-title {
       padding: 5px;
-      white-space: pre-wrap;
-      color: $mainColor;
-      background-color: $fontColor;
+      font-weight: bold;
+      font-size: 1.15rem;
     }
   }
 }

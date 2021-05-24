@@ -24,6 +24,25 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         profile={vm.character.profile}
         setProfile={vm.setProfile}
       />
+      <div className="kg-negai">
+        <div className="kg-negai-title">
+          <span style={{ paddingLeft: '10px' }}>願い</span>
+          <div>
+            <img src="/images/kakuriyogarden/icons/human-pictogram/play.png" />
+          </div>
+        </div>
+        <div className="kg-negai-title">
+          <span className="kg-editable" style={{ paddingLeft: '5px' }}>
+            復讐
+          </span>
+          <div>
+            <img src="/images/kakuriyogarden/icons/game-icons/spark-spirit.png" />
+          </div>
+        </div>
+        <div className="kg-detail-area" style={{ flex: 1 }}>
+          test
+        </div>
+      </div>
     </SubPage>
   )
 }
