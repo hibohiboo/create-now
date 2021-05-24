@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 
-const Footer: FC<{
+const MagicalName: FC<{
   symbolName: string
   symbolNameKana: string
   magicalName: string
@@ -52,4 +52,4 @@ const Footer: FC<{
     </div>
   )
 }
-export default Footer
+export default MagicalName

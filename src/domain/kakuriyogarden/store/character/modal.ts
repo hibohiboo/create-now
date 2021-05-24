@@ -11,7 +11,7 @@ const inputModalBase = {
   isTextArea: false
 }
 export type InputModal = typeof inputModalBase;
-export type OpenInputModal = (title: string, value: string, handler: InputHandler)=>void
+
 
 
 export const useInputModal = ()=>{
@@ -33,7 +33,7 @@ export const useInputModal = ()=>{
     },
   }
 }
-
+export type OpenInputModal = ReturnType<typeof useInputModal>['openInputModal']
 
 const imageEditModalBase = {
   show: false,
@@ -62,3 +62,4 @@ export const useImageEditModal = ()=>{
     },
   }
 }
+export type OpenImageEditModal = ReturnType<typeof useImageEditModal>['openImageEditModal']

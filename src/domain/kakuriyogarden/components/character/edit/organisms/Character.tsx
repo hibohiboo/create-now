@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { CharacterViewModel } from '~/domain/kakuriyogarden/store/character'
 import SubPage from '../layout/SubPage'
 import MagicalName from './character/MagicalName'
-import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
+import Profile from './character/Profile'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
@@ -16,28 +16,14 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         setMagicalName={vm.setMagicalName}
         openInputModal={vm.openInputModal}
       />
-      <div className="kg-profile">
-        <div
-          className="kg-editable"
-          onClick={() => {
-            vm.openImageEditModal(
-              'キャラクターアイコン',
-              vm.character.prevUrl,
-              vm.handleOnDrop,
-            )
-          }}
-        >
-          <img src={vm.character.prevUrl} />
-        </div>
-        <div
-          className="kg-editable"
-          onClick={() =>
-            vm.openInputModal('設定', vm.character.profile, vm.setProfile, true)
-          }
-        >
-          {vm.character.profile}
-        </div>
-      </div>
+      <Profile
+        imageUrl={vm.character.imageUrl}
+        openImageEditModal={vm.openImageEditModal}
+        handleOnDrop={vm.handleOnDrop}
+        openInputModal={vm.openInputModal}
+        profile={vm.character.profile}
+        setProfile={vm.setProfile}
+      />
     </SubPage>
   )
 }
