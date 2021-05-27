@@ -1,0 +1,424 @@
+.kg-wrapper {
+  //#######################################################
+  // タグ
+  //#######################################################
+  .tag {
+    background-color: teal;
+    color: #fff;
+    padding: 0 3px;
+    margin-bottom: 3px;
+    margin-left: 5px;
+    font-size: 0.6rem;
+    white-space: nowrap;
+    line-height: 2;
+    height: 18px;
+    display: inline-block;
+    width: fit-content;
+    border-radius: 5px;
+  }
+
+  //#######################################################
+  // カード
+  //#######################################################
+  .card-list {
+    display: flex;
+    flex-wrap: wrap; // 折り返す
+  }
+
+  // 継承元の設定
+  %card-wrapper {
+    // マジックのカードが8.8cm * 6.3cm なので、その比率に合わせてみる
+    width: 252px;
+    height: 352px;
+    display: grid;
+    border: #fff solid 1px;
+    flex-direction: column; // 子要素をflexboxにより縦方向に揃える
+    justify-content: center; // 子要素をflexboxにより中央に配置する
+    align-items: center; // 子要素をflexboxにより中央に配置する
+    box-sizing: border-box; // ボックスの幅・高さにborderを含める
+  }
+
+  %card-base {
+    width: 242px;
+    height: 342px;
+    border: #000 solid 1px;
+    border-radius: 0.8em; // 角を丸める
+    padding: 5px;
+
+    // materializeのカードと同じく影を入れる -> html2canvasを行ったときに灰色になってしまうのでコメントアウト 2020.10.24
+    // box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+    // フォントサイズ設定
+    font-size: 14px;
+
+    // グリッドレイアウトを適用
+    display: grid;
+  }
+
+  .skill-card {
+    position: relative;
+    color: $mainColor;
+
+    .wrapper {
+      background-color: white;
+      @extend %card-wrapper;
+
+      .base {
+        $mainContentHeight: 140px; // カードのメイン部分の高さ
+        @extend %card-base;
+        grid-template-columns:
+          [leftGap] 5px // 左余白～左端
+          [innerLeft] 60px // 左端～
+          [attrLabel] 60px // 特性～
+          [attrValue]1fr
+          [innerRight] 1px // 右端ターゲット
+          [rightGap] 4px; // 右端余白;
+
+        grid-template-rows: [topGap]1px // 上部余白～
+          [innerTop]20px // 上部情報
+          [cardName] 28px //  カード名
+          [tags] 22px //  タグ
+          [pictTop]20px // 画像開始 / タイミング
+          [range_] 20px // 射程
+          [target_] 20px // 対象
+          [count]20px // コスト
+          [exp] 20px //経験点 画像終わり
+          [mainContent] $mainContentHeight // カード説明
+          [bottomContent] 1fr // カード番号など
+          2px;
+        %border {
+          box-sizing: border-box;
+          padding: 2px;
+          padding-left: 5px;
+          font-size: 12px;
+          border-color: #000;
+          border-style: solid;
+          border-width: 1px;
+        }
+        .border {
+          @extend %border;
+        }
+        .border-br {
+          @extend %border;
+          border-top-style: none;
+          border-left-style: none;
+        }
+        .border-bl {
+          @extend %border;
+          border-top-style: none;
+          border-right-style: none;
+        }
+        .border-tr {
+          @extend %border;
+          border-bottom-style: none;
+          border-left-style: none;
+        }
+        .border-blr {
+          @extend %border;
+          border-top-style: none;
+        }
+        .border-trb {
+          @extend %border;
+          border-left-style: none;
+        }
+        .border-tlr {
+          @extend %border;
+          border-bottom-style: none;
+        }
+        .image {
+          $imgsize: 50px;
+          grid-column: innerLeft; // 左端
+          grid-row: pictTop/exp; // 画像行の頭
+          border: none; // #000 solid 1px;
+          width: $imgsize;
+          height: $imgsize;
+          outline: solid 2px #000;
+          overflow: hidden;
+          img {
+            position: absolute;
+            max-width: $imgsize;
+            max-height: $imgsize;
+            overflow: hidden;
+          }
+        }
+        // 右上カード情報
+        .attrLabel {
+          font-size: 0.7em;
+        }
+        .attrValue {
+          white-space: nowrap;
+        }
+        .skillLabel {
+          grid-column: innerLeft/innerRight;
+          grid-row: innerTop; // 上端
+          justify-self: right;
+
+          font-family: 'Anton', sans-serif;
+        }
+        .attrTimingLabel {
+          grid-column: attrLabel; // 左端
+          grid-row: pictTop; // 画像 / タイミング
+        }
+        .attrTimingValue {
+          grid-column: attrValue; // 左端
+          grid-row: pictTop; // 画像 / タイミング
+        }
+        .attrCountLabel {
+          grid-column: attrLabel;
+          grid-row: count;
+        }
+        .attrCountValue {
+          grid-column: attrValue;
+          grid-row: count;
+        }
+        .attrRangeLabel {
+          grid-column: attrLabel;
+          grid-row: range_;
+        }
+        .attrRangeValue {
+          grid-column: attrValue;
+          grid-row: range_;
+        }
+        .attrTargetLabel {
+          grid-column: attrLabel;
+          grid-row: target_;
+        }
+        .attrTargetValue {
+          grid-column: attrValue;
+          grid-row: target_;
+        }
+        .attrSuccessRate {
+          grid-column: attrValue;
+          grid-row: count;
+          margin-left: 60px;
+        }
+        .attrSuccessRateLabel {
+          grid-column: attrLabel;
+          grid-row: count;
+          margin-left: 80px;
+          width: 40px;
+        }
+        .attrExpLabel {
+          grid-column: attrLabel;
+          grid-row: exp;
+          height: 14px; // 下余白調整
+          line-height: 10px;
+          font-size: 10px;
+        }
+        .attrExpValue {
+          grid-column: attrValue;
+          grid-row: exp;
+          height: 14px; // 下余白調整
+          line-height: 10px;
+          font-size: 10px;
+        }
+        .cardName {
+          grid-column: 1/-1; // カード名の行
+          grid-row: cardName; //
+
+          justify-self: left; // 横方向の位置揃え
+          align-self: center; // 縦方向の位置揃え
+          font-size: 1.5em;
+        }
+        .tags {
+          grid-column: 1/-1; // カード名の行
+          grid-row: tags;
+          justify-self: left;
+          display: flex;
+          flex-wrap: wrap; // 折り返す
+        }
+        .mainContent {
+          grid-column: innerLeft/innerRight;
+          grid-row: mainContent;
+          height: $mainContentHeight;
+          padding: 0;
+          display: grid;
+          grid-template-columns:
+            [leftGap]1px // 左余白～左端
+            [maxLevelLabel] 50px
+            [maxLevel] 20px
+            [lvLavel] 25px
+            [lv] 20px
+            1fr
+            [innerRight] 1px // 右端ターゲット
+            [rightGap] 1px; // 右端余白;
+
+          grid-template-rows:
+            [innerTop]auto // 上部情報
+            [effect] auto
+            [description] 1fr;
+
+          .maxLevelLabel {
+            grid-column-start: leftGap;
+            grid-column-end: maxLevel;
+            grid-row: innerTop;
+          }
+          .maxLevel {
+            grid-column: maxLevel;
+            grid-row: innerTop;
+          }
+          .lvLavel {
+            grid-column: lvLavel;
+            grid-row: innerTop;
+          }
+          .level {
+            grid-column: lv;
+            grid-row: innerTop;
+          }
+
+          $mainContentTopPadding: 2px;
+          $mainContentLeftPadding: 5px;
+          .effect {
+            grid-column: 1/-1;
+            grid-row: effect;
+
+            // 効果と解説の境目のスタイルを調整
+            border-bottom-style: dashed;
+            border-bottom-width: 1px;
+            padding-bottom: 5px;
+
+            padding-top: $mainContentTopPadding;
+            padding-left: $mainContentLeftPadding;
+            white-space: pre-line; // 折り返し反映。行末空白削除
+          }
+          .description {
+            grid-column: 1/-1;
+            grid-row: description;
+            border-top-style: none;
+
+            padding-top: $mainContentTopPadding;
+            padding-left: $mainContentLeftPadding;
+
+            font-size: 0.8em;
+            position: relative;
+            white-space: pre-line; // 折り返し反映。行末空白削除
+          }
+          %triangle-base {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0px;
+            left: 0;
+            width: 0px;
+            height: 0px;
+            margin: auto;
+            border-style: solid;
+            border-color: #eeff00 transparent transparent transparent;
+            border-width: 20px 20px 0 20px;
+          }
+          $link-opacity: 0.5;
+          $link-trinangle-size-mini: 10px 10px 0 10px;
+          $border-color-mini: rgb(25, 105, 0, 0) transparent transparent
+            transparent; // 文字が重なったときに読めなくなるので一旦消しておく。重ねる線とかを考えたほうがよいかも。。
+
+          .description.link:before {
+            @extend %triangle-base;
+            top: auto;
+            left: auto;
+            right: -5px;
+            bottom: 10px;
+            opacity: $link-opacity;
+            transform: rotateZ(-90deg);
+          }
+
+          .description.link:after {
+            @extend %triangle-base;
+            top: auto;
+            left: auto;
+            right: 5px;
+            bottom: 15px;
+
+            border-color: $border-color-mini;
+            border-width: $link-trinangle-size-mini;
+            opacity: $link-opacity;
+            transform: rotateZ(-90deg);
+          }
+
+          .description.link2:before {
+            @extend %triangle-base;
+            bottom: 0px;
+            opacity: $link-opacity;
+          }
+          .description.link2:after {
+            @extend %triangle-base;
+            bottom: 5px;
+            border-color: $border-color-mini;
+            border-width: $link-trinangle-size-mini;
+            opacity: $link-opacity;
+          }
+        }
+        .bottomContent {
+          grid-column: innerLeft/innerRight;
+          grid-row: bottomContent;
+
+          font-size: 8px;
+          align-self: self-end;
+
+          // 子要素向けの設定
+          display: flex;
+          justify-content: flex-end; // 最初の要素以外は右端
+
+          .cardId {
+            margin-right: auto; // 最初の要素は左端
+          }
+        }
+      }
+    }
+  }
+
+  .skills-card {
+    position: relative;
+    .wrapper {
+      @extend %card-wrapper;
+
+      .base {
+        @extend %card-base;
+        grid-template-rows: [topGap]1px // 上部余白～
+          [innerTop] 20px // 上部情報
+          [list] 1fr //  カード名カナ
+;
+        .enemyName {
+          grid-row: innerTop; // 上端
+          justify-self: right;
+
+          font-family: 'Anton', sans-serif;
+        }
+        .cards {
+          grid-row: list;
+          margin: 1px;
+
+          li {
+            padding: 1px;
+          }
+
+          .skill-name {
+            white-space: nowrap;
+            display: flex;
+            flex-wrap: wrap;
+          }
+          .skill-description {
+            font-size: 0.6rem;
+            line-height: 1.3;
+            height: 45px;
+            overflow-y: auto;
+          }
+          .injury,
+          .used {
+            padding-left: 5px;
+          }
+          [type='checkbox'] + span {
+            padding-left: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .collection .collection-item.disabled-skill {
+    background-color: #aaa;
+  }
+
+  .collection .collection-item.damaged-skill {
+    background-color: #ffb6c1;
+  }
+}
