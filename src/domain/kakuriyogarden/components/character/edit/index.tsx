@@ -7,6 +7,7 @@ import { useCharacterViewModel } from '~/domain/kakuriyogarden/store/character'
 import InputModal from './molecules/modal/InputModal'
 import Character from './organisms/Character'
 import ImageEditModal from './molecules/modal/ImageEditModal'
+import NegaiModal from './organisms/modal/NegaiModal'
 
 const Edit: FC<{}> = ({ children }) => {
   const vm = useCharacterViewModel()
@@ -19,6 +20,7 @@ const Edit: FC<{}> = ({ children }) => {
       <Footer>フッタ</Footer>
       <InputModal {...vm.inputModal} />
       <ImageEditModal {...vm.imageEditModal} />
+      <NegaiModal show={true} closeHandler={() => {}} />
     </Wrapper>
   )
 }

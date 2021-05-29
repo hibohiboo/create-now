@@ -31,7 +31,7 @@
     width: 252px;
     height: 352px;
     display: grid;
-    border: #fff solid 1px;
+    // border: #fff solid 1px;
     flex-direction: column; // 子要素をflexboxにより縦方向に揃える
     justify-content: center; // 子要素をflexboxにより中央に配置する
     align-items: center; // 子要素をflexboxにより中央に配置する
@@ -60,10 +60,10 @@
     color: $mainColor;
 
     .wrapper {
-      background-color: white;
       @extend %card-wrapper;
 
       .base {
+        background-color: white;
         $mainContentHeight: 140px; // カードのメイン部分の高さ
         @extend %card-base;
         grid-template-columns:

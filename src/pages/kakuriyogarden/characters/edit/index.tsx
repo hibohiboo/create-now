@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { NextPage } from 'next'
-import { getCharacter } from '~/api/firestoreAPI'
-import Edit from '~/domain/kakuriyogarden/components/character/edit'
 import Head from 'next/head'
+
+import Edit from '~/domain/kakuriyogarden/components/character/edit'
 
 const Page: NextPage<{
   id: string
@@ -22,6 +22,17 @@ const Page: NextPage<{
           href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
           integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
           crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
         />
         <title>{ctx.pageTitle}</title>
       </Head>

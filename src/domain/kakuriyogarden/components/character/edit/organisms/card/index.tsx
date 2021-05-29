@@ -36,7 +36,7 @@ const labelData = {
 
 const Card: FC<{ cardData: Card }> = ({ cardData }) => {
   return (
-    <div style={{ padding: '0px', width: '252px', backgroundColor: '#fff' }}>
+    <div style={{ padding: '0px', width: '252px' }}>
       <div className="skill-card">
         <div className="wrapper">
           <div className="base">

@@ -4,7 +4,6 @@ import ImageEdit from '../edit/ImageEdit'
 import { ImageEditModal } from '~/domain/kakuriyogarden/store/character/modal'
 
 const modal: FC<ImageEditModal> = (ctx) => {
-  console.log('img test ', ctx)
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
       <div className="kg-input-modal">
