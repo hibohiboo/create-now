@@ -13,13 +13,15 @@ export type Card = {
   range: string
   tags: string[]
   effect: string
+  gardeneffect: string
   description: string
   id: string
   image: null | { sourceUrl: string; url: string; source: string }
   maxLevel: null | number
   level: null | number
   successRate: string
-  exp: null | string
+  exp: number
+  nameKana: string
 }
 const labelData = {
   timing: 'タイミング',
@@ -28,7 +30,7 @@ const labelData = {
   target: '対象',
   maxLevel: '最大Lv',
   level: 'Lv',
-  exp: 'EXP',
+  exp: 'コスト',
   successRate: '成功率',
 }
 
@@ -42,13 +44,12 @@ const Card: FC<{ cardData: Card }> = ({ cardData }) => {
             <div className="image">
               <img src={cardData.image.url} crossOrigin="use-credentials"></img>
             </div>
+            <div className="cardNameKana">{cardData.nameKana}</div>
             <div className="cardName">{cardData.name}</div>
-
             <div className="attrTimingLabel attrLabel border-tlr">
               {labelData.timing}
             </div>
             <div className="attrTimingValue border-tr">{cardData.timing}</div>
-
             <div className="attrCountLabel attrLabel border-blr">
               {labelData.count}
             </div>
@@ -67,17 +68,10 @@ const Card: FC<{ cardData: Card }> = ({ cardData }) => {
             <div className="attrSuccessRate border-br">
               {cardData.successRate}
             </div>
-
-            {cardData.exp ? (
-              <>
-                <div className="attrExpLabel attrLabel border-blr">
-                  {labelData.exp}
-                </div>
-                <div className="attrExpValue border-br">{cardData.exp}</div>{' '}
-              </>
-            ) : (
-              <></>
-            )}
+            <div className="attrExpLabel attrLabel border-lr">
+              {labelData.exp}
+            </div>
+            <div className="attrExpValue border-r">{cardData.exp}</div>
             <div className="tags">
               {cardData.tags.map((tag) => (
                 <span className="tag" key={tag}>
@@ -87,8 +81,10 @@ const Card: FC<{ cardData: Card }> = ({ cardData }) => {
             </div>
             <div className="mainContent border">
               <div className="effect">{cardData.effect}</div>
+              <div className="gardeneffect">
+                庭園効果: {cardData.gardeneffect}
+              </div>
               <div className="description">{cardData.description}</div>
-              <div className={['description', 'link'].join(' ')}></div>
             </div>
             <div className="bottomContent">
               <div className="illustedBy">

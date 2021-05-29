@@ -8,10 +8,10 @@
     padding: 0 3px;
     margin-bottom: 3px;
     margin-left: 5px;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     white-space: nowrap;
-    line-height: 2;
-    height: 18px;
+    line-height: 2.1;
+    height: 20px;
     display: inline-block;
     width: fit-content;
     border-radius: 5px;
@@ -76,8 +76,8 @@
 
         grid-template-rows: [topGap]1px // 上部余白～
           [innerTop]20px // 上部情報
-          [cardName] 28px //  カード名
-          [tags] 22px //  タグ
+          [cardName] 26px //  カード名
+          [tags] 24px //  タグ
           [pictTop]20px // 画像開始 / タイミング
           [range_] 20px // 射程
           [target_] 20px // 対象
@@ -86,11 +86,16 @@
           [mainContent] $mainContentHeight // カード説明
           [bottomContent] 1fr // カード番号など
           2px;
+        %valueLabel {
+          font-size: 12px;
+        }
+        %value {
+          line-height: 1.4;
+        }
         %border {
           box-sizing: border-box;
           padding: 2px;
           padding-left: 5px;
-          font-size: 12px;
           border-color: #000;
           border-style: solid;
           border-width: 1px;
@@ -102,6 +107,17 @@
           @extend %border;
           border-top-style: none;
           border-left-style: none;
+        }
+        .border-r {
+          @extend %border;
+          border-top-style: none;
+          border-left-style: none;
+          border-bottom-style: none;
+        }
+        .border-lr {
+          @extend %border;
+          border-top-style: none;
+          border-bottom-style: none;
         }
         .border-bl {
           @extend %border;
@@ -158,59 +174,71 @@
         .attrTimingLabel {
           grid-column: attrLabel; // 左端
           grid-row: pictTop; // 画像 / タイミング
+          @extend %valueLabel;
         }
         .attrTimingValue {
           grid-column: attrValue; // 左端
           grid-row: pictTop; // 画像 / タイミング
+          @extend %valueLabel;
+          @extend %value;
         }
         .attrCountLabel {
           grid-column: attrLabel;
           grid-row: count;
+          @extend %valueLabel;
         }
         .attrCountValue {
           grid-column: attrValue;
           grid-row: count;
+          @extend %valueLabel;
+          @extend %value;
         }
         .attrRangeLabel {
           grid-column: attrLabel;
           grid-row: range_;
+          @extend %valueLabel;
         }
         .attrRangeValue {
           grid-column: attrValue;
           grid-row: range_;
+          @extend %valueLabel;
+          @extend %value;
         }
         .attrTargetLabel {
           grid-column: attrLabel;
           grid-row: target_;
+          @extend %valueLabel;
         }
         .attrTargetValue {
           grid-column: attrValue;
           grid-row: target_;
+          @extend %valueLabel;
+          @extend %value;
         }
         .attrSuccessRate {
           grid-column: attrValue;
           grid-row: count;
           margin-left: 60px;
+          @extend %valueLabel;
+          @extend %value;
         }
         .attrSuccessRateLabel {
           grid-column: attrLabel;
           grid-row: count;
-          margin-left: 80px;
+          margin-left: 78px;
           width: 40px;
+          @extend %valueLabel;
         }
         .attrExpLabel {
           grid-column: attrLabel;
           grid-row: exp;
-          height: 14px; // 下余白調整
-          line-height: 10px;
-          font-size: 10px;
+          @extend %valueLabel;
         }
         .attrExpValue {
           grid-column: attrValue;
           grid-row: exp;
-          height: 14px; // 下余白調整
-          line-height: 10px;
-          font-size: 10px;
+          @extend %valueLabel;
+          @extend %value;
         }
         .cardName {
           grid-column: 1/-1; // カード名の行
@@ -219,6 +247,15 @@
           justify-self: left; // 横方向の位置揃え
           align-self: center; // 縦方向の位置揃え
           font-size: 1.5em;
+        }
+        .cardNameKana {
+          grid-column: 1/-1; // カード名の行
+          grid-row: innerTop; //
+
+          justify-self: left; // 横方向の位置揃え
+          align-self: baseline; // 縦方向の位置揃え
+          font-size: 0.8rem;
+          line-height: 2.4; // 縦位置をタイトルに近づける
         }
         .tags {
           grid-column: 1/-1; // カード名の行
@@ -246,6 +283,7 @@
           grid-template-rows:
             [innerTop]auto // 上部情報
             [effect] auto
+            [gardeneffect] auto
             [description] 1fr;
 
           .maxLevelLabel {
@@ -280,6 +318,17 @@
             padding-top: $mainContentTopPadding;
             padding-left: $mainContentLeftPadding;
             white-space: pre-line; // 折り返し反映。行末空白削除
+          }
+          .gardeneffect {
+            grid-column: 1/-1;
+            grid-row: gardeneffect;
+            // 効果と解説の境目のスタイルを調整
+            border-bottom-style: dashed;
+            border-bottom-width: 1px;
+            padding-bottom: 5px;
+            padding-top: $mainContentTopPadding;
+            padding-left: $mainContentLeftPadding;
+            white-space: pre-line;
           }
           .description {
             grid-column: 1/-1;
