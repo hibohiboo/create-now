@@ -39,7 +39,7 @@ const SimpleSlider: FC<NegaiModal> = (ctx) => {
         <div className="kg-modal-hope" onClick={() => ctx.hopeHandler('献身')}>
           <h3>献身</h3>
           <img src={getHopeImageUrl('献身')} />
-          <p>あなたは誰かのために願った。</p>
+          <p>あなたの願いは誰かのために</p>
           <div className="kg-modal-hope-skill">
             <Card cardData={dedicationMagica} />
           </div>
@@ -47,7 +47,7 @@ const SimpleSlider: FC<NegaiModal> = (ctx) => {
         <div className="kg-modal-hope" onClick={() => ctx.hopeHandler('利己')}>
           <h3>利己</h3>
           <img src={getHopeImageUrl('利己')} />
-          <p>あなたは己のために願った。</p>
+          <p>あなたの願いは己のために</p>
           <div className="kg-modal-hope-skill">
             <Card cardData={egoMagica} />
           </div>
@@ -56,7 +56,7 @@ const SimpleSlider: FC<NegaiModal> = (ctx) => {
         <div className="kg-modal-hope" onClick={() => ctx.hopeHandler('復讐')}>
           <h3>復讐</h3>
           <img src={getHopeImageUrl('復讐')} />
-          <p>己のための奇跡は不要。ただただ報いを願うのみ。</p>
+          <p>己のための奇跡は不要。ただただ報いを願うのみ</p>
           <div className="kg-modal-hope-skill">
             <Card cardData={avengeMagica} />
           </div>
