@@ -20,7 +20,7 @@ const Edit: FC<{}> = ({ children }) => {
       <Footer>フッタ</Footer>
       <InputModal {...vm.inputModal} />
       <ImageEditModal {...vm.imageEditModal} />
-      <NegaiModal show={true} closeHandler={() => {}} />
+      <NegaiModal {...vm.negaiModal} />
     </Wrapper>
   )
 }

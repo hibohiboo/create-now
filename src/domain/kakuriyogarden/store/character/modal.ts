@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react"
+import { Hope } from "../../negai";
 
 type InputHandler = (a:string)=>void
 
@@ -63,3 +64,33 @@ export const useImageEditModal = ()=>{
   }
 }
 export type OpenImageEditModal = ReturnType<typeof useImageEditModal>['openImageEditModal']
+
+
+
+const negaiModalBase = {
+  show: false,
+  hope: '献身',
+  hopeHandler: (hope: Hope)=>{},
+  closeHandler: ()=>{}
+}
+export type NegaiModal = typeof negaiModalBase;
+export const useNegaiModal = ()=>{
+  const [negaiModal, setNegaiModal] = useState(negaiModalBase)
+  return {
+    negaiModal,
+    openNegaiModal: (hope: '献身' | '利己' | '復讐', handler: any)=>{
+      setNegaiModal(
+        {
+          hope,
+          show: true,
+          hopeHandler: (event: Hope) => {
+            handler(event)
+            setNegaiModal(negaiModalBase)
+          },
+          closeHandler: () =>
+          setNegaiModal(negaiModalBase)
+      })
+    },
+  }
+}
+export type OpenNegaiModal = ReturnType<typeof useNegaiModal>['openNegaiModal']

@@ -29,6 +29,9 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         setHopeDetail={vm.setHopeDetail}
         hopeDetail={vm.character.hopeDetail}
         openInputModal={vm.openInputModal}
+        hope={vm.character.hope}
+        openNegaiModal={vm.openNegaiModal}
+        setHope={vm.setHope}
       />
     </SubPage>
   )

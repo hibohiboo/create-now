@@ -1,14 +1,26 @@
 import { FC } from 'react'
+import { getHopeImageUrl } from '~/domain/kakuriyogarden/negai'
 import {
-  OpenImageEditModal,
   OpenInputModal,
+  OpenNegaiModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
+import type { Hope } from '~/domain/kakuriyogarden/negai'
 
-const Hope: FC<{
+const hope: FC<{
   hopeDetail: string
+  hope: Hope
+  setHope: any
   setHopeDetail: any
   openInputModal: OpenInputModal
-}> = ({ openInputModal, setHopeDetail, hopeDetail }) => {
+  openNegaiModal: OpenNegaiModal
+}> = ({
+  openInputModal,
+  openNegaiModal,
+  setHope,
+  hope,
+  setHopeDetail,
+  hopeDetail,
+}) => {
   return (
     <div className="kg-negai">
       <div className="kg-negai-title">
@@ -17,12 +29,16 @@ const Hope: FC<{
           <img src="/images/kakuriyogarden/icons/human-pictogram/play.png" />
         </div>
       </div>
-      <div className="kg-negai-title">
+      <div
+        className="kg-negai-title"
+        onClick={() => openNegaiModal(hope, setHope)}
+        style={{ cursor: 'pointer' }}
+      >
         <span className="kg-editable" style={{ paddingLeft: '5px' }}>
-          復讐
+          {hope}
         </span>
         <div>
-          <img src="/images/kakuriyogarden/icons/game-icons/spark-spirit.png" />
+          <img src={getHopeImageUrl(hope)} />
         </div>
       </div>
       <div
@@ -37,4 +53,4 @@ const Hope: FC<{
     </div>
   )
 }
-export default Hope
+export default hope
