@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
-import URLImage from './URLImage'
+import URLImage from './atoms/URLImage'
 import Hidden from '@material-ui/core/Hidden'
-import TimeCell from './atoms/TimeCell'
+import Cell from './atoms/GardenCell'
 
-const ImageArea: React.FC = () => {
-  const cellCount = 13
-  const canvasWidth = 0 + cellCount * 50
-  const canvasHight = 100
+const ImageArea: React.FC<{ gardenItems: any[]; color: string }> = ({
+  gardenItems,
+  color,
+}) => {
+  const size = 50
+  const cellCount = Math.max(...gardenItems.map((i) => i.cols.length))
+  const canvasWidth = 2 + cellCount * size
+  const canvasHight = 2 + size * gardenItems.length
   const leftPadding = 5
   const inputWidth = canvasWidth - leftPadding
   const family = {
@@ -62,33 +66,17 @@ const ImageArea: React.FC = () => {
               height={canvasHight}
               fill={'white'}
             />
-            {Array(cellCount)
-              .fill(0)
-              .map((x, i) => (
-                <TimeCell
-                  x={1 + i * 50}
-                  y={50}
-                  key={i}
-                  color={'yellow'}
-                  text={i === 0 ? '' : (13 - i).toString()}
+            {gardenItems.map((x, i) =>
+              x.cols.map((y, j) => (
+                <Cell
+                  x={1 + j * size}
+                  y={1 + i * size}
+                  key={`${i}${j}`}
+                  color={color}
+                  image={`/images/kakuriyogarden/icons/game-icons/crystal-growth.svg`}
                 />
-              ))}
-            <URLImage
-              src={'/images/kakuriyogarden/icons/icooon/time.svg'}
-              x={0}
-              y={50}
-              scale={1}
-            />
-            <Text
-              y={10}
-              width={canvasWidth}
-              align="center"
-              text={''}
-              fontFamily={
-                '"Hiragino Sans W3", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif'
-              }
-              fontSize={30}
-            />
+              )),
+            )}
           </Layer>
         </Stage>
       </Hidden>

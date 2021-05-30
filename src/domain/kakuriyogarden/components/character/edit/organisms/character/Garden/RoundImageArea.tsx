@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
-import URLImage from './URLImage'
+import URLImage from './atoms/URLImage'
 import Hidden from '@material-ui/core/Hidden'
 import TimeCell from './atoms/TimeCell'
 
@@ -78,6 +78,7 @@ const ImageArea: React.FC = () => {
               x={0}
               y={50}
               scale={1}
+              size={50}
             />
             <Text
               y={10}

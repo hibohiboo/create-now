@@ -9,7 +9,7 @@ const component: FC<{}> = () => {
       description: '風景',
       strength: 3,
       image: { url: '' },
-      cols: [{}, {}, {}, {}],
+      cols: [{}, {}, {}, {}, {}],
     },
     {
       description: '風景',
@@ -63,7 +63,7 @@ const component: FC<{}> = () => {
         </div>
       </div>
       <div className="flex-centering">
-        <ImageArea />
+        <ImageArea gardenItems={gardenItems} color={`darkmagenta`} />
       </div>
     </>
   )
