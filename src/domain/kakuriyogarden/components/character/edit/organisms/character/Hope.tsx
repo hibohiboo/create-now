@@ -22,15 +22,15 @@ const hope: FC<{
   hopeDetail,
 }) => {
   return (
-    <div className="kg-negai">
-      <div className="kg-negai-title">
+    <div className="kg-section">
+      <div className="kg-section-title">
         <span style={{ paddingLeft: '10px' }}>願い</span>
         <div>
           <img src="/images/kakuriyogarden/icons/human-pictogram/play.png" />
         </div>
       </div>
       <div
-        className="kg-negai-title"
+        className="kg-section-title"
         onClick={() => openNegaiModal(hope, setHope)}
         style={{ cursor: 'pointer' }}
       >

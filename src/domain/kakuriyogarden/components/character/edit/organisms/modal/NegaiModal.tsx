@@ -34,7 +34,8 @@ const settings = {
 const SimpleSlider: FC<NegaiModal> = (ctx) => {
   return (
     <div>
-      <h2>願い選択</h2>
+      <h2>願い</h2>
+      <p>魔法少女が戦う理由。</p>
       <Slider {...settings}>
         <div className="kg-modal-hope" onClick={() => ctx.hopeHandler('献身')}>
           <h3>献身</h3>

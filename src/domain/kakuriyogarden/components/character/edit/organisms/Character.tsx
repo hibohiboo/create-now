@@ -4,6 +4,7 @@ import SubPage from '../layout/SubPage'
 import MagicalName from './character/MagicalName'
 import Profile from './character/Profile'
 import Hope from './character/Hope'
+import Cloth from './character/Cloth'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
@@ -33,6 +34,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         openNegaiModal={vm.openNegaiModal}
         setHope={vm.setHope}
       />
+      <Cloth openInputModal={vm.openInputModal} />
     </SubPage>
   )
 }
