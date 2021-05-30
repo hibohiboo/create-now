@@ -8,6 +8,7 @@ import Gadget from './character/Gadget'
 import Openness from './character/Openness'
 import Attributes from './character/Attributes'
 import Equipments from './character/Equipments'
+import Deviation from './character/Deviation'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
@@ -45,6 +46,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
       <Attributes />
       <Openness />
       <Equipments />
+      <Deviation />
     </SubPage>
   )
 }

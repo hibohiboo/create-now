@@ -85,4 +85,16 @@
       white-space: pre-wrap;
     }
   }
+
+  // 逸脱
+  &table {
+    th {
+      border-bottom: solid #fff 2px;
+    }
+
+    td {
+      padding-left: 3px;
+      border-bottom: dashed #fff 1px;
+    }
+  }
 }
