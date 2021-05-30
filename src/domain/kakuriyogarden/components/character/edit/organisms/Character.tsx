@@ -6,6 +6,7 @@ import Profile from './character/Profile'
 import Hope from './character/Hope'
 import Cloth from './character/Cloth'
 import Openness from './character/Openness'
+import Attributes from './character/Attributes'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
@@ -21,7 +22,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
       />
       <div>
         <span className="tag">戦闘未経験</span>
-        <span className="tag">木</span>
+        <span className="tag">火</span>
       </div>
       <Profile
         imageUrl={vm.character.imageUrl}
@@ -41,6 +42,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
       />
       <Cloth openInputModal={vm.openInputModal} />
       <Openness />
+      <Attributes />
     </SubPage>
   )
 }

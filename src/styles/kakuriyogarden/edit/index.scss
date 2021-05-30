@@ -45,6 +45,8 @@
       @extend .kg-detail-area;
     }
   }
+
+  // 各項目の大枠レイアウト
   &section {
     margin-top: 5px;
     padding: 5px;
@@ -61,6 +63,26 @@
       padding: 5px;
       font-weight: bold;
       font-size: 1.15rem;
+    }
+  }
+
+  // アトリビュート
+  &attributes {
+    padding-left: 5px;
+  }
+  &attribute {
+    border-top: dashed 1px #fff;
+    border-bottom: dashed 1px #fff;
+    background-color: $mainColor;
+    div {
+      padding: 5px;
+    }
+    div:nth-child(1) {
+      font-size: 1.2rem;
+      width: fit-content;
+    }
+    div:nth-child(2) {
+      white-space: pre-wrap;
     }
   }
 }
