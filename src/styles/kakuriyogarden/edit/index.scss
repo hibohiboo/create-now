@@ -97,4 +97,38 @@
       border-bottom: dashed #fff 1px;
     }
   }
+
+  // 心象庭園
+  &garden {
+    width: 230px;
+    overflow: auto;
+    &-layer {
+      display: flex;
+      &:nth-child(n + 2) {
+        margin-top: -1px; // 線を重ねる
+      }
+
+      &-first {
+        flex: 0 0 auto;
+        width: $iconWidth;
+        height: $iconHeight;
+        font-size: 1rem;
+        color: #aaa;
+      }
+
+      &-col {
+        margin-left: -1px; // 線を重ねる
+        flex: 0 0 auto;
+        border: white solid 1px;
+        width: $iconWidth;
+        height: $iconHeight;
+        @extend .flex-centering;
+
+        img {
+          width: $iconWidth * 2/3;
+          height: $iconHeight * 2/3;
+        }
+      }
+    }
+  }
 }
