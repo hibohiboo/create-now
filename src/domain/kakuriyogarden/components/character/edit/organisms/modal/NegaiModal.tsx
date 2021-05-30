@@ -10,7 +10,7 @@ import {
   dedicationMagica,
   egoMagica,
   getHopeImageUrl,
-} from '~/domain/kakuriyogarden/negai'
+} from '~/domain/kakuriyogarden/classes/hope'
 
 const modal: FC<NegaiModal> = (ctx) => {
   return (

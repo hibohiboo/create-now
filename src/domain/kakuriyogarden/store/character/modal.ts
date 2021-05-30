@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react"
-import { Hope } from "../../negai";
+import { Hope } from "../../classes/hope";
 
 type InputHandler = (a:string)=>void
 

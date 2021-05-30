@@ -1,10 +1,10 @@
 import { FC } from 'react'
-import { getHopeImageUrl } from '~/domain/kakuriyogarden/negai'
+import { getHopeImageUrl } from '~/domain/kakuriyogarden/classes/hope'
 import {
   OpenInputModal,
   OpenNegaiModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
-import type { Hope } from '~/domain/kakuriyogarden/negai'
+import type { Hope } from '~/domain/kakuriyogarden/classes/hope'
 
 const hope: FC<{
   hopeDetail: string

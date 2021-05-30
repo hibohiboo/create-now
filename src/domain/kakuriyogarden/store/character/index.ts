@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo, ChangeEvent } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
 import { useImageEditModal, useInputModal, useNegaiModal } from './modal';
-import type { Hope } from '../../negai';
+import type { Hope } from '../../classes/hope';
 
 const sampleCharacter = {
   symbolName: '灰花',
