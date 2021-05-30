@@ -19,6 +19,10 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         setMagicalName={vm.setMagicalName}
         openInputModal={vm.openInputModal}
       />
+      <div>
+        <span className="tag">戦闘未経験</span>
+        <span className="tag">木</span>
+      </div>
       <Profile
         imageUrl={vm.character.imageUrl}
         openImageEditModal={vm.openImageEditModal}
