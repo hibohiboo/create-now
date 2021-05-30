@@ -5,7 +5,7 @@ import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 const component: FC<{}> = () => {
   return (
     <div className="kg-section">
-      <div className="kg-section-title" style={{ width: '80px' }}>
+      <div className="kg-section-title" style={{ width: '60px' }}>
         <span style={{}}>
           <ruby>逸脱</ruby>
         </span>
