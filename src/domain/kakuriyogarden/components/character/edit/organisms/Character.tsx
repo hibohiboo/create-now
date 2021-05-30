@@ -9,7 +9,7 @@ import Openness from './character/Openness'
 import Attributes from './character/Attributes'
 import Equipments from './character/Equipments'
 import Deviation from './character/Deviation'
-import Garden from './character/Garden'
+import Garden from './character/Garden/index'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
