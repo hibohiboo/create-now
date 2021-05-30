@@ -50,6 +50,8 @@ export default class URLImage extends React.Component<{
         ref={(node) => {
           this.imageNode = node
         }}
+        width={50}
+        height={50}
       />
     )
   }
