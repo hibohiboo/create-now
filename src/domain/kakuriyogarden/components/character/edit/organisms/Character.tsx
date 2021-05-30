@@ -5,6 +5,7 @@ import MagicalName from './character/MagicalName'
 import Profile from './character/Profile'
 import Hope from './character/Hope'
 import Cloth from './character/Cloth'
+import Openness from './character/Openness'
 
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
@@ -35,6 +36,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         setHope={vm.setHope}
       />
       <Cloth openInputModal={vm.openInputModal} />
+      <Openness />
     </SubPage>
   )
 }
