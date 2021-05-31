@@ -1,10 +1,12 @@
-import { FC } from 'react'
+import { Dispatch, FC } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 
 const cloth: FC<{
+  gadgetDetail: string
+  setGadgetDetail: Dispatch<string>
   openInputModal: OpenInputModal
-}> = ({ openInputModal }) => {
+}> = ({ gadgetDetail, openInputModal, setGadgetDetail }) => {
   return (
     <div className="kg-section">
       <div className="kg-section-title">
@@ -35,10 +37,16 @@ const cloth: FC<{
       <div
         className="kg-detail-area kg-editable"
         style={{ flex: 1 }}
-        onClick={() => {}}
+        onClick={() =>
+          openInputModal(
+            '焦点具と魔法戦衣の説明',
+            gadgetDetail,
+            setGadgetDetail,
+            true,
+          )
+        }
       >
-        {`手榴弾を模したキーホルダー。ピンを抜く動作をトリガーに、爆炎に包まれ変身する。
-変身後の衣装は黒紫色のドレス。`}
+        {gadgetDetail}
       </div>
     </div>
   )

@@ -43,7 +43,11 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         openNegaiModal={vm.openNegaiModal}
         setHope={vm.characterDispatch.hope}
       />
-      <Gadget openInputModal={vm.openInputModal} />
+      <Gadget
+        openInputModal={vm.openInputModal}
+        gadgetDetail={vm.character.gadgetDetail}
+        setGadgetDetail={vm.characterDispatch.gadgetDetail}
+      />
       <Attributes />
       <Openness />
       <Equipments />
