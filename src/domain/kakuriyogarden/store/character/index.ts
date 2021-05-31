@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, ChangeEvent } from 'react'
+import { useState, useEffect, useCallback, useMemo, ChangeEvent, Dispatch } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
 import { useImageEditModal, useInputModal, useNegaiModal } from './modal';
@@ -16,21 +16,24 @@ const sampleCharacter = {
 変身後の衣装は黒紫色のドレス。`
 }
 type Character = typeof sampleCharacter;
-const getSetName = (key:string)=>`set${key.replace(/^./, (match)=>match.toUpperCase())}`
+type Exclude<T, U> = T extends U ? never : T;
+
+// state -> setState
+// const getSetName = (key:string)=>`set${key.replace(/^./, (match)=>match.toUpperCase())}`
 const characterToState = (c:Character) =>{
-  const char = {}
-  const sets = {}
+  const char = {} as Character
+  const sets = {} as {[K in Exclude<keyof Character, "imageUrl">]: Dispatch<Character[K]>}
   for(const key of Object.keys(c)){
     if(key === 'imageUrl') continue;
     const [a,b] = useState(c[key])
     char[key] = a;
-    sets[getSetName(key)] = b;
+    sets[key] = b;
   }
-  return [char, sets];
+  return [char, sets] as const;
 }
 
 export const useCharacterViewModel = ()=>{
-  const [character, sets] = characterToState(sampleCharacter)
+  const [character, characterDispatch] = characterToState(sampleCharacter)
   const {inputModal, openInputModal} = useInputModal()
   const {imageEditModal, openImageEditModal} = useImageEditModal()
   const {negaiModal, openNegaiModal} = useNegaiModal()
@@ -42,7 +45,7 @@ export const useCharacterViewModel = ()=>{
     if(!loadedData) return
     for(const key of Object.keys(character)){
       if(key === 'imageUrl') continue;
-      sets[getSetName(key)](loadedData[key])
+      characterDispatch[key](loadedData[key])
     }
     setPrevUrl(loadedData.imageUrl)
   },[])
@@ -55,7 +58,7 @@ export const useCharacterViewModel = ()=>{
     imageEditModal,
     negaiModal,
     handleOnDrop,
-    ...sets,
+    characterDispatch,
     openInputModal,
     openImageEditModal,
     openNegaiModal

@@ -18,9 +18,9 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         symbolName={vm.character.symbolName}
         magicalName={vm.character.magicalName}
         symbolNameKana={vm.character.symbolNameKana}
-        setSymbolName={vm.setSymbolName}
-        setSymbolNameKana={vm.setSymbolNameKana}
-        setMagicalName={vm.setMagicalName}
+        setSymbolName={vm.characterDispatch.symbolName}
+        setSymbolNameKana={vm.characterDispatch.symbolNameKana}
+        setMagicalName={vm.characterDispatch.magicalName}
         openInputModal={vm.openInputModal}
       />
       <div>
@@ -33,15 +33,15 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         handleOnDrop={vm.handleOnDrop}
         openInputModal={vm.openInputModal}
         profile={vm.character.profile}
-        setProfile={vm.setProfile}
+        setProfile={vm.characterDispatch.profile}
       />
       <Hope
-        setHopeDetail={vm.setHopeDetail}
+        setHopeDetail={vm.characterDispatch.hopeDetail}
         hopeDetail={vm.character.hopeDetail}
         openInputModal={vm.openInputModal}
         hope={vm.character.hope}
         openNegaiModal={vm.openNegaiModal}
-        setHope={vm.setHope}
+        setHope={vm.characterDispatch.hope}
       />
       <Gadget openInputModal={vm.openInputModal} />
       <Attributes />
