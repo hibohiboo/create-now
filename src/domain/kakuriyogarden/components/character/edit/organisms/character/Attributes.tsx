@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
@@ -7,7 +7,11 @@ interface Attributes {
   title: string
   detail: string
 }
-const component: FC<{ items: Attributes[] }> = ({ items }) => {
+const component: FC<{
+  items: Attributes[]
+  setAttributes: Dispatch<Attributes[]>
+  openInputModal: OpenInputModal
+}> = ({ items, setAttributes, openInputModal }) => {
   return (
     <div className="kg-section">
       <div className="kg-section-title" style={{ width: '200px' }}>
@@ -31,10 +35,39 @@ const component: FC<{ items: Attributes[] }> = ({ items }) => {
       <div className="kg-attributes">
         {items.map((item, i) => (
           <div className="kg-attribute kg-editable" key={i}>
-            <div>
+            <div
+              className="kg-editable"
+              onClick={() =>
+                openInputModal(
+                  '属性',
+                  item.title,
+                  (text) =>
+                    setAttributes(
+                      items.map((x, j) =>
+                        j === i ? { ...item, title: text } : x,
+                      ),
+                    ),
+                  false,
+                )
+              }
+            >
               <Ruby text={item.title} />
             </div>
-            <div>
+            <div
+              onClick={() =>
+                openInputModal(
+                  '属性詳細',
+                  item.detail,
+                  (text) =>
+                    setAttributes(
+                      items.map((x, j) =>
+                        j === i ? { ...item, detail: text } : x,
+                      ),
+                    ),
+                  true,
+                )
+              }
+            >
               <Ruby text={item.detail} />
             </div>
           </div>

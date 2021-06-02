@@ -17,7 +17,7 @@ const sampleCharacter = {
 変身後の衣装は黒紫色のドレス。`,
   gadget: '武器' as Gadget,
   attributes: [{
-    title: '|名乗り(Roll Call)',
+    title: '|名乗り(カーテンコール)',
     detail: `解放度+30。戦闘開始時に魔法少女としての名を名乗る誓約により解放度を高める。
     「|庭園解放(オープン)。灰花のユキスミレ。真っ白な灰に燃やし尽くしてあげる」`
   },
