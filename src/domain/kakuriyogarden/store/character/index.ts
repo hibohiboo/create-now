@@ -29,10 +29,16 @@ const sampleCharacter = {
     detail: `アミュレットを取得。`
   },
 ],
-equipments:[{
-  title: 'アミュレット',
-  detail: '自身を対象とした、一節までの魔法を無効化する。'
-}]
+  equipments:[{
+    title: 'アミュレット',
+    detail: '自身を対象とした、一節までの魔法を無効化する。'
+  }],
+  deviations: [{point:'髪の長さ', before: '長髪', after: '短髪'},
+  {point:'髪の色', before: '黒髪', after: '黒髪'},
+  {point:'右頬', before: '火傷痕', after: '綺麗な肌'},
+  {point:'怒りを', before: '溜め込む', after: 'ブチキレる'},
+  {point:'自信', before: '卑下', after: '高慢'},
+]
 }
 type Character = typeof sampleCharacter;
 type Exclude<T, U> = T extends U ? never : T;

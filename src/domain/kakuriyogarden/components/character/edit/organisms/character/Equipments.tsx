@@ -71,11 +71,15 @@ const component: FC<{
         <button
           style={{ padding: '5px', marginTop: '15px', marginLeft: '50px' }}
           onClick={() => {
-            if (!confirm('先頭の魔装を一つ削除します。よろしいですか？')) {
+            // if (!confirm('先頭の魔装を一つ削除します。よろしいですか？')) {
+            //   return
+            // }
+            // const [, ...rest] = items
+            if (!confirm('最後の魔装を一つ削除します。よろしいですか？')) {
               return
             }
-            const [, ...rest] = items
-            setEquipments(rest)
+            items.pop()
+            setEquipments([...items])
           }}
         >
           魔装削除

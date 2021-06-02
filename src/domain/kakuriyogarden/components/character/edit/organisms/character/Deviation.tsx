@@ -1,8 +1,18 @@
-import { FC } from 'react'
+import { Dispatch, FC } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
+import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
 
-const component: FC<{}> = () => {
+interface Deviation {
+  point: string
+  before: string
+  after: string
+}
+const component: FC<{
+  items: Deviation[]
+  setDeviations: Dispatch<Deviation[]>
+  openInputModal: OpenInputModal
+}> = ({ items, setDeviations, openInputModal }) => {
   return (
     <div className="kg-section">
       <div className="kg-section-title" style={{ width: '60px' }}>
@@ -21,33 +31,89 @@ const component: FC<{}> = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>髪の長さ</td>
-              <td>長髪</td>
-              <td>短髪</td>
-            </tr>
-            <tr>
-              <td>髪の色</td>
-              <td>黒髪</td>
-              <td>白メッシュ</td>
-            </tr>
-            <tr>
-              <td>右頬</td>
-              <td>火傷痕</td>
-              <td>綺麗な肌</td>
-            </tr>
-            <tr>
-              <td>怒りを</td>
-              <td>溜め込む</td>
-              <td>ブチキレる</td>
-            </tr>
-            <tr>
-              <td>自信</td>
-              <td>自己評価低</td>
-              <td>高慢</td>
-            </tr>
+            {items.map((item, i) => (
+              <tr key={i}>
+                <td
+                  className="kg-editable"
+                  onClick={() =>
+                    openInputModal(
+                      '逸脱箇所',
+                      item.point,
+                      (text) =>
+                        setDeviations(
+                          items.map((x, j) =>
+                            j === i ? { ...item, point: text } : x,
+                          ),
+                        ),
+                      false,
+                    )
+                  }
+                >
+                  <Ruby text={item.point} />
+                </td>
+                <td
+                  className="kg-editable"
+                  onClick={() =>
+                    openInputModal(
+                      '変身前',
+                      item.before,
+                      (text) =>
+                        setDeviations(
+                          items.map((x, j) =>
+                            j === i ? { ...item, before: text } : x,
+                          ),
+                        ),
+                      false,
+                    )
+                  }
+                >
+                  <Ruby text={item.before} />
+                </td>
+                <td
+                  className="kg-editable"
+                  onClick={() =>
+                    openInputModal(
+                      '変身後',
+                      item.after,
+                      (text) =>
+                        setDeviations(
+                          items.map((x, j) =>
+                            j === i ? { ...item, after: text } : x,
+                          ),
+                        ),
+                      false,
+                    )
+                  }
+                >
+                  <Ruby text={item.after} />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+        <button
+          style={{ padding: '5px', marginTop: '15px' }}
+          onClick={() =>
+            setDeviations([
+              ...items,
+              { point: 'どこかが', before: 'もともと', after: 'こうなる' },
+            ])
+          }
+        >
+          逸脱追加
+        </button>
+        <button
+          style={{ padding: '5px', marginTop: '15px', marginLeft: '50px' }}
+          onClick={() => {
+            if (!confirm('最後の逸脱を一つ削除します。よろしいですか？')) {
+              return
+            }
+            items.pop()
+            setDeviations([...items])
+          }}
+        >
+          逸脱削除
+        </button>
       </div>
     </div>
   )

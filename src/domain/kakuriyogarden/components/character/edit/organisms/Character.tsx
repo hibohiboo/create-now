@@ -63,7 +63,11 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         setEquipments={vm.characterDispatch.equipments}
         openInputModal={vm.openInputModal}
       />
-      <Deviation />
+      <Deviation
+        items={vm.character.deviations}
+        setDeviations={vm.characterDispatch.deviations}
+        openInputModal={vm.openInputModal}
+      />
       <Garden />
     </SubPage>
   )
