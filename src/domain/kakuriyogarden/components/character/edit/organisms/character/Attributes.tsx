@@ -2,7 +2,12 @@ import { FC } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
-const component: FC<{}> = () => {
+
+interface Attributes {
+  title: string
+  detail: string
+}
+const component: FC<{ items: Attributes[] }> = ({ items }) => {
   return (
     <div className="kg-section">
       <div className="kg-section-title" style={{ width: '200px' }}>
@@ -22,24 +27,19 @@ const component: FC<{}> = () => {
           />
         </div>
       </div>
+
       <div className="kg-attributes">
-        <div className="kg-attribute kg-editable">
-          <div>名乗り</div>
-          <div>
-            <Ruby
-              text={`解放度+30。戦闘開始時に魔法少女としての名を名乗る誓約により解放度を高める。
-  「|庭園解放(オープン)。灰花のユキスミレ。真っ白な灰に燃やし尽くしてあげる」`}
-            />
+        {items.map((item, i) => (
+          <div className="kg-attribute kg-editable" key={i}>
+            <div>
+              <Ruby text={item.title} />
+            </div>
+            <div>
+              <Ruby text={item.detail} />
+            </div>
           </div>
-        </div>
-        <div className="kg-attribute kg-editable">
-          <div>先天属性:火</div>
-          <div>{`火タグを持つ魔法のカウント -1 (最低1)。`}</div>
-        </div>
-        <div className="kg-attribute kg-editable">
-          <div>魔装獲得:お守り</div>
-          <div>{`アミュレットを取得。`}</div>
-        </div>
+        ))}
+
         {/* <button style={{ padding: '5px', marginTop: '15px' }}>属性追加</button> */}
       </div>
     </div>
