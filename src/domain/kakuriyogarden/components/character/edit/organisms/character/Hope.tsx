@@ -5,6 +5,7 @@ import {
   OpenNegaiModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
 import type { Hope } from '~/domain/kakuriyogarden/classes/hope'
+import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
 
 const hope: FC<{
   hopeDetail: string
@@ -48,7 +49,7 @@ const hope: FC<{
           openInputModal('願いの詳細', hopeDetail, setHopeDetail, true)
         }
       >
-        {hopeDetail}
+        <Ruby text={hopeDetail} />
       </div>
     </div>
   )

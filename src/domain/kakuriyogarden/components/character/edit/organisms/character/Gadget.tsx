@@ -7,6 +7,7 @@ import {
   OpenGadgetModal,
   OpenInputModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
+import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
 
 const cloth: FC<{
   gadgetDetail: string
@@ -62,7 +63,7 @@ const cloth: FC<{
           )
         }
       >
-        {gadgetDetail}
+        <Ruby text={gadgetDetail} />
       </div>
     </div>
   )

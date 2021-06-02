@@ -3,6 +3,7 @@ import {
   OpenImageEditModal,
   OpenInputModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
+import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
 
 const Profile: FC<{
   imageUrl: string
@@ -33,7 +34,7 @@ const Profile: FC<{
         className="kg-editable"
         onClick={() => openInputModal('設定', profile, setProfile, true)}
       >
-        {profile}
+        <Ruby text={profile} />
       </div>
     </div>
   )
