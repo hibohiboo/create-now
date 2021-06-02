@@ -28,7 +28,11 @@ const sampleCharacter = {
     title: '魔装:お守り',
     detail: `アミュレットを取得。`
   },
-]
+],
+equipments:[{
+  title: 'アミュレット',
+  detail: '自身を対象とした、一節までの魔法を無効化する。'
+}]
 }
 type Character = typeof sampleCharacter;
 type Exclude<T, U> = T extends U ? never : T;

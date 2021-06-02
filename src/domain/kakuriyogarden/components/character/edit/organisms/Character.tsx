@@ -58,7 +58,11 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         openIframeModal={vm.openIframeModal}
       />
       <Openness />
-      <Equipments />
+      <Equipments
+        items={vm.character.equipments}
+        setEquipments={vm.characterDispatch.equipments}
+        openInputModal={vm.openInputModal}
+      />
       <Deviation />
       <Garden />
     </SubPage>
