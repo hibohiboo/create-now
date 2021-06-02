@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
-
+import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
 const component: FC<{}> = () => {
   return (
     <div className="kg-section">
@@ -26,8 +26,10 @@ const component: FC<{}> = () => {
         <div className="kg-attribute kg-editable">
           <div>名乗り</div>
           <div>
-            {`解放度+30。戦闘開始時に魔法少女としての名を名乗る誓約により解放度を高める。
-  「灰花のユキスミレ。真っ白な灰に燃やし尽くしてあげる」`}
+            <Ruby
+              text={`解放度+30。戦闘開始時に魔法少女としての名を名乗る誓約により解放度を高める。
+  「|庭園解放(オープン)。灰花のユキスミレ。真っ白な灰に燃やし尽くしてあげる」`}
+            />
           </div>
         </div>
         <div className="kg-attribute kg-editable">
