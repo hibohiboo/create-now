@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent, Dispatch } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
-import { useGadgetModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
+import { useGadgetModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
 import type { Hope } from '../../classes/hope';
 import { Gadget } from '../../classes/gadget';
 
@@ -53,6 +53,7 @@ export const useCharacterViewModel = ()=>{
   const {imageEditModal, openImageEditModal} = useImageEditModal()
   const {negaiModal, openNegaiModal} = useNegaiModal()
   const {gadgetModal, openGadgetModal} = useGadgetModal();
+  const {iframeModal, openIframeModal} = useIframeModal()
   const [imageUrl, handleOnDrop, setPrevUrl] = useCharacterImage(sampleCharacter.imageUrl)
   character['imageUrl'] = imageUrl;
 
@@ -75,12 +76,14 @@ export const useCharacterViewModel = ()=>{
     imageEditModal,
     negaiModal,
     gadgetModal,
+    iframeModal,
     handleOnDrop,
     characterDispatch,
     openInputModal,
     openImageEditModal,
     openNegaiModal,
-    openGadgetModal
+    openGadgetModal,
+    openIframeModal
   }
 }
 

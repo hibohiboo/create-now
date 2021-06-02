@@ -1,6 +1,9 @@
 import { Dispatch, FC } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
-import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
+import {
+  OpenIframeModal,
+  OpenInputModal,
+} from '~/domain/kakuriyogarden/store/character/modal'
 import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyText'
 
 interface Attributes {
@@ -11,7 +14,8 @@ const component: FC<{
   items: Attributes[]
   setAttributes: Dispatch<Attributes[]>
   openInputModal: OpenInputModal
-}> = ({ items, setAttributes, openInputModal }) => {
+  openIframeModal: OpenIframeModal
+}> = ({ items, setAttributes, openInputModal, openIframeModal }) => {
   return (
     <div className="kg-section">
       <div className="kg-section-title" style={{ width: '200px' }}>
@@ -27,8 +31,18 @@ const component: FC<{
               backgroundColor: '#000',
               paddingLeft: '5px',
               paddingRight: '5px',
+              marginBottom: '10px',
             }}
           />
+          <i
+            className="far fa-question-circle"
+            style={{ cursor: 'pointer' }}
+            onClick={() =>
+              openIframeModal(
+                'https://scrapbox.io/magicalGirlTRPG/%E3%82%AD%E3%83%A3%E3%83%A9%E3%82%AF%E3%82%BF%E3%83%BC%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9_%E3%81%9D%E3%81%AE3',
+              )
+            }
+          ></i>
         </div>
       </div>
 

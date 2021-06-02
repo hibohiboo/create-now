@@ -55,6 +55,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         items={vm.character.attributes}
         setAttributes={vm.characterDispatch.attributes}
         openInputModal={vm.openInputModal}
+        openIframeModal={vm.openIframeModal}
       />
       <Openness />
       <Equipments />

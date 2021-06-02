@@ -124,3 +124,30 @@ export const useGadgetModal = ()=>{
   }
 }
 export type OpenGadgetModal = ReturnType<typeof useGadgetModal>['openGadgetModal']
+
+
+
+const iframeModalBase = {
+  url: '',
+  show: false,
+  closeHandler: ()=>{}
+}
+export type IframeModal = typeof iframeModalBase;
+
+
+export const useIframeModal = ()=>{
+  const [iframeModal, setIframeModal] = useState(iframeModalBase)
+  return {
+    iframeModal,
+    openIframeModal: (url: string, )=>{
+      setIframeModal(
+        {
+          url,
+          show: true,
+          closeHandler: () =>
+            setIframeModal(iframeModalBase),
+      })
+    },
+  }
+}
+export type OpenIframeModal = ReturnType<typeof useIframeModal>['openIframeModal']
