@@ -18,7 +18,6 @@ const InputField: React.FC<{
   changeHandler = () => {},
   readonly = false,
 }) => {
-  console.log(`test ${labelText}`)
   return (
     <FormControl fullWidth style={{ marginTop: '10px' }}>
       <InputLabel>{labelText}</InputLabel>

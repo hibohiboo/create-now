@@ -78,4 +78,12 @@
       border: 2px solid #fff;
     }
   }
+  &gadget-modal {
+    overflow: auto;
+    max-height: 80vh;
+    img {
+      width: $iconWidth;
+      height: $iconHeight;
+    }
+  }
 }

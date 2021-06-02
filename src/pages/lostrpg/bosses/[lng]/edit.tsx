@@ -50,8 +50,7 @@ const Page: NextPage = () => {
             </h2>
             <Box my={2}>
               <InputField
-                model={vm.boss}
-                prop="creatorName"
+                value={vm.boss.creatorName}
                 labelText={t('lostrpg_boss_common_creatorName')}
                 changeHandler={vm.creatorNameHandler}
               />
@@ -73,23 +72,20 @@ const Page: NextPage = () => {
               </FormControl>
               <Box my={2} display="flex" flex="wrap">
                 <InputField
-                  model={vm.boss}
+                  value={vm.boss.level}
                   type="number"
-                  prop="level"
                   labelText={t('lostrpg_common_level')}
                   changeHandler={vm.levelHandler}
                 />
                 <InputField
-                  model={vm.boss}
+                  value={vm.boss.stamina}
                   type="number"
-                  prop="stamina"
                   labelText={t('lostrpg_character_common_stamina')}
                   changeHandler={vm.staminaHandler}
                 />
                 <InputField
-                  model={vm.boss}
+                  value={vm.boss.willPower}
                   type="number"
-                  prop="willPower"
                   labelText={t('lostrpg_character_common_willPower')}
                   changeHandler={vm.willPowerHandler}
                 />

@@ -1,9 +1,20 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { getHopeImageUrl } from '~/domain/kakuriyogarden/classes/hope'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
 const component: FC<{}> = () => {
+  // SSRのときにImageAreaの見た目が違うと怒られるので対応
+  const [showChild, setShowChild] = useState(false)
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setShowChild(true)
+  }, [])
+
+  if (!showChild) {
+    // You can show some kind of placeholder UI here
+    return <></>
+  }
   const gardenItems = [
     {
       description: '風景',

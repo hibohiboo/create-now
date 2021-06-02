@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, Dispatch, useState } from "react"
+import { Gadget } from "../../classes/gadget";
 import { Hope } from "../../classes/hope";
 
 type InputHandler = (a:string)=>void
@@ -78,7 +79,7 @@ export const useNegaiModal = ()=>{
   const [negaiModal, setNegaiModal] = useState(negaiModalBase)
   return {
     negaiModal,
-    openNegaiModal: (hope: '献身' | '利己' | '復讐', handler: any)=>{
+    openNegaiModal: (hope: Hope, handler: any)=>{
       setNegaiModal(
         {
           hope,
@@ -94,3 +95,32 @@ export const useNegaiModal = ()=>{
   }
 }
 export type OpenNegaiModal = ReturnType<typeof useNegaiModal>['openNegaiModal']
+
+
+const gadgetModalBase = {
+  show: false,
+  gadget: '武器',
+  gadgetHandler: (gadget: Gadget)=>{},
+  closeHandler: ()=>{}
+}
+export type GadgetModal = typeof gadgetModalBase;
+export const useGadgetModal = ()=>{
+  const [gadgetModal, setGadgetModal] = useState(gadgetModalBase)
+  return {
+    gadgetModal,
+    openGadgetModal: (gadget: Gadget, handler: Dispatch<Gadget>)=>{
+      setGadgetModal(
+        {
+          gadget,
+          show: true,
+          gadgetHandler: (event: Gadget) => {
+            handler(event)
+            setGadgetModal(gadgetModalBase)
+          },
+          closeHandler: () =>
+          setGadgetModal(gadgetModalBase)
+      })
+    },
+  }
+}
+export type OpenGadgetModal = ReturnType<typeof useGadgetModal>['openGadgetModal']

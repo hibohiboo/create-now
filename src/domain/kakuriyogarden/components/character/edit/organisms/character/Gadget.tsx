@@ -1,12 +1,28 @@
 import { Dispatch, FC } from 'react'
-import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
-import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
+import {
+  Gadget,
+  getGadgetImageUrl,
+} from '~/domain/kakuriyogarden/classes/gadget'
+import {
+  OpenGadgetModal,
+  OpenInputModal,
+} from '~/domain/kakuriyogarden/store/character/modal'
 
 const cloth: FC<{
   gadgetDetail: string
+  gadget: Gadget
+  setGadget: Dispatch<Gadget>
   setGadgetDetail: Dispatch<string>
   openInputModal: OpenInputModal
-}> = ({ gadgetDetail, openInputModal, setGadgetDetail }) => {
+  openGadgetModal: OpenGadgetModal
+}> = ({
+  gadgetDetail,
+  gadget,
+  setGadget,
+  openInputModal,
+  setGadgetDetail,
+  openGadgetModal,
+}) => {
   return (
     <div className="kg-section">
       <div className="kg-section-title">
@@ -21,17 +37,17 @@ const cloth: FC<{
       </div>
       <div
         className="kg-section-title"
-        onClick={() => {}}
+        onClick={() => openGadgetModal(gadget, setGadget)}
         style={{ cursor: 'pointer' }}
       >
         <span className="kg-editable" style={{ paddingLeft: '5px' }}>
           <ruby>
-            {'武器'}
+            {gadget}
             <rt>モチーフ</rt>
           </ruby>
         </span>
         <div>
-          <img src={getGadgetImageUrl('武器')} />
+          <img src={getGadgetImageUrl(gadget)} />
         </div>
       </div>
       <div

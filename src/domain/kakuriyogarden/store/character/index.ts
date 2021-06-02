@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent, Dispatch } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
-import { useImageEditModal, useInputModal, useNegaiModal } from './modal';
+import { useGadgetModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
 import type { Hope } from '../../classes/hope';
+import { Gadget } from '../../classes/gadget';
 
 const sampleCharacter = {
   symbolName: '灰花',
@@ -13,7 +14,8 @@ const sampleCharacter = {
   hope: '復讐' as Hope,
   hopeDetail: `傷一つない美を。後ろ指を指したやつらが羨む成功を。`,
   gadgetDetail: `手榴弾を模したキーホルダー。ピンを抜く動作をトリガーに、爆炎に包まれ変身する。
-変身後の衣装は黒紫色のドレス。`
+変身後の衣装は黒紫色のドレス。`,
+  gadget: '武器' as Gadget
 }
 type Character = typeof sampleCharacter;
 type Exclude<T, U> = T extends U ? never : T;
@@ -37,6 +39,7 @@ export const useCharacterViewModel = ()=>{
   const {inputModal, openInputModal} = useInputModal()
   const {imageEditModal, openImageEditModal} = useImageEditModal()
   const {negaiModal, openNegaiModal} = useNegaiModal()
+  const {gadgetModal, openGadgetModal} = useGadgetModal();
   const [imageUrl, handleOnDrop, setPrevUrl] = useCharacterImage()
   character['imageUrl'] = imageUrl;
 
@@ -45,7 +48,8 @@ export const useCharacterViewModel = ()=>{
     if(!loadedData) return
     for(const key of Object.keys(character)){
       if(key === 'imageUrl') continue;
-      characterDispatch[key](loadedData[key])
+      const data = loadedData[key]
+      if(data) characterDispatch[key](data)
     }
     setPrevUrl(loadedData.imageUrl)
   },[])
@@ -57,11 +61,13 @@ export const useCharacterViewModel = ()=>{
     inputModal,
     imageEditModal,
     negaiModal,
+    gadgetModal,
     handleOnDrop,
     characterDispatch,
     openInputModal,
     openImageEditModal,
-    openNegaiModal
+    openNegaiModal,
+    openGadgetModal
   }
 }
 
