@@ -4,6 +4,7 @@ import { useCharacterImage } from './image';
 import { useGadgetModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
 import type { Hope } from '../../classes/hope';
 import { Gadget } from '../../classes/gadget';
+import { moveMagic } from '../../classes/gemory/magic';
 
 const sampleCharacter = {
   symbolName: '灰花',
@@ -34,11 +35,24 @@ const sampleCharacter = {
     detail: '自身を対象とした、一節までの魔法を無効化する。'
   }],
   deviations: [{point:'髪の長さ', before: '長髪', after: '短髪'},
-  {point:'髪の色', before: '黒髪', after: '黒髪'},
-  {point:'右頬', before: '火傷痕', after: '綺麗な肌'},
-  {point:'怒りを', before: '溜め込む', after: 'ブチキレる'},
-  {point:'自信', before: '卑下', after: '高慢'},
-]
+    {point:'髪の色', before: '黒髪', after: '黒髪'},
+    {point:'右頬', before: '火傷痕', after: '綺麗な肌'},
+    {point:'怒りを', before: '溜め込む', after: 'ブチキレる'},
+    {point:'自信', before: '卑下', after: '高慢'},
+  ],
+  garden: [
+    {
+      description: '風景',
+      strength: 2,
+      type: '戦い',
+      cards: [moveMagic, null, null],
+    },
+  {
+    description: '風景',
+    strength: 3,
+    image: '死',
+    cards: [null, null],
+  }]
 }
 type Character = typeof sampleCharacter;
 type Exclude<T, U> = T extends U ? never : T;

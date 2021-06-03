@@ -1,40 +1,22 @@
 import { FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
-import { getHopeImageUrl } from '~/domain/kakuriyogarden/classes/hope'
+import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
+import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
-const component: FC<{}> = () => {
+const component: FC<{ hope: Hope; gardenItems: (Gemory | null)[] }> = ({
+  hope,
+  gardenItems,
+}) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
-  // Wait until after client-side hydration to show
   useEffect(() => {
     setShowChild(true)
   }, [])
-
   if (!showChild) {
-    // You can show some kind of placeholder UI here
     return <></>
   }
-  const gardenItems = [
-    {
-      description: '風景',
-      strength: 3,
-      image: { url: '' },
-      cols: [{}, {}, {}, {}, {}],
-    },
-    {
-      description: '風景',
-      strength: 2,
-      image: { url: getHopeImageUrl('献身') },
-      cols: [{}, {}, {}],
-    },
-    {
-      description: '風景',
-      strength: 1,
-      image: { url: getHopeImageUrl('復讐') },
-      cols: [{}, {}],
-    },
-  ]
+
   return (
     <>
       <div className="kg-section">
@@ -74,19 +56,19 @@ const component: FC<{}> = () => {
             {gardenItems.map((item, i) => (
               <div className="kg-garden-layer" key={i}>
                 <div
-                  className={`kg-garden-layer-first ${
-                    i === gardenItems.length - 1 ? '' : 'kg-editable'
-                  }`}
+                  className={`kg-garden-layer-first ${'kg-editable'}`}
                   style={{
-                    backgroundImage: `url('${item.image.url}' )`,
+                    backgroundImage: item ? `url('${item.type}' )` : '',
                     backgroundSize: 'contain',
                   }}
                 >
                   {i + 1}層
                 </div>
-                {item.cols.map((c, j) => (
+                {item.cards.map((c, j) => (
                   <div
-                    className="kg-garden-layer-col kg-editable"
+                    className={`kg-garden-layer-col ${
+                      j === 0 ? '' : 'kg-editable'
+                    }`}
                     key={`${i}${j}`}
                     style={{ backgroundColor: 'darkmagenta' }}
                   >
@@ -95,11 +77,38 @@ const component: FC<{}> = () => {
                 ))}
               </div>
             ))}
+            <div className="kg-garden-layer">
+              <div
+                className={`kg-garden-layer-first `}
+                style={{
+                  backgroundImage: `url('${getHopeImageUrl(hope)}' )`,
+                  backgroundSize: 'contain',
+                }}
+              >
+                {gardenItems.length + 1}層
+              </div>
+              <div
+                className="kg-garden-layer-col"
+                style={{ backgroundColor: 'darkmagenta' }}
+              >
+                <img src="/images/kakuriyogarden/icons/game-icons/crystal-growth.svg" />
+              </div>
+              <div
+                className="kg-garden-layer-col"
+                style={{ backgroundColor: 'darkmagenta' }}
+              >
+                <img src={getHopeImageUrl(hope)} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="flex-centering">
-        <ImageArea gardenItems={gardenItems} color={`darkmagenta`} />
+        <ImageArea
+          gardenItems={gardenItems}
+          hope={hope}
+          color={`darkmagenta`}
+        />
       </div>
     </>
   )

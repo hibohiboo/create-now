@@ -4,15 +4,18 @@ import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
 import URLImage from './atoms/URLImage'
 import Hidden from '@material-ui/core/Hidden'
 import Cell from './atoms/GardenCell'
+import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
+import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 
-const ImageArea: React.FC<{ gardenItems: any[]; color: string }> = ({
-  gardenItems,
-  color,
-}) => {
+const ImageArea: React.FC<{
+  gardenItems: Gemory[]
+  hope: Hope
+  color: string
+}> = ({ gardenItems, color, hope }) => {
   const size = 50
-  const cellCount = Math.max(...gardenItems.map((i) => i.cols.length))
+  const cellCount = Math.max(...gardenItems.map((i) => i.cards.length))
   const canvasWidth = 2 + cellCount * size
-  const canvasHight = 2 + size * gardenItems.length
+  const canvasHight = 2 + size * (gardenItems.length + 1)
   const leftPadding = 5
   const inputWidth = canvasWidth - leftPadding
   const family = {
@@ -67,7 +70,7 @@ const ImageArea: React.FC<{ gardenItems: any[]; color: string }> = ({
               fill={'white'}
             />
             {gardenItems.map((x, i) =>
-              x.cols.map((y, j) => (
+              x.cards.map((y, j) => (
                 <Cell
                   x={1 + j * size}
                   y={1 + i * size}
@@ -77,6 +80,18 @@ const ImageArea: React.FC<{ gardenItems: any[]; color: string }> = ({
                 />
               )),
             )}
+            <Cell
+              x={1 + 0 * size}
+              y={1 + gardenItems.length * size}
+              color={color}
+              image={`/images/kakuriyogarden/icons/game-icons/crystal-growth.svg`}
+            />
+            <Cell
+              x={1 + 1 * size}
+              y={1 + gardenItems.length * size}
+              color={color}
+              image={getHopeImageUrl(hope)}
+            />
           </Layer>
         </Stage>
       </Hidden>
