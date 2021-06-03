@@ -96,7 +96,7 @@ const component: FC<{
           onClick={() =>
             setDeviations([
               ...items,
-              { point: 'どこかが', before: 'もともと', after: 'こうなる' },
+              { point: '部位・性格', before: 'びふぉー', after: 'あふたー' },
             ])
           }
         >

@@ -127,8 +127,8 @@
         @extend .flex-centering;
 
         img {
-          width: $iconWidth * 2/3;
-          height: $iconHeight * 2/3;
+          width: $iconWidth * 2/5;
+          height: $iconHeight * 2/5;
         }
       }
     }

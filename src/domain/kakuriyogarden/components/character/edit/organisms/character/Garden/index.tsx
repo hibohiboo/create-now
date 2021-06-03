@@ -25,7 +25,7 @@ const component: FC<{}> = () => {
     {
       description: '風景',
       strength: 2,
-      image: { url: '' },
+      image: { url: getHopeImageUrl('献身') },
       cols: [{}, {}, {}],
     },
     {
@@ -47,11 +47,36 @@ const component: FC<{}> = () => {
           <img src="/images/kakuriyogarden/icons/game-icons/field.svg" />
         </div>
         <div>
+          <div>
+            <button
+              style={{ padding: '5px', marginTop: '5px', marginBottom: '10px' }}
+              onClick={() => {}}
+            >
+              想晶追加
+            </button>
+            <button
+              style={{
+                padding: '5px',
+                marginTop: '5px',
+                marginBottom: '10px',
+                marginLeft: '50px',
+              }}
+              onClick={() => {
+                if (!confirm('第一層を削除します。よろしいですか？')) {
+                  return
+                }
+              }}
+            >
+              想晶削除
+            </button>
+          </div>
           <div className="kg-garden">
             {gardenItems.map((item, i) => (
               <div className="kg-garden-layer" key={i}>
                 <div
-                  className="kg-garden-layer-first"
+                  className={`kg-garden-layer-first ${
+                    i === gardenItems.length - 1 ? '' : 'kg-editable'
+                  }`}
                   style={{
                     backgroundImage: `url('${item.image.url}' )`,
                     backgroundSize: 'contain',
@@ -61,7 +86,7 @@ const component: FC<{}> = () => {
                 </div>
                 {item.cols.map((c, j) => (
                   <div
-                    className="kg-garden-layer-col"
+                    className="kg-garden-layer-col kg-editable"
                     key={`${i}${j}`}
                     style={{ backgroundColor: 'darkmagenta' }}
                   >
