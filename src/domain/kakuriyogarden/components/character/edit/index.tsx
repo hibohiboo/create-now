@@ -10,6 +10,7 @@ import ImageEditModal from './molecules/modal/ImageEditModal'
 import NegaiModal from './organisms/modal/NegaiModal'
 import GadgetModal from './organisms/modal/GadgetModal'
 import IframeModal from './molecules/modal/IframeModal'
+import GemoryModal from './organisms/modal/GemoryModal'
 
 const Edit: FC<{}> = ({ children }) => {
   const vm = useCharacterViewModel()
@@ -25,6 +26,7 @@ const Edit: FC<{}> = ({ children }) => {
       <NegaiModal {...vm.negaiModal} />
       <GadgetModal {...vm.gadgetModal} />
       <IframeModal {...vm.iframeModal} />
+      <GemoryModal {...vm.gemoryModal} />
     </Wrapper>
   )
 }

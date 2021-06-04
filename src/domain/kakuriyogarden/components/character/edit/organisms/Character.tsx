@@ -68,7 +68,11 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         setDeviations={vm.characterDispatch.deviations}
         openInputModal={vm.openInputModal}
       />
-      <Garden hope={vm.character.hope} gardenItems={vm.character.garden} />
+      <Garden
+        hope={vm.character.hope}
+        gardenItems={vm.character.garden}
+        openGemoryModal={vm.openGemoryModal}
+      />
     </SubPage>
   )
 }

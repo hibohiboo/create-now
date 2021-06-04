@@ -1,13 +1,17 @@
 import { FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
-import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
+import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
-import { OpenInputModal } from '~/domain/kakuriyogarden/store/character/modal'
+import {
+  OpenGemoryModal,
+  OpenInputModal,
+} from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
-const component: FC<{ hope: Hope; gardenItems: (Gemory | null)[] }> = ({
-  hope,
-  gardenItems,
-}) => {
+const component: FC<{
+  hope: Hope
+  gardenItems: Gemory[]
+  openGemoryModal: OpenGemoryModal
+}> = ({ hope, gardenItems, openGemoryModal }) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
   useEffect(() => {
@@ -58,23 +62,42 @@ const component: FC<{ hope: Hope; gardenItems: (Gemory | null)[] }> = ({
                 <div
                   className={`kg-garden-layer-first ${'kg-editable'}`}
                   style={{
-                    backgroundImage: item ? `url('${item.type}' )` : '',
+                    backgroundImage: item
+                      ? `url('${getGemoryImage(item.type)}' )`
+                      : '',
                     backgroundSize: 'contain',
                   }}
+                  onClick={() => openGemoryModal(item)}
                 >
-                  {i + 1}層
-                </div>
-                {item.cards.map((c, j) => (
-                  <div
-                    className={`kg-garden-layer-col ${
-                      j === 0 ? '' : 'kg-editable'
-                    }`}
-                    key={`${i}${j}`}
-                    style={{ backgroundColor: 'darkmagenta' }}
+                  <span
+                    style={{
+                      backgroundColor: '#eee',
+                      color: 'black',
+                      fontSize: '12px',
+                    }}
                   >
-                    <img src="/images/kakuriyogarden/icons/game-icons/crystal-growth.svg" />
-                  </div>
-                ))}
+                    {i + 1}層
+                  </span>
+                </div>
+                {item.cards.map((c, j) =>
+                  j === 0 ? (
+                    <div
+                      className={`kg-garden-layer-col `}
+                      key={`${i}${j}`}
+                      style={{ backgroundColor: 'darkmagenta' }}
+                    >
+                      <img src="/images/kakuriyogarden/icons/game-icons/crystal-growth.svg" />
+                    </div>
+                  ) : (
+                    <div
+                      className={`kg-garden-layer-col ${'kg-editable'}`}
+                      key={`${i}${j}`}
+                      style={{ backgroundColor: 'darkmagenta' }}
+                    >
+                      {c ? <img src={c.image.url} /> : <></>}
+                    </div>
+                  ),
+                )}
               </div>
             ))}
             <div className="kg-garden-layer">
@@ -85,7 +108,15 @@ const component: FC<{ hope: Hope; gardenItems: (Gemory | null)[] }> = ({
                   backgroundSize: 'contain',
                 }}
               >
-                {gardenItems.length + 1}層
+                <span
+                  style={{
+                    backgroundColor: '#eee',
+                    color: 'black',
+                    fontSize: '12px',
+                  }}
+                >
+                  {gardenItems.length + 1}層
+                </span>
               </div>
               <div
                 className="kg-garden-layer-col"

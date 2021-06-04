@@ -1,5 +1,6 @@
 import { ChangeEvent, Dispatch, useState } from "react"
 import { Gadget } from "../../classes/gadget";
+import { Gemory, GemoryType } from "../../classes/gemory";
 import { Hope } from "../../classes/hope";
 
 type InputHandler = (a:string)=>void
@@ -151,3 +152,34 @@ export const useIframeModal = ()=>{
   }
 }
 export type OpenIframeModal = ReturnType<typeof useIframeModal>['openIframeModal']
+
+
+
+const gemoryModalBase = {
+  gemory: {
+    description: '風景',
+    episode: 'エピソード',
+    strength: 3,
+    type: '死' as GemoryType,
+    cards: [],
+  },
+  show: false,
+  closeHandler: ()=>{}
+}
+export type GemoryModal = typeof gemoryModalBase;
+export const useGemoryModal = ()=>{
+  const [gemoryModal, setGemoryModal] = useState(gemoryModalBase)
+  return {
+    gemoryModal: gemoryModal,
+    openGemoryModal: (gemory: Gemory)=>{
+      setGemoryModal(
+        {
+          gemory,
+          show: true,
+          closeHandler: () =>
+            setGemoryModal(gemoryModalBase),
+      })
+    },
+  }
+}
+export type OpenGemoryModal = ReturnType<typeof useGemoryModal>['openGemoryModal']

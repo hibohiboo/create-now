@@ -40,7 +40,7 @@ export const moveMagic: Magic = {
   id: '',
   image: {
     url:
-      '/images/kakuriyogarden/icons/game-icons/footprint.png',
+      '/images/kakuriyogarden/icons/game-icons/footprint.svg',
     source: 'Game-icons.net',
     sourceUrl:
       'https://game-icons.net/1x1/lorc/footprint.html',

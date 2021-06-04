@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent, Dispatch } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
-import { useGadgetModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
+import { useGadgetModal, useGemoryModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
 import type { Hope } from '../../classes/hope';
 import { Gadget } from '../../classes/gadget';
 import { moveMagic } from '../../classes/gemory/magic';
+import { GemoryType } from '../../classes/gemory';
 
 const sampleCharacter = {
   symbolName: '灰花',
@@ -35,22 +36,33 @@ const sampleCharacter = {
     detail: '自身を対象とした、一節までの魔法を無効化する。'
   }],
   deviations: [{point:'髪の長さ', before: '長髪', after: '短髪'},
-    {point:'髪の色', before: '黒髪', after: '黒髪'},
+    {point:'髪の色', before: '黒髪', after: '白メッシュ'},
     {point:'右頬', before: '火傷痕', after: '綺麗な肌'},
     {point:'怒りを', before: '溜め込む', after: 'ブチキレる'},
-    {point:'自信', before: '卑下', after: '高慢'},
+    {point:'自己評価', before: '卑下', after: '高慢'},
   ],
   garden: [
     {
-      description: '風景',
+      description: `綿のような雲の漂う空地。`,
       strength: 2,
-      type: '戦い',
-      cards: [moveMagic, null, null],
+      type: '戦い' as GemoryType,
+      episode: `クマのぬいぐるみを取られそうになった。
+普段はやられるばかりだった私。
+その時ばかりは夢中で抵抗して。
+結果、クマは腹からまっぷたつ。
+ただ、相手になされるままにはならなかった。
+|たった一度の小さな勝利。(あいつは泣いてわたしは笑った)
+      `,
+      cards: [null,moveMagic, null, null],
     },
   {
-    description: '風景',
+    description: `火の粉の舞う焼野原。`,
     strength: 3,
-    image: '死',
+    type: '死' as GemoryType,
+    episode: `幼いころに火事にあった。
+歯車が狂い始めたきっかけ。両親は助からず
+私は消えない傷を負った。
+`,
     cards: [null, null],
   }]
 }
@@ -78,6 +90,7 @@ export const useCharacterViewModel = ()=>{
   const {negaiModal, openNegaiModal} = useNegaiModal()
   const {gadgetModal, openGadgetModal} = useGadgetModal();
   const {iframeModal, openIframeModal} = useIframeModal()
+  const {gemoryModal, openGemoryModal}=useGemoryModal()
   const [imageUrl, handleOnDrop, setPrevUrl] = useCharacterImage(sampleCharacter.imageUrl)
   character['imageUrl'] = imageUrl;
 
@@ -101,13 +114,15 @@ export const useCharacterViewModel = ()=>{
     negaiModal,
     gadgetModal,
     iframeModal,
+    gemoryModal,
     handleOnDrop,
     characterDispatch,
     openInputModal,
     openImageEditModal,
     openNegaiModal,
     openGadgetModal,
-    openIframeModal
+    openIframeModal,
+    openGemoryModal
   }
 }
 
