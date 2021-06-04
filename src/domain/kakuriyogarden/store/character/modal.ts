@@ -179,7 +179,7 @@ export const useGemoryModal = ()=>{
     openGemoryModal: (garden: Gemory[],gemory: Gemory, dispatch: Record<string, Dispatch<any>>,openInputModal: OpenInputModal, index:number)=>{
       setGemoryModal(
         {
-          gemory,
+          gemory:{...gemory},
           garden,
           show: true,
           dispatch,

@@ -8,6 +8,10 @@ const modal: FC<GemoryModal> = (ctx) => {
   const { gemory } = ctx
   const [description, setDescrption] = useState(gemory.description)
   const [strength, setStrength] = useState(gemory.strength)
+  useEffect(() => {
+    setDescrption(gemory.description)
+    setStrength(gemory.strength)
+  }, [gemory])
 
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
@@ -55,7 +59,8 @@ const modal: FC<GemoryModal> = (ctx) => {
                       )
                       return
                     }
-                    const cards = ([...gemory.cards].length = num)
+                    const cards = [...gemory.cards]
+                    cards.length = num
 
                     ctx.dispatch.garden(
                       ctx.garden.map((x, i) =>
