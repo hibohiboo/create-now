@@ -11,6 +11,7 @@ import NegaiModal from './organisms/modal/NegaiModal'
 import GadgetModal from './organisms/modal/GadgetModal'
 import IframeModal from './molecules/modal/IframeModal'
 import GemoryModal from './organisms/modal/GemoryModal'
+import GemoryTypeModal from './organisms/modal/GemoryTypeModal'
 
 const Edit: FC<{}> = ({ children }) => {
   const vm = useCharacterViewModel()
@@ -22,6 +23,7 @@ const Edit: FC<{}> = ({ children }) => {
       </MainArea>
       <Footer>フッタ</Footer>
       <GemoryModal {...vm.gemoryModal} />
+      <GemoryTypeModal {...vm.gemoryTypeModal} />
       <NegaiModal {...vm.negaiModal} />
       <GadgetModal {...vm.gadgetModal} />
       <IframeModal {...vm.iframeModal} />

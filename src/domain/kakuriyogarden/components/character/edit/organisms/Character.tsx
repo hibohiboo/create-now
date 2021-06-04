@@ -73,6 +73,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         character={vm.character}
         openGemoryModal={vm.openGemoryModal}
         openInputModal={vm.openInputModal}
+        openGemoryTypeModal={vm.openGemoryTypeModal}
       />
     </SubPage>
   )

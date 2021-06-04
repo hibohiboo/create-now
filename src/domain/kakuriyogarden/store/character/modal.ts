@@ -169,14 +169,15 @@ const gemoryModalBase = {
   dispatch: {} as Record<string, Dispatch<any>>,
   show: false,
   closeHandler: ()=>{},
-  openInputModal: (()=>{}) as OpenInputModal
+  openInputModal: (()=>{}) as OpenInputModal,
+  openGemoryTypeModal:  (()=>{}) as OpenGemoryTypeModal
 }
 export type GemoryModal = typeof gemoryModalBase;
 export const useGemoryModal = ()=>{
   const [gemoryModal, setGemoryModal] = useState(gemoryModalBase)
   return {
     gemoryModal: gemoryModal,
-    openGemoryModal: (garden: Gemory[],gemory: Gemory, dispatch: Record<string, Dispatch<any>>,openInputModal: OpenInputModal, index:number)=>{
+    openGemoryModal: (garden: Gemory[],gemory: Gemory, dispatch: Record<string, Dispatch<any>>,openInputModal: OpenInputModal, openGemoryTypeModal:  OpenGemoryTypeModal,index:number)=>{
       setGemoryModal(
         {
           gemory:{...gemory},
@@ -186,9 +187,39 @@ export const useGemoryModal = ()=>{
           index,
           closeHandler: () =>
             setGemoryModal(gemoryModalBase),
-          openInputModal
+          openInputModal,
+          openGemoryTypeModal
       })
     },
   }
 }
 export type OpenGemoryModal = ReturnType<typeof useGemoryModal>['openGemoryModal']
+
+
+const gemoryTypeModalBase = {
+  show: false,
+  type: '死',
+  gemoryTypeHandler: (gadget: GemoryType)=>{},
+  closeHandler: ()=>{}
+}
+export type GemoryTypeModal = typeof gemoryTypeModalBase;
+export const useGemoryTypeModal = ()=>{
+  const [gemoryTypeModal, setGemoryTypeModal] = useState(gemoryTypeModalBase)
+  return {
+    gemoryTypeModal,
+    openGemoryTypeModal: (type: GemoryType, handler: Dispatch<GemoryType>)=>{
+      setGemoryTypeModal(
+        {
+          type,
+          show: true,
+          gemoryTypeHandler: (event: GemoryType) => {
+            handler(event)
+            setGemoryTypeModal(gemoryTypeModalBase)
+          },
+          closeHandler: () =>
+          setGemoryTypeModal(gemoryTypeModalBase)
+      })
+    },
+  }
+}
+export type OpenGemoryTypeModal = ReturnType<typeof useGemoryTypeModal>['openGemoryTypeModal']

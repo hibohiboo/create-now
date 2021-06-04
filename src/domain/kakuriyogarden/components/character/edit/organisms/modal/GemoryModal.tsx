@@ -9,10 +9,12 @@ const modal: FC<GemoryModal> = (ctx) => {
   const [description, setDescrption] = useState(gemory.description)
   const [strength, setStrength] = useState(gemory.strength)
   const [episode, setEpisode] = useState(gemory.episode)
+  const [gemoryType, setGemoryType] = useState(gemory.type)
   useEffect(() => {
     setDescrption(gemory.description)
     setStrength(gemory.strength)
     setEpisode(gemory.episode)
+    setGemoryType(gemory.type)
   }, [gemory])
 
   return (
@@ -21,10 +23,22 @@ const modal: FC<GemoryModal> = (ctx) => {
         <h3>想晶</h3>
         <p>心に強く焼き付いている記憶の結晶。魔法の源。</p>
         <div style={{ display: 'flex' }}>
-          <div>
-            <h4>種別:{gemory.type}</h4>
+          <div
+            className="kg-editable"
+            onClick={() => {
+              ctx.openGemoryTypeModal(gemoryType, (text) => {
+                ctx.dispatch.garden(
+                  ctx.garden.map((x, i) =>
+                    i === ctx.index ? { ...x, type: text } : x,
+                  ),
+                )
+                setGemoryType(text)
+              })
+            }}
+          >
+            <h4>種別:{gemoryType}</h4>
             <img
-              src={getGemoryImage(gemory.type)}
+              src={getGemoryImage(gemoryType)}
               style={{ width: '50px', height: '50px' }}
             />
           </div>

@@ -5,6 +5,7 @@ import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 import { Character } from '~/domain/kakuriyogarden/store/character'
 import {
   OpenGemoryModal,
+  OpenGemoryTypeModal,
   OpenInputModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
@@ -13,7 +14,14 @@ const component: FC<{
   dispatch: Record<string, Dispatch<any>>
   openGemoryModal: OpenGemoryModal
   openInputModal: OpenInputModal
-}> = ({ openGemoryModal, character, dispatch, openInputModal }) => {
+  openGemoryTypeModal: OpenGemoryTypeModal
+}> = ({
+  openGemoryModal,
+  character,
+  dispatch,
+  openInputModal,
+  openGemoryTypeModal,
+}) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
   useEffect(() => {
@@ -70,18 +78,27 @@ const component: FC<{
                     backgroundSize: 'contain',
                   }}
                   onClick={() =>
-                    openGemoryModal(garden, item, dispatch, openInputModal, i)
+                    openGemoryModal(
+                      garden,
+                      item,
+                      dispatch,
+                      openInputModal,
+                      openGemoryTypeModal,
+                      i,
+                    )
                   }
                 >
                   <span
                     style={{
                       backgroundColor: '#eee',
+
                       color: 'black',
                       fontSize: '12px',
                     }}
                   >
                     {i + 1}層
                   </span>
+                  <br />
                 </div>
                 {item.cards.map((c, j) =>
                   j === 0 ? (
