@@ -21,12 +21,12 @@ const Edit: FC<{}> = ({ children }) => {
         <Character vm={vm} />
       </MainArea>
       <Footer>フッタ</Footer>
-      <InputModal {...vm.inputModal} />
-      <ImageEditModal {...vm.imageEditModal} />
+      <GemoryModal {...vm.gemoryModal} />
       <NegaiModal {...vm.negaiModal} />
       <GadgetModal {...vm.gadgetModal} />
       <IframeModal {...vm.iframeModal} />
-      <GemoryModal {...vm.gemoryModal} />
+      <InputModal {...vm.inputModal} />
+      <ImageEditModal {...vm.imageEditModal} />
     </Wrapper>
   )
 }

@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, useState } from "react"
+import { Character } from ".";
 import { Gadget } from "../../classes/gadget";
 import { Gemory, GemoryType } from "../../classes/gemory";
 import { Hope } from "../../classes/hope";
@@ -163,21 +164,29 @@ const gemoryModalBase = {
     type: '死' as GemoryType,
     cards: [],
   },
+  garden:[],
+  index:0,
+  dispatch: {} as Record<string, Dispatch<any>>,
   show: false,
-  closeHandler: ()=>{}
+  closeHandler: ()=>{},
+  openInputModal: (()=>{}) as OpenInputModal
 }
 export type GemoryModal = typeof gemoryModalBase;
 export const useGemoryModal = ()=>{
   const [gemoryModal, setGemoryModal] = useState(gemoryModalBase)
   return {
     gemoryModal: gemoryModal,
-    openGemoryModal: (gemory: Gemory)=>{
+    openGemoryModal: (garden: Gemory[],gemory: Gemory, dispatch: Record<string, Dispatch<any>>,openInputModal: OpenInputModal, index:number)=>{
       setGemoryModal(
         {
           gemory,
+          garden,
           show: true,
+          dispatch,
+          index,
           closeHandler: () =>
             setGemoryModal(gemoryModalBase),
+          openInputModal
       })
     },
   }

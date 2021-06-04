@@ -66,7 +66,7 @@ const sampleCharacter = {
     cards: [null, null],
   }]
 }
-type Character = typeof sampleCharacter;
+export type Character = typeof sampleCharacter;
 type Exclude<T, U> = T extends U ? never : T;
 
 // state -> setState

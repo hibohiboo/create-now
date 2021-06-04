@@ -1,17 +1,19 @@
-import { FC, useEffect, useState } from 'react'
+import { Dispatch, FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
+import { Character } from '~/domain/kakuriyogarden/store/character'
 import {
   OpenGemoryModal,
   OpenInputModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
 const component: FC<{
-  hope: Hope
-  gardenItems: Gemory[]
+  character: Character
+  dispatch: Record<string, Dispatch<any>>
   openGemoryModal: OpenGemoryModal
-}> = ({ hope, gardenItems, openGemoryModal }) => {
+  openInputModal: OpenInputModal
+}> = ({ openGemoryModal, character, dispatch, openInputModal }) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
   useEffect(() => {
@@ -20,7 +22,7 @@ const component: FC<{
   if (!showChild) {
     return <></>
   }
-
+  const { hope, garden } = character
   return (
     <>
       <div className="kg-section">
@@ -57,7 +59,7 @@ const component: FC<{
             </button>
           </div>
           <div className="kg-garden">
-            {gardenItems.map((item, i) => (
+            {garden.map((item, i) => (
               <div className="kg-garden-layer" key={i}>
                 <div
                   className={`kg-garden-layer-first ${'kg-editable'}`}
@@ -67,7 +69,9 @@ const component: FC<{
                       : '',
                     backgroundSize: 'contain',
                   }}
-                  onClick={() => openGemoryModal(item)}
+                  onClick={() =>
+                    openGemoryModal(garden, item, dispatch, openInputModal, i)
+                  }
                 >
                   <span
                     style={{
@@ -115,7 +119,7 @@ const component: FC<{
                     fontSize: '12px',
                   }}
                 >
-                  {gardenItems.length + 1}層
+                  {garden.length + 1}層
                 </span>
               </div>
               <div
@@ -135,11 +139,7 @@ const component: FC<{
         </div>
       </div>
       <div className="flex-centering">
-        <ImageArea
-          gardenItems={gardenItems}
-          hope={hope}
-          color={`darkmagenta`}
-        />
+        <ImageArea gardenItems={garden} hope={hope} color={`darkmagenta`} />
       </div>
     </>
   )

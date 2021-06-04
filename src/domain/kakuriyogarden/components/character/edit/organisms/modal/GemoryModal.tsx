@@ -6,6 +6,8 @@ import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyTe
 
 const modal: FC<GemoryModal> = (ctx) => {
   const { gemory } = ctx
+  const [description, setDescrption] = useState(gemory.description)
+
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
       <div className="kg-gemory-modal">
@@ -25,8 +27,25 @@ const modal: FC<GemoryModal> = (ctx) => {
           </div>
         </div>
         <h4>風景</h4>
-        <div className="kg-detail-area">
-          <Ruby text={gemory.description} />
+        <div
+          className="kg-detail-area kg-editable"
+          onClick={() =>
+            ctx.openInputModal(
+              '風景',
+              gemory.description,
+              (text) => {
+                setDescrption(text)
+                ctx.dispatch.garden(
+                  ctx.garden.map((x, i) =>
+                    i === ctx.index ? { ...x, description: text } : x,
+                  ),
+                )
+              },
+              true,
+            )
+          }
+        >
+          <Ruby text={description} />
         </div>
         <h4>エピソード</h4>
         <div className="kg-detail-area">
