@@ -8,9 +8,11 @@ const modal: FC<GemoryModal> = (ctx) => {
   const { gemory } = ctx
   const [description, setDescrption] = useState(gemory.description)
   const [strength, setStrength] = useState(gemory.strength)
+  const [episode, setEpisode] = useState(gemory.episode)
   useEffect(() => {
     setDescrption(gemory.description)
     setStrength(gemory.strength)
+    setEpisode(gemory.episode)
   }, [gemory])
 
   return (
@@ -98,8 +100,25 @@ const modal: FC<GemoryModal> = (ctx) => {
           <Ruby text={description} />
         </div>
         <h4>エピソード</h4>
-        <div className="kg-detail-area">
-          <Ruby text={gemory.episode} />
+        <div
+          className="kg-detail-area kg-editable"
+          onClick={() =>
+            ctx.openInputModal(
+              'エピソード',
+              episode,
+              (text) => {
+                setEpisode(text)
+                ctx.dispatch.garden(
+                  ctx.garden.map((x, i) =>
+                    i === ctx.index ? { ...x, episode: text } : x,
+                  ),
+                )
+              },
+              'textarea',
+            )
+          }
+        >
+          <Ruby text={episode} />
         </div>
       </div>
     </Modal>
