@@ -44,7 +44,7 @@ const sampleCharacter = {
   garden: [
     {
       description: `綿のような雲の漂う空地。`,
-      strength: 2,
+      strength: 4,
       type: '戦い' as GemoryType,
       episode: `クマのぬいぐるみを取られそうになった。
 普段はやられるばかりだった私。
@@ -53,17 +53,17 @@ const sampleCharacter = {
 ただ、相手になされるままにはならなかった。
 |たった一度の小さな勝利。(あいつは泣いてわたしは笑った)
       `,
-      cards: [null,moveMagic, null, null],
+      cards: [null,moveMagic, moveMagic, null],
     },
   {
     description: `火の粉の舞う焼野原。`,
-    strength: 3,
+    strength: 2,
     type: '死' as GemoryType,
     episode: `幼いころに火事にあった。
 歯車が狂い始めたきっかけ。両親は助からず
 私は消えない傷を負った。
 `,
-    cards: [null, null],
+    cards: [null, moveMagic],
   }]
 }
 export type Character = typeof sampleCharacter;

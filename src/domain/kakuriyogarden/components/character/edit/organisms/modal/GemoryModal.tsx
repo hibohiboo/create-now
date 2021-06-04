@@ -32,10 +32,34 @@ const modal: FC<GemoryModal> = (ctx) => {
                   '強度',
                   String(strength),
                   (text) => {
-                    setStrength(Number(text))
+                    const num = Number(text)
+                    if (num < 1) {
+                      setStrength(1)
+                      return
+                    }
+                    setStrength(num)
+                    // 強度がカードの枚数より増えたら増やす。減っていたら減らす
+                    if (gemory.cards.length < num) {
+                      ctx.dispatch.garden(
+                        ctx.garden.map((x, i) =>
+                          i === ctx.index
+                            ? {
+                                ...x,
+                                strength: num,
+                                cards: gemory.cards.concat(
+                                  Array(num - gemory.cards.length).fill(null),
+                                ),
+                              }
+                            : x,
+                        ),
+                      )
+                      return
+                    }
+                    const cards = ([...gemory.cards].length = num)
+
                     ctx.dispatch.garden(
                       ctx.garden.map((x, i) =>
-                        i === ctx.index ? { ...x, strength: Number(text) } : x,
+                        i === ctx.index ? { ...x, strength: num, cards } : x,
                       ),
                     )
                   },
