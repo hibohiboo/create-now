@@ -46,7 +46,18 @@ const component: FC<{
           <div>
             <button
               style={{ padding: '5px', marginTop: '5px', marginBottom: '10px' }}
-              onClick={() => {}}
+              onClick={() => {
+                dispatch.garden([
+                  {
+                    description: `心象風景。`,
+                    strength: 1,
+                    type: '戦い',
+                    episode: `強く記憶に焼き付いた光景`,
+                    cards: [null],
+                  },
+                  ...garden,
+                ])
+              }}
             >
               想晶追加
             </button>
@@ -61,6 +72,8 @@ const component: FC<{
                 if (!confirm('第一層を削除します。よろしいですか？')) {
                   return
                 }
+                const [, ...rest] = garden
+                dispatch.garden(rest)
               }}
             >
               想晶削除
