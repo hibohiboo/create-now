@@ -52,16 +52,12 @@ const component: FC<{
             <div
               className="kg-editable"
               onClick={() =>
-                openInputModal(
-                  '属性',
-                  item.title,
-                  (text) =>
-                    setAttributes(
-                      items.map((x, j) =>
-                        j === i ? { ...item, title: text } : x,
-                      ),
+                openInputModal('属性', item.title, (text) =>
+                  setAttributes(
+                    items.map((x, j) =>
+                      j === i ? { ...item, title: text } : x,
                     ),
-                  false,
+                  ),
                 )
               }
             >
@@ -78,7 +74,7 @@ const component: FC<{
                         j === i ? { ...item, detail: text } : x,
                       ),
                     ),
-                  true,
+                  'textarea',
                 )
               }
             >

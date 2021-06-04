@@ -36,16 +36,12 @@ const component: FC<{
                 <td
                   className="kg-editable"
                   onClick={() =>
-                    openInputModal(
-                      '逸脱箇所',
-                      item.point,
-                      (text) =>
-                        setDeviations(
-                          items.map((x, j) =>
-                            j === i ? { ...item, point: text } : x,
-                          ),
+                    openInputModal('逸脱箇所', item.point, (text) =>
+                      setDeviations(
+                        items.map((x, j) =>
+                          j === i ? { ...item, point: text } : x,
                         ),
-                      false,
+                      ),
                     )
                   }
                 >
@@ -54,16 +50,12 @@ const component: FC<{
                 <td
                   className="kg-editable"
                   onClick={() =>
-                    openInputModal(
-                      '変身前',
-                      item.before,
-                      (text) =>
-                        setDeviations(
-                          items.map((x, j) =>
-                            j === i ? { ...item, before: text } : x,
-                          ),
+                    openInputModal('変身前', item.before, (text) =>
+                      setDeviations(
+                        items.map((x, j) =>
+                          j === i ? { ...item, before: text } : x,
                         ),
-                      false,
+                      ),
                     )
                   }
                 >
@@ -72,16 +64,12 @@ const component: FC<{
                 <td
                   className="kg-editable"
                   onClick={() =>
-                    openInputModal(
-                      '変身後',
-                      item.after,
-                      (text) =>
-                        setDeviations(
-                          items.map((x, j) =>
-                            j === i ? { ...item, after: text } : x,
-                          ),
+                    openInputModal('変身後', item.after, (text) =>
+                      setDeviations(
+                        items.map((x, j) =>
+                          j === i ? { ...item, after: text } : x,
                         ),
-                      false,
+                      ),
                     )
                   }
                 >

@@ -1,7 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 import { TextareaAutosize } from '@material-ui/core'
 import Modal from './Modal'
-import type { InputModal } from '~/domain/kakuriyogarden/store/character/modal'
+import type {
+  InputModal,
+  InputType,
+} from '~/domain/kakuriyogarden/store/character/modal'
 
 const modal: FC<InputModal> = (ctx) => {
   const [value, setValue] = useState('')
@@ -17,27 +20,33 @@ const modal: FC<InputModal> = (ctx) => {
     }
   }
 
+  const inputArea = (type: InputType) => {
+    if (type === 'textarea') {
+      return (
+        <TextareaAutosize
+          rowsMin={3}
+          value={value}
+          onChange={(e) => ctx.changeHandler(e.target.value)}
+          onInput={(e) => setValue(e.currentTarget.value)}
+        />
+      )
+    }
+    return (
+      <input
+        onChange={(event) => ctx.changeHandler(event.target.value)}
+        onInput={(e) => setValue(e.currentTarget.value)}
+        onKeyDown={onKeyDown}
+        type={type}
+        value={value}
+      />
+    )
+  }
+
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
       <div className="kg-input-modal">
         <div>{ctx.title}</div>
-        <div>
-          {ctx.isTextArea ? (
-            <TextareaAutosize
-              rowsMin={3}
-              value={value}
-              onChange={(e) => ctx.changeHandler(e.target.value)}
-              onInput={(e) => setValue(e.currentTarget.value)}
-            />
-          ) : (
-            <input
-              onChange={(event) => ctx.changeHandler(event.target.value)}
-              onInput={(e) => setValue(e.currentTarget.value)}
-              onKeyDown={onKeyDown}
-              value={value}
-            />
-          )}
-        </div>
+        <div>{inputArea(ctx.type)}</div>
         <div className="kg-button-wrapper">
           <button onClick={ctx.closeHandler}>確定</button>
         </div>

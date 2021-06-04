@@ -59,7 +59,7 @@ const cloth: FC<{
             '焦点具と魔法戦衣の説明',
             gadgetDetail,
             setGadgetDetail,
-            true,
+            'textarea',
           )
         }
       >

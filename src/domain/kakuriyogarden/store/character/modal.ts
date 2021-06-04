@@ -5,14 +5,14 @@ import { Gemory, GemoryType } from "../../classes/gemory";
 import { Hope } from "../../classes/hope";
 
 type InputHandler = (a:string)=>void
-
+export type InputType = 'text' | 'textarea' | 'number'
 const inputModalBase = {
   title: '',
   value: '',
   changeHandler: (value:string)=>{},
   show: false,
   closeHandler: ()=>{},
-  isTextArea: false
+  type: 'text' as InputType
 }
 export type InputModal = typeof inputModalBase;
 
@@ -22,7 +22,7 @@ export const useInputModal = ()=>{
   const [inputModal, setInputModal] = useState(inputModalBase)
   return {
     inputModal,
-    openInputModal: (title: string, value: string, handler: InputHandler, isTextArea = false)=>{
+    openInputModal: (title: string, value: string, handler: InputHandler, type:InputType = 'text')=>{
       setInputModal(
         {
           title, value,
@@ -32,7 +32,7 @@ export const useInputModal = ()=>{
           },
           closeHandler: () =>
             setInputModal(inputModalBase),
-          isTextArea,
+            type,
       })
     },
   }

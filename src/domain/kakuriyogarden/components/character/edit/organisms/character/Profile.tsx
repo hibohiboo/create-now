@@ -32,7 +32,7 @@ const Profile: FC<{
       </div>
       <div
         className="kg-editable"
-        onClick={() => openInputModal('設定', profile, setProfile, true)}
+        onClick={() => openInputModal('設定', profile, setProfile, 'textarea')}
       >
         <Ruby text={profile} />
       </div>

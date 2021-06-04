@@ -46,7 +46,7 @@ const hope: FC<{
         className="kg-detail-area kg-editable"
         style={{ flex: 1 }}
         onClick={() =>
-          openInputModal('願いの詳細', hopeDetail, setHopeDetail, true)
+          openInputModal('願いの詳細', hopeDetail, setHopeDetail, 'textarea')
         }
       >
         <Ruby text={hopeDetail} />

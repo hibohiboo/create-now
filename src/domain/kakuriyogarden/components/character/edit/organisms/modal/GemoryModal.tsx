@@ -7,6 +7,7 @@ import Ruby from '~/domain/kakuriyogarden/components/character/edit/atoms/RubyTe
 const modal: FC<GemoryModal> = (ctx) => {
   const { gemory } = ctx
   const [description, setDescrption] = useState(gemory.description)
+  const [strength, setStrength] = useState(gemory.strength)
 
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
@@ -23,7 +24,27 @@ const modal: FC<GemoryModal> = (ctx) => {
           </div>
           <div style={{ marginLeft: '20px' }}>
             <h4>強度</h4>
-            <div style={{ fontSize: '2rem' }}>{gemory.strength}</div>
+            <div
+              style={{ fontSize: '2rem' }}
+              className="kg-editable"
+              onClick={() =>
+                ctx.openInputModal(
+                  '強度',
+                  String(strength),
+                  (text) => {
+                    setStrength(Number(text))
+                    ctx.dispatch.garden(
+                      ctx.garden.map((x, i) =>
+                        i === ctx.index ? { ...x, strength: Number(text) } : x,
+                      ),
+                    )
+                  },
+                  'number',
+                )
+              }
+            >
+              {strength}
+            </div>
           </div>
         </div>
         <h4>風景</h4>
@@ -32,7 +53,7 @@ const modal: FC<GemoryModal> = (ctx) => {
           onClick={() =>
             ctx.openInputModal(
               '風景',
-              gemory.description,
+              description,
               (text) => {
                 setDescrption(text)
                 ctx.dispatch.garden(
@@ -41,7 +62,7 @@ const modal: FC<GemoryModal> = (ctx) => {
                   ),
                 )
               },
-              true,
+              'textarea',
             )
           }
         >
