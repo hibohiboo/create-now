@@ -16,6 +16,8 @@ import {
   OpenInputModal,
 } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
+import Card from '~/domain/kakuriyogarden/components/character/edit/organisms/card'
+
 const component: FC<{
   cardList: Magic[]
   character: Character
@@ -66,7 +68,7 @@ const component: FC<{
                     strength: 1,
                     type: '戦い',
                     episode: `強く記憶に焼き付いた光景`,
-                    cards: [null],
+                    cards: [gemory],
                   },
                   ...garden,
                 ])
@@ -215,6 +217,15 @@ const component: FC<{
       </div>
       <div className="flex-centering">
         <ImageArea gardenItems={garden} hope={hope} color={`darkmagenta`} />
+      </div>
+      <div className="flex-centering">
+        {character.garden
+          .map((g, gi) =>
+            g.cards
+              .filter((c) => !!c && c.type !== '想晶')
+              .map((c, ci) => <Card key={`${gi}${ci}`} cardData={c} />),
+          )
+          .flat()}
       </div>
     </>
   )

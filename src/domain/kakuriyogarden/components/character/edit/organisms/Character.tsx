@@ -27,9 +27,21 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
         setMagicalName={vm.characterDispatch.magicalName}
         openInputModal={vm.openInputModal}
       />
-      <div>
-        <span className="tag">戦闘未経験</span>
-        <span className="tag">火</span>
+      <div
+        className="kg-editable"
+        onClick={() =>
+          vm.openInputModal(
+            'タグ',
+            vm.character.tags,
+            vm.characterDispatch.tags,
+          )
+        }
+      >
+        {vm.character.tags.split(',').map((t, i) => (
+          <span className="tag" key={i}>
+            {t}
+          </span>
+        ))}
       </div>
       <Profile
         imageUrl={vm.character.imageUrl}
@@ -61,7 +73,11 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
         openInputModal={vm.openInputModal}
         openIframeModal={vm.openIframeModal}
       />
-      <Openness />
+      <Openness
+        character={vm.character}
+        openInputModal={vm.openInputModal}
+        dispatchOpenness={vm.characterDispatch.openness}
+      />
       <Equipments
         items={vm.character.equipments}
         setEquipments={vm.characterDispatch.equipments}
@@ -82,6 +98,7 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
         openCardModal={vm.openCardModal}
         openCardListModal={vm.openCardListModal}
       />
+      <div></div>
     </SubPage>
   )
 }
