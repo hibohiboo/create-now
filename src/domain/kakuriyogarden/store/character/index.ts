@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent, Dispatch } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
-import { useGadgetModal, useGemoryModal, useGemoryTypeModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
+import { useCardModal, useGadgetModal, useGemoryModal, useGemoryTypeModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
 import type { Hope } from '../../classes/hope';
 import { Gadget } from '../../classes/gadget';
-import { moveMagic } from '../../classes/gemory/magic';
+import { fireballMagic, gemory, moveMagic, quickShootMagic, shootMagic, wallMagic } from '../../classes/gemory/magic';
 import { GemoryType } from '../../classes/gemory';
 
 const sampleCharacter = {
@@ -45,7 +45,7 @@ const sampleCharacter = {
     {
       description: `綿のような雲の漂う空地。`,
       strength: 4,
-      type: '戦い' as GemoryType,
+      type: '死' as GemoryType,
       episode: `クマのぬいぐるみを取られそうになった。
 普段はやられるばかりだった私。
 その時ばかりは夢中で抵抗して。
@@ -53,17 +53,17 @@ const sampleCharacter = {
 ただ、相手になされるままにはならなかった。
 |たった一度の小さな勝利。(あいつは泣いてわたしは笑った)
       `,
-      cards: [null,moveMagic, moveMagic, null],
+      cards: [gemory,quickShootMagic, fireballMagic, null],
     },
   {
     description: `火の粉の舞う焼野原。`,
-    strength: 2,
-    type: '死' as GemoryType,
+    strength: 4,
+    type: '戦い' as GemoryType,
     episode: `幼いころに火事にあった。
 歯車が狂い始めたきっかけ。両親は助からず
 私は消えない傷を負った。
 `,
-    cards: [null, moveMagic],
+    cards: [gemory, moveMagic, wallMagic,shootMagic],
   }]
 }
 export type Character = typeof sampleCharacter;
@@ -92,6 +92,7 @@ export const useCharacterViewModel = ()=>{
   const {iframeModal, openIframeModal} = useIframeModal()
   const {gemoryModal, openGemoryModal}=useGemoryModal()
   const {gemoryTypeModal, openGemoryTypeModal} = useGemoryTypeModal()
+  const {cardModal, openCardModal} = useCardModal()
   const [imageUrl, handleOnDrop, setPrevUrl] = useCharacterImage(sampleCharacter.imageUrl)
   character['imageUrl'] = imageUrl;
 
@@ -117,6 +118,7 @@ export const useCharacterViewModel = ()=>{
     iframeModal,
     gemoryModal,
     gemoryTypeModal,
+    cardModal,
     handleOnDrop,
     characterDispatch,
     openInputModal,
@@ -124,7 +126,8 @@ export const useCharacterViewModel = ()=>{
     openNegaiModal,
     openGadgetModal,
     openIframeModal,
-    openGemoryModal, openGemoryTypeModal
+    openGemoryModal, openGemoryTypeModal,
+    openCardModal
   }
 }
 

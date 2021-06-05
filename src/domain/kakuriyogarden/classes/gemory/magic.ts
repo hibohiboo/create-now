@@ -108,6 +108,34 @@ export const shootMagic: Magic = {
   level: 1,
   exp: 15,
 }
+export const fireballMagic: Magic = {
+  type: '魔法',
+  kind: '一般',
+  nameKana: 'ファイアボール',
+  name: '爆裂火球',
+  timing: 'アクション',
+  count: '6',
+  target: '横3マス',
+  range: '5',
+  tags: ['攻撃', '詠唱'],
+  effect:
+    'ダメージ:5',
+  gardeneffect: 'カウント-1(最低1)',
+  description: '燃え盛る火炎',
+  successRate: '60%',
+  id: '',
+  image: {
+    url:
+      '/images/kakuriyogarden/icons/game-icons/haunting.svg',
+    source: 'Game-icons.net',
+    sourceUrl:
+      'https://game-icons.net/1x1/lorc/haunting.html',
+  },
+  maxLevel: 1,
+
+  level: 1,
+  exp: 15,
+}
 export const wallMagic: Magic = {
   type: '魔法',
   kind: '一般',
@@ -143,10 +171,10 @@ export const gemory: Magic = {
   kind: '想晶',
   nameKana: 'ココロガラス',
   name: '想晶',
-  timing: '常駐',
+  timing: '-',
   count: '0',
-  target: '自身',
-  range: '自身',
+  target: '-',
+  range: '-',
   tags: [],
   effect:
     ``,
@@ -164,5 +192,5 @@ export const gemory: Magic = {
   maxLevel: 1,
 
   level: 1,
-  exp: 15,
+  exp: 0,
 }

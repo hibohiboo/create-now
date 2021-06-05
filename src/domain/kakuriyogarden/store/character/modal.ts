@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, useState } from "react"
 import { Character } from ".";
 import { Gadget } from "../../classes/gadget";
 import { Gemory, GemoryType } from "../../classes/gemory";
+import { gemory, Magic } from "../../classes/gemory/magic";
 import { Hope } from "../../classes/hope";
 
 type InputHandler = (a:string)=>void
@@ -223,3 +224,28 @@ export const useGemoryTypeModal = ()=>{
   }
 }
 export type OpenGemoryTypeModal = ReturnType<typeof useGemoryTypeModal>['openGemoryTypeModal']
+
+
+
+const cardModalBase = {
+  card: gemory,
+  show: false,
+  closeHandler: ()=>{},
+}
+export type CardModal = typeof cardModalBase;
+export const useCardModal = ()=>{
+  const [CardModal, setCardModal] = useState(cardModalBase)
+  return {
+    cardModal: CardModal,
+    openCardModal: (card: Magic)=>{
+      setCardModal(
+        {
+          card,
+          show: true,
+          closeHandler: () =>
+            setCardModal(cardModalBase),
+      })
+    },
+  }
+}
+export type OpenCardModal = ReturnType<typeof useCardModal>['openCardModal']

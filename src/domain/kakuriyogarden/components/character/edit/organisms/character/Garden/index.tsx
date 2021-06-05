@@ -4,6 +4,7 @@ import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 import { Character } from '~/domain/kakuriyogarden/store/character'
 import {
+  OpenCardModal,
   OpenGemoryModal,
   OpenGemoryTypeModal,
   OpenInputModal,
@@ -15,12 +16,14 @@ const component: FC<{
   openGemoryModal: OpenGemoryModal
   openInputModal: OpenInputModal
   openGemoryTypeModal: OpenGemoryTypeModal
+  openCardModal: OpenCardModal
 }> = ({
   openGemoryModal,
   character,
   dispatch,
   openInputModal,
   openGemoryTypeModal,
+  openCardModal,
 }) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
@@ -118,7 +121,16 @@ const component: FC<{
                     <div
                       className={`kg-garden-layer-col `}
                       key={`${i}${j}`}
-                      style={{ backgroundColor: 'darkmagenta' }}
+                      style={{
+                        backgroundColor: 'darkmagenta',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() =>
+                        openCardModal({
+                          ...c,
+                          effect: `種別:${item.type}。強度:${item.strength}`,
+                        })
+                      }
                     >
                       <img src="/images/kakuriyogarden/icons/game-icons/crystal-growth.svg" />
                     </div>
