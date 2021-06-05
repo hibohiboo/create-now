@@ -76,7 +76,7 @@ const ImageArea: React.FC<{
                   y={1 + i * size}
                   key={`${i}${j}`}
                   color={color}
-                  image={`/images/kakuriyogarden/icons/game-icons/crystal-growth.svg`}
+                  image={y ? y.image.url : null}
                 />
               )),
             )}

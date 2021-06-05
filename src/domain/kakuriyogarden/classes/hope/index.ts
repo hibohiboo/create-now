@@ -5,6 +5,12 @@ export const getHopeImageUrl = (hope: Hope)=>{
   if(hope==='復讐') return avengeIamge.url
 }
 
+export const getHopeMagic = (hope: Hope)=>{
+  if(hope==='献身') return dedicationMagica
+  if(hope==='利己') return egoMagica
+  if(hope==='復讐') return avengeMagica
+}
+
 const dedicationImage = {
   url:
     '/images/kakuriyogarden/icons/game-icons/heart-wings.svg',

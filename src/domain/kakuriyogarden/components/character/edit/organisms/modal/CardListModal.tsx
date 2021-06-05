@@ -36,12 +36,13 @@ const modal: FC<CardListModal> = (ctx) => {
         )}
         <strong>魔法選択</strong>
         <div style={{ overflow: 'auto', maxHeight: '50vh' }}>
-          {ctx.cardList.map((card) => (
+          {ctx.cardList.map((card, i) => (
             <div
               onClick={() => {
                 ctx.dispatchHandler(card)
                 ctx.closeHandler()
               }}
+              key={i}
             >
               <Card cardData={card} />
             </div>

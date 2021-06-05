@@ -1,8 +1,12 @@
 import { Dispatch, FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
-import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
-import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
+import { Magic, gemory } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import {
+  getHopeImageUrl,
+  getHopeMagic,
+  Hope,
+} from '~/domain/kakuriyogarden/classes/hope'
 import { Character } from '~/domain/kakuriyogarden/store/character'
 import {
   OpenCardListModal,
@@ -188,13 +192,20 @@ const component: FC<{
               </div>
               <div
                 className="kg-garden-layer-col"
-                style={{ backgroundColor: 'darkmagenta' }}
+                style={{ backgroundColor: 'darkmagenta', cursor: 'pointer' }}
+                onClick={() =>
+                  openCardModal({
+                    ...gemory,
+                    effect: `種別:願い。強度:2`,
+                  })
+                }
               >
                 <img src="/images/kakuriyogarden/icons/game-icons/crystal-growth.svg" />
               </div>
               <div
                 className="kg-garden-layer-col"
-                style={{ backgroundColor: 'darkmagenta' }}
+                style={{ backgroundColor: 'darkmagenta', cursor: 'pointer' }}
+                onClick={() => openCardModal(getHopeMagic(hope))}
               >
                 <img src={getHopeImageUrl(hope)} />
               </div>

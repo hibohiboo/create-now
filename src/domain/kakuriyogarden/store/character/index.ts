@@ -44,7 +44,7 @@ const sampleCharacter = {
   garden: [
     {
       description: `綿のような雲の漂う空地。`,
-      strength: 4,
+      strength: 5,
       type: '死' as GemoryType,
       episode: `クマのぬいぐるみを取られそうになった。
 普段はやられるばかりだった私。
@@ -53,7 +53,7 @@ const sampleCharacter = {
 ただ、相手になされるままにはならなかった。
 |たった一度の小さな勝利。(あいつは泣いてわたしは笑った)
       `,
-      cards: [gemory,quickShootMagic, fireballMagic, null],
+      cards: [gemory,quickShootMagic, fireballMagic, null,null],
     },
   {
     description: `火の粉の舞う焼野原。`,
