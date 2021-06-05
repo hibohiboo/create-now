@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, ChangeEvent, Dispatch } from 'react'
 import { loadData, saveData } from '../save-data';
 import { useCharacterImage } from './image';
-import { useCardModal, useGadgetModal, useGemoryModal, useGemoryTypeModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
+import { useCardListModal, useCardModal, useGadgetModal, useGemoryModal, useGemoryTypeModal, useIframeModal, useImageEditModal, useInputModal, useNegaiModal } from './modal';
 import type { Hope } from '../../classes/hope';
 import { Gadget } from '../../classes/gadget';
 import { fireballMagic, gemory, moveMagic, quickShootMagic, shootMagic, wallMagic } from '../../classes/gemory/magic';
@@ -93,6 +93,7 @@ export const useCharacterViewModel = ()=>{
   const {gemoryModal, openGemoryModal}=useGemoryModal()
   const {gemoryTypeModal, openGemoryTypeModal} = useGemoryTypeModal()
   const {cardModal, openCardModal} = useCardModal()
+  const {cardListModal, openCardListModal} = useCardListModal()
   const [imageUrl, handleOnDrop, setPrevUrl] = useCharacterImage(sampleCharacter.imageUrl)
   character['imageUrl'] = imageUrl;
 
@@ -119,6 +120,7 @@ export const useCharacterViewModel = ()=>{
     gemoryModal,
     gemoryTypeModal,
     cardModal,
+    cardListModal,
     handleOnDrop,
     characterDispatch,
     openInputModal,
@@ -127,7 +129,8 @@ export const useCharacterViewModel = ()=>{
     openGadgetModal,
     openIframeModal,
     openGemoryModal, openGemoryTypeModal,
-    openCardModal
+    openCardModal,
+    openCardListModal
   }
 }
 

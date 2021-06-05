@@ -34,8 +34,8 @@ export const moveMagic: Magic = {
   range: '自身',
   tags: ['移動', '即唱'],
   effect:
-    '移動:[配置階層]。',
-  gardeneffect: 'アクションで撤退できる。',
+    '移動:[配置階層]',
+  gardeneffect: 'アクションで撤退できる',
   description: '細道。',
   id: '',
   image: {
@@ -110,14 +110,14 @@ export const shootMagic: Magic = {
 }
 export const fireballMagic: Magic = {
   type: '魔法',
-  kind: '一般',
+  kind: '死',
   nameKana: 'ファイアボール',
   name: '爆裂火球',
   timing: 'アクション',
   count: '6',
   target: '横3マス',
   range: '5',
-  tags: ['攻撃', '詠唱'],
+  tags: ['攻撃', '詠唱','火'],
   effect:
     'ダメージ:5',
   gardeneffect: 'カウント-1(最低1)',
@@ -143,15 +143,15 @@ export const wallMagic: Magic = {
   name: '防壁',
   timing: '常駐',
   count: '0',
-  target: '自身',
-  range: '自身',
+  target: '全体',
+  range: '庭園',
   tags: [],
   effect:
     `この魔法の配置階層より深い階層と、浅い階層（配置階層を含む）では互いに射程が届かないものとする。
 配置階層より深い階層へは庭園主しか入ることはできない。`,
   gardeneffect: 'ダメージ軽減:1',
   description: '心理防壁。何物モ立チ入ルベカラズ',
-  successRate: '70%',
+  successRate: '-',
   id: '',
   image: {
     url:

@@ -13,6 +13,7 @@ import IframeModal from './molecules/modal/IframeModal'
 import GemoryModal from './organisms/modal/GemoryModal'
 import GemoryTypeModal from './organisms/modal/GemoryTypeModal'
 import CardModal from './organisms/modal/CardModal'
+import CardListModal from './organisms/modal/CardListModal'
 
 const Edit: FC<{}> = ({ children }) => {
   const vm = useCharacterViewModel()
@@ -23,6 +24,7 @@ const Edit: FC<{}> = ({ children }) => {
         <Character vm={vm} />
       </MainArea>
       <Footer>フッタ</Footer>
+      <CardListModal {...vm.cardListModal} />
       <CardModal {...vm.cardModal} />
       <GemoryModal {...vm.gemoryModal} />
       <GemoryTypeModal {...vm.gemoryTypeModal} />

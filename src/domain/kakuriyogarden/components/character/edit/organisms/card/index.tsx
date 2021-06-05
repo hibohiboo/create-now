@@ -34,7 +34,17 @@ const labelData = {
   successRate: '成功率',
 }
 
-const Card: FC<{ cardData: Card }> = ({ cardData }) => {
+const Card: FC<{ cardData: Card | null }> = ({ cardData }) => {
+  if (!cardData) {
+    return <div></div>
+  }
+  let effectStyle = {}
+  if (cardData.effect.length > 35) {
+    effectStyle = { fontSize: '12px' }
+  }
+  if (cardData.effect.length > 50) {
+    effectStyle = { fontSize: '10px' }
+  }
   return (
     <div style={{ padding: '0px', width: '252px' }}>
       <div className="skill-card">
@@ -80,7 +90,9 @@ const Card: FC<{ cardData: Card }> = ({ cardData }) => {
               ))}
             </div>
             <div className="mainContent border">
-              <div className="effect">{cardData.effect}</div>
+              <div className="effect" style={effectStyle}>
+                {cardData.effect}
+              </div>
               <div className="gardeneffect">
                 庭園効果: {cardData.gardeneffect}
               </div>

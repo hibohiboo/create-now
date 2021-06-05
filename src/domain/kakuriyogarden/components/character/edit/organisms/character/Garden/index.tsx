@@ -4,6 +4,7 @@ import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 import { Character } from '~/domain/kakuriyogarden/store/character'
 import {
+  OpenCardListModal,
   OpenCardModal,
   OpenGemoryModal,
   OpenGemoryTypeModal,
@@ -17,6 +18,7 @@ const component: FC<{
   openInputModal: OpenInputModal
   openGemoryTypeModal: OpenGemoryTypeModal
   openCardModal: OpenCardModal
+  openCardListModal: OpenCardListModal
 }> = ({
   openGemoryModal,
   character,
@@ -24,6 +26,7 @@ const component: FC<{
   openInputModal,
   openGemoryTypeModal,
   openCardModal,
+  openCardListModal,
 }) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
@@ -139,6 +142,9 @@ const component: FC<{
                       className={`kg-garden-layer-col ${'kg-editable'}`}
                       key={`${i}${j}`}
                       style={{ backgroundColor: 'darkmagenta' }}
+                      onClick={() => {
+                        openCardListModal(c)
+                      }}
                     >
                       {c ? <img src={c.image.url} /> : <></>}
                     </div>

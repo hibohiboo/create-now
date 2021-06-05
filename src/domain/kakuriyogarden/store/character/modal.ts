@@ -249,3 +249,27 @@ export const useCardModal = ()=>{
   }
 }
 export type OpenCardModal = ReturnType<typeof useCardModal>['openCardModal']
+
+
+const cardListModalBase = {
+  card: gemory,
+  show: false,
+  closeHandler: ()=>{},
+}
+export type CardListModal = typeof cardListModalBase;
+export const useCardListModal = ()=>{
+  const [CardListModal, setCardListModal] = useState(cardListModalBase)
+  return {
+    cardListModal: CardListModal,
+    openCardListModal: (card: Magic)=>{
+      setCardListModal(
+        {
+          card,
+          show: true,
+          closeHandler: () =>
+            setCardListModal(cardListModalBase),
+      })
+    },
+  }
+}
+export type OpenCardListModal = ReturnType<typeof useCardListModal>['openCardListModal']
