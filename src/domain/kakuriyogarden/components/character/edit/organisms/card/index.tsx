@@ -46,7 +46,7 @@ const Card: FC<{ cardData: Card | null }> = ({ cardData }) => {
     effectStyle = { fontSize: '10px' }
   }
   return (
-    <div style={{ padding: '0px', width: '252px' }}>
+    <div style={{ padding: '0px', width: '252px' }} id={`card-${cardData.id}`}>
       <div className="skill-card">
         <div className="wrapper">
           <div className="base">

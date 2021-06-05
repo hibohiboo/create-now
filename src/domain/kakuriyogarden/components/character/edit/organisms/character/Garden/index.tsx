@@ -17,6 +17,7 @@ import {
 } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
 import Card from '~/domain/kakuriyogarden/components/character/edit/organisms/card'
+// import { createZip } from '~/domain/kakuriyogarden/store/character/udonEvent'
 
 const component: FC<{
   cardList: Magic[]
@@ -46,6 +47,18 @@ const component: FC<{
     return <></>
   }
   const { hope, garden } = character
+
+  const cards = character.garden
+    .map((g, gi) =>
+      g.cards
+        .filter((c) => !!c && c.type !== '想晶')
+        .map((c, ci) => ({ ...c, id: `${gi}${ci}` })),
+    )
+    .flat()
+  // HTML2Canvasはいったん諦める。
+  // const onZipHandler = () => {
+  //   createZip(character.magicalName, cards)
+  // }
   return (
     <>
       <div className="kg-section">
@@ -224,13 +237,9 @@ const component: FC<{
         <ImageArea gardenItems={garden} hope={hope} color={character.color} />
       </div>
       <div className="flex-centering">
-        {character.garden
-          .map((g, gi) =>
-            g.cards
-              .filter((c) => !!c && c.type !== '想晶')
-              .map((c, ci) => <Card key={`${gi}${ci}`} cardData={c} />),
-          )
-          .flat()}
+        {cards.map((c) => (
+          <Card key={`${c.id}`} cardData={c} />
+        ))}
       </div>
     </>
   )

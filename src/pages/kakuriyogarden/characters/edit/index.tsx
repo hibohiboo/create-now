@@ -48,7 +48,14 @@ export const getStaticProps = async (context) => {
   const sheet = (context.query?.sheet ||
     '1uI6lGPfsXfn77tKjLBzKaSl9lHrTsN5la-tTDo9gPZw') as string
   const data = await getSheetData(sheet, 'cards', 'B2:S')
-  const skills = data.values.map(csvToCard)
+  // 固有魔法
+  const original = await getSheetData(
+    '1GDR0INKjUuqX5dWUn4tleuoASJDTB-_mTHigSTDQP3c',
+    'cards',
+    'B2:S',
+  )
+
+  const skills = [...data.values, ...original.values].map(csvToCard)
   return {
     props: {
       id: sheet,
