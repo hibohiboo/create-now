@@ -56,6 +56,11 @@ const component: FC<{
             </ruby>
           </span>
           <img src="/images/kakuriyogarden/icons/game-icons/field.svg" />
+          <input
+            value={character.color}
+            type="color"
+            onChange={(event) => dispatch.color(event.target.value)}
+          />
         </div>
         <div>
           <div>
@@ -134,7 +139,7 @@ const component: FC<{
                       className={`kg-garden-layer-col `}
                       key={`${i}${j}`}
                       style={{
-                        backgroundColor: 'darkmagenta',
+                        backgroundColor: character.color,
                         cursor: 'pointer',
                       }}
                       onClick={() =>
@@ -150,7 +155,7 @@ const component: FC<{
                     <div
                       className={`kg-garden-layer-col ${'kg-editable'}`}
                       key={`${i}${j}`}
-                      style={{ backgroundColor: 'darkmagenta' }}
+                      style={{ backgroundColor: character.color }}
                       onClick={() => {
                         openCardListModal(c, cardList, (selectedCard) => {
                           dispatch.garden(
@@ -194,7 +199,7 @@ const component: FC<{
               </div>
               <div
                 className="kg-garden-layer-col"
-                style={{ backgroundColor: 'darkmagenta', cursor: 'pointer' }}
+                style={{ backgroundColor: character.color, cursor: 'pointer' }}
                 onClick={() =>
                   openCardModal({
                     ...gemory,
@@ -206,7 +211,7 @@ const component: FC<{
               </div>
               <div
                 className="kg-garden-layer-col"
-                style={{ backgroundColor: 'darkmagenta', cursor: 'pointer' }}
+                style={{ backgroundColor: character.color, cursor: 'pointer' }}
                 onClick={() => openCardModal(getHopeMagic(hope))}
               >
                 <img src={getHopeImageUrl(hope)} />
@@ -216,7 +221,7 @@ const component: FC<{
         </div>
       </div>
       <div className="flex-centering">
-        <ImageArea gardenItems={garden} hope={hope} color={`darkmagenta`} />
+        <ImageArea gardenItems={garden} hope={hope} color={character.color} />
       </div>
       <div className="flex-centering">
         {character.garden

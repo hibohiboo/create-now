@@ -43,6 +43,7 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
           </span>
         ))}
       </div>
+
       <Profile
         imageUrl={vm.character.imageUrl}
         openImageEditModal={vm.openImageEditModal}
