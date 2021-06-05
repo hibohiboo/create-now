@@ -1,6 +1,7 @@
 import { Dispatch, FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
+import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 import { Character } from '~/domain/kakuriyogarden/store/character'
 import {
@@ -12,6 +13,7 @@ import {
 } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
 const component: FC<{
+  cardList: Magic[]
   character: Character
   dispatch: Record<string, Dispatch<any>>
   openGemoryModal: OpenGemoryModal
@@ -22,6 +24,7 @@ const component: FC<{
 }> = ({
   openGemoryModal,
   character,
+  cardList,
   dispatch,
   openInputModal,
   openGemoryTypeModal,
@@ -143,7 +146,7 @@ const component: FC<{
                       key={`${i}${j}`}
                       style={{ backgroundColor: 'darkmagenta' }}
                       onClick={() => {
-                        openCardListModal(c)
+                        openCardListModal(c, cardList)
                       }}
                     >
                       {c ? <img src={c.image.url} /> : <></>}

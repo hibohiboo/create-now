@@ -39,7 +39,7 @@ const Page: NextPage<{
         />
         <title>{ctx.pageTitle}</title>
       </Head>
-      <Edit>{id}</Edit>
+      <Edit cardList={skills}>{id}</Edit>
       <div>{JSON.stringify(skills)}</div>
     </>
   )

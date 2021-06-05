@@ -14,14 +14,15 @@ import GemoryModal from './organisms/modal/GemoryModal'
 import GemoryTypeModal from './organisms/modal/GemoryTypeModal'
 import CardModal from './organisms/modal/CardModal'
 import CardListModal from './organisms/modal/CardListModal'
+import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
 
-const Edit: FC<{}> = ({ children }) => {
+const Edit: FC<{ cardList: Magic[] }> = ({ children, cardList }) => {
   const vm = useCharacterViewModel()
   return (
     <Wrapper>
       <Header>現代異能魔法少女心象風景バトルTRPG『カクリヨガーデン』</Header>
       <MainArea>
-        <Character vm={vm} />
+        <Character vm={vm} cardList={cardList} />
       </MainArea>
       <Footer>フッタ</Footer>
       <CardListModal {...vm.cardListModal} />

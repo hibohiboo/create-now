@@ -253,6 +253,7 @@ export type OpenCardModal = ReturnType<typeof useCardModal>['openCardModal']
 
 const cardListModalBase = {
   card: gemory,
+  cardList: [],
   show: false,
   closeHandler: ()=>{},
 }
@@ -261,10 +262,11 @@ export const useCardListModal = ()=>{
   const [CardListModal, setCardListModal] = useState(cardListModalBase)
   return {
     cardListModal: CardListModal,
-    openCardListModal: (card: Magic)=>{
+    openCardListModal: (card: Magic,cardList:Magic[])=>{
       setCardListModal(
         {
           card,
+          cardList: [...cardList],
           show: true,
           closeHandler: () =>
             setCardListModal(cardListModalBase),

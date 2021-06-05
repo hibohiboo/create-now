@@ -10,8 +10,12 @@ import Attributes from './character/Attributes'
 import Equipments from './character/Equipments'
 import Deviation from './character/Deviation'
 import Garden from './character/Garden/index'
+import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
 
-const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
+const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
+  vm,
+  cardList,
+}) => {
   return (
     <SubPage id="cloth">
       <MagicalName
@@ -69,13 +73,14 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
         openInputModal={vm.openInputModal}
       />
       <Garden
+        cardList={cardList}
         dispatch={vm.characterDispatch}
         character={vm.character}
         openGemoryModal={vm.openGemoryModal}
         openInputModal={vm.openInputModal}
         openGemoryTypeModal={vm.openGemoryTypeModal}
         openCardModal={vm.openCardModal}
-        openCardListModal={vm.openCardModal}
+        openCardListModal={vm.openCardListModal}
       />
     </SubPage>
   )
