@@ -98,6 +98,7 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
         openGemoryTypeModal={vm.openGemoryTypeModal}
         openCardModal={vm.openCardModal}
         openCardListModal={vm.openCardListModal}
+        setGardenUrl={vm.setGardenUrl}
       />
       <div></div>
     </SubPage>

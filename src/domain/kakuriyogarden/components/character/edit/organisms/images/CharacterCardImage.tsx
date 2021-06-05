@@ -1,22 +1,16 @@
-import React, { useState, useRef, useEffect, Dispatch } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
-import URLImage from './atoms/CellImage'
-import Hidden from '@material-ui/core/Hidden'
-import Cell from './atoms/GardenCell'
 import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 
-const ImageArea: React.FC<{
-  gardenItems: Gemory[]
-  hope: Hope
-  color: string
-  setGardenUrl: Dispatch<string>
-}> = ({ gardenItems, color, hope, setGardenUrl }) => {
+import URLImage from '~/domain/kakuriyogarden/components/character/edit/atoms/URLImage'
+
+const ImageArea: React.FC<{ gardenUrl: string }> = ({ gardenUrl }) => {
   const size = 50
-  const cellCount = Math.max(...gardenItems.map((i) => i.cards.length))
-  const canvasWidth = 2 + cellCount * size
-  const canvasHight = 2 + size * (gardenItems.length + 1)
+
+  const canvasWidth = 242
+  const canvasHight = 342
   const leftPadding = 5
   const inputWidth = canvasWidth - leftPadding
   const family = {
@@ -35,7 +29,6 @@ const ImageArea: React.FC<{
     const stage = stageRef.current
     const canvas: HTMLCanvasElement = stage.toCanvas()
     setUrl(canvas.toDataURL())
-    setGardenUrl(url)
 
     if (firstFlg) {
       firstFlg = false
@@ -69,28 +62,13 @@ const ImageArea: React.FC<{
               height={canvasHight}
               fill={'white'}
             />
-            {gardenItems.map((x, i) =>
-              x.cards.map((y, j) => (
-                <Cell
-                  x={1 + j * size}
-                  y={1 + i * size}
-                  key={`${i}${j}`}
-                  color={color}
-                  image={y ? y.image.url : null}
-                />
-              )),
-            )}
-            <Cell
-              x={1 + 0 * size}
-              y={1 + gardenItems.length * size}
-              color={color}
-              image={`/images/kakuriyogarden/icons/game-icons/crystal-growth.svg`}
-            />
-            <Cell
-              x={1 + 1 * size}
-              y={1 + gardenItems.length * size}
-              color={color}
-              image={getHopeImageUrl(hope)}
+            <URLImage
+              src={gardenUrl}
+              x={0}
+              y={0}
+              width={200}
+              height={200}
+              size="contain"
             />
           </Layer>
         </Stage>

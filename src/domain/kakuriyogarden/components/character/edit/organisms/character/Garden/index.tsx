@@ -28,6 +28,7 @@ const component: FC<{
   openGemoryTypeModal: OpenGemoryTypeModal
   openCardModal: OpenCardModal
   openCardListModal: OpenCardListModal
+  setGardenUrl: Dispatch<string>
 }> = ({
   openGemoryModal,
   character,
@@ -37,6 +38,7 @@ const component: FC<{
   openGemoryTypeModal,
   openCardModal,
   openCardListModal,
+  setGardenUrl,
 }) => {
   // SSRのときにImageAreaの見た目が違うと怒られるので対応
   const [showChild, setShowChild] = useState(false)
@@ -234,7 +236,12 @@ const component: FC<{
         </div>
       </div>
       <div className="flex-centering">
-        <ImageArea gardenItems={garden} hope={hope} color={character.color} />
+        <ImageArea
+          gardenItems={garden}
+          hope={hope}
+          color={character.color}
+          setGardenUrl={setGardenUrl}
+        />
       </div>
       <div className="flex-centering">
         {cards.map((c) => (

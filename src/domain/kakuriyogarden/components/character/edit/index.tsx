@@ -3,7 +3,10 @@ import Wrapper from './layout/Wrapper'
 import Header from './layout/Header'
 import Footer from './layout/Footer'
 import MainArea from './layout/MainArea'
-import { useCharacterViewModel } from '~/domain/kakuriyogarden/store/character'
+import {
+  CharacterViewModel,
+  useCharacterViewModel,
+} from '~/domain/kakuriyogarden/store/character'
 import InputModal from './molecules/modal/InputModal'
 import Character from './organisms/Character'
 import ImageEditModal from './molecules/modal/ImageEditModal'
@@ -15,14 +18,18 @@ import GemoryTypeModal from './organisms/modal/GemoryTypeModal'
 import CardModal from './organisms/modal/CardModal'
 import CardListModal from './organisms/modal/CardListModal'
 import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import Views from './organisms/Views'
 
-const Edit: FC<{ cardList: Magic[] }> = ({ children, cardList }) => {
-  const vm = useCharacterViewModel()
+const Edit: FC<{ cardList: Magic[]; vm: CharacterViewModel }> = ({
+  cardList,
+  vm,
+}) => {
   return (
     <Wrapper>
       <Header>現代異能魔法少女心象風景バトルTRPG『カクリヨガーデン』</Header>
       <MainArea>
         <Character vm={vm} cardList={cardList} />
+        <Views vm={vm} />
       </MainArea>
       <Footer>フッタ</Footer>
       <CardListModal {...vm.cardListModal} />

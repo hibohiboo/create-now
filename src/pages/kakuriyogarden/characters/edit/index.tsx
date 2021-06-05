@@ -6,6 +6,7 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import Edit from '~/domain/kakuriyogarden/components/character/edit'
 import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import { useCharacterViewModel } from '~/domain/kakuriyogarden/store/character'
 
 const Page: NextPage<{
   id: string
@@ -17,6 +18,7 @@ const Page: NextPage<{
   useEffect(() => {}, [])
 
   const { id, skills } = ctx
+  const vm = useCharacterViewModel()
   return (
     <>
       <Head>
@@ -39,7 +41,7 @@ const Page: NextPage<{
         />
         <title>{ctx.pageTitle}</title>
       </Head>
-      <Edit cardList={skills}>{id}</Edit>
+      <Edit vm={vm} cardList={skills} />
     </>
   )
 }

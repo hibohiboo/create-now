@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
-import URLImage from './atoms/URLImage'
+import URLImage from './atoms/CellImage'
 import Hidden from '@material-ui/core/Hidden'
 import TimeCell from './atoms/TimeCell'
 

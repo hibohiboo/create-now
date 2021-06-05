@@ -1,6 +1,6 @@
 import React from 'react'
 import { Group, Rect, Text } from 'react-konva'
-import URLImage from './URLImage'
+import URLImage from './CellImage'
 const cellSize = 50
 type Args = { x: number; y: number; color: string; image: string | null }
 export default ({ x, y, color, image }: Args) => (

@@ -98,6 +98,7 @@ export const useCharacterViewModel = ()=>{
   const {cardModal, openCardModal} = useCardModal()
   const {cardListModal, openCardListModal} = useCardListModal()
   const [imageUrl, handleOnDrop, setPrevUrl] = useCharacterImage(sampleCharacter.imageUrl)
+  const [gardenUrl, setGardenUrl] = useState('')
   character['imageUrl'] = imageUrl;
 
   useEffect(()=>{
@@ -115,6 +116,7 @@ export const useCharacterViewModel = ()=>{
   }, [character])
   return {
     character,
+    gardenUrl,
     inputModal,
     imageEditModal,
     negaiModal,
@@ -126,6 +128,7 @@ export const useCharacterViewModel = ()=>{
     cardListModal,
     handleOnDrop,
     characterDispatch,
+    setGardenUrl,
     openInputModal,
     openImageEditModal,
     openNegaiModal,
