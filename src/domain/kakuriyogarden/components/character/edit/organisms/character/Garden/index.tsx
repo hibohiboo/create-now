@@ -146,7 +146,20 @@ const component: FC<{
                       key={`${i}${j}`}
                       style={{ backgroundColor: 'darkmagenta' }}
                       onClick={() => {
-                        openCardListModal(c, cardList)
+                        openCardListModal(c, cardList, (selectedCard) => {
+                          dispatch.garden(
+                            garden.map((gx, gi) =>
+                              gi === i
+                                ? {
+                                    ...gx,
+                                    cards: gx.cards.map((gy, gj) =>
+                                      gj === j ? selectedCard : gy,
+                                    ),
+                                  }
+                                : gx,
+                            ),
+                          )
+                        })
                       }}
                     >
                       {c ? <img src={c.image.url} /> : <></>}

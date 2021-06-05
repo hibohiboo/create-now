@@ -256,13 +256,14 @@ const cardListModalBase = {
   cardList: [],
   show: false,
   closeHandler: ()=>{},
+  dispatchHandler: (m: Magic)=>{}
 }
 export type CardListModal = typeof cardListModalBase;
 export const useCardListModal = ()=>{
   const [CardListModal, setCardListModal] = useState(cardListModalBase)
   return {
     cardListModal: CardListModal,
-    openCardListModal: (card: Magic,cardList:Magic[])=>{
+    openCardListModal: (card: Magic,cardList:Magic[], dispatchHandler:(m: Magic)=>void)=>{
       setCardListModal(
         {
           card,
@@ -270,6 +271,7 @@ export const useCardListModal = ()=>{
           show: true,
           closeHandler: () =>
             setCardListModal(cardListModalBase),
+          dispatchHandler
       })
     },
   }

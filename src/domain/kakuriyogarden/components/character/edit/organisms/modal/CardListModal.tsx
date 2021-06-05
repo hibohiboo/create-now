@@ -5,7 +5,6 @@ import Card from '~/domain/kakuriyogarden/components/character/edit/organisms/ca
 import type { CardListModal } from '~/domain/kakuriyogarden/store/character/modal'
 
 const modal: FC<CardListModal> = (ctx) => {
-  console.log('ttt', ctx)
   return (
     <Modal show={ctx.show} closeHandler={ctx.closeHandler}>
       <div>
@@ -14,14 +13,22 @@ const modal: FC<CardListModal> = (ctx) => {
             <strong>配置中</strong>
             <div
               style={{
-                transform: 'scale(0.5,0.5)',
-                transformOrigin: 'top',
-                height: '25vh',
+                transform: 'scale(0.7,0.7)',
+                transformOrigin: 'top right',
+                height: '30vh',
               }}
             >
               <Card cardData={ctx.card} />
             </div>
-
+            <button
+              style={{ padding: '5px', marginLeft: '5px' }}
+              onClick={() => {
+                ctx.dispatchHandler(null)
+                ctx.closeHandler()
+              }}
+            >
+              取り外す
+            </button>
             <hr></hr>
           </div>
         ) : (
@@ -30,7 +37,14 @@ const modal: FC<CardListModal> = (ctx) => {
         <strong>魔法選択</strong>
         <div style={{ overflow: 'auto', maxHeight: '50vh' }}>
           {ctx.cardList.map((card) => (
-            <Card cardData={card} />
+            <div
+              onClick={() => {
+                ctx.dispatchHandler(card)
+                ctx.closeHandler()
+              }}
+            >
+              <Card cardData={card} />
+            </div>
           ))}
         </div>
       </div>
