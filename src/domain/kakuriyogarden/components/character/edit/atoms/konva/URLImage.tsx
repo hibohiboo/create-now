@@ -32,7 +32,6 @@ export default class URLImage extends React.Component<{
     this.image = new window.Image()
     this.image.src = this.props.src
     this.image.addEventListener('load', this.handleLoad)
-    console.log('load image')
   }
   handleLoad = () => {
     // after setState react-konva will update canvas and redraw the layer
@@ -47,9 +46,6 @@ export default class URLImage extends React.Component<{
       if (this.props.height < this.image.height * this.scale) {
         this.scale = (this.props.height / this.image.height) * this.scale
       }
-      console.log('test', this.scale)
-      console.log('prop', this.props.width)
-      console.log('img', this.image.width)
     }
     // if you keep same image object during source updates
     // you will have to update layer manually:

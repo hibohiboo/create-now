@@ -5,7 +5,7 @@ import CharacterCard from './images/CharacterCardImage'
 const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
     <SubPage id="preview">
-      <CharacterCard gardenUrl={vm.gardenUrl} />
+      <CharacterCard character={vm.character} gardenUrl={vm.gardenUrl} />
     </SubPage>
   )
 }
