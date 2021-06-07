@@ -18,6 +18,19 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
 }) => {
   return (
     <SubPage id="cloth">
+      <div
+        className="kg-editable"
+        onClick={() =>
+          vm.openInputModal(
+            'プレイヤー名',
+            vm.character.playerName,
+            vm.characterDispatch.playerName,
+          )
+        }
+        style={{ textAlign: 'right' }}
+      >
+        {vm.character.playerName}
+      </div>
       <MagicalName
         symbolName={vm.character.symbolName}
         magicalName={vm.character.magicalName}

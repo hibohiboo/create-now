@@ -8,6 +8,7 @@ import { fireballMagic, gemory, moveMagic, quickShootMagic, shootMagic, wallMagi
 import { GemoryType } from '../../classes/gemory';
 
 const sampleCharacter = {
+  playerName: 'プレイヤー/ひぼ',
   symbolName: '灰花',
   symbolNameKana: 'はいばな',
   magicalName: 'ユキスミレ',

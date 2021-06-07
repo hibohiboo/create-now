@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
-import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
+import { Stage, Layer, Rect, Text, Ellipse, Group } from 'react-konva'
 import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
 import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
 import OutLine from './card/outline'
@@ -8,6 +8,8 @@ import URLImage from '~/domain/kakuriyogarden/components/character/edit/atoms/ko
 import CellImage from '~/domain/kakuriyogarden/components/character/edit/organisms/character/Garden/atoms/CellImage'
 import { Character } from '~/domain/kakuriyogarden/store/character'
 import TagText from '~/domain/kakuriyogarden/components/character/edit/atoms/konva/TagText'
+import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
+import { textToRemoveRubyTag } from '~/domain/kakuriyogarden/classes/ruby'
 
 const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
   gardenUrl,
@@ -32,10 +34,10 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
 
   // カードの横幅ガイド src\styles\kakuriyogarden\card\index.scssより
   const leftGap = 5
-  const innerLeft = 60
-  const attrLabel = 60
-  const attrValue = 1
-  const innerRight = 1
+  const innerLeft = 60 + leftGap
+  const attrLabel = 60 + innerLeft
+  const attrValue = 1 + attrLabel
+  const innerRight = 1 + attrValue
   const rightGap = 4
 
   // カードの縦幅ガイド
@@ -43,12 +45,12 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
   const cardName = 26 + innerTop - 15
   const tagsY = 24 + cardName
   const pictTop = 20 + tagsY
-  const range_ = 20
-  const target_ = 20
-  const count = 20
-  const exp = 20
-  const mainContent = 140
-  const bottomContent = 1
+  const range_ = 20 + pictTop
+  const target_ = 20 + range_
+  const count = 20 + target_
+  const exp = 20 + count
+  const mainContent = 40 + exp
+  const bottomContent = 130 + mainContent
   const [url, setUrl] = useState('')
   const stageRef = useRef(null)
   let firstFlg = true
@@ -74,12 +76,23 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
         <Stage width={canvasWidth} height={canvasHight} ref={stageRef}>
           <Layer>
             <OutLine width={canvasWidth} height={canvasHight} />
+            {/* キャラ画像 */}
+            <Rect
+              x={leftGap}
+              y={pictTop}
+              width={cellSize}
+              height={cellSize}
+              stroke={'black'}
+              strokeWidth={1}
+            />
+
             <CellImage
               src={character.imageUrl}
               x={leftGap}
               y={pictTop}
               size={cellSize}
             />
+            {/* 名前 */}
             <Text
               x={leftGap}
               y={innerTop}
@@ -96,6 +109,19 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
               text={`${character.symbolName}の${character.magicalName}`}
               shadowEnabled={false}
             />
+            {/* 右上 */}
+            <Text
+              x={innerLeft}
+              y={innerTop - 10}
+              fontSize={fontSize}
+              fontFamily={family.gothic}
+              text={character.playerName}
+              shadowEnabled={false}
+              align={'right'}
+              width={canvasWidth - innerLeft - 10}
+            />
+
+            {/* tag */}
             {tags.map((t, i) =>
               i === 0 ? (
                 <TagText text={t} y={tagsY} x={leftGap} />
@@ -107,20 +133,130 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
                     leftGap +
                     tags
                       .filter((_, j) => j < i)
-                      .reduce((a, b) => a + b.length * fontSize, 0) +
-                    i * 12
+                      .reduce((a, b) => a + b.length * fontSize + 12, 0)
                   }
                 />
               ),
             )}
+
+            {/* 願い */}
+            <CellImage
+              src={getHopeImageUrl(character.hope)}
+              x={leftGap}
+              y={pictTop + 55}
+              size={cellSize * 0.6}
+            />
+            <Text
+              x={leftGap}
+              y={pictTop + 55 + 35}
+              fontSize={fontSize}
+              fontFamily={family.gothic}
+              text={character.hope}
+            />
+            {/* 装備 */}
+            <CellImage
+              src={getGadgetImageUrl(character.gadget)}
+              x={leftGap + 35}
+              y={pictTop + 55}
+              size={cellSize * 0.6}
+            />
+            <Text
+              x={leftGap + 35}
+              y={pictTop + 55 + 35}
+              fontSize={fontSize}
+              fontFamily={family.gothic}
+              text={character.gadget}
+            />
             <URLImage
               src={gardenUrl}
-              x={20}
-              y={200}
-              width={200}
-              height={200}
+              x={5}
+              y={180}
+              width={230}
+              height={185}
               size="contain"
             />
+            <Text
+              x={leftGap + 5}
+              y={bottomContent + 2}
+              fontSize={fontSize * 0.6}
+              fontFamily={family.gothic}
+              text={textToRemoveRubyTag(character.profile)}
+              width={230}
+            />
+
+            {/* 逸脱 */}
+            <Rect
+              x={innerLeft + 10}
+              y={pictTop}
+              width={160}
+              height={105}
+              stroke={'black'}
+              strokeWidth={1}
+            />
+            <CellImage
+              src={'/images/kakuriyogarden/icons/game-icons/egg-eye.svg'}
+              x={innerLeft + 10}
+              y={pictTop}
+              size={cellSize * 0.4}
+            />
+            <Text
+              x={innerLeft + 35}
+              y={pictTop + 5}
+              fontSize={fontSize * 0.8}
+              fontFamily={family.gothic}
+              text={'箇所'}
+              width={40}
+              shadowEnabled={false}
+            />
+            <Text
+              x={innerLeft + 65}
+              y={pictTop + 5}
+              fontSize={fontSize * 0.8}
+              fontFamily={family.gothic}
+              text={'変身前'}
+              width={40}
+              shadowEnabled={false}
+            />
+            <Text
+              x={innerLeft + 110}
+              y={pictTop + 5}
+              fontSize={fontSize * 0.8}
+              fontFamily={family.gothic}
+              text={'変身後'}
+              width={40}
+              shadowEnabled={false}
+            />
+            {character.deviations.map((d, i) => (
+              <Group key={i}>
+                <Text
+                  x={innerLeft + 15}
+                  y={pictTop + 8 + (i + 1) * 16}
+                  fontSize={fontSize * 0.6}
+                  fontFamily={family.gothic}
+                  text={d.point}
+                  width={40}
+                  shadowEnabled={false}
+                />
+                <Text
+                  x={innerLeft + 65}
+                  y={pictTop + 8 + (i + 1) * 16}
+                  fontSize={fontSize * 0.6}
+                  fontFamily={family.gothic}
+                  text={d.before}
+                  width={45}
+                  shadowEnabled={false}
+                />
+                <Text
+                  x={innerLeft + 110}
+                  y={pictTop + 8 + (i + 1) * 16}
+                  fontSize={fontSize * 0.6}
+                  fontFamily={family.gothic}
+                  text={d.after}
+                  width={45}
+                  shadowEnabled={false}
+                />
+              </Group>
+            ))}
           </Layer>
         </Stage>
       </div>
