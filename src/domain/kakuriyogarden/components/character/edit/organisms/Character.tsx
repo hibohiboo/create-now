@@ -11,6 +11,8 @@ import Equipments from './character/Equipments'
 import Deviation from './character/Deviation'
 import Garden from './character/Garden/index'
 import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import CharacterCard from './images/CharacterCardImage'
+import Cards from './character/Cards'
 
 const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
   vm,
@@ -113,6 +115,11 @@ const Item: FC<{ vm: CharacterViewModel; cardList: Magic[] }> = ({
         openCardListModal={vm.openCardListModal}
         setGardenUrl={vm.setGardenUrl}
       />
+      <div style={{ width: '242px', margin: '0 auto' }}>
+        <CharacterCard character={vm.character} gardenUrl={vm.gardenUrl} />
+      </div>
+      <Cards character={vm.character} />
+
       <div></div>
     </SubPage>
   )

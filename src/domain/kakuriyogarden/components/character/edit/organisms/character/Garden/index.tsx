@@ -243,11 +243,6 @@ const component: FC<{
           setGardenUrl={setGardenUrl}
         />
       </div>
-      <div className="flex-centering">
-        {cards.map((c) => (
-          <Card key={`${c.id}`} cardData={c} />
-        ))}
-      </div>
     </>
   )
 }
