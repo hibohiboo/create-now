@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { formatMagic } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import { getHopeMagic } from '~/domain/kakuriyogarden/classes/hope'
 import { CharacterViewModel } from '~/domain/kakuriyogarden/store/character'
 import SubPage from '../layout/SubPage'
 import CharacterCard from './images/CharacterCardImage'
@@ -8,6 +9,7 @@ const Item: FC<{ vm: CharacterViewModel }> = ({ vm }) => {
   return (
     <SubPage id="preview">
       <CharacterCard character={vm.character} gardenUrl={vm.gardenUrl} />
+      <MagicCard magic={getHopeMagic(vm.character.hope)} />
       {vm.character.garden.map((g, gi) =>
         g.cards
           .filter((c) => !!c && c.type !== '想晶')

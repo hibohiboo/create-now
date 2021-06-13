@@ -93,6 +93,7 @@ const Card: FC<{ cardData: Card | null }> = ({ cardData }) => {
               <div className="illustedBy">
                 <a
                   href={cardData.image.sourceUrl}
+                  target={'_blank'}
                 >{`illust: ${cardData.image.source}`}</a>
               </div>
             </div>
