@@ -10,7 +10,8 @@ import {
 } from '~/lib/fileArchiver'
 
 import { Magic } from '../../classes/gemory/magic'
-import { Garden } from '.'
+import { Character, Garden } from '.'
+import { getHopeMagic } from '../../classes/hope'
 
 const CARD_BACK = './assets/images/trump/z02.gif'
 
@@ -19,8 +20,20 @@ const getCanvasBlob = (canvas: HTMLCanvasElement): Promise<Blob> =>
 
   // TODO: 一旦あきらめ。画像化素直にしたほうがはやいかも。
 
-export const createZip = async (name:string, garden: Garden) => {
+export const createZip = async (character: Character) => {
+  const {garden, magicalName} = character
   const files: File[] = []
+
+  // 小奇跡
+  const hopeBlob = await getCanvasBlob(document.getElementById(`card-hope`) as HTMLCanvasElement)
+  const hopeIdentifier = await calcSHA256Async(hopeBlob)
+  files.push(
+    new File([hopeBlob], hopeIdentifier + '.' + MimeType.extension(hopeBlob.type), {
+      type: hopeBlob.type,
+    }),
+  )
+
+  // 魔法
   const mappedList = await Promise.all(
     garden.map(async (g,gi)=>
 
@@ -38,7 +51,7 @@ export const createZip = async (name:string, garden: Garden) => {
     }),
   )))
 
-  files.push(createCardStack(`${name}の魔法山札`, mappedList.flat()))
+  files.push(createCardStack(`${magicalName}の魔法山札`, [...mappedList.flat(), {...getHopeMagic(character.hope), identifier: hopeIdentifier}]))
 
   FileArchiver.instance.save(files, moment().format('YYYYMMDD_HHmmss'))
 }

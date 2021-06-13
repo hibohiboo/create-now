@@ -56,7 +56,7 @@ const component: FC<{
 
   // HTML2Canvasはいったん諦める。
   const onZipHandler = () => {
-    createZip(character.magicalName, garden)
+    createZip(character)
   }
   return (
     <>
