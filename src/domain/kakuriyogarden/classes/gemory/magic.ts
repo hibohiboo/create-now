@@ -23,6 +23,7 @@ export type Magic =  {
   level: null | number
   exp: number
 }
+
 export const moveMagic: Magic = {
   type: '魔法',
   kind: '一般',

@@ -40,12 +40,14 @@ export default class URLImage extends React.Component<{
       image: this.image,
     })
     if (this.props.size === 'contain') {
+      let scale = this.scale
       if (this.props.width < this.image.width) {
-        this.scale = this.props.width / this.image.width
+        scale = this.props.width / this.image.width
       }
-      if (this.props.height < this.image.height * this.scale) {
-        this.scale = (this.props.height / this.image.height) * this.scale
+      if (this.props.height < this.image.height * scale) {
+        scale = this.props.height / this.image.height
       }
+      this.scale = scale
     }
     // if you keep same image object during source updates
     // you will have to update layer manually:

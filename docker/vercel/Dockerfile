@@ -123,3 +123,4 @@ RUN npm i --no-optional html2canvas
 RUN npm i --no-optional moment
 # RUN npm i --no-optional material-table/jspdf
 RUN npm i --no-optional react-slick
+RUN npm i konva@7

@@ -1,3 +1,4 @@
+@use "sass:math";
 .kg- {
   &magical-name {
     // レイアウト
@@ -128,8 +129,8 @@
         @extend .flex-centering;
 
         img {
-          width: $iconWidth * 2/5;
-          height: $iconHeight * 2/5;
+          width: math.div($iconWidth * 2, 5);
+          height: math.div($iconHeight * 2, 5);
         }
       }
     }

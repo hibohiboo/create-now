@@ -29,7 +29,7 @@ const Edit: FC<{ cardList: Magic[]; vm: CharacterViewModel }> = ({
       <Header>現代異能魔法少女心象風景バトルTRPG『カクリヨガーデン』</Header>
       <MainArea>
         <Character vm={vm} cardList={cardList} />
-        {/* <Views vm={vm} /> */}
+        <Views vm={vm} />
       </MainArea>
       <Footer>フッタ</Footer>
       <CardListModal {...vm.cardListModal} />
