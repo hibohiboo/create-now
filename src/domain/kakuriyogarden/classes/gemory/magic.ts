@@ -205,3 +205,5 @@ export const gemory: Magic = {
   level: 1,
   exp: 0,
 }
+
+export const formatMagic = (layer:number, magic: Magic)=>({...magic, effect:magic.effect.replace(/\[配置階層\]/g, `${layer}`)})
