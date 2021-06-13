@@ -1,7 +1,11 @@
 import { Dispatch, FC, useEffect, useState } from 'react'
 import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
 import { Gemory, getGemoryImage } from '~/domain/kakuriyogarden/classes/gemory'
-import { Magic, gemory } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import {
+  Magic,
+  gemory,
+  formatMagic,
+} from '~/domain/kakuriyogarden/classes/gemory/magic'
 import {
   getHopeImageUrl,
   getHopeMagic,
@@ -50,13 +54,14 @@ const component: FC<{
   }
   const { hope, garden } = character
 
-  const cards = character.garden
-    .map((g, gi) =>
-      g.cards
-        .filter((c) => !!c && c.type !== '想晶')
-        .map((c, ci) => ({ ...c, id: `${gi}${ci}` })),
-    )
-    .flat()
+  // const cards = character.garden
+  //   .map((g, gi) =>
+  //     g.cards
+  //       .filter((c) => !!c && c.type !== '想晶')
+
+  //       .map((c, ci) => ({ ...c, id: `${gi}${ci}` })),
+  //   )
+  //   .flat()
   // HTML2Canvasはいったん諦める。
   // const onZipHandler = () => {
   //   createZip(character.magicalName, cards)
