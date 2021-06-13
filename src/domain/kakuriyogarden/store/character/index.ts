@@ -72,6 +72,7 @@ const sampleCharacter = {
 }
 export type Character = typeof sampleCharacter;
 type Exclude<T, U> = T extends U ? never : T;
+export type Garden = Character['garden']
 
 // state -> setState
 // const getSetName = (key:string)=>`set${key.replace(/^./, (match)=>match.toUpperCase())}`

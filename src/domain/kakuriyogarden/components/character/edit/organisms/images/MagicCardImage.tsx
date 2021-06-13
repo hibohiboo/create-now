@@ -1,23 +1,16 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { useEntrySheet } from '~/store/modules/trpgManualModule'
-import { Stage, Layer, Rect, Text, Ellipse, Group, Line } from 'react-konva'
-import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
-import { getHopeImageUrl, Hope } from '~/domain/kakuriyogarden/classes/hope'
+import React, { useState, useCallback } from 'react'
+import { Stage, Layer, Rect, Text, Line } from 'react-konva'
 import OutLine from './card/outline'
-import URLImage from '~/domain/kakuriyogarden/components/character/edit/atoms/konva/URLImage'
 import CellImage from '~/domain/kakuriyogarden/components/character/edit/organisms/character/Garden/atoms/CellImage'
 import TagText from '~/domain/kakuriyogarden/components/character/edit/atoms/konva/TagText'
-import { getGadgetImageUrl } from '~/domain/kakuriyogarden/classes/gadget'
-import { textToRemoveRubyTag } from '~/domain/kakuriyogarden/classes/ruby'
-import { Magic, gemory } from '~/domain/kakuriyogarden/classes/gemory/magic'
+import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
 import { labelData } from '~/domain/kakuriyogarden/classes/gemory/magic'
-const ImageArea: React.FC<{ magic: Magic }> = ({ magic }) => {
+const ImageArea: React.FC<{ magic: Magic; id: string }> = ({ magic, id }) => {
   const tags = magic?.tags || []
-  const size = 50
 
   const canvasWidth = 242
   const canvasHight = 342
-  const leftPadding = 5
+
   const family = {
     gothic:
       '"Hiragino Sans W3", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif',
@@ -61,6 +54,9 @@ const ImageArea: React.FC<{ magic: Magic }> = ({ magic }) => {
       }
     }
   }, [])
+  const canvasRef = useCallback((node) => {
+    node.getCanvas()._canvas.id = id
+  }, [])
 
   const cellSize = 50
   const dataAreaHeight = 100
@@ -78,7 +74,7 @@ const ImageArea: React.FC<{ magic: Magic }> = ({ magic }) => {
       <img className="sample-image" src={url} style={{ width: '100%' }}></img>
       <div style={{ display: 'none' }}>
         <Stage width={canvasWidth} height={canvasHight} ref={measuredRef}>
-          <Layer>
+          <Layer ref={canvasRef}>
             <OutLine width={canvasWidth} height={canvasHight} />
             {/* キャラ画像 */}
             <Rect

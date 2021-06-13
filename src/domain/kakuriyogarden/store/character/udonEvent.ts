@@ -10,30 +10,23 @@ import {
 } from '~/lib/fileArchiver'
 
 import { Magic } from '../../classes/gemory/magic'
+import { Garden } from '.'
 
 const CARD_BACK = './assets/images/trump/z02.gif'
 
-const getCanvasBlob = (canvas): Promise<Blob> =>
+const getCanvasBlob = (canvas: HTMLCanvasElement): Promise<Blob> =>
   new Promise((resolve, reject) => canvas.toBlob((blob) => resolve(blob)))
 
   // TODO: 一旦あきらめ。画像化素直にしたほうがはやいかも。
 
-export const createZip = async (name:string, cards: Magic[]) => {
+export const createZip = async (name:string, garden: Garden) => {
   const files: File[] = []
   const mappedList = await Promise.all(
-    cards.map(async (c) => {
-      const target = document.getElementById(`card-${c.id}`)
+    garden.map(async (g,gi)=>
 
-      // そのままだと真っ白になってしまったので一度innerframeに入れてみる ... 入れると表示はされるが、CSSが効いていない模様。
-      // const copy_ele = target.cloneNode(true)  as HTMLElement;
-      // const canvas_handler = document.getElementById('canvas_handler') as HTMLIFrameElement
-      // canvas_handler.contentDocument.body.appendChild(copy_ele);
-      // canvas_handler.height = target.scrollHeight.toString()
-      // canvas_handler.width = target.scrollWidth.toString()
-      const canvas = await html2canvas(target, {useCORS: true, height: 342,width:242, removeContainer: false})
-      // canvas_handler.contentDocument.body.removeChild(copy_ele)
-
-      const blob = await getCanvasBlob(canvas)
+    Promise.all(g.cards.filter((c) => !!c && c.type !== '想晶').map(async (c, ci) => {
+      const target = document.getElementById(`card-${gi}_${ci}`) as HTMLCanvasElement
+      const blob = await getCanvasBlob(target)
       const identifier = await calcSHA256Async(blob)
       files.push(
         new File([blob], identifier + '.' + MimeType.extension(blob.type), {
@@ -43,9 +36,9 @@ export const createZip = async (name:string, cards: Magic[]) => {
 
       return { ...c, identifier }
     }),
-  )
+  )))
 
-  files.push(createCardStack(`${name}の魔法山札`, mappedList))
+  files.push(createCardStack(`${name}の魔法山札`, mappedList.flat()))
 
   FileArchiver.instance.save(files, moment().format('YYYYMMDD_HHmmss'))
 }

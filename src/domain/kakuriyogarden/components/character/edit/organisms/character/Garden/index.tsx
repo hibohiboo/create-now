@@ -21,7 +21,7 @@ import {
 } from '~/domain/kakuriyogarden/store/character/modal'
 import ImageArea from './ImageArea'
 import Card from '~/domain/kakuriyogarden/components/character/edit/organisms/card'
-// import { createZip } from '~/domain/kakuriyogarden/store/character/udonEvent'
+import { createZip } from '~/domain/kakuriyogarden/store/character/udonEvent'
 
 const component: FC<{
   cardList: Magic[]
@@ -54,18 +54,10 @@ const component: FC<{
   }
   const { hope, garden } = character
 
-  // const cards = character.garden
-  //   .map((g, gi) =>
-  //     g.cards
-  //       .filter((c) => !!c && c.type !== '想晶')
-
-  //       .map((c, ci) => ({ ...c, id: `${gi}${ci}` })),
-  //   )
-  //   .flat()
   // HTML2Canvasはいったん諦める。
-  // const onZipHandler = () => {
-  //   createZip(character.magicalName, cards)
-  // }
+  const onZipHandler = () => {
+    createZip(character.magicalName, garden)
+  }
   return (
     <>
       <div className="kg-section">
@@ -81,6 +73,12 @@ const component: FC<{
             type="color"
             onChange={(event) => dispatch.color(event.target.value)}
           />
+          <button
+            style={{ padding: '5px', marginTop: '5px', marginBottom: '10px' }}
+            onClick={onZipHandler}
+          >
+            ユドナzip
+          </button>
         </div>
         <div>
           <div>
