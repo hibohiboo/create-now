@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-
 import fetch from 'isomorphic-unfetch'
 import Edit from '~/domain/kakuriyogarden/components/character/edit'
 import { Magic } from '~/domain/kakuriyogarden/classes/gemory/magic'
@@ -13,11 +11,25 @@ const Page: NextPage<{
   pageTitle: string
   skills: any
 }> = function (ctx) {
-  const dispatch = useDispatch()
+  const [skills, setSkills] = useState([])
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    ;(async () => {
+      const sheet = '1uI6lGPfsXfn77tKjLBzKaSl9lHrTsN5la-tTDo9gPZw' as string
+      const data = await getSheetData(sheet, 'cards', 'B2:S')
+      // 固有魔法
+      const original = await getSheetData(
+        '1GDR0INKjUuqX5dWUn4tleuoASJDTB-_mTHigSTDQP3c',
+        'cards',
+        'B2:S',
+      )
 
-  const { id, skills } = ctx
+      const tmpskills = [...data.values, ...original.values].map(csvToCard)
+      setSkills(tmpskills)
+    })()
+  }, [])
+  // const { id, skills, pageTitle } = ctx
+  const pageTitle = 'カクリヨガーデン: キャラクター編集'
   const vm = useCharacterViewModel()
   return (
     <>
@@ -39,34 +51,36 @@ const Page: NextPage<{
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
         />
-        <title>{ctx.pageTitle}</title>
+        <title>{pageTitle}</title>
       </Head>
       <Edit vm={vm} cardList={skills} />
     </>
   )
 }
-export const getStaticProps = async (context) => {
-  const postId = context.params?.id
-  const sheet = (context.query?.sheet ||
-    '1uI6lGPfsXfn77tKjLBzKaSl9lHrTsN5la-tTDo9gPZw') as string
-  const data = await getSheetData(sheet, 'cards', 'B2:S')
-  // 固有魔法
-  const original = await getSheetData(
-    '1GDR0INKjUuqX5dWUn4tleuoASJDTB-_mTHigSTDQP3c',
-    'cards',
-    'B2:S',
-  )
 
-  const skills = [...data.values, ...original.values].map(csvToCard)
-  return {
-    props: {
-      id: sheet,
-      pageTitle: 'カクリヨガーデン: キャラクター編集',
-      skills,
-    },
-    revalidate: 60, // ここを追加
-  }
-}
+// デプロイに失敗するので、SSG fallbackをやめる
+// export const getStaticProps = async (context) => {
+//   const postId = context.params?.id
+// const sheet = (context.query?.sheet ||
+//   '1uI6lGPfsXfn77tKjLBzKaSl9lHrTsN5la-tTDo9gPZw') as string
+// const data = await getSheetData(sheet, 'cards', 'B2:S')
+// // 固有魔法
+// const original = await getSheetData(
+//   '1GDR0INKjUuqX5dWUn4tleuoASJDTB-_mTHigSTDQP3c',
+//   'cards',
+//   'B2:S',
+// )
+
+// const skills = [...data.values, ...original.values].map(csvToCard)
+//   return {
+//     props: {
+//       id: sheet,
+//       pageTitle: 'カクリヨガーデン: キャラクター編集',
+//       skills,
+//     },
+//     revalidate: 60, // ここを追加
+//   }
+// }
 
 const fetchUrl = 'https://sheets.googleapis.com/v4/spreadsheets'
 const key = process.env.GOOGLE_API_KEY

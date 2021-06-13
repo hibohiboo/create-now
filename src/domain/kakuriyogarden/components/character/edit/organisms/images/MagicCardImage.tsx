@@ -47,7 +47,6 @@ const ImageArea: React.FC<{ magic: Magic; id: string }> = ({ magic, id }) => {
     if (node !== null) {
       try {
         const canvas: HTMLCanvasElement = node.toCanvas()
-        console.log('update canvas')
         setUrl(canvas.toDataURL())
       } catch (e) {
         console.error(`canvas is null name:${magic.name}`, e)
