@@ -51,6 +51,16 @@ export const moveMagic: Magic = {
   level: 1,
   exp: 15,
 }
+export const labelData = {
+  timing: 'タイミング',
+  count: 'カウント',
+  range: '射程',
+  target: '対象',
+  maxLevel: '最大Lv',
+  level: 'Lv',
+  exp: 'コスト',
+  successRate: '成功率',
+}
 
 
 export const quickShootMagic: Magic = {
@@ -159,7 +169,7 @@ export const wallMagic: Magic = {
       '/images/kakuriyogarden/icons/game-icons/brick-wall.svg',
     source: 'Game-icons.net',
     sourceUrl:
-      'https://game-icons.net/1x1/lorc/brick-wall.html',
+      'https://game-icons.net/1x1/delapouite/brick-wall.html',
   },
   maxLevel: 1,
 

@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { labelData } from '~/domain/kakuriyogarden/classes/gemory/magic'
 import {
   OpenImageEditModal,
   OpenInputModal,
@@ -22,16 +23,6 @@ export type Card = {
   successRate: string
   exp: number
   nameKana: string
-}
-const labelData = {
-  timing: 'タイミング',
-  count: 'カウント',
-  range: '射程',
-  target: '対象',
-  maxLevel: '最大Lv',
-  level: 'Lv',
-  exp: 'コスト',
-  successRate: '成功率',
 }
 
 const Card: FC<{ cardData: Card | null }> = ({ cardData }) => {
