@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse, Group } from 'react-konva'
 import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
@@ -72,12 +78,16 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
 
   const cellSize = 50
 
+  const canvasRef = useCallback((node) => {
+    node.getCanvas()._canvas.id = 'card-character'
+  }, [])
+
   return (
     <>
       <img className="sample-image" src={url} style={{ width: '100%' }}></img>
       <div style={{ display: 'none' }}>
         <Stage width={canvasWidth} height={canvasHight} ref={stageRef}>
-          <Layer>
+          <Layer ref={canvasRef}>
             <OutLine width={canvasWidth} height={canvasHight} />
             {/* キャラ画像 */}
             <Rect

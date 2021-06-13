@@ -51,14 +51,24 @@ export const createZip = async (character: Character) => {
     }),
   )))
 
-  files.push(createCardStack(`${magicalName}の魔法山札`, [...mappedList.flat(), {...getHopeMagic(character.hope), identifier: hopeIdentifier}]))
+  // 背景(キャラクターカード)
+  const characterBlob = await getCanvasBlob(document.getElementById(`card-character`) as HTMLCanvasElement)
+  const characterIdentifier = await calcSHA256Async(characterBlob)
+  files.push(
+    new File([characterBlob], characterIdentifier + '.' + MimeType.extension(characterBlob.type), {
+      type: characterBlob.type,
+    }),
+  )
+
+
+  files.push(createCardStack(`${magicalName}の魔法山札`,characterIdentifier, [...mappedList.flat(), {...getHopeMagic(character.hope), identifier: hopeIdentifier}]))
 
   FileArchiver.instance.save(files, moment().format('YYYYMMDD_HHmmss'))
 }
 
 type MagicWithIdentifer = Magic & {identifier: string}
 
-const createCardStack = (stackName: string, cards: MagicWithIdentifer[]) => {
+const createCardStack = (stackName: string, backIdentifier:string, cards: MagicWithIdentifer[]) => {
   const doc = createDoc()
   const cardStackWrapper = createElement(doc, 'card-stack', [
     ['location.name', 'table'],
@@ -73,7 +83,7 @@ const createCardStack = (stackName: string, cards: MagicWithIdentifer[]) => {
   ])
 
   cardStackWrapper.appendChild(createCardStackElment(doc, stackName))
-  cardStackWrapper.appendChild(createCardRoot(doc, cards))
+  cardStackWrapper.appendChild(createCardRoot(doc, cards,backIdentifier))
   doc.appendChild(cardStackWrapper)
   const sXML = convertDocToXML(doc)
   return new File([sXML], `${stackName}.xml`, { type: 'text/plain' })
@@ -99,12 +109,12 @@ const createCardStackElment = (doc: Document, stackName: string) => {
   return cardStack
 }
 
-const createCardRoot = (doc: Document, cards: MagicWithIdentifer[]) => {
+const createCardRoot = (doc: Document, cards: MagicWithIdentifer[], backIdentifier: string) => {
   const cardRoot = createElement(doc, 'node', [['name', 'cardRoot']])
-  cards.forEach((card) => cardRoot.appendChild(createCard(doc, card)))
+  cards.forEach((card) => cardRoot.appendChild(createCard(doc, card,backIdentifier)))
   return cardRoot
 }
-const createCard = (doc: Document, card: MagicWithIdentifer) => {
+const createCard = (doc: Document, card: MagicWithIdentifer,backIdentifier:string) => {
   const cardWrapper = createElement(doc, 'card', [
     ['location.name', 'table'],
     ['location.x', '50'],
@@ -137,7 +147,7 @@ const createCard = (doc: Document, card: MagicWithIdentifer) => {
       ['name', 'back'],
       ['type', 'image'],
     ],
-    CARD_BACK,
+    backIdentifier,
   )
   image.appendChild(imageIdentifier)
   image.appendChild(front)
