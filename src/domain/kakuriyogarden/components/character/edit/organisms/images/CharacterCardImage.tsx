@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse, Group } from 'react-konva'
 import { Gemory } from '~/domain/kakuriyogarden/classes/gemory'
@@ -15,6 +15,9 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
   gardenUrl,
   character,
 }) => {
+  // https://blog.chetan-verma.in/uselayouteffect-and-the-ssr-warning
+  const useIsomorphicLayoutEffect =
+    typeof window !== 'undefined' ? useLayoutEffect : useEffect
   const tags = character.tags.split(',')
   const size = 50
 
@@ -65,7 +68,7 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
       setTimeout(effect, 500) // useEffectで初回に呼ばれるときにはまだ描画がされていないので少し待ってから読み込む
     }
   }
-  useEffect(effect)
+  useIsomorphicLayoutEffect(effect)
 
   const cellSize = 50
 
@@ -124,9 +127,10 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
             {/* tag */}
             {tags.map((t, i) =>
               i === 0 ? (
-                <TagText text={t} y={tagsY} x={leftGap} />
+                <TagText key={i} text={t} y={tagsY} x={leftGap} />
               ) : (
                 <TagText
+                  key={i}
                   text={t}
                   y={tagsY}
                   x={
@@ -167,14 +171,23 @@ const ImageArea: React.FC<{ character: Character; gardenUrl: string }> = ({
               fontFamily={family.gothic}
               text={character.gadget}
             />
+            {/* 庭園 */}
             <URLImage
               src={gardenUrl}
               x={5}
               y={180}
               width={230}
-              height={185}
+              height={140}
               size="contain"
             />
+            {/* <Rect
+              x={5}
+              y={180}
+              width={230}
+              height={140}
+              stroke={'black'}
+              strokeWidth={1}
+            /> */}
             <Text
               x={leftGap + 5}
               y={bottomContent + 2}
