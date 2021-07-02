@@ -10,4 +10,4 @@ container_name=gcloud
 cd $docker_dir && docker-compose run -p 9005:9005 $container_name /bin/bash
 
 # gcloud init
-# gsutil cors set cors.json gs://<your-cloud-storage-bucket>
+# gsutil cors set cors.json gs://create-now-6fa17.appspot.com

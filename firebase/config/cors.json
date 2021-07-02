@@ -1,7 +1,11 @@
 [
   {
-    "origin": ["https://create-now.now.sh"],
-    "method": ["GET"],
+    "origin": [
+      "https://create-now.vercel.app"
+    ],
+    "method": [
+      "GET"
+    ],
     "maxAgeSeconds": 3600
   }
 ]
