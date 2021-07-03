@@ -85,9 +85,10 @@ const Page: NextPage = () => {
           <Box my={1}>
             <SelectField
               id="camp-select"
-              items={React.useMemo(() => cloneDeep(vm.camps), [
-                vm.camps.length,
-              ])}
+              items={React.useMemo(
+                () => cloneDeep(vm.camps),
+                [vm.camps.length],
+              )}
               value={vm.character.campId}
               valueProp={'id'}
               unselectedText={t('common_unselected')}
@@ -185,10 +186,10 @@ const Page: NextPage = () => {
         <EditableMaterialTable
           title={t('lostrpg_character_common_ability')}
           columns={vm.abilitiesColumns}
-          data={React.useMemo(() => cloneDeep(vm.character.abilities), [
-            vm.character.abilities.length,
-            vm.abilityTableCount,
-          ])}
+          data={React.useMemo(
+            () => cloneDeep(vm.character.abilities),
+            [vm.character.abilities.length, vm.abilityTableCount],
+          )}
           rowAddHandler={vm.abilityAddhandler}
           rowUpdateHandler={vm.abilityUpdateHandler}
           rowDeleteHandler={vm.abilityDeleteHandler}
@@ -255,9 +256,10 @@ const Page: NextPage = () => {
           <EditableMaterialTable
             title={t('lostrpg_character_common_item')}
             columns={vm.itemsColumns}
-            data={React.useMemo(() => cloneDeep(vm.character.items), [
-              vm.itemTableEditCount,
-            ])}
+            data={React.useMemo(
+              () => cloneDeep(vm.character.items),
+              [vm.itemTableEditCount],
+            )}
             rowAddHandler={vm.addItemHandler}
             rowUpdateHandler={vm.updateItemHandler}
             rowDeleteHandler={vm.deleteItemHandler}
@@ -408,6 +410,14 @@ const Page: NextPage = () => {
           style={{ marginRight: '1rem', marginBottom: '1rem' }}
         >
           TRPGスタジオ用テキスト出力
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={vm.copyClipboardForCcfolia}
+          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+        >
+          ココフォリア用クリップボードコピー
         </Button>
       </Box>
       <Link href={`/lostrpg/characters/[lng]/list`} as={vm.beforePage}>

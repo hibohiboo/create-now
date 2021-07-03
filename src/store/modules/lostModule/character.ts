@@ -1105,6 +1105,14 @@ export const useCharacterEditViewModel = () =>
 
         FileArchiver.instance.saveText(file)
       },
+      copyClipboardForCcfolia: async ()=>{
+        const json = characterToCcfoliaDoc(character,
+          damagedParts,
+          makedStatusAilments,
+          i18n)
+        navigator.clipboard.writeText(json)
+      },
+
       authUser,
       i18n,
       id,
@@ -1434,4 +1442,121 @@ export const fetchCharactersRecords = (id: string): AppThunk => async (
 ) => {
   const ret = await readCharactersRecords(id)
   dispatch(setCharactersRecords(ret))
+}
+
+type CharacterClipboardData = {
+  kind: "character";
+  data: Partial<CcfoliaCharacter>;
+}
+
+type CcfoliaCharacter = {
+  name: string;
+  memo: string;
+  initiative?: number;
+  externalUrl: string;
+  status: {
+    label: string;
+    value: number;
+    max: number;
+  }[];
+  params: { label: string; value: string }[];
+  iconUrl: string | null; // [!]
+  faces?: { iconUrl: string | null; label: string }[]; // [!]
+  x?: number; // [!]
+  y?: number; // [!]
+  angle?: number;
+  width?: number;
+  height?: number;
+  active?: boolean; // [!]
+  secret?: boolean;
+  invisible?: boolean;
+  hideStatus?: boolean;
+  color?: string;
+  commands?: string;
+  owner?: string | null;
+};
+
+export const characterToCcfoliaDoc = (
+  character: Character,
+  parts: {
+    name: string
+    damaged: boolean
+  }[],
+  status: {
+    name: string
+    effect: string
+    isChecked: boolean
+  }[],
+  i18n: any,
+) => {
+  const t = i18n.t
+  const obj: CharacterClipboardData = {
+    kind: 'character',
+    data: {
+      status:[],
+    }
+  }
+  obj.data.name = character.name;
+  obj.data.externalUrl = `https://create-now.vercel.app/lostrpg/public/ja/characters/${character.id}`
+  obj.data.status.push({label: t('lostrpg_character_common_stamina'), value: character.stamina, max: character.stamina*2})
+  obj.data.status.push({label: t('lostrpg_character_common_willPower'), value: character.willPower, max: character.willPower*2})
+  obj.data.memo =`${t('common_summary')}
+${character.summary}
+`
+
+  parts.forEach((p) => {
+    obj.data.status.push({
+      label: p.name,
+      value: p.damaged ? 0 : 1,
+      max: 1
+    })
+  })
+
+  // char detail 変調
+  status.forEach((s) => {
+    obj.data.status.push({
+      label: s.name,
+      value: s.isChecked ? 1 : 0,
+      max: 1
+    })
+  })
+
+
+  character.specialties.forEach((s, i) => {
+    obj.data.memo =`${obj.data.memo}
+${t('lostrpg_character_common_specialty')}:${s}`
+  })
+  // char detail アビリティ
+  character.abilities.forEach((a) => {
+    obj.data.commands =`${obj.data.commands}
+2d6>=5 ${a.name}:${a.group}/${a.type}/${a.specialty}/${a.target}/${a.recoil}/${a.effect}`
+  })
+  // char detail アイテム
+  obj.data.memo =`${obj.data.memo}
+
+  ${t('lostrpg_character_common_item')}`
+  character.items.forEach((a) => {
+    obj.data.memo =`${obj.data.memo}
+${a.name}:${a.number}`
+  })
+
+  character.bags.forEach((b) => {
+    obj.data.memo =`${obj.data.memo}
+
+${b.name}`
+    b.items.forEach((a) => {
+      obj.data.memo =`${obj.data.memo}
+${a.name}:${a.number}`
+    })
+  })
+  obj.data.memo =`${obj.data.memo}
+
+  ${t('lostrpg_character_common_equipments_column')}`
+  // char detail 装備
+  character.equipments.forEach((e) => {
+    obj.data.memo =`${obj.data.memo}
+${e.name}:${e.equipedArea}/${e.type}/${e.specialty}/${e.target}/${e.trait}/${e.effect}`
+  })
+
+  return JSON.stringify(obj)
 }
