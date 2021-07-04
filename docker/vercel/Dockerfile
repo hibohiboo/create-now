@@ -123,4 +123,8 @@ RUN npm i --no-optional html2canvas
 RUN npm i --no-optional moment
 # RUN npm i --no-optional material-table/jspdf
 RUN npm i --no-optional react-slick
+# konvaは8.0以上はmodule
 RUN npm i konva@7
+# RUN npm install --save-dev eslint-config-next
+# d3は7.0以上はmodule
+RUN npm i --no-optional d3@6.7.0

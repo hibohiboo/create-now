@@ -9,6 +9,8 @@ const nextConfig = {
   webpack: (config) => {
     // src ディレクトリをエイリアスのルートに設定
     config.resolve.alias['~'] = resolve(__dirname, 'src')
+    // navigator.clipboardがhttpsでないと使えないため、確認用にしたいが、webpack dev server使ってないみたい
+    // config.devServer.https = true;
     // config.resolve.extensions.push('.elm')
     // if (MODE === 'development') {
     //   config.module.rules.push({
@@ -80,6 +82,11 @@ const nextConfig = {
     UDONARIUM_DOMAIN: process.env.UDONARIUM_DOMAIN,
     TYRANO_DOMAIN: process.env.TYRANO_DOMAIN,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+  },
+  eslint: {
+    // Warning: Dangerously allow production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
   },
 }
 

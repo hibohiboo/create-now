@@ -1073,7 +1073,7 @@ export const useCharacterEditViewModel = () =>
           )
         }
         const doc = characterToDoc(
-          character,
+          {...character, id},
           damagedParts,
           makedStatusAilments,
           i18n,
@@ -1088,7 +1088,7 @@ export const useCharacterEditViewModel = () =>
         // const identifier = ''
 
         const json = characterToTRPGStudioDoc(
-          character,
+          {...character, id},
           damagedParts,
           makedStatusAilments,
           i18n,
@@ -1106,7 +1106,7 @@ export const useCharacterEditViewModel = () =>
         FileArchiver.instance.saveText(file)
       },
       copyClipboardForCcfolia: async ()=>{
-        const json = characterToCcfoliaDoc(character,
+        const json = characterToCcfoliaDoc({...character, id},
           damagedParts,
           makedStatusAilments,
           i18n)
@@ -1494,6 +1494,8 @@ export const characterToCcfoliaDoc = (
     kind: 'character',
     data: {
       status:[],
+      params: [],
+      commands: ''
     }
   }
   obj.data.name = character.name;
@@ -1524,12 +1526,14 @@ ${character.summary}
 
   character.specialties.forEach((s, i) => {
     obj.data.memo =`${obj.data.memo}
-${t('lostrpg_character_common_specialty')}:${s}`
+${t('lostrpg_character_common_specialty')}:《${s}》`
   })
   // char detail アビリティ
   character.abilities.forEach((a) => {
+    obj.data.params.push({label: a.name, value:`${a.name}:${a.group}/${a.type}/${a.specialty}/${a.target}/${a.recoil}/${a.effect}`})
+
     obj.data.commands =`${obj.data.commands}
-2d6>=5 ${a.name}:${a.group}/${a.type}/${a.specialty}/${a.target}/${a.recoil}/${a.effect}`
+2d6>=5 {${a.name}}`
   })
   // char detail アイテム
   obj.data.memo =`${obj.data.memo}
@@ -1537,7 +1541,7 @@ ${t('lostrpg_character_common_specialty')}:${s}`
   ${t('lostrpg_character_common_item')}`
   character.items.forEach((a) => {
     obj.data.memo =`${obj.data.memo}
-${a.name}:${a.number}`
+    ${a.name}:${a.number}個×${a.weight}W :${a.type}/${a.specialty}/${a.target}/${a.effect}`
   })
 
   character.bags.forEach((b) => {
@@ -1546,16 +1550,13 @@ ${a.name}:${a.number}`
 ${b.name}`
     b.items.forEach((a) => {
       obj.data.memo =`${obj.data.memo}
-${a.name}:${a.number}`
+${a.name}:${a.number}個×${a.weight}W :${a.type}/${a.specialty}/${a.target}/${a.effect}`
     })
   })
-  obj.data.memo =`${obj.data.memo}
 
-  ${t('lostrpg_character_common_equipments_column')}`
   // char detail 装備
   character.equipments.forEach((e) => {
-    obj.data.memo =`${obj.data.memo}
-${e.name}:${e.equipedArea}/${e.type}/${e.specialty}/${e.target}/${e.trait}/${e.effect}`
+    obj.data.params.push({label: e.name, value:`${e.name}:${e.equipedArea}/${e.type}/${e.specialty}/${e.target}/${e.trait}/${e.effect}`})
   })
 
   return JSON.stringify(obj)

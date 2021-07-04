@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 
 const DamageTable: React.FC<{
   rows: any[]
-  damageHandler: Function
+  damageHandler: any
   sevenLabel: string
 }> = ({ rows, damageHandler, sevenLabel }) => {
   const classes = useStyles()

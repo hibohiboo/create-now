@@ -37,12 +37,12 @@ services:
     # command: [vercel, dev]
     command: [npm, run, dev]
 
-  testing:
-    # Dockerfileビルド
-    build: ./testing
-    #   # ディレクトリを共有する。
-    volumes:
-      - ../src:/app/src
+  # testing:
+  #   # Dockerfileビルド
+  #   build: ./testing
+  #   #   # ディレクトリを共有する。
+  #   volumes:
+  #     - ../src:/app/src
   #     - ../tests:/app/tests
   #     - ../public:/app/public
   #     - ../fonts:/app/fonts

@@ -12,9 +12,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:prettier/recommended',
-    'prettier/@typescript-eslint',
   ],
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['react'],
   parser: '@typescript-eslint/parser',
   env: {
     browser: true,
@@ -40,5 +39,11 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'commma-dangle': 'off',
+    'no-unused-vars': 'off',
+    'no-duplicate-case': 'off',
+    'no-undef': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    'prettier/prettier': 'off',
+    'react/display-name': 'off',
   },
 }
