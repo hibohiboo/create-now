@@ -311,8 +311,8 @@ const getAttributes = (text: string) => {
 
 export const mdToScenario = (md: string): Scenario => {
   const processor = remark().use(html)
-  const parsed = processor.parse(md)
-  const children = parsed.children as AstNode[]
+  const parsed = processor.parse(md) as any as {children: AstNode[]}
+  const children = (parsed ? parsed.children : []) as AstNode[]
   let scenario = initScenario
 
   const payload: ScenarioPayload = {
