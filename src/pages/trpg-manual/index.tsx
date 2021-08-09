@@ -149,7 +149,7 @@ export const MyGlobalJSX = () => (
     }
   `}</style>
 )
-
+// https://cdnjs.com/libraries/font-awesome
 const Home: NextPage = () => {
   return (
     <div className="container trpg-manual">
@@ -157,9 +157,10 @@ const Home: NextPage = () => {
         <title>僕の私のTRPG説明書</title>
         <link
           rel="stylesheet"
-          href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-          integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
         />
       </Head>
       <main>
