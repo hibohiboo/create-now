@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useEntrySheet } from '~/store/modules/trpgManualModule'
 import { Stage, Layer, Rect, Text, Ellipse } from 'react-konva'
 import URLImage from '../../atoms/URLImage'
+import Hidden from '@material-ui/core/Hidden'
 
 const ImageArea: React.FC = () => {
   const sheet = useEntrySheet()
@@ -97,9 +98,11 @@ const ImageArea: React.FC = () => {
   )
 
   return (
-    <div style={{ maxWidth: '800px', position: 'relative' }}>
-      <img className="sample-image" src={url} style={{ width: '100%' }}></img>
-      <div style={{ display: 'none' }}>
+    <>
+      <Hidden mdUp implementation="css">
+        <img className="sample-image" src={url} style={{ width: '100%' }}></img>
+      </Hidden>
+      <Hidden smDown implementation="css">
         <Stage width={canvasWidth} height={canvasHight} ref={stageRef}>
           <Layer>
             <Rect
@@ -229,8 +232,8 @@ const ImageArea: React.FC = () => {
             />
           </Layer>
         </Stage>
-      </div>
-    </div>
+      </Hidden>
+    </>
   )
 }
 

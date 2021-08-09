@@ -152,7 +152,7 @@ export const MyGlobalJSX = () => (
 
 const Home: NextPage = () => {
   return (
-    <div className="container trpg-manual">
+    <div className="container">
       <Head>
         <title>僕の私のTRPG説明書</title>
         <link
@@ -169,13 +169,15 @@ const Home: NextPage = () => {
           さんのTRPG自己紹介シートを入力できるようにしました。
           作成した画像は、右クリック（スマホなら長押し）でダウンロードしてお使いください。
         </p>
-        <div className="trpg-manual-wrapper">
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <InputArea />
           <ImageArea />
         </div>
       </main>
 
       <Footer />
+      <MyJSX />
+      <MyGlobalJSX />
     </div>
   )
 }

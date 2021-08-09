@@ -1,6 +1,16 @@
 import React from 'react'
 import { InputLabel, FormControl, Input } from '@material-ui/core'
 import { ChangeEvent } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}))
 
 const InputField: React.FC<{
   model: any

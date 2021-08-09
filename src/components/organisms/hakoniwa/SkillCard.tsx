@@ -193,3 +193,11 @@ const SkillCard: React.FC<{
 }
 
 export default SkillCard
+
+const MyJSX = () => (
+  <style jsx>{`
+    div {
+      background-color: #fff;
+    }
+  `}</style>
+)

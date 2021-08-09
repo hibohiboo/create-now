@@ -38,7 +38,7 @@ const InputArea: React.FC = () => {
     reader.readAsDataURL(file)
   }
   return (
-    <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '500px', minWidth: '200px' }}>
       <Box my={4} display="flex">
         <SelectField
           id="theme"
