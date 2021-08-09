@@ -6,6 +6,10 @@
     margin: 0 auto;
     max-width: 1200px;
   }
+
+  input[type='checkbox'] {
+    display: none;
+  }
 }
 @media screen and (min-width: 900px) {
   .trpg-manual-wrapper {

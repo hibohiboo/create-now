@@ -131,4 +131,3 @@ RUN npm i --no-optional d3@6.7.0
 
 # mark-htmlは14以上はmodule
 RUN npm i --no-optional remark@13 remark-html@13
-RUN npm install @material-ui/core@next @emotion/react @emotion/styled @material-ui/styles@next

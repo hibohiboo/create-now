@@ -275,6 +275,7 @@ const InputArea: React.FC = () => {
         items={noproFavItems}
       />
       <InputLabel>Play Style</InputLabel>
+
       <Box m={2}>
         <InputLabel>On-Line</InputLabel>
         <FormControlLabel
@@ -379,11 +380,9 @@ const InputArea: React.FC = () => {
           id="tool-other"
           label="Other"
           multiline
-          rows="2"
-          variant="outlined"
+          rows={2}
           value={sheet.others}
-          style={{ marginTop: '20px', marginBottom: '20px' }}
-          fullWidth={true}
+          fullWidth
           onChange={(e) =>
             dispatch(update({ ...sheet, others: e.target.value }))
           }
@@ -530,30 +529,27 @@ const InputArea: React.FC = () => {
         />
       </Box>
       <TextField
-        id="outlined-multiline-static"
+        id="outlined-multiline-outline"
         label="Rule Book / Supplement"
         multiline
-        rows="10"
-        variant="outlined"
+        rows={10}
         value={sheet.rulebook}
-        style={{ marginTop: '20px', marginBottom: '20px' }}
-        fullWidth={true}
+        fullWidth
         onChange={(e) =>
           dispatch(update({ ...sheet, rulebook: e.target.value }))
         }
       />
       <TextField
-        id="outlined-multiline-static"
+        id="outlined-multiline-comment"
         label="Comment"
         multiline
-        rows="10"
-        variant="outlined"
+        rows={10}
+        // variant="outlined" レイアウト壊れる
         value={sheet.free}
-        style={{ marginTop: '20px', marginBottom: '20px' }}
-        fullWidth={true}
+        fullWidth
         onChange={(e) => dispatch(update({ ...sheet, free: e.target.value }))}
       />
-      <InputLabel>フォントサイズ</InputLabel>
+      <InputLabel style={{ paddingTop: '20px' }}>フォントサイズ</InputLabel>
       <Box m={2} display="flex">
         <InputField
           model={sheet}
