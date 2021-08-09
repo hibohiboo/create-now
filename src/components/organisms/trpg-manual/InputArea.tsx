@@ -544,7 +544,6 @@ const InputArea: React.FC = () => {
         label="Comment"
         multiline
         rows={10}
-        // variant="outlined" レイアウト壊れる
         value={sheet.free}
         fullWidth
         onChange={(e) => dispatch(update({ ...sheet, free: e.target.value }))}
