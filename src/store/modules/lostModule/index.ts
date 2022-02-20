@@ -50,7 +50,7 @@ import {
   mdToScenario,
   useScenariosViewModel,
 } from './scenario'
-import { stringToArray } from 'konva/types/shapes/Text'
+
 export type {
   Camp,
   Character,

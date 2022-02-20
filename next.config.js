@@ -52,7 +52,7 @@ const nextConfig = {
     swDest: 'static/service-worker.js',
     runtimeCaching: [
       {
-        urlPattern: /^https:\/\/create-now.now.sh\/third\/.*/,
+        urlPattern: /^https:\/\/create-now.vercel.app\/third\/.*/,
         handler: 'NetworkFirst',
         options: {
           cacheName: 'https-calls',

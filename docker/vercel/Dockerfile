@@ -131,3 +131,7 @@ RUN npm i --no-optional d3@6.7.0
 
 # mark-htmlは14以上はmodule
 RUN npm i --no-optional remark@13 remark-html@13
+# firebaseは9でIFが変化
+RUN npm i --no-optional firebase@8
+RUN npm i --no-optional firebase-admin@9
+RUN npm i --no-optional --legacy-peer-deps react-firebaseui@5
